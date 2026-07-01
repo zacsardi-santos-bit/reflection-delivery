@@ -7,32 +7,32 @@ Clean delivery: **1500 tasks** (harbor format), all QC + nop/oracle validated. D
 - CodeBuild login-shell validation: see REQUIREMENTS_RECONFIRM.md.
 - LLM semantic QC: PASS_CLEAN + FIXABLE kept; 12 REMOVE excluded.
 
-## Language (cap<=30%)
+## Language
 | lang | n | % |
 |---|--:|--:|
-| go | 599 | 39.9% ⚠️>cap |
-| rust | 358 | 23.9% |
+| go | 608 | 40.5% |
+| rust | 351 | 23.4% |
 | python | 204 | 13.6% |
-| typescript | 161 | 10.7% |
+| typescript | 160 | 10.7% |
 | javascript | 81 | 5.4% |
-| java | 65 | 4.3% |
+| java | 64 | 4.3% |
 | cpp | 11 | 0.7% |
 | kotlin | 7 | 0.5% |
 | ruby | 6 | 0.4% |
-| unknown | 3 | 0.2% |
 | swift | 3 | 0.2% |
+| unknown | 3 | 0.2% |
 | csharp | 1 | 0.1% |
 | c | 1 | 0.1% |
 
-## Category (cap 5-20%)
+## Category
 | category | n | % |
 |---|--:|--:|
-| Software Engineering | 937 | 62.5% ⚠️>cap |
+| Software Engineering | 936 | 62.4% |
 | Debugging and Repair | 220 | 14.7% |
-| Security | 81 | 5.4% |
-| Systems, Infrastructure, and Operations | 70 | 4.7% |
+| Security | 82 | 5.5% |
+| Systems, Infrastructure, and Operations | 69 | 4.6% |
 | Data Processing and ETL | 61 | 4.1% |
-| Build, Dependency, and Release Management | 44 | 2.9% |
+| Build, Dependency, and Release Management | 45 | 3.0% |
 | Data Querying and Databases | 40 | 2.7% |
 | Machine Learning and AI | 22 | 1.5% |
 | Scientific Computing and Domain Science | 12 | 0.8% |
@@ -42,12 +42,14 @@ Clean delivery: **1500 tasks** (harbor format), all QC + nop/oracle validated. D
 ## pass@8 (Opus-4.8, from 8 trajectories)
 | pass@8 | n |
 |---|--:|
-| 0/8 | 1189 |
+| 0/8 | 1190 |
 | 1/8 | 79 |
 | 2/8 | 81 |
 | 3/8 | 69 |
 | 4/8 | 81 |
-| 5/8 | 1 |
+
+All tasks satisfy the Reflection difficulty bar (pass@8 ≤ 0.5, i.e. ≤ 4/8). The lone 5/8 outlier
+(`mattermost-mattermost-mobile-8735`) was replaced by a validated 0/8 task (`akuity-kargo-3151`).
 
 ## Provenance & caps
 - Repo <=10%: max 27 (1.8%), 721 distinct repos — PASS.

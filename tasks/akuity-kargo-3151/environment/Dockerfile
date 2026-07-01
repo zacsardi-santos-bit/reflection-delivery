@@ -1,14 +1,14 @@
-FROM node:22
+FROM golang:1.23
 
 RUN apt-get update && apt-get install -y \
-    git curl ca-certificates patch build-essential python3 \
+    git curl ca-certificates patch build-essential \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /workspace
 
 RUN git init /workspace/repo && cd /workspace/repo && \
-    git remote add origin https://github.com/mattermost/mattermost-mobile.git && \
-    git fetch --depth 30 origin 767d4d920a2ffdb36444ed26136bda0ad81a380b && \
+    git remote add origin https://github.com/akuity/kargo.git && \
+    git fetch --depth 30 origin 17a58cf696eb3bb61dd4695a1c7a4dd31cf093a5 && \
     git checkout --detach FETCH_HEAD && \
     git submodule update --init --recursive --depth 1 2>/dev/null || true && \
     git remote remove origin && \
@@ -20,11 +20,26 @@ RUN git init /workspace/repo && cd /workspace/repo && \
 
 WORKDIR /workspace/repo
 
-RUN npm ci --ignore-scripts
+RUN go mod download
 
-RUN npx patch-package
 
-RUN node scripts/generate-assets.js
+# --- offline dep-baking: warm Go module cache at build (network available here) ---
+RUN cd /workspace/repo && \
+    for d in $(find . -name go.mod -not -path '*/vendor/*' -exec dirname {} \; | sort -u); do \
+      ( cd "$d" && echo "warming $d" && \
+        (go mod download all 2>/dev/null || go mod download 2>/dev/null || true) && \
+        (go test -count=1 -run '^$' ./... 2>/dev/null || true) ) ; \
+    done; true
+# warm exact dep versions the fix/test introduce (module coordinates only, not solution code)
+RUN cd /workspace/repo && for m in \
+    github.com/tidwall/gjson@v1.14.2 \
+    github.com/tidwall/match@v1.1.1 \
+    github.com/tidwall/pretty@v1.2.0 \
+    github.com/tidwall/sjson@v1.2.5 \
+    ; do go mod download "$m" 2>/dev/null || true; done; true
+ENV GOFLAGS=-mod=mod
+ENV GOPROXY=off
+ENV GOSUMDB=off
 
 WORKDIR /workspace
 
