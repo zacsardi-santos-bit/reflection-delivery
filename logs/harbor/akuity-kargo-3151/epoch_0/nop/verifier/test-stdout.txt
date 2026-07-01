@@ -1,0 +1,17 @@
+patching file internal/directives/json_updater_test.go
+# github.com/akuity/kargo/internal/directives [github.com/akuity/kargo/internal/directives.test]
+internal/directives/json_updater_test.go:101:7: undefined: newJSONUpdater
+internal/directives/json_updater_test.go:123:19: undefined: JSONUpdate
+internal/directives/json_updater_test.go:129:15: undefined: JSONUpdate
+internal/directives/json_updater_test.go:149:15: undefined: JSONUpdate
+internal/directives/json_updater_test.go:161:21: undefined: JSONUpdate
+internal/directives/json_updater_test.go:181:15: undefined: JSONUpdate
+internal/directives/json_updater_test.go:210:13: undefined: jsonUpdater
+internal/directives/json_updater_test.go:232:16: undefined: JSONUpdate
+internal/directives/json_updater_test.go:245:15: undefined: JSONUpdate
+internal/directives/json_updater_test.go:258:15: undefined: JSONUpdate
+internal/directives/json_updater_test.go:258:15: too many errors
+{"Time":"2026-07-01T19:22:27.25220529Z","Action":"start","Package":"github.com/akuity/kargo/internal/directives"}
+{"Time":"2026-07-01T19:22:27.252261577Z","Action":"output","Package":"github.com/akuity/kargo/internal/directives","Output":"FAIL\tgithub.com/akuity/kargo/internal/directives [build failed]\n"}
+{"Time":"2026-07-01T19:22:27.252276964Z","Action":"fail","Package":"github.com/akuity/kargo/internal/directives","Elapsed":0}
+reward=0 graded=26 found=0 failed=0 parsed=1 framework=go exit_code=1

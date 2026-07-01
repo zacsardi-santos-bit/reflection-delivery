@@ -1,0 +1,5 @@
+I'm working on Kargo and I'd like to add support for updating JSON files as part of a promotion step. Right now there's a promotion step for updating YAML files, but nothing equivalent for JSON. I need a new step that takes a path to a JSON file and a list of keys and values to update, where keys use dot-notation to address nested fields. It should support strings, numbers, and booleans as value types.
+
+The step should validate its configuration — the file path and the list of updates are both required, and each update needs a non-empty key and a value. If the file doesn't exist, it should fail. If no updates are provided, it should succeed without doing anything. It should also handle empty JSON files gracefully, treating them as empty objects.
+
+When updates are made successfully, the step should produce a commit message output describing the changes — one line per updated key, with string values shown in quotes and non-string values shown without quotes. This follows the same pattern as the existing YAML update step. The configuration validation should produce user-friendly error messages that indicate which field is missing or invalid.
