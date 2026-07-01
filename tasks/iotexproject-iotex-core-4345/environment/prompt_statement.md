@@ -1,0 +1,7 @@
+I need help migrating the peer-to-peer networking library used in this blockchain node project. The library was recently reorganized — the peer identity utilities that used to live in a separate standalone package have been consolidated into the main library, and the import path has changed. On top of that, the method used to convert a peer identifier to a human-readable string was renamed from its old name to the standard naming convention.
+
+Right now the codebase still references the old package path and the old method name in many places: the node information manager, the p2p agent, the block syncer, the chain service, the dispatcher, the message batcher, and the generated mock files all need to be updated. Specifically, anywhere that converts a peer ID to a string for logging, comparison, or storage needs to use the new method name.
+
+There's also a functional correctness requirement: the node information broadcasting feature stores the local node's peer identifier as a string. After the migration, that stored value must match what the updated string conversion method produces — previously a deprecated method was used for this conversion, and it must now be replaced consistently with the standard approach. The same applies to the p2p agent when it captures and compares source peer IDs during message routing.
+
+The module dependency file also needs to be updated to declare the new library package instead of the old one, along with the corresponding checksum updates.

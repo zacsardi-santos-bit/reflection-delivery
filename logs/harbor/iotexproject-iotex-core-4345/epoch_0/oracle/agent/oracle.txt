@@ -1,0 +1,336 @@
+patching file blocksync/blocksync.go
+patching file chainservice/chainservice.go
+patching file dispatcher/dispatcher.go
+patching file dispatcher/subscriber.go
+patching file go.mod
+patching file go.sum
+Hunk #1 succeeded at 8 (offset 2 lines).
+Hunk #2 FAILED at 17.
+Hunk #3 succeeded at 84 with fuzz 2 (offset 25 lines).
+Hunk #4 succeeded at 100 with fuzz 3 (offset 25 lines).
+Hunk #5 succeeded at 127 with fuzz 3 (offset 44 lines).
+Hunk #6 FAILED at 99.
+Hunk #7 succeeded at 221 with fuzz 2 (offset 82 lines).
+Hunk #8 FAILED at 152.
+Hunk #9 succeeded at 278 with fuzz 3 (offset 95 lines).
+Hunk #10 FAILED at 196.
+Hunk #11 FAILED at 243.
+Hunk #12 succeeded at 363 with fuzz 3 (offset 95 lines).
+Hunk #13 FAILED at 280.
+Hunk #14 succeeded at 428 with fuzz 2 (offset 126 lines).
+Hunk #15 FAILED at 316.
+Hunk #16 FAILED at 352.
+Hunk #17 succeeded at 527 with fuzz 3 (offset 154 lines).
+Hunk #18 FAILED at 385.
+Hunk #19 FAILED at 395.
+Hunk #20 succeeded at 568 with fuzz 3 (offset 154 lines).
+Hunk #21 FAILED at 427.
+Hunk #22 succeeded at 610 with fuzz 3 (offset 154 lines).
+Hunk #23 succeeded at 668 (offset 195 lines).
+Hunk #24 succeeded at 687 (offset 195 lines).
+Hunk #25 succeeded at 727 (offset 203 lines).
+Hunk #26 FAILED at 536.
+Hunk #27 succeeded at 755 with fuzz 3 (offset 207 lines).
+Hunk #28 FAILED at 571.
+Hunk #29 FAILED at 602.
+Hunk #30 succeeded at 852 with fuzz 3 (offset 228 lines).
+Hunk #31 succeeded at 873 with fuzz 2 (offset 231 lines).
+Hunk #32 succeeded at 884 with fuzz 1 (offset 233 lines).
+Hunk #33 FAILED at 676.
+Hunk #34 succeeded at 941 (offset 247 lines).
+Hunk #35 succeeded at 959 (offset 247 lines).
+Hunk #36 FAILED at 772.
+Hunk #37 succeeded at 1067 (offset 259 lines).
+Hunk #38 succeeded at 1075 with fuzz 3 (offset 259 lines).
+Hunk #39 succeeded at 1089 with fuzz 3 (offset 259 lines).
+Hunk #40 succeeded at 1101 with fuzz 3 (offset 259 lines).
+Hunk #41 FAILED at 873.
+Hunk #42 FAILED at 904.
+Hunk #43 FAILED at 1007.
+Hunk #44 FAILED at 1039.
+Hunk #45 succeeded at 1461 with fuzz 3 (offset 323 lines).
+Hunk #46 succeeded at 1494 (offset 324 lines).
+Hunk #47 succeeded at 1533 (offset 330 lines).
+Hunk #48 succeeded at 1555 with fuzz 3 (offset 330 lines).
+Hunk #49 succeeded at 1611 (offset 343 lines).
+Hunk #50 succeeded at 1628 (offset 343 lines).
+Hunk #51 succeeded at 1654 with fuzz 2 (offset 343 lines).
+Hunk #52 FAILED at 1389.
+Hunk #53 FAILED at 1411.
+Hunk #54 succeeded at 1796 with fuzz 2 (offset 372 lines).
+Hunk #55 succeeded at 1832 with fuzz 3 (offset 375 lines).
+Hunk #56 succeeded at 1859 (offset 376 lines).
+Hunk #57 succeeded at 1873 (offset 376 lines).
+Hunk #58 succeeded at 1888 (offset 376 lines).
+Hunk #59 FAILED at 1526.
+Hunk #60 succeeded at 1925 (offset 382 lines).
+Hunk #61 succeeded at 1945 with fuzz 3 (offset 382 lines).
+Hunk #62 FAILED at 1602.
+Hunk #63 succeeded at 2067 (offset 428 lines).
+Hunk #64 FAILED at 1654.
+Hunk #65 succeeded at 2116 with fuzz 2 (offset 435 lines).
+Hunk #66 succeeded at 2129 (offset 438 lines).
+Hunk #67 FAILED at 1707.
+Hunk #68 succeeded at 2224 (offset 467 lines).
+Hunk #69 succeeded at 2232 with fuzz 1 (offset 467 lines).
+Hunk #70 succeeded at 2317 with fuzz 3 (offset 468 lines).
+Hunk #71 succeeded at 2342 (offset 470 lines).
+Hunk #72 succeeded at 2361 (offset 470 lines).
+Hunk #73 succeeded at 2395 (offset 470 lines).
+Hunk #74 succeeded at 2404 (offset 470 lines).
+Hunk #75 succeeded at 2431 with fuzz 2 (offset 471 lines).
+Hunk #76 FAILED at 1974.
+Hunk #77 succeeded at 2489 (offset 473 lines).
+Hunk #78 succeeded at 2516 (offset 473 lines).
+Hunk #79 succeeded at 2578 (offset 473 lines).
+Hunk #80 succeeded at 2617 (offset 474 lines).
+Hunk #81 succeeded at 2654 (offset 474 lines).
+Hunk #82 succeeded at 2678 (offset 474 lines).
+Hunk #83 succeeded at 2696 (offset 474 lines).
+Hunk #84 succeeded at 2812 (offset 474 lines).
+Hunk #85 succeeded at 2837 (offset 474 lines).
+Hunk #86 succeeded at 2880 (offset 474 lines).
+Hunk #87 FAILED at 2426.
+Hunk #88 succeeded at 2944 with fuzz 2 (offset 479 lines).
+Hunk #89 succeeded at 2987 with fuzz 3 (offset 479 lines).
+Hunk #90 succeeded at 3026 with fuzz 3 (offset 481 lines).
+Hunk #91 succeeded at 3141 (offset 485 lines).
+Hunk #92 succeeded at 3180 with fuzz 1 (offset 485 lines).
+Hunk #93 succeeded at 3239 (offset 500 lines).
+Hunk #94 succeeded at 3253 with fuzz 3 (offset 500 lines).
+28 out of 94 hunks FAILED -- saving rejects to file go.sum.rej
+patching file ioctl/cmd/ioid/projectregister.go
+patching file nodeinfo/manager.go
+patching file p2p/agent.go
+patching file pkg/messagebatcher/batchwriter.go
+patching file blocksync/blocksync.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file blocksync/blocksync.go.rej
+patching file chainservice/chainservice.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file chainservice/chainservice.go.rej
+patching file dispatcher/dispatcher.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file dispatcher/dispatcher.go.rej
+patching file dispatcher/subscriber.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file dispatcher/subscriber.go.rej
+patching file go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file go.mod.rej
+patching file go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+94 out of 94 hunks ignored -- saving rejects to file go.sum.rej
+patching file ioctl/cmd/ioid/projectregister.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file ioctl/cmd/ioid/projectregister.go.rej
+patching file nodeinfo/manager.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file nodeinfo/manager.go.rej
+patching file p2p/agent.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file p2p/agent.go.rej
+patching file pkg/messagebatcher/batchwriter.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/messagebatcher/batchwriter.go.rej
+can't find file to patch at input line 5
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/blocksync/blocksync.go b/blocksync/blocksync.go
+|index f4e3f1f84..fd11e76b3 100644
+|--- a/blocksync/blocksync.go
+|+++ b/blocksync/blocksync.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 27
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/chainservice/chainservice.go b/chainservice/chainservice.go
+|index 299207e1e..3b7e0d9b9 100644
+|--- a/chainservice/chainservice.go
+|+++ b/chainservice/chainservice.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 40
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/dispatcher/dispatcher.go b/dispatcher/dispatcher.go
+|index 037254369..896ffdb09 100644
+|--- a/dispatcher/dispatcher.go
+|+++ b/dispatcher/dispatcher.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 53
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/dispatcher/subscriber.go b/dispatcher/subscriber.go
+|index 4ac08ca0b..aafb70c3a 100644
+|--- a/dispatcher/subscriber.go
+|+++ b/dispatcher/subscriber.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 66
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/go.mod b/go.mod
+|index 58d41ac34..6ceba1f2c 100644
+|--- a/go.mod
+|+++ b/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+4 out of 4 hunks ignored
+can't find file to patch at input line 376
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/go.sum b/go.sum
+|index 8eba470fc..58705b0e7 100644
+|--- a/go.sum
+|+++ b/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+94 out of 94 hunks ignored
+can't find file to patch at input line 3225
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/ioctl/cmd/ioid/projectregister.go b/ioctl/cmd/ioid/projectregister.go
+|index d08943a7d..016032177 100644
+|--- a/ioctl/cmd/ioid/projectregister.go
+|+++ b/ioctl/cmd/ioid/projectregister.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 3238
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/nodeinfo/manager.go b/nodeinfo/manager.go
+|index ec83c6d0c..0d7dcc443 100644
+|--- a/nodeinfo/manager.go
+|+++ b/nodeinfo/manager.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 3275
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/p2p/agent.go b/p2p/agent.go
+|index 16cca0ee2..7e4c9396c 100644
+|--- a/p2p/agent.go
+|+++ b/p2p/agent.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+5 out of 5 hunks ignored
+can't find file to patch at input line 3324
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/messagebatcher/batchwriter.go b/pkg/messagebatcher/batchwriter.go
+|index daa32fe71..a3eb9cdca 100644
+|--- a/pkg/messagebatcher/batchwriter.go
+|+++ b/pkg/messagebatcher/batchwriter.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file blocksync/blocksync.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file blocksync/blocksync.go.rej
+patching file chainservice/chainservice.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file chainservice/chainservice.go.rej
+patching file dispatcher/dispatcher.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file dispatcher/dispatcher.go.rej
+patching file dispatcher/subscriber.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file dispatcher/subscriber.go.rej
+patching file go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file go.mod.rej
+patching file go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+94 out of 94 hunks ignored -- saving rejects to file go.sum.rej
+patching file ioctl/cmd/ioid/projectregister.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file ioctl/cmd/ioid/projectregister.go.rej
+patching file nodeinfo/manager.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file nodeinfo/manager.go.rej
+patching file p2p/agent.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file p2p/agent.go.rej
+patching file pkg/messagebatcher/batchwriter.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/messagebatcher/batchwriter.go.rej
+ERROR: golden patch failed to apply by all strategies

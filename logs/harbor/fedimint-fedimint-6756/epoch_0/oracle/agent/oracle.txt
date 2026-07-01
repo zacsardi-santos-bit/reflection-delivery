@@ -1,8 +1,0 @@
-patching file db/migrations/wallet-client-v0/000004.log
-patching file db/migrations/wallet-client-v0/IDENTITY
-patching file db/migrations/wallet-client-v0/LOG
-patching file db/migrations/wallet-client-v0/MANIFEST-000005
-patching file db/migrations/wallet-client-v0/OPTIONS-000007
-patching file modules/fedimint-wallet-client/src/client_db.rs
-patching file modules/fedimint-wallet-client/src/lib.rs
-patching file modules/fedimint-wallet-common/src/lib.rs

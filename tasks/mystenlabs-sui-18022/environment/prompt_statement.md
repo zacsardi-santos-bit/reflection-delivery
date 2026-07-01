@@ -1,7 +1,0 @@
-I'm working on the consensus engine and I need to add randomized DAG-based testing for our leader commitment algorithm. Right now we only have deterministic test DAG builders, and that makes it hard to catch subtle correctness bugs that only appear in random network topologies.
-
-I'd like to add a utility that builds randomized directed acyclic graphs for testing, parameterized by a random seed (for reproducibility), a configurable probability that each round links to its leader block, and the number of rounds. The layer-building helper also needs to be updated so that when building a layer with minimum ancestor connections, callers can specify whether the leader of that round must be guaranteed to appear in every block's ancestor set.
-
-Two correctness properties need to be covered: first, when the leader-inclusion probability is 100%, the commitment algorithm should directly commit every round's leader in the correct order. Second, when leader inclusion is randomized (say, 50% of the time), two validators that receive the exact same set of blocks but in different random arrival orders should converge on the identical sequence of committed leaders. After processing all blocks, neither validator should have any remaining suspended or missing blocks.
-
-The block manager's check for whether it has processed all pending work also needs to be accessible outside its own module so these tests can verify the empty state.

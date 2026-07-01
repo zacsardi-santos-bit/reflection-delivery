@@ -1,0 +1,4 @@
+patching file internal/services/arckubernetes/arc_kubernetes_cluster_resource_test.go
+ok  	github.com/hashicorp/terraform-provider-azurerm/internal/services/arckubernetes	0.127s
+ok  	github.com/hashicorp/terraform-provider-azurerm/internal/services/arckubernetes/validate	0.043s
+reward=1 graded=9 found=0 failed=0 parsed=0 framework=go exit_code=0

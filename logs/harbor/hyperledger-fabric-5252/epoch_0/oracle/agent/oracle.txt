@@ -1,0 +1,5 @@
+patching file cmd/osnadmin/mocks/channel_management.go
+patching file orderer/common/channelparticipation/mocks/channel_management.go
+patching file orderer/common/channelparticipation/restapi.go
+patching file orderer/common/channelparticipation/validator.go
+patching file swagger/swagger-fabric.json
