@@ -1,0 +1,22 @@
+patching file controllers/cluster_controller_test.go
+patching file controllers/cluster_controller_test_test.go
+patching file pkg/signature/manifest_test.go
+patching file pkg/validations/extendedversion_test.go
+# github.com/aws/eks-anywhere/pkg/signature [github.com/aws/eks-anywhere/pkg/signature.test]
+pkg/signature/manifest_test.go:28:17: undefined: constants.SignatureAnnotation
+pkg/signature/manifest_test.go:52:17: undefined: constants.SignatureAnnotation
+pkg/signature/manifest_test.go:72:17: undefined: constants.SignatureAnnotation
+pkg/signature/manifest_test.go:93:17: undefined: constants.SignatureAnnotation
+pkg/signature/manifest_test.go:114:17: undefined: constants.SignatureAnnotation
+pkg/signature/manifest_test.go:139:17: undefined: constants.SignatureAnnotation
+pkg/signature/manifest_test.go:151:25: undefined: constants.KMSPublicKey
+pkg/signature/manifest_test.go:159:18: undefined: ValidateSignature
+pkg/signature/manifest_test.go:215:29: undefined: getDigest
+pkg/signature/manifest_test.go:313:21: undefined: filterExcludes
+pkg/signature/manifest_test.go:313:21: too many errors
+# github.com/aws/eks-anywhere/pkg/validations_test [github.com/aws/eks-anywhere/pkg/validations.test]
+pkg/validations/extendedversion_test.go:51:17: undefined: constants.SignatureAnnotation
+pkg/validations/extendedversion_test.go:69:23: undefined: validations.ValidateExtendedK8sVersionSupport
+FAIL	github.com/aws/eks-anywhere/pkg/signature [build failed]
+FAIL	github.com/aws/eks-anywhere/pkg/validations [build failed]
+reward=0 graded=124 found=124 failed=124 parsed=2 framework=go exit_code=1

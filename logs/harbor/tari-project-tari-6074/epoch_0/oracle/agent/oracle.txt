@@ -1,7 +1,0 @@
-patching file applications/minotari_app_grpc/proto/wallet.proto
-patching file applications/minotari_console_wallet/src/grpc/wallet_grpc_server.rs
-patching file base_layer/core/src/transactions/test_helpers.rs
-patching file base_layer/wallet/src/output_manager_service/storage/sqlite_db/mod.rs
-patching file base_layer/wallet/src/output_manager_service/storage/sqlite_db/new_output_sql.rs
-patching file base_layer/wallet/src/output_manager_service/tasks/txo_validation_task.rs
-patching file base_layer/wallet_ffi/src/lib.rs

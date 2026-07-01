@@ -1,0 +1,6 @@
+patching file internal/services/arckubernetes/arc_kubernetes_cluster_resource_test.go
+# github.com/hashicorp/terraform-provider-azurerm/internal/services/arckubernetes
+internal/services/arckubernetes/arc_kubernetes_cluster_resource_test.go:19:2: cannot find module providing package github.com/hashicorp/go-azure-sdk/resource-manager/hybridkubernetes/2024-01-01/connectedclusters: import lookup disabled by -mod=vendor
+FAIL	github.com/hashicorp/terraform-provider-azurerm/internal/services/arckubernetes [setup failed]
+FAIL
+reward=0 graded=9 found=0 failed=0 parsed=0 framework=go exit_code=1

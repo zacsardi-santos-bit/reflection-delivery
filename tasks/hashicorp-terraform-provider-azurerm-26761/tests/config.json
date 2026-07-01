@@ -1,0 +1,21 @@
+{
+  "test_framework": "go",
+  "test_command": "go test ./internal/services/arckubernetes -count=1 && go test ./internal/services/arckubernetes/validate -count=1",
+  "test_files": [
+    "internal/services/arckubernetes/arc_kubernetes_cluster_resource_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/hashicorp/terraform-provider-azurerm/internal/services/arckubernetes/validate::TestLocalAuthReference/#00",
+    "github.com/hashicorp/terraform-provider-azurerm/internal/services/arckubernetes/validate::TestLocalAuthReference/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "github.com/hashicorp/terraform-provider-azurerm/internal/services/arckubernetes/validate::TestLocalAuthReference/a",
+    "github.com/hashicorp/terraform-provider-azurerm/internal/services/arckubernetes/validate::TestLocalAuthReference/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "github.com/hashicorp/terraform-provider-azurerm/internal/services/arckubernetes/validate::TestLocalAuthReference/A",
+    "github.com/hashicorp/terraform-provider-azurerm/internal/services/arckubernetes/validate::TestLocalAuthReference/-",
+    "github.com/hashicorp/terraform-provider-azurerm/internal/services/arckubernetes/validate::TestLocalAuthReference/a-1",
+    "github.com/hashicorp/terraform-provider-azurerm/internal/services/arckubernetes/validate::TestLocalAuthReference/1-a",
+    "github.com/hashicorp/terraform-provider-azurerm/internal/services/arckubernetes/validate::TestLocalAuthReference"
+  ],
+  "PASS_TO_PASS": []
+}
