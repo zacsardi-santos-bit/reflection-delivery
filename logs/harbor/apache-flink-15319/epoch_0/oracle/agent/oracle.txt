@@ -1,0 +1,8 @@
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/jobmaster/JobMaster.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/resourcemanager/ResourceManager.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/resourcemanager/ResourceManagerGateway.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/resourcemanager/slotmanager/DeclarativeSlotManager.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/resourcemanager/slotmanager/DefaultSlotTracker.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/resourcemanager/slotmanager/SlotTracker.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/taskexecutor/TaskExecutor.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/taskexecutor/TaskExecutorGateway.java

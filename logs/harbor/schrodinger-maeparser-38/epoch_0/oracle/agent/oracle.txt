@@ -1,0 +1,9 @@
+patching file .travis.yml
+patching file Buffer.cpp
+patching file Buffer.hpp
+patching file CMakeLists.txt
+patching file MaeBlock.hpp
+patching file MaeParser.cpp
+patching file MaeParser.hpp
+patching file Reader.cpp
+patching file appveyor.yml

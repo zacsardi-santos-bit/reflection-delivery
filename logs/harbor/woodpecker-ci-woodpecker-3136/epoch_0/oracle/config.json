@@ -1,16 +1,16 @@
 {
     "task": {
-        "path": "/home/ubuntu/reflection_offline_harbor_delivery/harbor/woodpecker-ci-woodpecker-3136",
+        "path": "woodpecker-ci-woodpecker-3136",
         "git_url": null,
         "git_commit_id": null,
         "name": null,
         "ref": null,
         "overwrite": false,
         "download_dir": null,
-        "source": "harbor"
+        "source": "src"
     },
-    "trial_name": "woodpecker-ci-woodpecker-3136__eF34S9G",
-    "trials_dir": "/home/ubuntu/reflection_offline_harbor_delivery/oracle_jobs_all/2026-06-29__15-12-04",
+    "trial_name": "woodpecker-ci-woodpecker-3136__tqPKcwF",
+    "trials_dir": "/tmp/oracle/2026-07-01__15-18-30",
     "timeout_multiplier": 1.0,
     "agent_timeout_multiplier": null,
     "verifier_timeout_multiplier": null,
@@ -27,10 +27,10 @@
         "env": {}
     },
     "environment": {
-        "type": "modal",
+        "type": "docker",
         "import_path": null,
         "force_build": false,
-        "delete": false,
+        "delete": true,
         "override_cpus": null,
         "override_memory_mb": null,
         "override_storage_mb": null,
@@ -46,5 +46,5 @@
         "disable": false
     },
     "artifacts": [],
-    "job_id": "8d8c11e2-61bb-4d33-b502-02a799419317"
+    "job_id": "cba9ae50-7bc0-43cd-98c8-d8d399689ec2"
 }

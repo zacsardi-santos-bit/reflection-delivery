@@ -1,0 +1,2 @@
+patching file sqlglot/dialects/duckdb.py
+patching file sqlglot/dialects/snowflake.py

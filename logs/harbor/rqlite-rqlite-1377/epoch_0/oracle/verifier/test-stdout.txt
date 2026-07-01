@@ -1,0 +1,13 @@
+patching file snapshot/upgrader_test.go
+patching file system_test/single_node_test.go
+{"Time":"2026-07-01T15:10:51.112014162Z","Action":"start","Package":"github.com/rqlite/rqlite/snapshot"}
+{"Time":"2026-07-01T15:10:51.115272524Z","Action":"run","Package":"github.com/rqlite/rqlite/snapshot","Test":"Test_Upgrade_NothingToDo"}
+{"Time":"2026-07-01T15:10:51.115297354Z","Action":"output","Package":"github.com/rqlite/rqlite/snapshot","Test":"Test_Upgrade_NothingToDo","Output":"=== RUN   Test_Upgrade_NothingToDo\n"}
+{"Time":"2026-07-01T15:10:51.115330332Z","Action":"output","Package":"github.com/rqlite/rqlite/snapshot","Test":"Test_Upgrade_NothingToDo","Output":"[snapshot-store-upgrader] old snapshot directory /does/not/exist does not exist, nothing to upgrade\n"}
+{"Time":"2026-07-01T15:10:51.115448883Z","Action":"output","Package":"github.com/rqlite/rqlite/snapshot","Test":"Test_Upgrade_NothingToDo","Output":"[snapshot-store-upgrader] old snapshot directory /tmp/Test_Upgrade_NothingToDo91375370/001 is empty, nothing to upgrade\n"}
+{"Time":"2026-07-01T15:10:51.115556499Z","Action":"output","Package":"github.com/rqlite/rqlite/snapshot","Test":"Test_Upgrade_NothingToDo","Output":"--- PASS: Test_Upgrade_NothingToDo (0.00s)\n"}
+{"Time":"2026-07-01T15:10:51.115568611Z","Action":"pass","Package":"github.com/rqlite/rqlite/snapshot","Test":"Test_Upgrade_NothingToDo","Elapsed":0}
+{"Time":"2026-07-01T15:10:51.115575624Z","Action":"output","Package":"github.com/rqlite/rqlite/snapshot","Output":"PASS\n"}
+{"Time":"2026-07-01T15:10:51.11599078Z","Action":"output","Package":"github.com/rqlite/rqlite/snapshot","Output":"ok  \tgithub.com/rqlite/rqlite/snapshot\t0.004s\n"}
+{"Time":"2026-07-01T15:10:51.116001065Z","Action":"pass","Package":"github.com/rqlite/rqlite/snapshot","Elapsed":0.004}
+reward=1 graded=1 found=1 failed=0 parsed=1 framework=go exit_code=0

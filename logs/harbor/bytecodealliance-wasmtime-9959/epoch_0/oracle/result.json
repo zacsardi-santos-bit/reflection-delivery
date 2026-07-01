@@ -1,26 +1,26 @@
 {
-    "id": "73be44c2-2cff-4ae4-8f3f-8bcd3a44f7df",
+    "id": "09d9fe04-3922-42e7-89ff-13821c816f26",
     "task_name": "offline/bytecodealliance-wasmtime-9959",
-    "trial_name": "bytecodealliance-wasmtime-9959__6FsDoYC",
-    "trial_uri": "file:///home/ubuntu/reflection_offline_harbor_delivery/oracle_jobs_all/2026-06-29__15-12-04/bytecodealliance-wasmtime-9959__6FsDoYC",
+    "trial_name": "bytecodealliance-wasmtime-9959__2gMX6nc",
+    "trial_uri": "file:///tmp/oracle/2026-07-01__14-30-42/bytecodealliance-wasmtime-9959__2gMX6nc",
     "task_id": {
-        "path": "/home/ubuntu/reflection_offline_harbor_delivery/harbor/bytecodealliance-wasmtime-9959"
+        "path": "bytecodealliance-wasmtime-9959"
     },
-    "source": "harbor",
-    "task_checksum": "99f6d6521cd342f62f7964e7f7745e35e817979e16f91cc1c0bb0b971717c633",
+    "source": "src",
+    "task_checksum": "c0f2b45bcadaac5616a56dc56e8f88b6024ef43d007529e3028f08d0ae7721bc",
     "config": {
         "task": {
-            "path": "/home/ubuntu/reflection_offline_harbor_delivery/harbor/bytecodealliance-wasmtime-9959",
+            "path": "bytecodealliance-wasmtime-9959",
             "git_url": null,
             "git_commit_id": null,
             "name": null,
             "ref": null,
             "overwrite": false,
             "download_dir": null,
-            "source": "harbor"
+            "source": "src"
         },
-        "trial_name": "bytecodealliance-wasmtime-9959__6FsDoYC",
-        "trials_dir": "/home/ubuntu/reflection_offline_harbor_delivery/oracle_jobs_all/2026-06-29__15-12-04",
+        "trial_name": "bytecodealliance-wasmtime-9959__2gMX6nc",
+        "trials_dir": "/tmp/oracle/2026-07-01__14-30-42",
         "timeout_multiplier": 1.0,
         "agent_timeout_multiplier": null,
         "verifier_timeout_multiplier": null,
@@ -37,10 +37,10 @@
             "env": {}
         },
         "environment": {
-            "type": "modal",
+            "type": "docker",
             "import_path": null,
             "force_build": false,
-            "delete": false,
+            "delete": true,
             "override_cpus": null,
             "override_memory_mb": null,
             "override_storage_mb": null,
@@ -56,7 +56,7 @@
             "disable": false
         },
         "artifacts": [],
-        "job_id": "8d8c11e2-61bb-4d33-b502-02a799419317"
+        "job_id": "fe8fdb3f-b5ad-4eef-ac65-f95380e4c16d"
     },
     "agent_info": {
         "name": "oracle",
@@ -73,26 +73,26 @@
     },
     "verifier_result": {
         "rewards": {
-            "reward": 0.0
+            "reward": 1.0
         }
     },
     "exception_info": null,
-    "started_at": "2026-06-29T15:18:28.122660Z",
-    "finished_at": "2026-06-29T15:22:31.268608Z",
+    "started_at": "2026-07-01T14:30:51.071702Z",
+    "finished_at": "2026-07-01T14:38:31.778268Z",
     "environment_setup": {
-        "started_at": "2026-06-29T15:18:28.128276Z",
-        "finished_at": "2026-06-29T15:18:42.961950Z"
+        "started_at": "2026-07-01T14:30:51.072888Z",
+        "finished_at": "2026-07-01T14:31:52.450084Z"
     },
     "agent_setup": {
-        "started_at": "2026-06-29T15:18:42.961957Z",
-        "finished_at": "2026-06-29T15:18:42.961978Z"
+        "started_at": "2026-07-01T14:31:52.450123Z",
+        "finished_at": "2026-07-01T14:31:52.450170Z"
     },
     "agent_execution": {
-        "started_at": "2026-06-29T15:18:42.961998Z",
-        "finished_at": "2026-06-29T15:20:00.242615Z"
+        "started_at": "2026-07-01T14:31:52.450220Z",
+        "finished_at": "2026-07-01T14:31:52.702486Z"
     },
     "verifier": {
-        "started_at": "2026-06-29T15:20:24.926018Z",
-        "finished_at": "2026-06-29T15:22:24.850732Z"
+        "started_at": "2026-07-01T14:31:52.702617Z",
+        "finished_at": "2026-07-01T14:38:20.619651Z"
     }
 }

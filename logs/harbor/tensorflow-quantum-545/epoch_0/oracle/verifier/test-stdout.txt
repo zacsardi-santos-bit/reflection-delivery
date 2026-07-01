@@ -1,0 +1,136 @@
+patching file tensorflow_quantum/python/layers/circuit_executors/expectation_test.py
+============================= test session starts ==============================
+platform linux -- Python 3.8.20, pytest-8.3.5, pluggy-1.5.0 -- /usr/local/bin/python3.8
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+collecting ... collected 18 items
+
+tensorflow_quantum/python/layers/circuit_executors/expectation_test.py::ExpectationTest::test_expectation_instantiate PASSED [  5%]
+tensorflow_quantum/python/layers/circuit_executors/expectation_test.py::ExpectationTest::test_expectation_instantiate_error PASSED [ 11%]
+tensorflow_quantum/python/layers/circuit_executors/expectation_test.py::ExpectationTest::test_expectation_op_error PASSED [ 16%]
+tensorflow_quantum/python/layers/circuit_executors/expectation_test.py::ExpectationTest::test_expectation_simple_tf_train PASSED [ 22%]
+tensorflow_quantum/python/layers/circuit_executors/expectation_test.py::ExpectationTest::test_expectation_type_inputs_error PASSED [ 27%]
+tensorflow_quantum/python/layers/circuit_executors/expectation_test.py::ExpectationTest::test_session SKIPPED [ 33%]
+tensorflow_quantum/python/layers/circuit_executors/expectation_test.py::ExpectationTest::test_static_cases PASSED [ 38%]
+tensorflow_quantum/python/layers/circuit_executors/expectation_test.py::ExpectationTest::test_static_cases_noisy PASSED [ 44%]
+tensorflow_quantum/python/layers/circuit_executors/expectation_test.py::ExpectationFunctionalTests::test_dnn_qnn_dnn0 PASSED [ 50%]
+tensorflow_quantum/python/layers/circuit_executors/expectation_test.py::ExpectationFunctionalTests::test_dnn_qnn_dnn1 PASSED [ 55%]
+tensorflow_quantum/python/layers/circuit_executors/expectation_test.py::ExpectationFunctionalTests::test_session SKIPPED [ 61%]
+tensorflow_quantum/python/layers/circuit_executors/expectation_test.py::ExpectationFunctionalTests::test_simple_op_and_param_input0 PASSED [ 66%]
+tensorflow_quantum/python/layers/circuit_executors/expectation_test.py::ExpectationFunctionalTests::test_simple_op_and_param_input1 PASSED [ 72%]
+tensorflow_quantum/python/layers/circuit_executors/expectation_test.py::ExpectationFunctionalTests::test_simple_op_and_param_input2 PASSED [ 77%]
+tensorflow_quantum/python/layers/circuit_executors/expectation_test.py::ExpectationFunctionalTests::test_simple_op_input0 PASSED [ 83%]
+tensorflow_quantum/python/layers/circuit_executors/expectation_test.py::ExpectationFunctionalTests::test_simple_op_input1 PASSED [ 88%]
+tensorflow_quantum/python/layers/circuit_executors/expectation_test.py::ExpectationFunctionalTests::test_simple_param_value_input0 PASSED [ 94%]
+tensorflow_quantum/python/layers/circuit_executors/expectation_test.py::ExpectationFunctionalTests::test_simple_param_value_input1 PASSED [100%]
+
+=============================== warnings summary ===============================
+../../usr/local/lib/python3.8/site-packages/google/protobuf/__init__.py:37
+  /usr/local/lib/python3.8/site-packages/google/protobuf/__init__.py:37: DeprecationWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html
+    __import__('pkg_resources').declare_namespace(__name__)
+
+../../usr/local/lib/python3.8/site-packages/pkg_resources/__init__.py:3154
+../../usr/local/lib/python3.8/site-packages/pkg_resources/__init__.py:3154
+../../usr/local/lib/python3.8/site-packages/pkg_resources/__init__.py:3154
+../../usr/local/lib/python3.8/site-packages/pkg_resources/__init__.py:3154
+  /usr/local/lib/python3.8/site-packages/pkg_resources/__init__.py:3154: DeprecationWarning: Deprecated call to `pkg_resources.declare_namespace('google')`.
+  Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
+    declare_namespace(pkg)
+
+../../usr/local/lib/python3.8/site-packages/pkg_resources/__init__.py:3154
+  /usr/local/lib/python3.8/site-packages/pkg_resources/__init__.py:3154: DeprecationWarning: Deprecated call to `pkg_resources.declare_namespace('google.logging')`.
+  Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
+    declare_namespace(pkg)
+
+../../usr/local/lib/python3.8/site-packages/pkg_resources/__init__.py:2563
+../../usr/local/lib/python3.8/site-packages/pkg_resources/__init__.py:2563
+  /usr/local/lib/python3.8/site-packages/pkg_resources/__init__.py:2563: DeprecationWarning: Deprecated call to `pkg_resources.declare_namespace('google')`.
+  Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
+    declare_namespace(parent)
+
+../../usr/local/lib/python3.8/site-packages/pkg_resources/__init__.py:3154
+  /usr/local/lib/python3.8/site-packages/pkg_resources/__init__.py:3154: DeprecationWarning: Deprecated call to `pkg_resources.declare_namespace('mpl_toolkits')`.
+  Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
+    declare_namespace(pkg)
+
+../../usr/local/lib/python3.8/site-packages/google/protobuf/__init__.py:37
+  /usr/local/lib/python3.8/site-packages/google/protobuf/__init__.py:37: DeprecationWarning: Deprecated call to `pkg_resources.declare_namespace('google.protobuf')`.
+  Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
+    __import__('pkg_resources').declare_namespace(__name__)
+
+../../usr/local/lib/python3.8/site-packages/google/protobuf/pyext/__init__.py:2
+  /usr/local/lib/python3.8/site-packages/google/protobuf/pyext/__init__.py:2: DeprecationWarning: Deprecated call to `pkg_resources.declare_namespace('google.protobuf.pyext')`.
+  Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
+    __import__('pkg_resources').declare_namespace(__name__)
+
+../../usr/local/lib/python3.8/site-packages/pkg_resources/__init__.py:2563
+  /usr/local/lib/python3.8/site-packages/pkg_resources/__init__.py:2563: DeprecationWarning: Deprecated call to `pkg_resources.declare_namespace('google.protobuf')`.
+  Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
+    declare_namespace(parent)
+
+../../usr/local/lib/python3.8/site-packages/tensorflow/python/framework/dtypes.py:513
+  /usr/local/lib/python3.8/site-packages/tensorflow/python/framework/dtypes.py:513: DeprecationWarning: `np.object` is a deprecated alias for the builtin `object`. To silence this warning, use `object` by itself. Doing this will not modify any behavior and is safe. 
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    np.object,
+
+../../usr/local/lib/python3.8/site-packages/tensorflow/python/framework/dtypes.py:521
+  /usr/local/lib/python3.8/site-packages/tensorflow/python/framework/dtypes.py:521: DeprecationWarning: `np.bool` is a deprecated alias for the builtin `bool`. To silence this warning, use `bool` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.bool_` here.
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    np.bool,
+
+../../usr/local/lib/python3.8/site-packages/tensorflow/python/framework/dtypes.py:555
+  /usr/local/lib/python3.8/site-packages/tensorflow/python/framework/dtypes.py:555: DeprecationWarning: `np.object` is a deprecated alias for the builtin `object`. To silence this warning, use `object` by itself. Doing this will not modify any behavior and is safe. 
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    np.object,
+
+../../usr/local/lib/python3.8/site-packages/tensorflow/python/framework/dtypes.py:565
+  /usr/local/lib/python3.8/site-packages/tensorflow/python/framework/dtypes.py:565: DeprecationWarning: `np.bool` is a deprecated alias for the builtin `bool`. To silence this warning, use `bool` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.bool_` here.
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    np.bool,
+
+../../usr/local/lib/python3.8/site-packages/tensorflow/python/framework/tensor_util.py:108
+  /usr/local/lib/python3.8/site-packages/tensorflow/python/framework/tensor_util.py:108: DeprecationWarning: `np.object` is a deprecated alias for the builtin `object`. To silence this warning, use `object` by itself. Doing this will not modify any behavior and is safe. 
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    np.object:
+
+../../usr/local/lib/python3.8/site-packages/tensorflow/python/framework/tensor_util.py:110
+  /usr/local/lib/python3.8/site-packages/tensorflow/python/framework/tensor_util.py:110: DeprecationWarning: `np.bool` is a deprecated alias for the builtin `bool`. To silence this warning, use `bool` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.bool_` here.
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    np.bool:
+
+../../usr/local/lib/python3.8/site-packages/tensorflow/python/autograph/impl/api.py:22
+  /usr/local/lib/python3.8/site-packages/tensorflow/python/autograph/impl/api.py:22: DeprecationWarning: the imp module is deprecated in favour of importlib; see the module's documentation for alternative uses
+    import imp
+
+../../usr/local/lib/python3.8/site-packages/tensorflow/python/ops/numpy_ops/np_random.py:95
+  /usr/local/lib/python3.8/site-packages/tensorflow/python/ops/numpy_ops/np_random.py:95: DeprecationWarning: `np.int` is a deprecated alias for the builtin `int`. To silence this warning, use `int` by itself. Doing this will not modify any behavior and is safe. When replacing `np.int`, you may wish to use e.g. `np.int64` or `np.int32` to specify the precision. If you wish to review your current use, check the release note link for additional information.
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    def randint(low, high=None, size=None, dtype=onp.int):  # pylint: disable=missing-function-docstring
+
+../../usr/local/lib/python3.8/site-packages/h5py/__init__.py:46
+  /usr/local/lib/python3.8/site-packages/h5py/__init__.py:46: DeprecationWarning: `np.typeDict` is a deprecated alias for `np.sctypeDict`.
+    from ._conv import register_converters as _register_converters
+
+tensorflow_quantum/core/ops/math_ops/inner_product_op.py:25
+  /workspace/repo/tensorflow_quantum/core/ops/math_ops/inner_product_op.py:25: DeprecationWarning: invalid escape sequence \l
+    """Calculate the adjoint gradients of the inner product between circuits.
+
+tensorflow_quantum/core/ops/math_ops/inner_product_op.py:73
+  /workspace/repo/tensorflow_quantum/core/ops/math_ops/inner_product_op.py:73: DeprecationWarning: invalid escape sequence \l
+    """Calculate the inner product between circuits.
+
+tensorflow_quantum/datasets/spin_system.py:95
+  /workspace/repo/tensorflow_quantum/datasets/spin_system.py:95: DeprecationWarning: invalid escape sequence \s
+    """1D Transverse field Ising-model quantum data set.
+
+tensorflow_quantum/datasets/spin_system.py:326
+  /workspace/repo/tensorflow_quantum/datasets/spin_system.py:326: DeprecationWarning: invalid escape sequence \s
+    """1D XXZ model quantum data set.
+
+tensorflow_quantum/datasets/spin_system.py:563
+  /workspace/repo/tensorflow_quantum/datasets/spin_system.py:563: DeprecationWarning: invalid escape sequence \s
+    """2D transverse field Ising-model quantum data set.
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+============ 16 passed, 2 skipped, 26 warnings in 200.82s (0:03:20) ============
+reward=1 graded=16 found=0 failed=0 parsed=18 framework=pytest exit_code=0

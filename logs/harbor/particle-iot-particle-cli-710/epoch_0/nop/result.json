@@ -1,26 +1,26 @@
 {
-    "id": "54cde8c6-2d99-41ed-b807-47bd61347e35",
+    "id": "1bc00fa2-ed73-4366-a3d4-259172f98984",
     "task_name": "offline/particle-iot-particle-cli-710",
-    "trial_name": "particle-iot-particle-cli-710__dz3ZSWT",
-    "trial_uri": "file:///home/ubuntu/reflection_offline_harbor_delivery/nop_jobs_all/2026-06-29__15-12-04/particle-iot-particle-cli-710__dz3ZSWT",
+    "trial_name": "particle-iot-particle-cli-710__dyVqWDv",
+    "trial_uri": "file:///tmp/nop/2026-07-01__15-03-35/particle-iot-particle-cli-710__dyVqWDv",
     "task_id": {
-        "path": "/home/ubuntu/reflection_offline_harbor_delivery/harbor/particle-iot-particle-cli-710"
+        "path": "particle-iot-particle-cli-710"
     },
-    "source": "harbor",
-    "task_checksum": "2a3da369fa1e80617dfe3d6b250557dfe44caef5136ef8d3ad8fd13768c8d44f",
+    "source": "src",
+    "task_checksum": "bc10f318a0872da78d05c6bcfd73a5d6783e0189e7eb3de37c9fc6ba818022b2",
     "config": {
         "task": {
-            "path": "/home/ubuntu/reflection_offline_harbor_delivery/harbor/particle-iot-particle-cli-710",
+            "path": "particle-iot-particle-cli-710",
             "git_url": null,
             "git_commit_id": null,
             "name": null,
             "ref": null,
             "overwrite": false,
             "download_dir": null,
-            "source": "harbor"
+            "source": "src"
         },
-        "trial_name": "particle-iot-particle-cli-710__dz3ZSWT",
-        "trials_dir": "/home/ubuntu/reflection_offline_harbor_delivery/nop_jobs_all/2026-06-29__15-12-04",
+        "trial_name": "particle-iot-particle-cli-710__dyVqWDv",
+        "trials_dir": "/tmp/nop/2026-07-01__15-03-35",
         "timeout_multiplier": 1.0,
         "agent_timeout_multiplier": null,
         "verifier_timeout_multiplier": null,
@@ -37,10 +37,10 @@
             "env": {}
         },
         "environment": {
-            "type": "modal",
+            "type": "docker",
             "import_path": null,
             "force_build": false,
-            "delete": false,
+            "delete": true,
             "override_cpus": null,
             "override_memory_mb": null,
             "override_storage_mb": null,
@@ -56,7 +56,7 @@
             "disable": false
         },
         "artifacts": [],
-        "job_id": "b069d7ef-a502-4a46-91d5-798d81044649"
+        "job_id": "7bf27d6e-c425-4fb7-be95-2741af69a674"
     },
     "agent_info": {
         "name": "nop",
@@ -71,29 +71,28 @@
         "rollout_details": null,
         "metadata": null
     },
-    "verifier_result": null,
-    "exception_info": {
-        "exception_type": "RewardFileEmptyError",
-        "exception_message": "Reward file is empty at /home/ubuntu/reflection_offline_harbor_delivery/nop_jobs_all/2026-06-29__15-12-04/particle-iot-particle-cli-710__dz3ZSWT/verifier/reward.txt",
-        "exception_traceback": "Traceback (most recent call last):\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/harbor/trial/trial.py\", line 562, in run\n    await self._run_verification()\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/harbor/trial/trial.py\", line 306, in _run_verification\n    await self._verify_with_retry()\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/tenacity/asyncio/__init__.py\", line 193, in async_wrapped\n    return await copy(fn, *args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/tenacity/asyncio/__init__.py\", line 112, in __call__\n    do = await self.iter(retry_state=retry_state)\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/tenacity/asyncio/__init__.py\", line 157, in iter\n    result = await action(retry_state)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/tenacity/_utils.py\", line 111, in inner\n    return call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/tenacity/__init__.py\", line 393, in <lambda>\n    self._add_action_func(lambda rs: rs.outcome.result())\n                                     ^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/concurrent/futures/_base.py\", line 449, in result\n    return self.__get_result()\n           ^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/concurrent/futures/_base.py\", line 401, in __get_result\n    raise self._exception\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/tenacity/asyncio/__init__.py\", line 116, in __call__\n    result = await fn(*args, **kwargs)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/harbor/trial/trial.py\", line 324, in _verify_with_retry\n    self.result.verifier_result = await asyncio.wait_for(\n                                  ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/asyncio/tasks.py\", line 520, in wait_for\n    return await fut\n           ^^^^^^^^^\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/harbor/verifier/verifier.py\", line 143, in verify\n    rewards = self._parse_reward_text()\n              ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/harbor/verifier/verifier.py\", line 48, in _parse_reward_text\n    raise RewardFileEmptyError(\nharbor.verifier.verifier.RewardFileEmptyError: Reward file is empty at /home/ubuntu/reflection_offline_harbor_delivery/nop_jobs_all/2026-06-29__15-12-04/particle-iot-particle-cli-710__dz3ZSWT/verifier/reward.txt\n",
-        "occurred_at": "2026-06-29T15:19:07.030781"
+    "verifier_result": {
+        "rewards": {
+            "reward": 0.0
+        }
     },
-    "started_at": "2026-06-29T15:18:03.209724Z",
-    "finished_at": "2026-06-29T15:19:12.051018Z",
+    "exception_info": null,
+    "started_at": "2026-07-01T15:03:40.816691Z",
+    "finished_at": "2026-07-01T15:03:54.685940Z",
     "environment_setup": {
-        "started_at": "2026-06-29T15:18:03.222538Z",
-        "finished_at": "2026-06-29T15:18:17.731827Z"
+        "started_at": "2026-07-01T15:03:40.817920Z",
+        "finished_at": "2026-07-01T15:03:42.759772Z"
     },
     "agent_setup": {
-        "started_at": "2026-06-29T15:18:17.731833Z",
-        "finished_at": "2026-06-29T15:18:17.731856Z"
+        "started_at": "2026-07-01T15:03:42.759809Z",
+        "finished_at": "2026-07-01T15:03:42.759856Z"
     },
     "agent_execution": {
-        "started_at": "2026-06-29T15:18:17.731883Z",
-        "finished_at": "2026-06-29T15:18:17.731900Z"
+        "started_at": "2026-07-01T15:03:42.759910Z",
+        "finished_at": "2026-07-01T15:03:42.759940Z"
     },
     "verifier": {
-        "started_at": "2026-06-29T15:18:24.963540Z",
-        "finished_at": "2026-06-29T15:19:07.029695Z"
+        "started_at": "2026-07-01T15:03:42.760039Z",
+        "finished_at": "2026-07-01T15:03:44.359896Z"
     }
 }

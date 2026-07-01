@@ -1,0 +1,6 @@
+patching file sdk/security/keyvault/azcertificates/fake/server_test.go
+github.com/Azure/azure-sdk-for-go/sdk/security/keyvault/azcertificates/fake: no non-test Go files in /workspace/repo/sdk/security/keyvault/azcertificates/fake
+{"Time":"2026-07-01T15:10:39.737920021Z","Action":"start","Package":"github.com/Azure/azure-sdk-for-go/sdk/security/keyvault/azcertificates/fake"}
+{"Time":"2026-07-01T15:10:39.737978152Z","Action":"output","Package":"github.com/Azure/azure-sdk-for-go/sdk/security/keyvault/azcertificates/fake","Output":"FAIL\tgithub.com/Azure/azure-sdk-for-go/sdk/security/keyvault/azcertificates/fake [build failed]\n"}
+{"Time":"2026-07-01T15:10:39.737995288Z","Action":"fail","Package":"github.com/Azure/azure-sdk-for-go/sdk/security/keyvault/azcertificates/fake","Elapsed":0}
+reward=0 graded=1 found=0 failed=0 parsed=1 framework=go exit_code=1

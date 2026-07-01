@@ -1,0 +1,4 @@
+patching file changelog/59236.added
+patching file doc/ref/configuration/minion.rst
+patching file salt/config/__init__.py
+patching file salt/minion.py

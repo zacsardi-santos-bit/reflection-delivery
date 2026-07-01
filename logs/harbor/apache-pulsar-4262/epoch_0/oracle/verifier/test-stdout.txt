@@ -1,0 +1,203 @@
+patching file pulsar-broker/src/test/java/org/apache/pulsar/broker/service/NonPersistentTopicE2ETest.java
+patching file pulsar-broker/src/test/java/org/apache/pulsar/broker/service/PersistentTopicE2ETest.java
+[[1;34mINFO[m] Scanning for projects...
+[[1;34mINFO[m] ------------------------------------------------------------------------
+[[1;34mINFO[m] Detecting the operating system and CPU architecture
+[[1;34mINFO[m] ------------------------------------------------------------------------
+[[1;34mINFO[m] os.detected.name: linux
+[[1;34mINFO[m] os.detected.arch: x86_64
+[[1;34mINFO[m] os.detected.release: ubuntu
+[[1;34mINFO[m] os.detected.release.version: 22.04
+[[1;34mINFO[m] os.detected.release.like.ubuntu: true
+[[1;34mINFO[m] os.detected.release.like.debian: true
+[[1;34mINFO[m] os.detected.classifier: linux-x86_64
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m------------------< [0;36morg.apache.pulsar:pulsar-broker[0;1m >-------------------[m
+[[1;34mINFO[m] [1mBuilding Pulsar Broker 2.4.0-SNAPSHOT[m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mgit-commit-id-plugin:2.2.4:revision[m [1m(git-info)[m @ [36mpulsar-broker[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mprotobuf-maven-plugin:0.6.1:compile[m [1m(default)[m @ [36mpulsar-broker[0;1m ---[m
+[[1;34mINFO[m] Skipping compilation because target directory newer than sources.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mprotobuf-maven-plugin:0.6.1:test-compile[m [1m(default)[m @ [36mpulsar-broker[0;1m ---[m
+[[1;34mINFO[m] Skipping compilation because target directory newer than sources.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-remote-resources-plugin:1.5:process[m [1m(process-resource-bundles)[m @ [36mpulsar-broker[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:2.7:resources[m [1m(default-resources)[m @ [36mpulsar-broker[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/pulsar-broker/src/main/resources
+[[1;34mINFO[m] Copying 2 resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.8.0:compile[m [1m(default-compile)[m @ [36mpulsar-broker[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 213 source files to /workspace/repo/pulsar-broker/target/classes
+[[1;33mWARNING[m] bootstrap class path not set in conjunction with -source 8
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/main/java/org/apache/pulsar/broker/admin/AdminResource.java:[473,43] getCluster() in org.apache.pulsar.common.naming.TopicName has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/main/java/org/apache/pulsar/broker/PulsarService.java:[802,56] isTlsEnabled() in org.apache.pulsar.broker.ServiceConfiguration has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/main/java/org/apache/pulsar/broker/PulsarService.java:[804,55] isTlsEnabled() in org.apache.pulsar.broker.ServiceConfiguration has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/main/java/org/apache/pulsar/broker/PulsarService.java:[804,21] enableTls(boolean) in org.apache.pulsar.client.api.ClientBuilder has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/main/java/org/apache/pulsar/broker/PulsarService.java:[1028,46] getZkLedgersRootPath() in org.apache.bookkeeper.conf.AbstractConfiguration has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/main/java/org/apache/pulsar/broker/namespace/NamespaceService.java:[549,68] create(int) in org.apache.zookeeper.KeeperException has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/main/java/org/apache/pulsar/broker/namespace/NamespaceService.java:[965,46] isTlsEnabled() in org.apache.pulsar.broker.ServiceConfiguration has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/main/java/org/apache/pulsar/broker/namespace/NamespaceService.java:[969,25] enableTls(boolean) in org.apache.pulsar.client.api.ClientBuilder has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/main/java/org/apache/pulsar/broker/service/BrokerService.java:[566,29] enableTls(boolean) in org.apache.pulsar.client.api.ClientBuilder has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/main/java/org/apache/pulsar/broker/loadbalance/LoadManager.java:[135,64] newInstance() in java.lang.Class has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/main/java/org/apache/pulsar/broker/service/schema/SchemaRegistryService.java:[39,88] newInstance() in java.lang.Class has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/main/java/org/apache/pulsar/broker/service/schema/SchemaRegistryService.java:[49,50] newInstance() in java.lang.Class has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/main/java/org/apache/pulsar/broker/lookup/TopicLookupBase.java:[66,47] getCluster() in org.apache.pulsar.common.naming.TopicName has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/main/java/org/apache/pulsar/broker/lookup/TopicLookupBase.java:[162,41] getCluster() in org.apache.pulsar.common.naming.TopicName has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/main/java/org/apache/pulsar/broker/namespace/OwnershipCache.java:[263,61] create(int) in org.apache.zookeeper.KeeperException has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/main/java/org/apache/pulsar/broker/admin/impl/BrokersBase.java:[219,17] getZkLedgersRootPath() in org.apache.bookkeeper.conf.AbstractConfiguration has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/main/java/org/apache/pulsar/PulsarStandalone.java:[275,42] isUseTls() in org.apache.pulsar.functions.worker.WorkerConfig has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/main/java/org/apache/pulsar/broker/loadbalance/impl/SimpleLoadManagerImpl.java:[415,65] getLoadBalancerPlacementStrategy() in org.apache.pulsar.broker.ServiceConfiguration has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/main/java/org/apache/pulsar/broker/loadbalance/impl/SimpleLoadManagerImpl.java:[435,42] getLoadBalancerBrokerUnderloadedThresholdPercentage() in org.apache.pulsar.broker.ServiceConfiguration has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/main/java/org/apache/pulsar/broker/loadbalance/impl/SimpleLoadManagerImpl.java:[447,42] getLoadBalancerBrokerComfortLoadLevelPercentage() in org.apache.pulsar.broker.ServiceConfiguration has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/main/java/org/apache/pulsar/broker/admin/v1/ResourceQuotas.java:[52,9] validateNamespaceName(java.lang.String,java.lang.String,java.lang.String) in org.apache.pulsar.broker.admin.AdminResource has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/main/java/org/apache/pulsar/broker/admin/v1/ResourceQuotas.java:[64,9] validateNamespaceName(java.lang.String,java.lang.String,java.lang.String) in org.apache.pulsar.broker.admin.AdminResource has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/main/java/org/apache/pulsar/broker/admin/v1/ResourceQuotas.java:[76,9] validateNamespaceName(java.lang.String,java.lang.String,java.lang.String) in org.apache.pulsar.broker.admin.AdminResource has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/main/java/org/apache/pulsar/broker/service/schema/SchemaRegistryServiceImpl.java:[179,66] valueOf(int) in org.apache.pulsar.broker.service.schema.proto.SchemaRegistryFormat.SchemaInfo.SchemaType has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/main/java/org/apache/pulsar/broker/admin/v1/BrokerStats.java:[52,9] validateNamespaceName(java.lang.String,java.lang.String,java.lang.String) in org.apache.pulsar.broker.admin.AdminResource has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/main/java/org/apache/pulsar/PulsarBrokerStarter.java:[151,46] isUseTls() in org.apache.pulsar.functions.worker.WorkerConfig has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/main/java/org/apache/pulsar/PulsarClusterMetadataSetup.java:[149,15] setZkServers(java.lang.String) in org.apache.bookkeeper.conf.AbstractConfiguration has been deprecated
+[[1;34mINFO[m] /workspace/repo/pulsar-broker/src/main/java/org/apache/pulsar/broker/PulsarService.java: Some input files use unchecked or unsafe operations.
+[[1;34mINFO[m] /workspace/repo/pulsar-broker/src/main/java/org/apache/pulsar/broker/PulsarService.java: Recompile with -Xlint:unchecked for details.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-antrun-plugin:1.8:run[m [1m(default)[m @ [36mpulsar-broker[0;1m ---[m
+[[1;33mWARNING[m] Parameter tasks is deprecated, use target instead
+[[1;34mINFO[m] Executing tasks
+
+main:
+     [echo] copy test examples package
+[[1;34mINFO[m] Executed tasks
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:2.7:testResources[m [1m(default-testResources)[m @ [36mpulsar-broker[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] Copying 37 resources
+[[1;34mINFO[m] Copying 1 resource
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.8.0:testCompile[m [1m(default-testCompile)[m @ [36mpulsar-broker[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 168 source files to /workspace/repo/pulsar-broker/target/test-classes
+[[1;33mWARNING[m] bootstrap class path not set in conjunction with -source 8
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/broker/loadbalance/SimpleLoadManagerImplTest.java:[446,35] setLoadBalancerPlacementStrategy(java.lang.String) in org.apache.pulsar.broker.ServiceConfiguration has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/broker/loadbalance/SimpleLoadManagerImplTest.java:[516,37] Long(long) in java.lang.Long has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/broker/loadbalance/SimpleLoadManagerImplTest.java:[517,42] Long(long) in java.lang.Long has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/broker/loadbalance/SimpleLoadManagerImplTest.java:[518,39] Long(long) in java.lang.Long has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/broker/admin/AdminTest.java:[212,38] getZkLedgersRootPath() in org.apache.bookkeeper.conf.AbstractConfiguration has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/broker/service/ReplicatorTestBase.java:[195,16] setTlsEnabled(boolean) in org.apache.pulsar.broker.ServiceConfiguration has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/client/api/TlsProducerConsumerBase.java:[75,65] enableTls(boolean) in org.apache.pulsar.client.api.ClientBuilder has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/websocket/proxy/ProxyPublishConsumeTlsTest.java:[108,41] WebSocketClient(org.eclipse.jetty.util.ssl.SslContextFactory) in org.eclipse.jetty.websocket.client.WebSocketClient has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/websocket/proxy/ProxyPublishConsumeTlsTest.java:[110,41] WebSocketClient(org.eclipse.jetty.util.ssl.SslContextFactory) in org.eclipse.jetty.websocket.client.WebSocketClient has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/broker/admin/NamespacesTest.java:[333,62] getCluster() in org.apache.pulsar.common.naming.NamespaceName has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/broker/admin/NamespacesTest.java:[341,65] getCluster() in org.apache.pulsar.common.naming.NamespaceName has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/broker/admin/NamespacesTest.java:[349,77] getCluster() in org.apache.pulsar.common.naming.NamespaceName has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/broker/admin/NamespacesTest.java:[358,77] getCluster() in org.apache.pulsar.common.naming.NamespaceName has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/broker/admin/NamespacesTest.java:[367,79] getCluster() in org.apache.pulsar.common.naming.NamespaceName has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/broker/admin/NamespacesTest.java:[376,79] getCluster() in org.apache.pulsar.common.naming.NamespaceName has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/broker/admin/NamespacesTest.java:[388,57] getCluster() in org.apache.pulsar.common.naming.NamespaceName has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/broker/admin/NamespacesTest.java:[392,49] getCluster() in org.apache.pulsar.common.naming.NamespaceName has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/broker/admin/NamespacesTest.java:[396,57] getCluster() in org.apache.pulsar.common.naming.NamespaceName has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/broker/admin/NamespacesTest.java:[401,53] getCluster() in org.apache.pulsar.common.naming.NamespaceName has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/broker/admin/NamespacesTest.java:[410,53] getCluster() in org.apache.pulsar.common.naming.NamespaceName has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/broker/admin/NamespacesTest.java:[595,52] getCluster() in org.apache.pulsar.common.naming.NamespaceName has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/broker/admin/NamespacesTest.java:[625,66] getCluster() in org.apache.pulsar.common.naming.NamespaceName has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/broker/admin/NamespacesTest.java:[637,66] getCluster() in org.apache.pulsar.common.naming.NamespaceName has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/broker/admin/NamespacesTest.java:[649,62] getCluster() in org.apache.pulsar.common.naming.NamespaceName has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/broker/admin/NamespacesTest.java:[655,62] getCluster() in org.apache.pulsar.common.naming.NamespaceName has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/broker/admin/NamespacesTest.java:[667,62] getCluster() in org.apache.pulsar.common.naming.NamespaceName has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/broker/admin/NamespacesTest.java:[849,62] getCluster() in org.apache.pulsar.common.naming.NamespaceName has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/broker/admin/NamespacesTest.java:[995,66] getCluster() in org.apache.pulsar.common.naming.NamespaceName has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/broker/admin/NamespacesTest.java:[1070,63] getCluster() in org.apache.pulsar.common.naming.NamespaceName has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/broker/admin/NamespacesTest.java:[1081,61] getCluster() in org.apache.pulsar.common.naming.NamespaceName has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/broker/admin/NamespacesTest.java:[1082,96] getCluster() in org.apache.pulsar.common.naming.NamespaceName has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/broker/admin/NamespacesTest.java:[1092,65] getCluster() in org.apache.pulsar.common.naming.NamespaceName has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/broker/admin/NamespacesTest.java:[1121,66] getCluster() in org.apache.pulsar.common.naming.TopicName has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/broker/admin/NamespacesTest.java:[1121,15] validateTopicName(java.lang.String,java.lang.String,java.lang.String,java.lang.String) in org.apache.pulsar.broker.admin.AdminResource has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/broker/service/BrokerServiceTest.java:[428,86] enableTls(boolean) in org.apache.pulsar.client.api.ClientBuilder has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/broker/service/BrokerServiceTest.java:[471,86] enableTls(boolean) in org.apache.pulsar.client.api.ClientBuilder has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/broker/service/BrokerServiceTest.java:[486,86] enableTls(boolean) in org.apache.pulsar.client.api.ClientBuilder has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/broker/service/BrokerServiceTest.java:[502,86] enableTls(boolean) in org.apache.pulsar.client.api.ClientBuilder has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/PulsarBrokerStarterTest.java:[204,42] getLoadBalancerBrokerUnderloadedThresholdPercentage() in org.apache.pulsar.broker.ServiceConfiguration has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/io/PulsarFunctionTlsTest.java:[143,16] configure(java.util.Map<java.lang.String,java.lang.String>) in org.apache.pulsar.client.api.Authentication has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/io/PulsarFunctionTlsTest.java:[186,21] setUseTls(boolean) in org.apache.pulsar.functions.worker.WorkerConfig has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/io/PulsarFunctionTlsTest.java:[191,21] setTlsEnabled(boolean) in org.apache.pulsar.functions.worker.WorkerConfig has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/client/api/AuthorizationProducerConsumerTest.java:[368,21] configure(java.util.Map<java.lang.String,java.lang.String>) in org.apache.pulsar.client.api.Authentication has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/broker/service/RackAwareTest.java:[64,17] setZkServers(java.lang.String) in org.apache.bookkeeper.conf.AbstractConfiguration has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/broker/admin/AdminApiTest.java:[959,40] getNamespaces(java.lang.String,java.lang.String) in org.apache.pulsar.client.admin.Namespaces has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/client/api/AuthenticationTlsHostnameVerificationTest.java:[106,16] configure(java.util.Map<java.lang.String,java.lang.String>) in org.apache.pulsar.client.api.Authentication has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/client/api/AuthenticationTlsHostnameVerificationTest.java:[115,41] enableTls(boolean) in org.apache.pulsar.client.api.ClientBuilder has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/functions/worker/PulsarFunctionStateTest.java:[213,16] configure(java.util.Map<java.lang.String,java.lang.String>) in org.apache.pulsar.client.api.Authentication has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/functions/worker/PulsarFunctionStateTest.java:[229,49] isUseTls() in org.apache.pulsar.functions.worker.WorkerConfig has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/functions/worker/PulsarFunctionStateTest.java:[229,26] enableTls(boolean) in org.apache.pulsar.client.api.ClientBuilder has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/functions/worker/PulsarFunctionStateTest.java:[281,21] setUseTls(boolean) in org.apache.pulsar.functions.worker.WorkerConfig has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/io/PulsarFunctionAdminTest.java:[135,16] configure(java.util.Map<java.lang.String,java.lang.String>) in org.apache.pulsar.client.api.Authentication has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/io/PulsarFunctionAdminTest.java:[151,49] isUseTls() in org.apache.pulsar.functions.worker.WorkerConfig has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/io/PulsarFunctionAdminTest.java:[151,26] enableTls(boolean) in org.apache.pulsar.client.api.ClientBuilder has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/io/PulsarFunctionAdminTest.java:[200,21] setUseTls(boolean) in org.apache.pulsar.functions.worker.WorkerConfig has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/client/api/MutualAuthenticationTest.java:[109,21] configure(java.util.Map<java.lang.String,java.lang.String>) in org.apache.pulsar.client.api.Authentication has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/broker/SLAMonitoringTest.java:[221,21] Integer(int) in java.lang.Integer has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/broker/namespace/OwnershipCacheTest.java:[96,38] Integer(int) in java.lang.Integer has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/broker/admin/v1/V1_AdminApiTest.java:[617,40] getNamespaces(java.lang.String,java.lang.String) in org.apache.pulsar.client.admin.Namespaces has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/broker/admin/v1/V1_AdminApiTest.java:[676,40] getNamespaces(java.lang.String,java.lang.String) in org.apache.pulsar.client.admin.Namespaces has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/broker/admin/v1/V1_AdminApiTest.java:[930,40] getNamespaces(java.lang.String,java.lang.String) in org.apache.pulsar.client.admin.Namespaces has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/client/api/AuthenticatedProducerConsumerTest.java:[115,17] enableTls(boolean) in org.apache.pulsar.client.api.ClientBuilder has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/client/api/AuthenticatedProducerConsumerTest.java:[169,16] configure(java.util.Map<java.lang.String,java.lang.String>) in org.apache.pulsar.client.api.Authentication has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/client/api/AuthenticatedProducerConsumerTest.java:[221,16] configure(java.util.Map<java.lang.String,java.lang.String>) in org.apache.pulsar.client.api.Authentication has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/client/api/AuthenticatedProducerConsumerTest.java:[269,16] configure(java.util.Map<java.lang.String,java.lang.String>) in org.apache.pulsar.client.api.Authentication has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/client/api/AuthenticatedProducerConsumerTest.java:[300,16] configure(java.util.Map<java.lang.String,java.lang.String>) in org.apache.pulsar.client.api.Authentication has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/functions/worker/PulsarFunctionPublishTest.java:[190,16] configure(java.util.Map<java.lang.String,java.lang.String>) in org.apache.pulsar.client.api.Authentication has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/functions/worker/PulsarFunctionPublishTest.java:[206,49] isUseTls() in org.apache.pulsar.functions.worker.WorkerConfig has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/functions/worker/PulsarFunctionPublishTest.java:[206,26] enableTls(boolean) in org.apache.pulsar.client.api.ClientBuilder has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/functions/worker/PulsarFunctionPublishTest.java:[261,21] setUseTls(boolean) in org.apache.pulsar.functions.worker.WorkerConfig has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/client/api/BrokerServiceLookupTest.java:[455,22] Integer(int) in java.lang.Integer has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/client/api/BrokerServiceLookupTest.java:[459,22] Integer(int) in java.lang.Integer has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/client/api/BrokerServiceLookupTest.java:[627,25] configure(java.util.Map<java.lang.String,java.lang.String>) in org.apache.pulsar.client.api.Authentication has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/client/api/BrokerServiceLookupTest.java:[700,25] configure(java.util.Map<java.lang.String,java.lang.String>) in org.apache.pulsar.client.api.Authentication has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/client/api/BrokerServiceLookupTest.java:[759,25] configure(java.util.Map<java.lang.String,java.lang.String>) in org.apache.pulsar.client.api.Authentication has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/broker/service/PeerReplicatorTest.java:[102,35] setTlsEnabled(boolean) in org.apache.pulsar.broker.ServiceConfiguration has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/broker/service/PeerReplicatorTest.java:[103,35] setTlsEnabled(boolean) in org.apache.pulsar.broker.ServiceConfiguration has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/broker/service/PeerReplicatorTest.java:[104,35] setTlsEnabled(boolean) in org.apache.pulsar.broker.ServiceConfiguration has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/broker/service/PeerReplicatorTest.java:[203,35] setTlsEnabled(boolean) in org.apache.pulsar.broker.ServiceConfiguration has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/broker/service/PeerReplicatorTest.java:[204,35] setTlsEnabled(boolean) in org.apache.pulsar.broker.ServiceConfiguration has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/broker/service/PeerReplicatorTest.java:[205,35] setTlsEnabled(boolean) in org.apache.pulsar.broker.ServiceConfiguration has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/io/PulsarFunctionE2ETest.java:[212,16] configure(java.util.Map<java.lang.String,java.lang.String>) in org.apache.pulsar.client.api.Authentication has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/io/PulsarFunctionE2ETest.java:[228,49] isUseTls() in org.apache.pulsar.functions.worker.WorkerConfig has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/io/PulsarFunctionE2ETest.java:[228,26] enableTls(boolean) in org.apache.pulsar.client.api.ClientBuilder has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/io/PulsarFunctionE2ETest.java:[340,21] setUseTls(boolean) in org.apache.pulsar.functions.worker.WorkerConfig has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/broker/admin/v1/V1_AdminApiTest2.java:[243,51] nonPersistentTopics() in org.apache.pulsar.client.admin.PulsarAdmin has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/broker/admin/v1/V1_AdminApiTest2.java:[248,59] nonPersistentTopics() in org.apache.pulsar.client.admin.PulsarAdmin has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/broker/admin/v1/V1_AdminApiTest2.java:[254,27] nonPersistentTopics() in org.apache.pulsar.client.admin.PulsarAdmin has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/broker/admin/v1/V1_AdminApiTest2.java:[260,27] nonPersistentTopics() in org.apache.pulsar.client.admin.PulsarAdmin has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/broker/admin/v1/V1_AdminApiTest2.java:[261,14] nonPersistentTopics() in org.apache.pulsar.client.admin.PulsarAdmin has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/broker/admin/v1/V1_AdminApiTest2.java:[262,27] nonPersistentTopics() in org.apache.pulsar.client.admin.PulsarAdmin has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/broker/admin/v1/V1_AdminApiTest2.java:[407,18] nonPersistentTopics() in org.apache.pulsar.client.admin.PulsarAdmin has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/broker/admin/v1/V1_AdminApiTest2.java:[738,55] nonPersistentTopics() in org.apache.pulsar.client.admin.PulsarAdmin has been deprecated
+[[1;34mINFO[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/broker/cache/ResourceQuotaCacheTest.java: Some input files use unchecked or unsafe operations.
+[[1;34mINFO[m] /workspace/repo/pulsar-broker/src/test/java/org/apache/pulsar/broker/cache/ResourceQuotaCacheTest.java: Recompile with -Xlint:unchecked for details.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:2.21.0:test[m [1m(default-test)[m @ [36mpulsar-broker[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] -------------------------------------------------------
+[[1;34mINFO[m]  T E S T S
+[[1;34mINFO[m] -------------------------------------------------------
+[[1;34mINFO[m] Running org.apache.pulsar.broker.service.[1mPersistentTopicE2ETest[m
+[[1;34mINFO[m] [1;32mTests run: [0;1;32m1[m, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 13.9 s - in org.apache.pulsar.broker.service.[1mPersistentTopicE2ETest[m
+[[1;34mINFO[m] Running org.apache.pulsar.broker.service.[1mNonPersistentTopicE2ETest[m
+[[1;34mINFO[m] [1;32mTests run: [0;1;32m1[m, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 11.716 s - in org.apache.pulsar.broker.service.[1mNonPersistentTopicE2ETest[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] Results:
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1;32mTests run: 2, Failures: 0, Errors: 0, Skipped: 0[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1;32mBUILD SUCCESS[m
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] Total time:  01:10 min
+[[1;34mINFO[m] Finished at: 2026-07-01T14:36:49Z
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+reward=1 graded=2 found=2 failed=0 parsed=2 framework=maven exit_code=0

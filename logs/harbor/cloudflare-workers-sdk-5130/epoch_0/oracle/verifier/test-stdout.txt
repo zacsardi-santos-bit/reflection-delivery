@@ -1,0 +1,21 @@
+patching file tools/deployments/__tests__/deploy-non-npm-packages.test.ts
+[33mThe CJS build of Vite's Node API is deprecated. See https://vitejs.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v1.2.2 /workspace/repo
+
+TAP version 13
+ ✓ deployments/__tests__/deploy-non-npm-packages.test.ts > getUpdatedPackages() > should default to an empty array
+ ✓ deployments/__tests__/deploy-non-npm-packages.test.ts > getUpdatedPackages() > should parse JSON from the PUBLISHED_PACKAGES env var
+ ✓ deployments/__tests__/deploy-non-npm-packages.test.ts > getUpdatedPackages() > should validate the shape of the PUBLISHED_PACKAGES JSON
+ ✓ deployments/__tests__/deploy-non-npm-packages.test.ts > findDeployablePackageNames() > should return all the private packages which contain deploy scripts
+ ✓ deployments/__tests__/deploy-non-npm-packages.test.ts > deployPackage > should run `pnpm deploy` for the given package via `execSync`
+ ✓ deployments/__tests__/deploy-non-npm-packages.test.ts > deployPackage > should ignore failures in `execSync`
+ ✓ deployments/__tests__/deploy-non-npm-packages.test.ts > deployNonNpmPackages() > should run `pnpm deploy` on each deployable updated package
+ ✓ deployments/__tests__/deploy-non-npm-packages.test.ts > deployNonNpmPackages() > should run display an informative message if no packages to deploy
+
+ Test Files  1 passed (1)
+      Tests  8 passed (8)
+   Start at  14:32:34
+   Duration  1.48s (transform 106ms, setup 0ms, collect 200ms, tests 18ms, environment 0ms, prepare 206ms)
+
+reward=1 graded=8 found=0 failed=0 parsed=0 framework=vitest exit_code=0

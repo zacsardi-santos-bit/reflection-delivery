@@ -1,0 +1,13 @@
+patching file CHANGELOG.md
+patching file go.mod
+patching file go.sum
+Hunk #1 succeeded at 723 with fuzz 3 (offset 468 lines).
+patching file internal/controllers/configuration/kongupstreampolicy_utils.go
+patching file internal/dataplane/configfetcher/config_fetcher.go
+patching file internal/dataplane/configfetcher/config_fetcher_test.go
+patching file internal/dataplane/kongstate/kongstate.go
+patching file internal/dataplane/kongstate/kongstate_test.go
+patching file internal/dataplane/translator/golden_test.go
+patching file internal/dataplane/translator/translator.go
+patching file internal/dataplane/translator/translator_test.go
+patching file internal/manager/run.go

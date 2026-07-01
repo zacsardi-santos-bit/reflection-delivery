@@ -1,0 +1,32 @@
+patching file base_layer/wallet/tests/output_manager_service_tests/service.rs
+patching file base_layer/wallet/tests/output_manager_service_tests/storage.rs
+patching file base_layer/wallet/tests/transaction_service_tests/service.rs
+patching file integration_tests/src/miner.rs
+patching file integration_tests/tests/features/Sync.feature
+patching file integration_tests/tests/steps/wallet_steps.rs
+   Compiling tari_features v1.0.0-pre.4 (/workspace/repo/common/tari_features)
+   Compiling tari_shutdown v1.0.0-pre.4 (/workspace/repo/infrastructure/shutdown)
+   Compiling tari_storage v1.0.0-pre.4 (/workspace/repo/infrastructure/storage)
+   Compiling tari_common_sqlite v1.0.0-pre.4 (/workspace/repo/common_sqlite)
+   Compiling tari_comms_rpc_macros v1.0.0-pre.4 (/workspace/repo/comms/rpc_macros)
+   Compiling tari_common v1.0.0-pre.4 (/workspace/repo/common)
+   Compiling tari_script v0.12.0 (/workspace/repo/infrastructure/tari_script)
+   Compiling tari_service_framework v1.0.0-pre.4 (/workspace/repo/base_layer/service_framework)
+   Compiling tari_common_types v1.0.0-pre.4 (/workspace/repo/base_layer/common_types)
+   Compiling tari_mmr v1.0.0-pre.4 (/workspace/repo/base_layer/mmr)
+   Compiling tari_key_manager v1.0.0-pre.4 (/workspace/repo/base_layer/key_manager)
+   Compiling tari_comms v1.0.0-pre.4 (/workspace/repo/comms/core)
+   Compiling tari_comms_dht v1.0.0-pre.4 (/workspace/repo/comms/dht)
+   Compiling tari_p2p v1.0.0-pre.4 (/workspace/repo/base_layer/p2p)
+   Compiling tari_contacts v1.0.0-pre.4 (/workspace/repo/base_layer/contacts)
+   Compiling tari_core v1.0.0-pre.4 (/workspace/repo/base_layer/core)
+   Compiling minotari_wallet v1.0.0-pre.4 (/workspace/repo/base_layer/wallet)
+   Compiling tari_test_utils v1.0.0-pre.4 (/workspace/repo/infrastructure/test_utils)
+    Finished test [unoptimized + debuginfo] target(s) in 2m 50s
+------------
+ Nextest run ID 5139135c-68c0-43de-ba05-909be5aa6de9 with nextest profile: ci
+    Starting 1 test across 2 binaries (90 tests skipped)
+        PASS [   6.987s] minotari_wallet::wallet_integration_tests transaction_service_tests::service::test_htlc_send_and_claim
+------------
+     Summary [   6.988s] 1 test run: 1 passed, 90 skipped
+reward=1 graded=1 found=1 failed=0 parsed=1 framework=cargo exit_code=0

@@ -1,0 +1,10 @@
+patching file .gitignore
+patching file README.md
+patching file cmd/build.go
+patching file cmd/describe.go
+patching file cmd/root.go
+patching file lib/build.go
+patching file lib/discover.go
+patching file lib/git_utils.go
+patching file lib/manifest.go
+patching file lib/module.go

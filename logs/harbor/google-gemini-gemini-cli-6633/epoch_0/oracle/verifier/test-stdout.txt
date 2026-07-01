@@ -1,0 +1,15 @@
+patching file packages/cli/src/ui/hooks/useSlashCompletion.test.ts
+
+ RUN  v3.2.4 /workspace/repo/packages/cli
+      Coverage enabled with v8
+
+ ✓ src/ui/hooks/useSlashCompletion.test.ts (27 tests) 1003ms
+
+ Test Files  1 passed (1)
+      Tests  27 passed (27)
+   Start at  14:43:31
+   Duration  6.21s (transform 486ms, setup 36ms, collect 588ms, tests 1.00s, environment 634ms, prepare 225ms)
+
+JUNIT report written to /workspace/repo/packages/cli/junit.xml
+ % Coverage report from v8
+reward=1 graded=26 found=0 failed=0 parsed=0 framework=vitest exit_code=0

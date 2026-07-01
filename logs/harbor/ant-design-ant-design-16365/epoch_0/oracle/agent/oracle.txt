@@ -1,0 +1,6 @@
+patching file components/collapse/Collapse.tsx
+patching file components/collapse/demo/extra.md
+patching file components/collapse/index.en-US.md
+patching file components/collapse/index.zh-CN.md
+patching file components/collapse/style/index.less
+patching file components/style/themes/default.less

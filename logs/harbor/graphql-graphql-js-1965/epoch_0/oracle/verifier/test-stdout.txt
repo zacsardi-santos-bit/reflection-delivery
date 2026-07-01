@@ -1,0 +1,211 @@
+patching file src/language/__tests__/schema-parser-test.js
+patching file src/language/__tests__/schema-printer-test.js
+patching file src/type/__tests__/directive-test.js
+patching file src/utilities/__tests__/buildASTSchema-test.js
+patching file src/utilities/__tests__/extendSchema-test.js
+patching file src/utilities/__tests__/schemaPrinter-test.js
+patching file src/validation/__tests__/UniqueDirectivesPerLocation-test.js
+Browserslist: caniuse-lite is outdated. Please run next command `yarn upgrade`
+
+
+  Schema Parser
+    ✓ Simple type
+    ✓ parses type with description string
+    ✓ parses type with description multi-line string
+    ✓ Simple extension
+    ✓ Extension without fields
+    ✓ Extension without fields followed by extension
+    ✓ Extension without anything throws
+    ✓ Extension do not include descriptions
+    ✓ Schema extension
+    ✓ Schema extension with only directives
+    ✓ Schema extension without anything throws
+    ✓ Simple non-null type
+    ✓ Simple type inheriting interface
+    ✓ Simple type inheriting multiple interfaces
+    ✓ Simple type inheriting multiple interfaces with leading ampersand
+    ✓ Single value enum
+    ✓ Double value enum
+    ✓ Simple interface
+    ✓ Simple field with arg
+    ✓ Simple field with arg with default value
+    ✓ Simple field with list arg
+    ✓ Simple field with two args
+    ✓ Simple union
+    ✓ Union with two types
+    ✓ Union with two types and leading pipe
+    ✓ Union fails with no types
+    ✓ Union fails with leading double pipe
+    ✓ Union fails with double pipe
+    ✓ Union fails with trailing pipe
+    ✓ Scalar
+    ✓ Simple input object
+    ✓ Simple input object with args should fail
+    ✓ Directive definition
+    ✓ Repeatable directive definition
+    ✓ Directive with incorrect locations
+    ✓ parses kitchen sink schema
+    ✓ Option: allowLegacySDLEmptyFields supports type with empty fields
+    ✓ Option: allowLegacySDLImplementsInterfaces
+
+  Printer: SDL document
+    ✓ prints minimal ast
+    ✓ produces helpful error messages
+    ✓ does not alter ast
+    ✓ prints kitchen sink
+
+  Type System: Directive
+    ✓ defines a directive with no args
+    ✓ defines a directive with multiple args
+    ✓ defines a repeatable directive
+    ✓ can be stringified, JSON.stringified and Object.toStringified
+    ✓ rejects an unnamed directive
+    ✓ rejects a directive with incorrectly typed args
+    ✓ rejects a directive with undefined locations
+    ✓ rejects a directive with incorrectly typed locations
+
+  Schema Builder
+    ✓ can use built schema for limited execution
+    ✓ can build a schema directly from the source
+    ✓ Empty type
+    ✓ Simple type
+    ✓ include standard type only if it is used
+    ✓ With directives
+    ✓ Supports descriptions
+    ✓ Supports option for comment descriptions
+    ✓ Maintains @skip & @include
+    ✓ Overriding directives excludes specified
+    ✓ Adding directives maintains @skip & @include
+    ✓ Type modifiers
+    ✓ Recursive type
+    ✓ Two types circular
+    ✓ Single argument field
+    ✓ Simple type with multiple arguments
+    ✓ Empty interface
+    ✓ Simple type with interface
+    ✓ Empty enum
+    ✓ Simple output enum
+    ✓ Simple input enum
+    ✓ Multiple value enum
+    ✓ Empty union
+    ✓ Simple Union
+    ✓ Multiple Union
+    ✓ Can build recursive Union
+    ✓ Specifying Union type using __typename
+    ✓ Specifying Interface type using __typename
+    ✓ Custom Scalar
+    ✓ Empty Input Object
+    ✓ Simple Input Object
+    ✓ Simple argument field with default
+    ✓ Custom scalar argument field with default
+    ✓ Simple type with mutation
+    ✓ Simple type with subscription
+    ✓ Unreferenced type implementing referenced interface
+    ✓ Unreferenced type implementing referenced union
+    ✓ Supports @deprecated
+    ✓ Correctly assign AST nodes
+    ✓ Root operation types with custom names
+    ✓ Default root operation type names
+    ✓ can build invalid schema
+    ✓ Accepts legacy names
+    ✓ Rejects invalid SDL
+    ✓ Allows to disable SDL validation
+
+  extendSchema
+    ✓ returns the original schema when there are no type definitions
+    ✓ extends without altering original schema
+    ✓ can be used for limited execution
+    ✓ can describe the extended fields
+    ✓ can describe the extended fields with legacy comments
+    ✓ describes extended fields with strings when present
+    ✓ extends objects by adding new fields
+    ✓ extends objects with standard type fields
+    ✓ extends enums by adding new values
+    ✓ extends unions by adding new types
+    ✓ allows extension of union by adding itself
+    ✓ extends inputs by adding new fields
+    ✓ extends scalars by adding new directives
+    ✓ correctly assign AST nodes to new and extended types
+    ✓ builds types with deprecated fields/values
+    ✓ extends objects with deprecated fields
+    ✓ extends enums with deprecated values
+    ✓ adds new unused object type
+    ✓ adds new unused enum type
+    ✓ adds new unused input object type
+    ✓ adds new union using new object type
+    ✓ extends objects by adding new fields with arguments
+    ✓ extends objects by adding new fields with existing types
+    ✓ extends objects by adding implemented interfaces
+    ✓ extends objects by including new types
+    ✓ extends objects by adding implemented new interfaces
+    ✓ extends different types multiple times
+    ✓ extends interfaces by adding new fields
+    ✓ allows extension of interface with missing Object fields
+    ✓ extends interfaces multiple times
+    ✓ may extend mutations and subscriptions
+    ✓ may extend directives with new simple directive
+    ✓ sets correct description when extending with a new directive
+    ✓ sets correct description using legacy comments
+    ✓ may extend directives with new complex directive
+    ✓ Rejects invalid SDL
+    ✓ Allows to disable SDL validation
+    ✓ does not allow replacing a default directive
+    ✓ does not allow replacing an existing enum value
+    ✓ maintains configuration of the original schema object
+    ✓ adds to the configuration of the original schema object
+    can add additional root operation types
+      ✓ does not automatically include common root type names
+      ✓ adds schema definition missing in the original schema
+      ✓ adds new root types via schema extension
+      ✓ adds multiple new root types via schema extension
+      ✓ applies multiple schema extensions
+      ✓ schema extension AST are available from schema object
+
+  Type System Printer
+    ✓ Prints String Field
+    ✓ Prints [String] Field
+    ✓ Prints String! Field
+    ✓ Prints [String]! Field
+    ✓ Prints [String!] Field
+    ✓ Prints [String!]! Field
+    ✓ Print Object Field
+    ✓ Prints String Field With Int Arg
+    ✓ Prints String Field With Int Arg With Default
+    ✓ Prints String Field With String Arg With Default
+    ✓ Prints String Field With Int Arg With Default Null
+    ✓ Prints String Field With Int! Arg
+    ✓ Prints String Field With Multiple Args
+    ✓ Prints String Field With Multiple Args, First is Default
+    ✓ Prints String Field With Multiple Args, Second is Default
+    ✓ Prints String Field With Multiple Args, Last is Default
+    ✓ Prints custom query root type
+    ✓ Print Interface
+    ✓ Print Multiple Interface
+    ✓ Print Unions
+    ✓ Print Input Type
+    ✓ Custom Scalar
+    ✓ Enum
+    ✓ Prints empty types
+    ✓ Prints custom directives
+    ✓ One-line prints a short description (45ms)
+    ✓ Print Introspection Schema
+    ✓ Print Introspection Schema with comment descriptions
+
+  Validate: Directives Are Unique Per Location
+    ✓ no directives
+    ✓ unique directives in different locations
+    ✓ unique directives in same locations
+    ✓ same directives in different locations
+    ✓ same directives in similar locations
+    ✓ repeatable directives in same location
+    ✓ unknown directives must be ignored
+    ✓ duplicate directives in one location
+    ✓ many duplicate directives in one location
+    ✓ different duplicate directives in one location
+    ✓ duplicate directives in many locations
+    ✓ duplicate directives on SDL definitions
+
+
+  182 passing (357ms)
+
+reward=1 graded=182 found=182 failed=0 parsed=178 framework=mocha exit_code=0

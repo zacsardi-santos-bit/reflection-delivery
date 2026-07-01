@@ -1,0 +1,962 @@
+patching file java/clients/src/test/java/sleeper/clients/admin/CompactionStatusReportScreenTest.java
+patching file java/clients/src/test/java/sleeper/clients/admin/testutils/AdminClientStatusStoreHolderTest.java
+patching file java/compaction/compaction-core/src/test/java/sleeper/compaction/job/CompactionJobStatusTestData.java
+patching file java/compaction/compaction-core/src/test/java/sleeper/compaction/job/CompactionJobTestDataHelper.java
+patching file java/compaction/compaction-core/src/test/java/sleeper/compaction/job/CompactionJobTestUtils.java
+patching file java/compaction/compaction-core/src/test/java/sleeper/compaction/testutils/CompactionJobStatusStoreInMemory.java
+patching file java/compaction/compaction-core/src/test/java/sleeper/compaction/testutils/CompactionJobStatusStoreInMemoryTest.java
+patching file java/core/src/test/java/sleeper/core/schema/SchemaTestHelper.java
+[[1;34mINFO[m] Scanning for projects...
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1mReactor Build Order:[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] aws                                                                [pom]
+[[1;34mINFO[m] core                                                               [jar]
+[[1;34mINFO[m] configuration                                                      [jar]
+[[1;34mINFO[m] parquet                                                            [jar]
+[[1;34mINFO[m] dynamodb-tools                                                     [jar]
+[[1;34mINFO[m] statestore                                                         [jar]
+[[1;34mINFO[m] ingest                                                             [pom]
+[[1;34mINFO[m] ingest-core                                                        [jar]
+[[1;34mINFO[m] common-job                                                         [jar]
+[[1;34mINFO[m] sketches                                                           [jar]
+[[1;34mINFO[m] tables                                                             [jar]
+[[1;34mINFO[m] ingest-status-store                                                [jar]
+[[1;34mINFO[m] ingest-runner                                                      [jar]
+[[1;34mINFO[m] query                                                              [jar]
+[[1;34mINFO[m] compaction                                                         [pom]
+[[1;34mINFO[m] compaction-core                                                    [jar]
+[[1;34mINFO[m] compaction-status-store                                            [jar]
+[[1;34mINFO[m] compaction-job-creation                                            [jar]
+[[1;34mINFO[m] splitter                                                           [jar]
+[[1;34mINFO[m] clients                                                            [jar]
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m----------------------------< [0;36msleeper:aws[0;1m >-----------------------------[m
+[[1;34mINFO[m] [1mBuilding aws 0.15.0-SNAPSHOT                                      [1/20][m
+[[1;34mINFO[m] [1m--------------------------------[ pom ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:3.2.0:check[m [1m(validate)[m @ [36maws[0;1m ---[m
+[[1;34mINFO[m] Starting audit...
+Audit done.
+[[1;34mINFO[m] You have 0 Checkstyle violations.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m>>> [0;32mspotbugs-maven-plugin:4.7.3.0:check[m [1m(validate)[0;1m > [0;1m:spotbugs[m @ [36maws[0;1m >>>[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotbugs-maven-plugin:4.7.3.0:spotbugs[m [1m(spotbugs)[m @ [36maws[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m<<< [0;32mspotbugs-maven-plugin:4.7.3.0:check[m [1m(validate)[0;1m < [0;1m:spotbugs[m @ [36maws[0;1m <<<[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotbugs-maven-plugin:4.7.3.0:check[m [1m(validate)[m @ [36maws[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m----------------------------< [0;36msleeper:core[0;1m >----------------------------[m
+[[1;34mINFO[m] [1mBuilding core 0.15.0-SNAPSHOT                                     [2/20][m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:2.6:resources[m [1m(default-resources)[m @ [36mcore[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] Copying 1 resource
+[[1;34mINFO[m] Copying 1 resource
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.10.1:compile[m [1m(default-compile)[m @ [36mcore[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 56 source files to /workspace/repo/java/core/target/classes
+[[1;34mINFO[m] /workspace/repo/java/core/src/main/java/sleeper/core/key/Key.java: Some input files use unchecked or unsafe operations.
+[[1;34mINFO[m] /workspace/repo/java/core/src/main/java/sleeper/core/key/Key.java: Recompile with -Xlint:unchecked for details.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:2.6:testResources[m [1m(default-testResources)[m @ [36mcore[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/java/core/src/test/resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.10.1:testCompile[m [1m(default-testCompile)[m @ [36mcore[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 50 source files to /workspace/repo/java/core/target/test-classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:3.0.0-M7:test[m [1m(default-test)[m @ [36mcore[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:3.2.0:check[m [1m(validate)[m @ [36mcore[0;1m ---[m
+[[1;34mINFO[m] Starting audit...
+Audit done.
+[[1;34mINFO[m] You have 0 Checkstyle violations.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m>>> [0;32mspotbugs-maven-plugin:4.7.3.0:check[m [1m(validate)[0;1m > [0;1m:spotbugs[m @ [36mcore[0;1m >>>[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotbugs-maven-plugin:4.7.3.0:spotbugs[m [1m(spotbugs)[m @ [36mcore[0;1m ---[m
+[[1;34mINFO[m] Fork Value is true
+[[1;34mINFO[m] Done SpotBugs Analysis....
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m<<< [0;32mspotbugs-maven-plugin:4.7.3.0:check[m [1m(validate)[0;1m < [0;1m:spotbugs[m @ [36mcore[0;1m <<<[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotbugs-maven-plugin:4.7.3.0:check[m [1m(validate)[m @ [36mcore[0;1m ---[m
+[[1;34mINFO[m] BugInstance size is 0
+[[1;34mINFO[m] Error size is 0
+[[1;34mINFO[m] No errors/warnings found
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m-----------------------< [0;36msleeper:configuration[0;1m >------------------------[m
+[[1;34mINFO[m] [1mBuilding configuration 0.15.0-SNAPSHOT                            [3/20][m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:2.6:resources[m [1m(default-resources)[m @ [36mconfiguration[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/java/configuration/src/main/resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.10.1:compile[m [1m(default-compile)[m @ [36mconfiguration[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 29 source files to /workspace/repo/java/configuration/target/classes
+[[1;34mINFO[m] /workspace/repo/java/configuration/src/main/java/sleeper/configuration/EstimateSplitPoints.java: /workspace/repo/java/configuration/src/main/java/sleeper/configuration/EstimateSplitPoints.java uses unchecked or unsafe operations.
+[[1;34mINFO[m] /workspace/repo/java/configuration/src/main/java/sleeper/configuration/EstimateSplitPoints.java: Recompile with -Xlint:unchecked for details.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:2.6:testResources[m [1m(default-testResources)[m @ [36mconfiguration[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/java/configuration/src/test/resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.10.1:testCompile[m [1m(default-testCompile)[m @ [36mconfiguration[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 23 source files to /workspace/repo/java/configuration/target/test-classes
+[[1;34mINFO[m] /workspace/repo/java/configuration/src/test/java/sleeper/configuration/properties/local/SaveLocalPropertiesIT.java: Some input files use or override a deprecated API.
+[[1;34mINFO[m] /workspace/repo/java/configuration/src/test/java/sleeper/configuration/properties/local/SaveLocalPropertiesIT.java: Recompile with -Xlint:deprecation for details.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:3.0.0-M7:test[m [1m(default-test)[m @ [36mconfiguration[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:3.2.0:check[m [1m(validate)[m @ [36mconfiguration[0;1m ---[m
+[[1;34mINFO[m] Starting audit...
+Audit done.
+[[1;34mINFO[m] You have 0 Checkstyle violations.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m>>> [0;32mspotbugs-maven-plugin:4.7.3.0:check[m [1m(validate)[0;1m > [0;1m:spotbugs[m @ [36mconfiguration[0;1m >>>[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotbugs-maven-plugin:4.7.3.0:spotbugs[m [1m(spotbugs)[m @ [36mconfiguration[0;1m ---[m
+[[1;34mINFO[m] Fork Value is true
+[[1;34mINFO[m] Done SpotBugs Analysis....
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m<<< [0;32mspotbugs-maven-plugin:4.7.3.0:check[m [1m(validate)[0;1m < [0;1m:spotbugs[m @ [36mconfiguration[0;1m <<<[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotbugs-maven-plugin:4.7.3.0:check[m [1m(validate)[m @ [36mconfiguration[0;1m ---[m
+[[1;34mINFO[m] BugInstance size is 0
+[[1;34mINFO[m] Error size is 0
+[[1;34mINFO[m] No errors/warnings found
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--------------------------< [0;36msleeper:parquet[0;1m >---------------------------[m
+[[1;34mINFO[m] [1mBuilding parquet 0.15.0-SNAPSHOT                                  [4/20][m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:2.6:resources[m [1m(default-resources)[m @ [36mparquet[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/java/parquet/src/main/resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.10.1:compile[m [1m(default-compile)[m @ [36mparquet[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 11 source files to /workspace/repo/java/parquet/target/classes
+[[1;34mINFO[m] /workspace/repo/java/parquet/src/main/java/sleeper/io/parquet/record/ParquetRecordReader.java: /workspace/repo/java/parquet/src/main/java/sleeper/io/parquet/record/ParquetRecordReader.java uses or overrides a deprecated API.
+[[1;34mINFO[m] /workspace/repo/java/parquet/src/main/java/sleeper/io/parquet/record/ParquetRecordReader.java: Recompile with -Xlint:deprecation for details.
+[[1;34mINFO[m] /workspace/repo/java/parquet/src/main/java/sleeper/io/parquet/record/RecordConverter.java: /workspace/repo/java/parquet/src/main/java/sleeper/io/parquet/record/RecordConverter.java uses unchecked or unsafe operations.
+[[1;34mINFO[m] /workspace/repo/java/parquet/src/main/java/sleeper/io/parquet/record/RecordConverter.java: Recompile with -Xlint:unchecked for details.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:2.6:testResources[m [1m(default-testResources)[m @ [36mparquet[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/java/parquet/src/test/resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.10.1:testCompile[m [1m(default-testCompile)[m @ [36mparquet[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 3 source files to /workspace/repo/java/parquet/target/test-classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:3.0.0-M7:test[m [1m(default-test)[m @ [36mparquet[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:3.2.0:check[m [1m(validate)[m @ [36mparquet[0;1m ---[m
+[[1;34mINFO[m] Starting audit...
+Audit done.
+[[1;34mINFO[m] You have 0 Checkstyle violations.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m>>> [0;32mspotbugs-maven-plugin:4.7.3.0:check[m [1m(validate)[0;1m > [0;1m:spotbugs[m @ [36mparquet[0;1m >>>[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotbugs-maven-plugin:4.7.3.0:spotbugs[m [1m(spotbugs)[m @ [36mparquet[0;1m ---[m
+[[1;34mINFO[m] Fork Value is true
+[[1;34mINFO[m] Done SpotBugs Analysis....
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m<<< [0;32mspotbugs-maven-plugin:4.7.3.0:check[m [1m(validate)[0;1m < [0;1m:spotbugs[m @ [36mparquet[0;1m <<<[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotbugs-maven-plugin:4.7.3.0:check[m [1m(validate)[m @ [36mparquet[0;1m ---[m
+[[1;34mINFO[m] BugInstance size is 0
+[[1;34mINFO[m] Error size is 0
+[[1;34mINFO[m] No errors/warnings found
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m-----------------------< [0;36msleeper:dynamodb-tools[0;1m >-----------------------[m
+[[1;34mINFO[m] [1mBuilding dynamodb-tools 0.15.0-SNAPSHOT                           [5/20][m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:2.6:resources[m [1m(default-resources)[m @ [36mdynamodb-tools[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/java/dynamodb-tools/src/main/resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.10.1:compile[m [1m(default-compile)[m @ [36mdynamodb-tools[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 3 source files to /workspace/repo/java/dynamodb-tools/target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:2.6:testResources[m [1m(default-testResources)[m @ [36mdynamodb-tools[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/java/dynamodb-tools/src/test/resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.10.1:testCompile[m [1m(default-testCompile)[m @ [36mdynamodb-tools[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 5 source files to /workspace/repo/java/dynamodb-tools/target/test-classes
+[[1;34mINFO[m] /workspace/repo/java/dynamodb-tools/src/test/java/sleeper/dynamodb/tools/DynamoDBTestBase.java: /workspace/repo/java/dynamodb-tools/src/test/java/sleeper/dynamodb/tools/DynamoDBTestBase.java uses or overrides a deprecated API.
+[[1;34mINFO[m] /workspace/repo/java/dynamodb-tools/src/test/java/sleeper/dynamodb/tools/DynamoDBTestBase.java: Recompile with -Xlint:deprecation for details.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:3.0.0-M7:test[m [1m(default-test)[m @ [36mdynamodb-tools[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:3.2.0:check[m [1m(validate)[m @ [36mdynamodb-tools[0;1m ---[m
+[[1;34mINFO[m] Starting audit...
+Audit done.
+[[1;34mINFO[m] You have 0 Checkstyle violations.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m>>> [0;32mspotbugs-maven-plugin:4.7.3.0:check[m [1m(validate)[0;1m > [0;1m:spotbugs[m @ [36mdynamodb-tools[0;1m >>>[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotbugs-maven-plugin:4.7.3.0:spotbugs[m [1m(spotbugs)[m @ [36mdynamodb-tools[0;1m ---[m
+[[1;34mINFO[m] Fork Value is true
+[[1;34mINFO[m] Done SpotBugs Analysis....
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m<<< [0;32mspotbugs-maven-plugin:4.7.3.0:check[m [1m(validate)[0;1m < [0;1m:spotbugs[m @ [36mdynamodb-tools[0;1m <<<[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotbugs-maven-plugin:4.7.3.0:check[m [1m(validate)[m @ [36mdynamodb-tools[0;1m ---[m
+[[1;34mINFO[m] BugInstance size is 0
+[[1;34mINFO[m] Error size is 0
+[[1;34mINFO[m] No errors/warnings found
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m-------------------------< [0;36msleeper:statestore[0;1m >-------------------------[m
+[[1;34mINFO[m] [1mBuilding statestore 0.15.0-SNAPSHOT                               [6/20][m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:2.6:resources[m [1m(default-resources)[m @ [36mstatestore[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/java/statestore/src/main/resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.10.1:compile[m [1m(default-compile)[m @ [36mstatestore[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 22 source files to /workspace/repo/java/statestore/target/classes
+[[1;34mINFO[m] /workspace/repo/java/statestore/src/main/java/sleeper/statestore/s3/S3PartitionStore.java: Some input files use unchecked or unsafe operations.
+[[1;34mINFO[m] /workspace/repo/java/statestore/src/main/java/sleeper/statestore/s3/S3PartitionStore.java: Recompile with -Xlint:unchecked for details.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:2.6:testResources[m [1m(default-testResources)[m @ [36mstatestore[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/java/statestore/src/test/resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.10.1:testCompile[m [1m(default-testCompile)[m @ [36mstatestore[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 15 source files to /workspace/repo/java/statestore/target/test-classes
+[[1;34mINFO[m] /workspace/repo/java/statestore/src/test/java/sleeper/statestore/InitialiseStateStoreIT.java: Some input files use or override a deprecated API.
+[[1;34mINFO[m] /workspace/repo/java/statestore/src/test/java/sleeper/statestore/InitialiseStateStoreIT.java: Recompile with -Xlint:deprecation for details.
+[[1;34mINFO[m] /workspace/repo/java/statestore/src/test/java/sleeper/statestore/dynamodb/DynamoDBStateStoreIT.java: Some input files use unchecked or unsafe operations.
+[[1;34mINFO[m] /workspace/repo/java/statestore/src/test/java/sleeper/statestore/dynamodb/DynamoDBStateStoreIT.java: Recompile with -Xlint:unchecked for details.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:3.0.0-M7:test[m [1m(default-test)[m @ [36mstatestore[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:3.2.0:check[m [1m(validate)[m @ [36mstatestore[0;1m ---[m
+[[1;34mINFO[m] Starting audit...
+Audit done.
+[[1;34mINFO[m] You have 0 Checkstyle violations.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m>>> [0;32mspotbugs-maven-plugin:4.7.3.0:check[m [1m(validate)[0;1m > [0;1m:spotbugs[m @ [36mstatestore[0;1m >>>[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotbugs-maven-plugin:4.7.3.0:spotbugs[m [1m(spotbugs)[m @ [36mstatestore[0;1m ---[m
+[[1;34mINFO[m] Fork Value is true
+[[1;34mINFO[m] Done SpotBugs Analysis....
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m<<< [0;32mspotbugs-maven-plugin:4.7.3.0:check[m [1m(validate)[0;1m < [0;1m:spotbugs[m @ [36mstatestore[0;1m <<<[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotbugs-maven-plugin:4.7.3.0:check[m [1m(validate)[m @ [36mstatestore[0;1m ---[m
+[[1;34mINFO[m] BugInstance size is 0
+[[1;34mINFO[m] Error size is 0
+[[1;34mINFO[m] No errors/warnings found
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m---------------------------< [0;36msleeper:ingest[0;1m >---------------------------[m
+[[1;34mINFO[m] [1mBuilding ingest 0.15.0-SNAPSHOT                                   [7/20][m
+[[1;34mINFO[m] [1m--------------------------------[ pom ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:3.2.0:check[m [1m(validate)[m @ [36mingest[0;1m ---[m
+[[1;34mINFO[m] Starting audit...
+Audit done.
+[[1;34mINFO[m] You have 0 Checkstyle violations.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m>>> [0;32mspotbugs-maven-plugin:4.7.3.0:check[m [1m(validate)[0;1m > [0;1m:spotbugs[m @ [36mingest[0;1m >>>[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotbugs-maven-plugin:4.7.3.0:spotbugs[m [1m(spotbugs)[m @ [36mingest[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m<<< [0;32mspotbugs-maven-plugin:4.7.3.0:check[m [1m(validate)[0;1m < [0;1m:spotbugs[m @ [36mingest[0;1m <<<[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotbugs-maven-plugin:4.7.3.0:check[m [1m(validate)[m @ [36mingest[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m------------------------< [0;36msleeper:ingest-core[0;1m >-------------------------[m
+[[1;34mINFO[m] [1mBuilding ingest-core 0.15.0-SNAPSHOT                              [8/20][m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:2.6:resources[m [1m(default-resources)[m @ [36mingest-core[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/java/ingest/ingest-core/src/main/resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.10.1:compile[m [1m(default-compile)[m @ [36mingest-core[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 13 source files to /workspace/repo/java/ingest/ingest-core/target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:2.6:testResources[m [1m(default-testResources)[m @ [36mingest-core[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/java/ingest/ingest-core/src/test/resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.10.1:testCompile[m [1m(default-testCompile)[m @ [36mingest-core[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 17 source files to /workspace/repo/java/ingest/ingest-core/target/test-classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:3.0.0-M7:test[m [1m(default-test)[m @ [36mingest-core[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:3.2.0:check[m [1m(validate)[m @ [36mingest-core[0;1m ---[m
+[[1;34mINFO[m] Starting audit...
+Audit done.
+[[1;34mINFO[m] You have 0 Checkstyle violations.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m>>> [0;32mspotbugs-maven-plugin:4.7.3.0:check[m [1m(validate)[0;1m > [0;1m:spotbugs[m @ [36mingest-core[0;1m >>>[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotbugs-maven-plugin:4.7.3.0:spotbugs[m [1m(spotbugs)[m @ [36mingest-core[0;1m ---[m
+[[1;34mINFO[m] Fork Value is true
+[[1;34mINFO[m] Done SpotBugs Analysis....
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m<<< [0;32mspotbugs-maven-plugin:4.7.3.0:check[m [1m(validate)[0;1m < [0;1m:spotbugs[m @ [36mingest-core[0;1m <<<[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotbugs-maven-plugin:4.7.3.0:check[m [1m(validate)[m @ [36mingest-core[0;1m ---[m
+[[1;34mINFO[m] BugInstance size is 0
+[[1;34mINFO[m] Error size is 0
+[[1;34mINFO[m] No errors/warnings found
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m-------------------------< [0;36msleeper:common-job[0;1m >-------------------------[m
+[[1;34mINFO[m] [1mBuilding common-job 0.15.0-SNAPSHOT                               [9/20][m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:2.6:resources[m [1m(default-resources)[m @ [36mcommon-job[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/java/common-job/src/main/resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.10.1:compile[m [1m(default-compile)[m @ [36mcommon-job[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 9 source files to /workspace/repo/java/common-job/target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:2.6:testResources[m [1m(default-testResources)[m @ [36mcommon-job[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/java/common-job/src/test/resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.10.1:testCompile[m [1m(default-testCompile)[m @ [36mcommon-job[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 6 source files to /workspace/repo/java/common-job/target/test-classes
+[[1;34mINFO[m] /workspace/repo/java/common-job/src/test/java/sleeper/job/common/QueueMessageCountIT.java: Some input files use or override a deprecated API.
+[[1;34mINFO[m] /workspace/repo/java/common-job/src/test/java/sleeper/job/common/QueueMessageCountIT.java: Recompile with -Xlint:deprecation for details.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:3.0.0-M7:test[m [1m(default-test)[m @ [36mcommon-job[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:3.2.0:check[m [1m(validate)[m @ [36mcommon-job[0;1m ---[m
+[[1;34mINFO[m] Starting audit...
+Audit done.
+[[1;34mINFO[m] You have 0 Checkstyle violations.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m>>> [0;32mspotbugs-maven-plugin:4.7.3.0:check[m [1m(validate)[0;1m > [0;1m:spotbugs[m @ [36mcommon-job[0;1m >>>[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotbugs-maven-plugin:4.7.3.0:spotbugs[m [1m(spotbugs)[m @ [36mcommon-job[0;1m ---[m
+[[1;34mINFO[m] Fork Value is true
+[[1;34mINFO[m] Done SpotBugs Analysis....
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m<<< [0;32mspotbugs-maven-plugin:4.7.3.0:check[m [1m(validate)[0;1m < [0;1m:spotbugs[m @ [36mcommon-job[0;1m <<<[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotbugs-maven-plugin:4.7.3.0:check[m [1m(validate)[m @ [36mcommon-job[0;1m ---[m
+[[1;34mINFO[m] BugInstance size is 0
+[[1;34mINFO[m] Error size is 0
+[[1;34mINFO[m] No errors/warnings found
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--------------------------< [0;36msleeper:sketches[0;1m >--------------------------[m
+[[1;34mINFO[m] [1mBuilding sketches 0.15.0-SNAPSHOT                                [10/20][m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:2.6:resources[m [1m(default-resources)[m @ [36msketches[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/java/sketches/src/main/resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.10.1:compile[m [1m(default-compile)[m @ [36msketches[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 3 source files to /workspace/repo/java/sketches/target/classes
+[[1;34mINFO[m] /workspace/repo/java/sketches/src/main/java/sleeper/sketches/SketchSerialiser.java: /workspace/repo/java/sketches/src/main/java/sleeper/sketches/SketchSerialiser.java uses unchecked or unsafe operations.
+[[1;34mINFO[m] /workspace/repo/java/sketches/src/main/java/sleeper/sketches/SketchSerialiser.java: Recompile with -Xlint:unchecked for details.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:2.6:testResources[m [1m(default-testResources)[m @ [36msketches[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/java/sketches/src/test/resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.10.1:testCompile[m [1m(default-testCompile)[m @ [36msketches[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 2 source files to /workspace/repo/java/sketches/target/test-classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:3.0.0-M7:test[m [1m(default-test)[m @ [36msketches[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:3.2.0:check[m [1m(validate)[m @ [36msketches[0;1m ---[m
+[[1;34mINFO[m] Starting audit...
+Audit done.
+[[1;34mINFO[m] You have 0 Checkstyle violations.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m>>> [0;32mspotbugs-maven-plugin:4.7.3.0:check[m [1m(validate)[0;1m > [0;1m:spotbugs[m @ [36msketches[0;1m >>>[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotbugs-maven-plugin:4.7.3.0:spotbugs[m [1m(spotbugs)[m @ [36msketches[0;1m ---[m
+[[1;34mINFO[m] Fork Value is true
+[[1;34mINFO[m] Done SpotBugs Analysis....
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m<<< [0;32mspotbugs-maven-plugin:4.7.3.0:check[m [1m(validate)[0;1m < [0;1m:spotbugs[m @ [36msketches[0;1m <<<[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotbugs-maven-plugin:4.7.3.0:check[m [1m(validate)[m @ [36msketches[0;1m ---[m
+[[1;34mINFO[m] BugInstance size is 0
+[[1;34mINFO[m] Error size is 0
+[[1;34mINFO[m] No errors/warnings found
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m---------------------------< [0;36msleeper:tables[0;1m >---------------------------[m
+[[1;34mINFO[m] [1mBuilding tables 0.15.0-SNAPSHOT                                  [11/20][m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:2.6:resources[m [1m(default-resources)[m @ [36mtables[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/java/tables/src/main/resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.10.1:compile[m [1m(default-compile)[m @ [36mtables[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 3 source files to /workspace/repo/java/tables/target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:2.6:testResources[m [1m(default-testResources)[m @ [36mtables[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/java/tables/src/test/resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.10.1:testCompile[m [1m(default-testCompile)[m @ [36mtables[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 2 source files to /workspace/repo/java/tables/target/test-classes
+[[1;34mINFO[m] /workspace/repo/java/tables/src/test/java/sleeper/table/job/TableInitialiserIT.java: Some input files use or override a deprecated API.
+[[1;34mINFO[m] /workspace/repo/java/tables/src/test/java/sleeper/table/job/TableInitialiserIT.java: Recompile with -Xlint:deprecation for details.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:3.0.0-M7:test[m [1m(default-test)[m @ [36mtables[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:3.2.0:check[m [1m(validate)[m @ [36mtables[0;1m ---[m
+[[1;34mINFO[m] Starting audit...
+Audit done.
+[[1;34mINFO[m] You have 0 Checkstyle violations.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m>>> [0;32mspotbugs-maven-plugin:4.7.3.0:check[m [1m(validate)[0;1m > [0;1m:spotbugs[m @ [36mtables[0;1m >>>[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotbugs-maven-plugin:4.7.3.0:spotbugs[m [1m(spotbugs)[m @ [36mtables[0;1m ---[m
+[[1;34mINFO[m] Fork Value is true
+[[1;34mINFO[m] Done SpotBugs Analysis....
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m<<< [0;32mspotbugs-maven-plugin:4.7.3.0:check[m [1m(validate)[0;1m < [0;1m:spotbugs[m @ [36mtables[0;1m <<<[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotbugs-maven-plugin:4.7.3.0:check[m [1m(validate)[m @ [36mtables[0;1m ---[m
+[[1;34mINFO[m] BugInstance size is 0
+[[1;34mINFO[m] Error size is 0
+[[1;34mINFO[m] No errors/warnings found
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--------------------< [0;36msleeper:ingest-status-store[0;1m >---------------------[m
+[[1;34mINFO[m] [1mBuilding ingest-status-store 0.15.0-SNAPSHOT                     [12/20][m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:2.6:resources[m [1m(default-resources)[m @ [36mingest-status-store[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/java/ingest/ingest-status-store/src/main/resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.10.1:compile[m [1m(default-compile)[m @ [36mingest-status-store[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 9 source files to /workspace/repo/java/ingest/ingest-status-store/target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:2.6:testResources[m [1m(default-testResources)[m @ [36mingest-status-store[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/java/ingest/ingest-status-store/src/test/resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.10.1:testCompile[m [1m(default-testCompile)[m @ [36mingest-status-store[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 18 source files to /workspace/repo/java/ingest/ingest-status-store/target/test-classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:3.0.0-M7:test[m [1m(default-test)[m @ [36mingest-status-store[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:3.2.0:check[m [1m(validate)[m @ [36mingest-status-store[0;1m ---[m
+[[1;34mINFO[m] Starting audit...
+Audit done.
+[[1;34mINFO[m] You have 0 Checkstyle violations.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m>>> [0;32mspotbugs-maven-plugin:4.7.3.0:check[m [1m(validate)[0;1m > [0;1m:spotbugs[m @ [36mingest-status-store[0;1m >>>[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotbugs-maven-plugin:4.7.3.0:spotbugs[m [1m(spotbugs)[m @ [36mingest-status-store[0;1m ---[m
+[[1;34mINFO[m] Fork Value is true
+[[1;34mINFO[m] Done SpotBugs Analysis....
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m<<< [0;32mspotbugs-maven-plugin:4.7.3.0:check[m [1m(validate)[0;1m < [0;1m:spotbugs[m @ [36mingest-status-store[0;1m <<<[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotbugs-maven-plugin:4.7.3.0:check[m [1m(validate)[m @ [36mingest-status-store[0;1m ---[m
+[[1;34mINFO[m] BugInstance size is 0
+[[1;34mINFO[m] Error size is 0
+[[1;34mINFO[m] No errors/warnings found
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m-----------------------< [0;36msleeper:ingest-runner[0;1m >------------------------[m
+[[1;34mINFO[m] [1mBuilding ingest-runner 0.15.0-SNAPSHOT                           [13/20][m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:2.6:resources[m [1m(default-resources)[m @ [36mingest-runner[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/java/ingest/ingest-runner/src/main/resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.10.1:compile[m [1m(default-compile)[m @ [36mingest-runner[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 33 source files to /workspace/repo/java/ingest/ingest-runner/target/classes
+[[1;34mINFO[m] /workspace/repo/java/ingest/ingest-runner/src/main/java/sleeper/ingest/job/IngestJobUtils.java: Some input files use unchecked or unsafe operations.
+[[1;34mINFO[m] /workspace/repo/java/ingest/ingest-runner/src/main/java/sleeper/ingest/job/IngestJobUtils.java: Recompile with -Xlint:unchecked for details.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:2.6:testResources[m [1m(default-testResources)[m @ [36mingest-runner[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/java/ingest/ingest-runner/src/test/resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.10.1:testCompile[m [1m(default-testCompile)[m @ [36mingest-runner[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 26 source files to /workspace/repo/java/ingest/ingest-runner/target/test-classes
+[[1;34mINFO[m] /workspace/repo/java/ingest/ingest-runner/src/test/java/sleeper/ingest/testutils/AwsExternalResource.java: Some input files use or override a deprecated API.
+[[1;34mINFO[m] /workspace/repo/java/ingest/ingest-runner/src/test/java/sleeper/ingest/testutils/AwsExternalResource.java: Recompile with -Xlint:deprecation for details.
+[[1;34mINFO[m] /workspace/repo/java/ingest/ingest-runner/src/test/java/sleeper/ingest/IngestRecordsTest.java: Some input files use unchecked or unsafe operations.
+[[1;34mINFO[m] /workspace/repo/java/ingest/ingest-runner/src/test/java/sleeper/ingest/IngestRecordsTest.java: Recompile with -Xlint:unchecked for details.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:3.0.0-M7:test[m [1m(default-test)[m @ [36mingest-runner[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:3.2.0:check[m [1m(validate)[m @ [36mingest-runner[0;1m ---[m
+[[1;34mINFO[m] Starting audit...
+Audit done.
+[[1;34mINFO[m] You have 0 Checkstyle violations.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m>>> [0;32mspotbugs-maven-plugin:4.7.3.0:check[m [1m(validate)[0;1m > [0;1m:spotbugs[m @ [36mingest-runner[0;1m >>>[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotbugs-maven-plugin:4.7.3.0:spotbugs[m [1m(spotbugs)[m @ [36mingest-runner[0;1m ---[m
+[[1;34mINFO[m] Fork Value is true
+[[1;34mINFO[m] Done SpotBugs Analysis....
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m<<< [0;32mspotbugs-maven-plugin:4.7.3.0:check[m [1m(validate)[0;1m < [0;1m:spotbugs[m @ [36mingest-runner[0;1m <<<[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotbugs-maven-plugin:4.7.3.0:check[m [1m(validate)[m @ [36mingest-runner[0;1m ---[m
+[[1;34mINFO[m] BugInstance size is 0
+[[1;34mINFO[m] Error size is 0
+[[1;34mINFO[m] No errors/warnings found
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m---------------------------< [0;36msleeper:query[0;1m >----------------------------[m
+[[1;34mINFO[m] [1mBuilding query 0.15.0-SNAPSHOT                                   [14/20][m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:2.6:resources[m [1m(default-resources)[m @ [36mquery[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/java/query/src/main/resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.10.1:compile[m [1m(default-compile)[m @ [36mquery[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 28 source files to /workspace/repo/java/query/target/classes
+[[1;34mINFO[m] /workspace/repo/java/query/src/main/java/sleeper/query/model/output/SQSResultsOutput.java: /workspace/repo/java/query/src/main/java/sleeper/query/model/output/SQSResultsOutput.java uses unchecked or unsafe operations.
+[[1;34mINFO[m] /workspace/repo/java/query/src/main/java/sleeper/query/model/output/SQSResultsOutput.java: Recompile with -Xlint:unchecked for details.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:2.6:testResources[m [1m(default-testResources)[m @ [36mquery[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/java/query/src/test/resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.10.1:testCompile[m [1m(default-testCompile)[m @ [36mquery[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 10 source files to /workspace/repo/java/query/target/test-classes
+[[1;34mINFO[m] /workspace/repo/java/query/src/test/java/sleeper/query/executor/QueryExecutorIT.java: Some input files use or override a deprecated API.
+[[1;34mINFO[m] /workspace/repo/java/query/src/test/java/sleeper/query/executor/QueryExecutorIT.java: Recompile with -Xlint:deprecation for details.
+[[1;34mINFO[m] /workspace/repo/java/query/src/test/java/sleeper/query/utils/RangeQueryUtilsTest.java: /workspace/repo/java/query/src/test/java/sleeper/query/utils/RangeQueryUtilsTest.java uses unchecked or unsafe operations.
+[[1;34mINFO[m] /workspace/repo/java/query/src/test/java/sleeper/query/utils/RangeQueryUtilsTest.java: Recompile with -Xlint:unchecked for details.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:3.0.0-M7:test[m [1m(default-test)[m @ [36mquery[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:3.2.0:check[m [1m(validate)[m @ [36mquery[0;1m ---[m
+[[1;34mINFO[m] Starting audit...
+Audit done.
+[[1;34mINFO[m] You have 0 Checkstyle violations.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m>>> [0;32mspotbugs-maven-plugin:4.7.3.0:check[m [1m(validate)[0;1m > [0;1m:spotbugs[m @ [36mquery[0;1m >>>[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotbugs-maven-plugin:4.7.3.0:spotbugs[m [1m(spotbugs)[m @ [36mquery[0;1m ---[m
+[[1;34mINFO[m] Fork Value is true
+[[1;34mINFO[m] Done SpotBugs Analysis....
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m<<< [0;32mspotbugs-maven-plugin:4.7.3.0:check[m [1m(validate)[0;1m < [0;1m:spotbugs[m @ [36mquery[0;1m <<<[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotbugs-maven-plugin:4.7.3.0:check[m [1m(validate)[m @ [36mquery[0;1m ---[m
+[[1;34mINFO[m] BugInstance size is 0
+[[1;34mINFO[m] Error size is 0
+[[1;34mINFO[m] No errors/warnings found
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m-------------------------< [0;36msleeper:compaction[0;1m >-------------------------[m
+[[1;34mINFO[m] [1mBuilding compaction 0.15.0-SNAPSHOT                              [15/20][m
+[[1;34mINFO[m] [1m--------------------------------[ pom ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:3.2.0:check[m [1m(validate)[m @ [36mcompaction[0;1m ---[m
+[[1;34mINFO[m] Starting audit...
+Audit done.
+[[1;34mINFO[m] You have 0 Checkstyle violations.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m>>> [0;32mspotbugs-maven-plugin:4.7.3.0:check[m [1m(validate)[0;1m > [0;1m:spotbugs[m @ [36mcompaction[0;1m >>>[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotbugs-maven-plugin:4.7.3.0:spotbugs[m [1m(spotbugs)[m @ [36mcompaction[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m<<< [0;32mspotbugs-maven-plugin:4.7.3.0:check[m [1m(validate)[0;1m < [0;1m:spotbugs[m @ [36mcompaction[0;1m <<<[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotbugs-maven-plugin:4.7.3.0:check[m [1m(validate)[m @ [36mcompaction[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m----------------------< [0;36msleeper:compaction-core[0;1m >-----------------------[m
+[[1;34mINFO[m] [1mBuilding compaction-core 0.15.0-SNAPSHOT                         [16/20][m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:2.6:resources[m [1m(default-resources)[m @ [36mcompaction-core[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/java/compaction/compaction-core/src/main/resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.10.1:compile[m [1m(default-compile)[m @ [36mcompaction-core[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 12 source files to /workspace/repo/java/compaction/compaction-core/target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:2.6:testResources[m [1m(default-testResources)[m @ [36mcompaction-core[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/java/compaction/compaction-core/src/test/resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.10.1:testCompile[m [1m(default-testCompile)[m @ [36mcompaction-core[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 12 source files to /workspace/repo/java/compaction/compaction-core/target/test-classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:3.0.0-M7:test[m [1m(default-test)[m @ [36mcompaction-core[0;1m ---[m
+[[1;34mINFO[m] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[[1;34mINFO[m] 
+[[1;34mINFO[m] -------------------------------------------------------
+[[1;34mINFO[m]  T E S T S
+[[1;34mINFO[m] -------------------------------------------------------
+[[1;34mINFO[m] Running sleeper.compaction.testutils.[1mCompactionJobStatusStoreInMemoryTest[m
+[[1;34mINFO[m] Running sleeper.compaction.testutils.[1mCompactionJobStatusStoreInMemoryTest$GetJobsInTimePeriod[m
+[main] compaction.job.CompactionJobFactory INFO  - Initialised CompactionFactory with table name test-table, filename prefix test-fs
+[main] core.partition.PartitionsFromSplitPoints INFO  - Constructing partition tree from no split points - tree will consist of one partition
+[main] compaction.job.CompactionJobFactory INFO  - Created compaction job of id 984eede6-e251-4a83-8639-ad91d8149277 to compact and split 1 files in partition root to output file test-fs/partition_root/984eede6-e251-4a83-8639-ad91d8149277.parquet
+[main] compaction.job.CompactionJobFactory INFO  - Created compaction job of id 781eb636-aadf-4c88-8ffc-42aa593b2f79 to compact and split 1 files in partition root to output file test-fs/partition_root/781eb636-aadf-4c88-8ffc-42aa593b2f79.parquet
+[main] compaction.job.CompactionJobFactory INFO  - Initialised CompactionFactory with table name test-table, filename prefix test-fs
+[main] core.partition.PartitionsFromSplitPoints INFO  - Constructing partition tree from no split points - tree will consist of one partition
+[main] compaction.job.CompactionJobFactory INFO  - Created compaction job of id 329a2041-5e20-4ee0-bbf2-620589f7cada to compact and split 1 files in partition root to output file test-fs/partition_root/329a2041-5e20-4ee0-bbf2-620589f7cada.parquet
+[main] compaction.job.CompactionJobFactory INFO  - Initialised CompactionFactory with table name test-table, filename prefix test-fs
+[[1;34mINFO[m] [1;32mTests run: [0;1;32m3[m, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.224 s - in sleeper.compaction.testutils.[1mCompactionJobStatusStoreInMemoryTest$GetJobsInTimePeriod[m
+[[1;34mINFO[m] Running sleeper.compaction.testutils.[1mCompactionJobStatusStoreInMemoryTest$GetJobsByTaskId[m
+[main] compaction.job.CompactionJobFactory INFO  - Initialised CompactionFactory with table name test-table, filename prefix test-fs
+[main] core.partition.PartitionsFromSplitPoints INFO  - Constructing partition tree from no split points - tree will consist of one partition
+[main] compaction.job.CompactionJobFactory INFO  - Created compaction job of id b0a0b1dc-325e-4de7-931a-97458701199f to compact and split 1 files in partition root to output file test-fs/partition_root/b0a0b1dc-325e-4de7-931a-97458701199f.parquet
+[main] compaction.job.CompactionJobFactory INFO  - Initialised CompactionFactory with table name test-table, filename prefix test-fs
+[main] core.partition.PartitionsFromSplitPoints INFO  - Constructing partition tree from no split points - tree will consist of one partition
+[main] compaction.job.CompactionJobFactory INFO  - Created compaction job of id 6d0ef7f5-8079-4007-8962-b8fa937e8b3a to compact and split 1 files in partition root to output file test-fs/partition_root/6d0ef7f5-8079-4007-8962-b8fa937e8b3a.parquet
+[main] compaction.job.CompactionJobFactory INFO  - Created compaction job of id c55e145e-5f16-4189-84f9-9e420dd607a9 to compact and split 1 files in partition root to output file test-fs/partition_root/c55e145e-5f16-4189-84f9-9e420dd607a9.parquet
+[main] compaction.job.CompactionJobFactory INFO  - Initialised CompactionFactory with table name test-table, filename prefix test-fs
+[[1;34mINFO[m] [1;32mTests run: [0;1;32m3[m, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.01 s - in sleeper.compaction.testutils.[1mCompactionJobStatusStoreInMemoryTest$GetJobsByTaskId[m
+[[1;34mINFO[m] Running sleeper.compaction.testutils.[1mCompactionJobStatusStoreInMemoryTest$GetUnfinishedJobs[m
+[main] compaction.job.CompactionJobFactory INFO  - Initialised CompactionFactory with table name test-table, filename prefix test-fs
+[main] core.partition.PartitionsFromSplitPoints INFO  - Constructing partition tree from no split points - tree will consist of one partition
+[main] compaction.job.CompactionJobFactory INFO  - Created compaction job of id 34c7244a-8e97-4d15-9445-3d9f5b9685e4 to compact and split 1 files in partition root to output file test-fs/partition_root/34c7244a-8e97-4d15-9445-3d9f5b9685e4.parquet
+[main] compaction.job.CompactionJobFactory INFO  - Initialised CompactionFactory with table name test-table, filename prefix test-fs
+[main] core.partition.PartitionsFromSplitPoints INFO  - Constructing partition tree from no split points - tree will consist of one partition
+[main] compaction.job.CompactionJobFactory INFO  - Created compaction job of id e7a2dea9-b0c4-4e57-abf4-3fbe4894bfc9 to compact and split 1 files in partition root to output file test-fs/partition_root/e7a2dea9-b0c4-4e57-abf4-3fbe4894bfc9.parquet
+[main] compaction.job.CompactionJobFactory INFO  - Created compaction job of id f3410ad1-1245-4186-9deb-dec33da07c1f to compact and split 1 files in partition root to output file test-fs/partition_root/f3410ad1-1245-4186-9deb-dec33da07c1f.parquet
+[main] compaction.job.CompactionJobFactory INFO  - Initialised CompactionFactory with table name test-table, filename prefix test-fs
+[[1;34mINFO[m] [1;32mTests run: [0;1;32m3[m, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.008 s - in sleeper.compaction.testutils.[1mCompactionJobStatusStoreInMemoryTest$GetUnfinishedJobs[m
+[[1;34mINFO[m] Running sleeper.compaction.testutils.[1mCompactionJobStatusStoreInMemoryTest$GetAllJobs[m
+[main] compaction.job.CompactionJobFactory INFO  - Initialised CompactionFactory with table name test-table, filename prefix test-fs
+[main] compaction.job.CompactionJobFactory INFO  - Initialised CompactionFactory with table name test-table, filename prefix test-fs
+[main] core.partition.PartitionsFromSplitPoints INFO  - Constructing partition tree from no split points - tree will consist of one partition
+[main] compaction.job.CompactionJobFactory INFO  - Created compaction job of id b061aca4-625a-4d95-ad56-fa710e0bfd87 to compact and split 1 files in partition root to output file test-fs/partition_root/b061aca4-625a-4d95-ad56-fa710e0bfd87.parquet
+[main] compaction.job.CompactionJobFactory INFO  - Created compaction job of id b0324a28-8630-4df5-84a7-3740c48e0b9b to compact and split 1 files in partition root to output file test-fs/partition_root/b0324a28-8630-4df5-84a7-3740c48e0b9b.parquet
+[main] compaction.job.CompactionJobFactory INFO  - Created compaction job of id b3b4365a-879a-4eb1-83c7-0c3d3c27870b to compact and split 1 files in partition root to output file test-fs/partition_root/b3b4365a-879a-4eb1-83c7-0c3d3c27870b.parquet
+[[1;34mINFO[m] [1;32mTests run: [0;1;32m2[m, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.005 s - in sleeper.compaction.testutils.[1mCompactionJobStatusStoreInMemoryTest$GetAllJobs[m
+[[1;34mINFO[m] Running sleeper.compaction.testutils.[1mCompactionJobStatusStoreInMemoryTest$GetJobById[m
+[main] compaction.job.CompactionJobFactory INFO  - Initialised CompactionFactory with table name test-table, filename prefix test-fs
+[main] compaction.job.CompactionJobFactory INFO  - Initialised CompactionFactory with table name test-table, filename prefix test-fs
+[main] core.partition.PartitionsFromSplitPoints INFO  - Constructing partition tree from no split points - tree will consist of one partition
+[main] compaction.job.CompactionJobFactory INFO  - Created compaction job of id 0142bc4c-b5cd-4fc0-8a11-691193893dec to compact and split 1 files in partition root to output file test-fs/partition_root/0142bc4c-b5cd-4fc0-8a11-691193893dec.parquet
+[main] compaction.job.CompactionJobFactory INFO  - Initialised CompactionFactory with table name test-table, filename prefix test-fs
+[main] core.partition.PartitionsFromSplitPoints INFO  - Constructing partition tree from no split points - tree will consist of one partition
+[main] compaction.job.CompactionJobFactory INFO  - Created compaction job of id 310935ed-7668-4042-ac06-f47865a5fe5c to compact and split 1 files in partition root to output file test-fs/partition_root/310935ed-7668-4042-ac06-f47865a5fe5c.parquet
+[[1;34mINFO[m] [1;32mTests run: [0;1;32m3[m, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.007 s - in sleeper.compaction.testutils.[1mCompactionJobStatusStoreInMemoryTest$GetJobById[m
+[[1;34mINFO[m] Running sleeper.compaction.testutils.[1mCompactionJobStatusStoreInMemoryTest$StoreStatusUpdates[m
+[main] compaction.job.CompactionJobFactory INFO  - Initialised CompactionFactory with table name test-table, filename prefix test-fs
+[main] core.partition.PartitionsFromSplitPoints INFO  - Constructing partition tree from no split points - tree will consist of one partition
+[main] compaction.job.CompactionJobFactory INFO  - Created compaction job of id 51bb57c8-17a9-43f6-8c3e-bf01fb9805e4 to compact and split 1 files in partition root to output file test-fs/partition_root/51bb57c8-17a9-43f6-8c3e-bf01fb9805e4.parquet
+[main] compaction.job.CompactionJobFactory INFO  - Initialised CompactionFactory with table name test-table, filename prefix test-fs
+[main] core.partition.PartitionsFromSplitPoints INFO  - Constructing partition tree from no split points - tree will consist of one partition
+[main] compaction.job.CompactionJobFactory INFO  - Created compaction job of id d89843f4-85c7-43f8-b9d5-57b7687f2f84 to compact and split 1 files in partition root to output file test-fs/partition_root/d89843f4-85c7-43f8-b9d5-57b7687f2f84.parquet
+[main] compaction.job.CompactionJobFactory INFO  - Initialised CompactionFactory with table name test-table, filename prefix test-fs
+[main] core.partition.PartitionsFromSplitPoints INFO  - Constructing partition tree from no split points - tree will consist of one partition
+[main] compaction.job.CompactionJobFactory INFO  - Created compaction job of id 6516155e-c99e-470a-97cf-e8264666de85 to compact and split 1 files in partition root to output file test-fs/partition_root/6516155e-c99e-470a-97cf-e8264666de85.parquet
+[[1;34mINFO[m] [1;32mTests run: [0;1;32m3[m, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.006 s - in sleeper.compaction.testutils.[1mCompactionJobStatusStoreInMemoryTest$StoreStatusUpdates[m
+[[1;34mINFO[m] [1mTests run: [0;1m0[m, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.282 s - in sleeper.compaction.testutils.[1mCompactionJobStatusStoreInMemoryTest[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] Results:
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1;32mTests run: 17, Failures: 0, Errors: 0, Skipped: 0[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:3.2.0:check[m [1m(validate)[m @ [36mcompaction-core[0;1m ---[m
+[[1;34mINFO[m] Starting audit...
+Audit done.
+[[1;34mINFO[m] You have 0 Checkstyle violations.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m>>> [0;32mspotbugs-maven-plugin:4.7.3.0:check[m [1m(validate)[0;1m > [0;1m:spotbugs[m @ [36mcompaction-core[0;1m >>>[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotbugs-maven-plugin:4.7.3.0:spotbugs[m [1m(spotbugs)[m @ [36mcompaction-core[0;1m ---[m
+[[1;34mINFO[m] Fork Value is true
+[[1;34mINFO[m] Done SpotBugs Analysis....
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m<<< [0;32mspotbugs-maven-plugin:4.7.3.0:check[m [1m(validate)[0;1m < [0;1m:spotbugs[m @ [36mcompaction-core[0;1m <<<[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotbugs-maven-plugin:4.7.3.0:check[m [1m(validate)[m @ [36mcompaction-core[0;1m ---[m
+[[1;34mINFO[m] BugInstance size is 0
+[[1;34mINFO[m] Error size is 0
+[[1;34mINFO[m] No errors/warnings found
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m------------------< [0;36msleeper:compaction-status-store[0;1m >-------------------[m
+[[1;34mINFO[m] [1mBuilding compaction-status-store 0.15.0-SNAPSHOT                 [17/20][m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:2.6:resources[m [1m(default-resources)[m @ [36mcompaction-status-store[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/java/compaction/compaction-status-store/src/main/resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.10.1:compile[m [1m(default-compile)[m @ [36mcompaction-status-store[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 9 source files to /workspace/repo/java/compaction/compaction-status-store/target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:2.6:testResources[m [1m(default-testResources)[m @ [36mcompaction-status-store[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/java/compaction/compaction-status-store/src/test/resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.10.1:testCompile[m [1m(default-testCompile)[m @ [36mcompaction-status-store[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 18 source files to /workspace/repo/java/compaction/compaction-status-store/target/test-classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:3.0.0-M7:test[m [1m(default-test)[m @ [36mcompaction-status-store[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:3.2.0:check[m [1m(validate)[m @ [36mcompaction-status-store[0;1m ---[m
+[[1;34mINFO[m] Starting audit...
+Audit done.
+[[1;34mINFO[m] You have 0 Checkstyle violations.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m>>> [0;32mspotbugs-maven-plugin:4.7.3.0:check[m [1m(validate)[0;1m > [0;1m:spotbugs[m @ [36mcompaction-status-store[0;1m >>>[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotbugs-maven-plugin:4.7.3.0:spotbugs[m [1m(spotbugs)[m @ [36mcompaction-status-store[0;1m ---[m
+[[1;34mINFO[m] Fork Value is true
+[[1;34mINFO[m] Done SpotBugs Analysis....
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m<<< [0;32mspotbugs-maven-plugin:4.7.3.0:check[m [1m(validate)[0;1m < [0;1m:spotbugs[m @ [36mcompaction-status-store[0;1m <<<[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotbugs-maven-plugin:4.7.3.0:check[m [1m(validate)[m @ [36mcompaction-status-store[0;1m ---[m
+[[1;34mINFO[m] BugInstance size is 0
+[[1;34mINFO[m] Error size is 0
+[[1;34mINFO[m] No errors/warnings found
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m------------------< [0;36msleeper:compaction-job-creation[0;1m >-------------------[m
+[[1;34mINFO[m] [1mBuilding compaction-job-creation 0.15.0-SNAPSHOT                 [18/20][m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:2.6:resources[m [1m(default-resources)[m @ [36mcompaction-job-creation[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/java/compaction/compaction-job-creation/src/main/resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.10.1:compile[m [1m(default-compile)[m @ [36mcompaction-job-creation[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 14 source files to /workspace/repo/java/compaction/compaction-job-creation/target/classes
+[[1;34mINFO[m] /workspace/repo/java/compaction/compaction-job-creation/src/main/java/sleeper/compaction/strategy/impl/SizeRatioLeafStrategy.java: /workspace/repo/java/compaction/compaction-job-creation/src/main/java/sleeper/compaction/strategy/impl/SizeRatioLeafStrategy.java uses unchecked or unsafe operations.
+[[1;34mINFO[m] /workspace/repo/java/compaction/compaction-job-creation/src/main/java/sleeper/compaction/strategy/impl/SizeRatioLeafStrategy.java: Recompile with -Xlint:unchecked for details.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:2.6:testResources[m [1m(default-testResources)[m @ [36mcompaction-job-creation[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/java/compaction/compaction-job-creation/src/test/resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.10.1:testCompile[m [1m(default-testCompile)[m @ [36mcompaction-job-creation[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 7 source files to /workspace/repo/java/compaction/compaction-job-creation/target/test-classes
+[[1;34mINFO[m] /workspace/repo/java/compaction/compaction-job-creation/src/test/java/sleeper/compaction/job/creation/CreateJobsIT.java: Some input files use or override a deprecated API.
+[[1;34mINFO[m] /workspace/repo/java/compaction/compaction-job-creation/src/test/java/sleeper/compaction/job/creation/CreateJobsIT.java: Recompile with -Xlint:deprecation for details.
+[[1;34mINFO[m] /workspace/repo/java/compaction/compaction-job-creation/src/test/java/sleeper/compaction/strategy/impl/SizeRatioCompactionStrategyTest.java: /workspace/repo/java/compaction/compaction-job-creation/src/test/java/sleeper/compaction/strategy/impl/SizeRatioCompactionStrategyTest.java uses unchecked or unsafe operations.
+[[1;34mINFO[m] /workspace/repo/java/compaction/compaction-job-creation/src/test/java/sleeper/compaction/strategy/impl/SizeRatioCompactionStrategyTest.java: Recompile with -Xlint:unchecked for details.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:3.0.0-M7:test[m [1m(default-test)[m @ [36mcompaction-job-creation[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:3.2.0:check[m [1m(validate)[m @ [36mcompaction-job-creation[0;1m ---[m
+[[1;34mINFO[m] Starting audit...
+Audit done.
+[[1;34mINFO[m] You have 0 Checkstyle violations.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m>>> [0;32mspotbugs-maven-plugin:4.7.3.0:check[m [1m(validate)[0;1m > [0;1m:spotbugs[m @ [36mcompaction-job-creation[0;1m >>>[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotbugs-maven-plugin:4.7.3.0:spotbugs[m [1m(spotbugs)[m @ [36mcompaction-job-creation[0;1m ---[m
+[[1;34mINFO[m] Fork Value is true
+[[1;34mINFO[m] Done SpotBugs Analysis....
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m<<< [0;32mspotbugs-maven-plugin:4.7.3.0:check[m [1m(validate)[0;1m < [0;1m:spotbugs[m @ [36mcompaction-job-creation[0;1m <<<[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotbugs-maven-plugin:4.7.3.0:check[m [1m(validate)[m @ [36mcompaction-job-creation[0;1m ---[m
+[[1;34mINFO[m] BugInstance size is 0
+[[1;34mINFO[m] Error size is 0
+[[1;34mINFO[m] No errors/warnings found
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--------------------------< [0;36msleeper:splitter[0;1m >--------------------------[m
+[[1;34mINFO[m] [1mBuilding splitter 0.15.0-SNAPSHOT                                [19/20][m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:2.6:resources[m [1m(default-resources)[m @ [36msplitter[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/java/splitter/src/main/resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.10.1:compile[m [1m(default-compile)[m @ [36msplitter[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 10 source files to /workspace/repo/java/splitter/target/classes
+[[1;34mINFO[m] /workspace/repo/java/splitter/src/main/java/sleeper/splitter/SplitMultiDimensionalPartitionImpl.java: /workspace/repo/java/splitter/src/main/java/sleeper/splitter/SplitMultiDimensionalPartitionImpl.java uses unchecked or unsafe operations.
+[[1;34mINFO[m] /workspace/repo/java/splitter/src/main/java/sleeper/splitter/SplitMultiDimensionalPartitionImpl.java: Recompile with -Xlint:unchecked for details.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:2.6:testResources[m [1m(default-testResources)[m @ [36msplitter[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/java/splitter/src/test/resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.10.1:testCompile[m [1m(default-testCompile)[m @ [36msplitter[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 3 source files to /workspace/repo/java/splitter/target/test-classes
+[[1;34mINFO[m] /workspace/repo/java/splitter/src/test/java/sleeper/splitter/FindPartitionsToSplitIT.java: Some input files use or override a deprecated API.
+[[1;34mINFO[m] /workspace/repo/java/splitter/src/test/java/sleeper/splitter/FindPartitionsToSplitIT.java: Recompile with -Xlint:deprecation for details.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:3.0.0-M7:test[m [1m(default-test)[m @ [36msplitter[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:3.2.0:check[m [1m(validate)[m @ [36msplitter[0;1m ---[m
+[[1;34mINFO[m] Starting audit...
+Audit done.
+[[1;34mINFO[m] You have 0 Checkstyle violations.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m>>> [0;32mspotbugs-maven-plugin:4.7.3.0:check[m [1m(validate)[0;1m > [0;1m:spotbugs[m @ [36msplitter[0;1m >>>[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotbugs-maven-plugin:4.7.3.0:spotbugs[m [1m(spotbugs)[m @ [36msplitter[0;1m ---[m
+[[1;34mINFO[m] Fork Value is true
+[[1;34mINFO[m] Done SpotBugs Analysis....
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m<<< [0;32mspotbugs-maven-plugin:4.7.3.0:check[m [1m(validate)[0;1m < [0;1m:spotbugs[m @ [36msplitter[0;1m <<<[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotbugs-maven-plugin:4.7.3.0:check[m [1m(validate)[m @ [36msplitter[0;1m ---[m
+[[1;34mINFO[m] BugInstance size is 0
+[[1;34mINFO[m] Error size is 0
+[[1;34mINFO[m] No errors/warnings found
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--------------------------< [0;36msleeper:clients[0;1m >---------------------------[m
+[[1;34mINFO[m] [1mBuilding clients 0.15.0-SNAPSHOT                                 [20/20][m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:2.6:resources[m [1m(default-resources)[m @ [36mclients[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] Copying 1 resource
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.10.1:compile[m [1m(default-compile)[m @ [36mclients[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 121 source files to /workspace/repo/java/clients/target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:2.6:testResources[m [1m(default-testResources)[m @ [36mclients[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] Copying 66 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.10.1:testCompile[m [1m(default-testCompile)[m @ [36mclients[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 82 source files to /workspace/repo/java/clients/target/test-classes
+[[1;34mINFO[m] /workspace/repo/java/clients/src/test/java/sleeper/clients/admin/testutils/AdminClientITBase.java: Some input files use or override a deprecated API.
+[[1;34mINFO[m] /workspace/repo/java/clients/src/test/java/sleeper/clients/admin/testutils/AdminClientITBase.java: Recompile with -Xlint:deprecation for details.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:3.0.0-M7:test[m [1m(default-test)[m @ [36mclients[0;1m ---[m
+[[1;34mINFO[m] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[[1;34mINFO[m] 
+[[1;34mINFO[m] -------------------------------------------------------
+[[1;34mINFO[m]  T E S T S
+[[1;34mINFO[m] -------------------------------------------------------
+[[1;34mINFO[m] Running sleeper.clients.admin.testutils.[1mAdminClientStatusStoreHolderTest[m
+[[1;34mINFO[m] [1;32mTests run: [0;1;32m8[m, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.037 s - in sleeper.clients.admin.testutils.[1mAdminClientStatusStoreHolderTest[m
+[[1;34mINFO[m] Running sleeper.clients.admin.[1mCompactionStatusReportScreenTest[m
+[[1;34mINFO[m] Running sleeper.clients.admin.[1mCompactionStatusReportScreenTest$CompactionTaskStatusReport[m
+[[1;34mINFO[m] [1;32mTests run: [0;1;32m3[m, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.044 s - in sleeper.clients.admin.[1mCompactionStatusReportScreenTest$CompactionTaskStatusReport[m
+[[1;34mINFO[m] Running sleeper.clients.admin.[1mCompactionStatusReportScreenTest$CompactionJobStatusReport[m
+[15:51:09,577] INFO - Initialised CompactionFactory with table name test-table, filename prefix test-fs
+[15:51:09,578] INFO - Constructing partition tree from no split points - tree will consist of one partition
+[15:51:09,604] INFO - Created compaction job of id 8a572685-2ff4-4d35-9d4f-248a724540d8 to compact and split 1 files in partition root to output file test-fs/partition_root/8a572685-2ff4-4d35-9d4f-248a724540d8.parquet
+[15:51:09,624] INFO - Initialised CompactionFactory with table name test-table, filename prefix test-fs
+[15:51:09,624] INFO - Constructing partition tree from no split points - tree will consist of one partition
+[15:51:09,624] INFO - Created compaction job of id 8cd01911-95fa-4f94-9279-55ed15a3dfb8 to compact and split 1 files in partition root to output file test-fs/partition_root/8cd01911-95fa-4f94-9279-55ed15a3dfb8.parquet
+[15:51:09,631] INFO - Initialised CompactionFactory with table name test-table, filename prefix test-fs
+[15:51:09,632] INFO - Constructing partition tree from no split points - tree will consist of one partition
+[15:51:09,632] INFO - Created compaction job of id 0dbf95e3-6397-46b6-8609-5dc9667cb5c0 to compact and split 1 files in partition root to output file test-fs/partition_root/0dbf95e3-6397-46b6-8609-5dc9667cb5c0.parquet
+[15:51:09,644] INFO - Initialised CompactionFactory with table name test-table, filename prefix test-fs
+[15:51:09,644] INFO - Constructing partition tree from no split points - tree will consist of one partition
+[15:51:09,644] INFO - Created compaction job of id b05770db-09b1-48e7-b111-1be33c5bc7a8 to compact and split 1 files in partition root to output file test-fs/partition_root/b05770db-09b1-48e7-b111-1be33c5bc7a8.parquet
+[[1;34mINFO[m] [1;32mTests run: [0;1;32m4[m, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.145 s - in sleeper.clients.admin.[1mCompactionStatusReportScreenTest$CompactionJobStatusReport[m
+[[1;34mINFO[m] [1mTests run: [0;1m0[m, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.222 s - in sleeper.clients.admin.[1mCompactionStatusReportScreenTest[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] Results:
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1;32mTests run: 15, Failures: 0, Errors: 0, Skipped: 0[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:3.2.0:check[m [1m(validate)[m @ [36mclients[0;1m ---[m
+[[1;34mINFO[m] Starting audit...
+Audit done.
+[[1;34mINFO[m] You have 0 Checkstyle violations.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m>>> [0;32mspotbugs-maven-plugin:4.7.3.0:check[m [1m(validate)[0;1m > [0;1m:spotbugs[m @ [36mclients[0;1m >>>[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotbugs-maven-plugin:4.7.3.0:spotbugs[m [1m(spotbugs)[m @ [36mclients[0;1m ---[m
+[[1;34mINFO[m] Fork Value is true
+[[1;34mINFO[m] Done SpotBugs Analysis....
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m<<< [0;32mspotbugs-maven-plugin:4.7.3.0:check[m [1m(validate)[0;1m < [0;1m:spotbugs[m @ [36mclients[0;1m <<<[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotbugs-maven-plugin:4.7.3.0:check[m [1m(validate)[m @ [36mclients[0;1m ---[m
+[[1;34mINFO[m] BugInstance size is 0
+[[1;34mINFO[m] Error size is 0
+[[1;34mINFO[m] No errors/warnings found
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1mReactor Summary for aws 0.15.0-SNAPSHOT:[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] aws ................................................ [1;32mSUCCESS[m [  1.866 s]
+[[1;34mINFO[m] core ............................................... [1;32mSUCCESS[m [  8.545 s]
+[[1;34mINFO[m] configuration ...................................... [1;32mSUCCESS[m [  5.036 s]
+[[1;34mINFO[m] parquet ............................................ [1;32mSUCCESS[m [  4.650 s]
+[[1;34mINFO[m] dynamodb-tools ..................................... [1;32mSUCCESS[m [  2.983 s]
+[[1;34mINFO[m] statestore ......................................... [1;32mSUCCESS[m [  6.168 s]
+[[1;34mINFO[m] ingest ............................................. [1;32mSUCCESS[m [  0.043 s]
+[[1;34mINFO[m] ingest-core ........................................ [1;32mSUCCESS[m [  3.749 s]
+[[1;34mINFO[m] common-job ......................................... [1;32mSUCCESS[m [  3.177 s]
+[[1;34mINFO[m] sketches ........................................... [1;32mSUCCESS[m [  3.152 s]
+[[1;34mINFO[m] tables ............................................. [1;32mSUCCESS[m [  3.310 s]
+[[1;34mINFO[m] ingest-status-store ................................ [1;32mSUCCESS[m [  3.481 s]
+[[1;34mINFO[m] ingest-runner ...................................... [1;32mSUCCESS[m [  6.716 s]
+[[1;34mINFO[m] query .............................................. [1;32mSUCCESS[m [  5.353 s]
+[[1;34mINFO[m] compaction ......................................... [1;32mSUCCESS[m [  0.038 s]
+[[1;34mINFO[m] compaction-core .................................... [1;32mSUCCESS[m [  5.508 s]
+[[1;34mINFO[m] compaction-status-store ............................ [1;32mSUCCESS[m [  4.293 s]
+[[1;34mINFO[m] compaction-job-creation ............................ [1;32mSUCCESS[m [  4.617 s]
+[[1;34mINFO[m] splitter ........................................... [1;32mSUCCESS[m [  4.302 s]
+[[1;34mINFO[m] clients ............................................ [1;32mSUCCESS[m [ 10.655 s]
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1;32mBUILD SUCCESS[m
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] Total time:  01:27 min
+[[1;34mINFO[m] Finished at: 2026-07-01T15:51:16Z
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+reward=1 graded=32 found=32 failed=0 parsed=32 framework=maven exit_code=0

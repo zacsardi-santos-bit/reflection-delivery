@@ -1,0 +1,144 @@
+patching file tests/integration/api_branch_test.go
+patching file tests/integration/db_collation_test.go
+2026/07/01 14:49:56 ...s/setting/setting.go:182:loadRunModeFrom() [E] You are running Gitea using the root user, and have purposely chosen to skip built-in protections around this. You have been warned against this.
+2026/07/01 14:49:56 ...s/storage/storage.go:176:initAttachments() [I] Initialising Attachment storage with type: local
+2026/07/01 14:49:56 ...les/storage/local.go:33:NewLocalStorage() [I] Creating new Local Storage at /workspace/repo/tests/integration/gitea-integration-sqlite/data/tests/integration/gitea-integration-sqlite/data/attachments
+2026/07/01 14:49:56 ...s/storage/storage.go:166:initAvatars() [I] Initialising Avatar storage with type: local
+2026/07/01 14:49:56 ...les/storage/local.go:33:NewLocalStorage() [I] Creating new Local Storage at /workspace/repo/tests/integration/gitea-integration-sqlite/data/tests/integration/gitea-integration-sqlite/data/avatars
+2026/07/01 14:49:56 ...s/storage/storage.go:192:initRepoAvatars() [I] Initialising Repository Avatar storage with type: local
+2026/07/01 14:49:56 ...les/storage/local.go:33:NewLocalStorage() [I] Creating new Local Storage at /workspace/repo/tests/integration/gitea-integration-sqlite/data/tests/integration/gitea-integration-sqlite/data/repo-avatars
+2026/07/01 14:49:56 ...s/storage/storage.go:186:initLFS() [I] Initialising LFS storage with type: local
+2026/07/01 14:49:56 ...les/storage/local.go:33:NewLocalStorage() [I] Creating new Local Storage at /workspace/repo/tests/integration/gitea-integration-sqlite/data/tests/integration/gitea-integration-sqlite/data/lfs
+2026/07/01 14:49:56 ...s/storage/storage.go:198:initRepoArchives() [I] Initialising Repository Archive storage with type: local
+2026/07/01 14:49:56 ...les/storage/local.go:33:NewLocalStorage() [I] Creating new Local Storage at /workspace/repo/tests/integration/gitea-integration-sqlite/data/repo-archive
+2026/07/01 14:49:56 ...s/storage/storage.go:208:initPackages() [I] Initialising Packages storage with type: local
+2026/07/01 14:49:56 ...les/storage/local.go:33:NewLocalStorage() [I] Creating new Local Storage at /workspace/repo/tests/integration/gitea-integration-sqlite/data/packages
+2026/07/01 14:49:56 ...s/storage/storage.go:219:initActions() [I] Initialising Actions storage with type: local
+2026/07/01 14:49:56 ...les/storage/local.go:33:NewLocalStorage() [I] Creating new Local Storage at /workspace/repo/tests/integration/gitea-integration-sqlite/data/actions_log
+2026/07/01 14:49:56 ...s/storage/storage.go:223:initActions() [I] Initialising ActionsArtifacts storage with type: local
+2026/07/01 14:49:56 ...les/storage/local.go:33:NewLocalStorage() [I] Creating new Local Storage at /workspace/repo/tests/integration/gitea-integration-sqlite/data/actions_artifacts
+2026/07/01 14:49:56 modules/git/git.go:132:checkInit() [W] git module has been initialized already, duplicate init may work but it's better to fix it
+2026/07/01 14:49:56 modules/git/git.go:132:checkInit() [W] git module has been initialized already, duplicate init may work but it's better to fix it
+2026/07/01 14:49:56 routers/init.go:112:InitWebInstalled() [I] Git version: 2.39.5, Wire Protocol Version 2 Enabled (home: /workspace/repo/tests/integration/gitea-integration-sqlite/data/home)
+??? [TestLogger] 2026/07/01 14:49:56 ...s/setting/session.go:74:loadSessionFrom() [I] Session Service Enabled
+??? [TestLogger] 2026/07/01 14:49:56 ...es/setting/mailer.go:237:loadMailerFrom() [I] Mail Service Enabled
+??? [TestLogger] 2026/07/01 14:49:56 ...es/setting/mailer.go:259:loadNotifyMailFrom() [I] Notify Mail Service Enabled
+??? [TestLogger] 2026/07/01 14:49:56 ...s/storage/storage.go:176:initAttachments() [I] Initialising Attachment storage with type: local
+??? [TestLogger] 2026/07/01 14:49:56 ...les/storage/local.go:33:NewLocalStorage() [I] Creating new Local Storage at /workspace/repo/tests/integration/gitea-integration-sqlite/data/tests/integration/gitea-integration-sqlite/data/attachments
+??? [TestLogger] 2026/07/01 14:49:56 ...s/storage/storage.go:166:initAvatars() [I] Initialising Avatar storage with type: local
+??? [TestLogger] 2026/07/01 14:49:56 ...les/storage/local.go:33:NewLocalStorage() [I] Creating new Local Storage at /workspace/repo/tests/integration/gitea-integration-sqlite/data/tests/integration/gitea-integration-sqlite/data/avatars
+??? [TestLogger] 2026/07/01 14:49:56 ...s/storage/storage.go:192:initRepoAvatars() [I] Initialising Repository Avatar storage with type: local
+??? [TestLogger] 2026/07/01 14:49:56 ...les/storage/local.go:33:NewLocalStorage() [I] Creating new Local Storage at /workspace/repo/tests/integration/gitea-integration-sqlite/data/tests/integration/gitea-integration-sqlite/data/repo-avatars
+??? [TestLogger] 2026/07/01 14:49:56 ...s/storage/storage.go:186:initLFS() [I] Initialising LFS storage with type: local
+??? [TestLogger] 2026/07/01 14:49:56 ...les/storage/local.go:33:NewLocalStorage() [I] Creating new Local Storage at /workspace/repo/tests/integration/gitea-integration-sqlite/data/tests/integration/gitea-integration-sqlite/data/lfs
+??? [TestLogger] 2026/07/01 14:49:56 ...s/storage/storage.go:198:initRepoArchives() [I] Initialising Repository Archive storage with type: local
+??? [TestLogger] 2026/07/01 14:49:56 ...les/storage/local.go:33:NewLocalStorage() [I] Creating new Local Storage at /workspace/repo/tests/integration/gitea-integration-sqlite/data/repo-archive
+??? [TestLogger] 2026/07/01 14:49:56 ...s/storage/storage.go:208:initPackages() [I] Initialising Packages storage with type: local
+??? [TestLogger] 2026/07/01 14:49:56 ...les/storage/local.go:33:NewLocalStorage() [I] Creating new Local Storage at /workspace/repo/tests/integration/gitea-integration-sqlite/data/packages
+??? [TestLogger] 2026/07/01 14:49:56 ...s/storage/storage.go:219:initActions() [I] Initialising Actions storage with type: local
+??? [TestLogger] 2026/07/01 14:49:56 ...les/storage/local.go:33:NewLocalStorage() [I] Creating new Local Storage at /workspace/repo/tests/integration/gitea-integration-sqlite/data/actions_log
+??? [TestLogger] 2026/07/01 14:49:56 ...s/storage/storage.go:223:initActions() [I] Initialising ActionsArtifacts storage with type: local
+??? [TestLogger] 2026/07/01 14:49:56 ...les/storage/local.go:33:NewLocalStorage() [I] Creating new Local Storage at /workspace/repo/tests/integration/gitea-integration-sqlite/data/actions_artifacts
+??? [TestLogger] 2026/07/01 14:49:56 routers/init.go:131:InitWebInstalled() [I] SQLite3 support is enabled
+??? [TestLogger] 2026/07/01 14:49:56 routers/common/db.go:23:InitDBEngine() [I] Beginning ORM engine initialization.
+??? [TestLogger] 2026/07/01 14:49:56 routers/common/db.go:30:InitDBEngine() [I] ORM engine initialization attempt #1/10...
+??? [TestLogger] 2026/07/01 14:49:58 routers/init.go:137:InitWebInstalled() [I] ORM engine initialization successful!
+??? [TestLogger] 2026/07/01 14:49:59 ...er/issues/indexer.go:76:func1() [I] PID 3105: Initializing Issue Indexer: bleve
+??? [TestLogger] 2026/07/01 14:49:59 ...exer/code/indexer.go:153:func3() [I] PID: 3105 Initializing Repository Indexer at: /workspace/repo/tests/integration/gitea-integration-sqlite/indexers/repos.bleve
+??? [TestLogger] 2026/07/01 14:49:59 ...xer/stats/indexer.go:41:populateRepoIndexer() [I] Populating the repo stats indexer with existing repositories
+??? [TestLogger] 2026/07/01 14:49:59 routers/init.go:81:syncAppConfForGit() [I] AppPath changed from '' to '/workspace/repo/gitea'
+??? [TestLogger] 2026/07/01 14:49:59 routers/init.go:86:syncAppConfForGit() [I] CustomConf changed from '' to '/workspace/repo/tests/sqlite.ini'
+??? [TestLogger] 2026/07/01 14:49:59 routers/init.go:92:syncAppConfForGit() [I] re-sync repository hooks ...
+??? [TestLogger] 2026/07/01 14:49:59 routers/init.go:95:syncAppConfForGit() [I] re-write ssh public keys ...
+??? [TestLogger] 2026/07/01 14:49:59 ...exer/code/indexer.go:234:func4() [I] Repository Indexer Initialization took 7.564886ms
+??? [TestLogger] 2026/07/01 14:49:59 ...exer/code/indexer.go:260:populateRepoIndexer() [I] Populating the repo indexer with existing repositories
+??? [TestLogger] 2026/07/01 14:49:59 ...er/issues/indexer.go:153:func2() [I] Issue Indexer Initialization took 8.829013ms
+??? [TestLogger] 2026/07/01 14:50:02 modules/ssh/ssh.go:331:Listen() [I] Adding SSH host key: /workspace/repo/tests/integration/gitea-integration-sqlite/data/ssh/gitea.rsa
+??? [TestLogger] 2026/07/01 14:50:02 modules/ssh/init.go:26:Init() [I] SSH server started on localhost:2203. Cipher list ([chacha20-poly1305@openssh.com aes128-ctr aes192-ctr aes256-ctr aes128-gcm@openssh.com aes256-gcm@openssh.com]), key exchange algorithms ([curve25519-sha256 ecdh-sha2-nistp256 ecdh-sha2-nistp384 ecdh-sha2-nistp521 diffie-hellman-group14-sha256 diffie-hellman-group14-sha1]), MACs ([hmac-sha2-256-etm@openssh.com hmac-sha2-256 hmac-sha1])
+??? [TestLogger] 2026/07/01 14:50:02 ...s/graceful/server.go:50:NewServer() [I] Starting new SSH server: tcp:localhost:2203 on PID: 3105
+??? [TestLogger] 2026/07/01 14:50:02 ...s/actions/cleanup.go:29:CleanupArtifacts() [I] Found 0 expired artifacts
+=== RUN   TestAPICreateBranch
+=== TestAPICreateBranch (tests/integration/api_branch_test.go:109)
+    testlogger.go:60: 2026/07/01 14:50:02 ...les/storage/local.go:33:NewLocalStorage() [I] Creating new Local Storage at /workspace/repo/tests/gitea-lfs-meta
+    testlogger.go:60: 2026/07/01 14:50:02 ...eb/routing/logger.go:102:func1() [I] router: completed GET /user/login for test-mock:12345, 200 OK in 8.0ms @ auth/auth.go:156(auth.SignIn)
+    testlogger.go:60: 2026/07/01 14:50:02 ...eb/routing/logger.go:102:func1() [I] router: completed POST /user/login for test-mock:12345, 303 See Other in 14.4ms @ auth/auth.go:183(auth.SignInPost)
+    testlogger.go:60: 2026/07/01 14:50:02 ...eb/routing/logger.go:102:func1() [I] router: completed GET /user/settings/applications for test-mock:12345, 200 OK in 9.2ms @ setting/applications.go:24(setting.Applications)
+    testlogger.go:60: 2026/07/01 14:50:02 ...eb/routing/logger.go:102:func1() [I] router: completed POST /user/settings/applications for test-mock:12345, 303 See Other in 15.3ms @ setting/applications.go:34(setting.ApplicationsPost)
+    testlogger.go:60: 2026/07/01 14:50:02 ...eb/routing/logger.go:102:func1() [I] router: completed GET /user/settings/applications for test-mock:12345, 200 OK in 3.4ms @ setting/applications.go:24(setting.Applications)
+=== RUN   TestAPICreateBranch/CreateRepo
+=== RUN   TestAPICreateBranch/new_branch_from_default_branch
+=== NAME  TestAPICreateBranch
+    testlogger.go:60: 2026/07/01 14:50:03 ...eb/routing/logger.go:102:func1() [I] router: completed POST /api/v1/user/repos for test-mock:12345, 201 Created in 907.9ms @ repo/repo.go:281(repo.Create)
+    testlogger.go:60: 2026/07/01 14:50:03 ...eb/routing/logger.go:102:func1() [I] router: completed GET /user/settings/applications for test-mock:12345, 200 OK in 5.5ms @ setting/applications.go:24(setting.Applications)
+    testlogger.go:60: 2026/07/01 14:50:03 ...eb/routing/logger.go:102:func1() [I] router: completed POST /user/settings/applications for test-mock:12345, 303 See Other in 18.4ms @ setting/applications.go:34(setting.ApplicationsPost)
+    testlogger.go:60: 2026/07/01 14:50:03 ...eb/routing/logger.go:102:func1() [I] router: completed GET /user/settings/applications for test-mock:12345, 200 OK in 3.1ms @ setting/applications.go:24(setting.Applications)
+    testlogger.go:60: 2026/07/01 14:50:03 ...eb/routing/logger.go:102:func1() [I] router: completed POST /api/internal/hook/pre-receive/user2/my-noo-repo for 127.0.0.1:0, 200 OK in 5.1ms @ private/hook_pre_receive.go:105(private.HookPreReceive)
+    testlogger.go:60: 2026/07/01 14:50:03 ...eb/routing/logger.go:102:func1() [I] router: completed POST /api/internal/hook/post-receive/user2/my-noo-repo for 127.0.0.1:0, 200 OK in 59.8ms @ private/hook_post_receive.go:25(private.HookPostReceive)
+    testlogger.go:60: 2026/07/01 14:50:03 ...eb/routing/logger.go:102:func1() [I] router: completed POST /api/v1/repos/user2/my-noo-repo/branches for test-mock:12345, 201 Created in 354.3ms @ repo/branch.go:180(repo.CreateBranch)
+=== RUN   TestAPICreateBranch/new_branch_from_master_1
+=== NAME  TestAPICreateBranch
+    testlogger.go:60: 2026/07/01 14:50:03 ...eb/routing/logger.go:102:func1() [I] router: completed GET /user/settings/applications for test-mock:12345, 200 OK in 3.5ms @ setting/applications.go:24(setting.Applications)
+    testlogger.go:60: 2026/07/01 14:50:03 ...eb/routing/logger.go:102:func1() [I] router: completed POST /user/settings/applications for test-mock:12345, 303 See Other in 15.6ms @ setting/applications.go:34(setting.ApplicationsPost)
+    testlogger.go:60: 2026/07/01 14:50:03 ...eb/routing/logger.go:102:func1() [I] router: completed GET /user/settings/applications for test-mock:12345, 200 OK in 3.5ms @ setting/applications.go:24(setting.Applications)
+    testlogger.go:60: 2026/07/01 14:50:04 ...eb/routing/logger.go:102:func1() [I] router: completed POST /api/internal/hook/pre-receive/user2/my-noo-repo for 127.0.0.1:0, 200 OK in 4.6ms @ private/hook_pre_receive.go:105(private.HookPreReceive)
+    testlogger.go:60: 2026/07/01 14:50:04 ...eb/routing/logger.go:102:func1() [I] router: completed POST /api/internal/hook/post-receive/user2/my-noo-repo for 127.0.0.1:0, 200 OK in 49.5ms @ private/hook_post_receive.go:25(private.HookPostReceive)
+    testlogger.go:60: 2026/07/01 14:50:04 ...eb/routing/logger.go:102:func1() [I] router: completed POST /api/v1/repos/user2/my-noo-repo/branches for test-mock:12345, 201 Created in 338.9ms @ repo/branch.go:180(repo.CreateBranch)
+=== RUN   TestAPICreateBranch/new_branch_from_master_1#01
+=== NAME  TestAPICreateBranch
+    testlogger.go:60: 2026/07/01 14:50:04 ...eb/routing/logger.go:102:func1() [I] router: completed GET /user/settings/applications for test-mock:12345, 200 OK in 3.5ms @ setting/applications.go:24(setting.Applications)
+    testlogger.go:60: 2026/07/01 14:50:04 ...eb/routing/logger.go:102:func1() [I] router: completed POST /user/settings/applications for test-mock:12345, 303 See Other in 15.7ms @ setting/applications.go:34(setting.ApplicationsPost)
+    testlogger.go:60: 2026/07/01 14:50:04 ...eb/routing/logger.go:102:func1() [I] router: completed GET /user/settings/applications for test-mock:12345, 200 OK in 3.4ms @ setting/applications.go:24(setting.Applications)
+=== RUN   TestAPICreateBranch/branch_2
+=== NAME  TestAPICreateBranch
+    testlogger.go:60: 2026/07/01 14:50:04 ...eb/routing/logger.go:102:func1() [I] router: completed POST /api/v1/repos/user2/my-noo-repo/branches for test-mock:12345, 409 Conflict in 19.4ms @ repo/branch.go:180(repo.CreateBranch)
+    testlogger.go:60: 2026/07/01 14:50:04 ...eb/routing/logger.go:102:func1() [I] router: completed GET /user/settings/applications for test-mock:12345, 200 OK in 3.4ms @ setting/applications.go:24(setting.Applications)
+    testlogger.go:60: 2026/07/01 14:50:04 ...eb/routing/logger.go:102:func1() [I] router: completed POST /user/settings/applications for test-mock:12345, 303 See Other in 15.5ms @ setting/applications.go:34(setting.ApplicationsPost)
+    testlogger.go:60: 2026/07/01 14:50:04 ...eb/routing/logger.go:102:func1() [I] router: completed GET /user/settings/applications for test-mock:12345, 200 OK in 3.4ms @ setting/applications.go:24(setting.Applications)
+    testlogger.go:60: 2026/07/01 14:50:04 ...eb/routing/logger.go:102:func1() [I] router: completed POST /api/internal/hook/pre-receive/user2/my-noo-repo for 127.0.0.1:0, 200 OK in 5.6ms @ private/hook_pre_receive.go:105(private.HookPreReceive)
+    testlogger.go:60: 2026/07/01 14:50:04 ...eb/routing/logger.go:102:func1() [I] router: completed POST /api/internal/hook/post-receive/user2/my-noo-repo for 127.0.0.1:0, 200 OK in 50.1ms @ private/hook_post_receive.go:25(private.HookPostReceive)
+    testlogger.go:60: 2026/07/01 14:50:04 ...eb/routing/logger.go:102:func1() [I] router: completed POST /api/v1/repos/user2/my-noo-repo/branches for test-mock:12345, 201 Created in 339.8ms @ repo/branch.go:180(repo.CreateBranch)
+=== RUN   TestAPICreateBranch/new_branch_from_non_existent
+=== NAME  TestAPICreateBranch
+    testlogger.go:60: 2026/07/01 14:50:04 ...eb/routing/logger.go:102:func1() [I] router: completed GET /user/settings/applications for test-mock:12345, 200 OK in 3.7ms @ setting/applications.go:24(setting.Applications)
+    testlogger.go:60: 2026/07/01 14:50:04 ...eb/routing/logger.go:102:func1() [I] router: completed POST /user/settings/applications for test-mock:12345, 303 See Other in 15.5ms @ setting/applications.go:34(setting.ApplicationsPost)
+    testlogger.go:60: 2026/07/01 14:50:04 ...eb/routing/logger.go:102:func1() [I] router: completed GET /user/settings/applications for test-mock:12345, 200 OK in 3.6ms @ setting/applications.go:24(setting.Applications)
+=== RUN   TestAPICreateBranch/test-👀
+=== NAME  TestAPICreateBranch
+    testlogger.go:60: 2026/07/01 14:50:04 ...eb/routing/logger.go:102:func1() [I] router: completed POST /api/v1/repos/user2/my-noo-repo/branches for test-mock:12345, 404 Not Found in 18.5ms @ repo/branch.go:180(repo.CreateBranch)
+    testlogger.go:60: 2026/07/01 14:50:04 ...eb/routing/logger.go:102:func1() [I] router: completed GET /user/settings/applications for test-mock:12345, 200 OK in 3.7ms @ setting/applications.go:24(setting.Applications)
+    testlogger.go:60: 2026/07/01 14:50:04 ...eb/routing/logger.go:102:func1() [I] router: completed POST /user/settings/applications for test-mock:12345, 303 See Other in 15.4ms @ setting/applications.go:34(setting.ApplicationsPost)
+    testlogger.go:60: 2026/07/01 14:50:04 ...eb/routing/logger.go:102:func1() [I] router: completed GET /user/settings/applications for test-mock:12345, 200 OK in 3.7ms @ setting/applications.go:24(setting.Applications)
+    testlogger.go:60: 2026/07/01 14:50:04 ...eb/routing/logger.go:102:func1() [I] router: completed POST /api/internal/hook/pre-receive/user2/my-noo-repo for 127.0.0.1:0, 200 OK in 4.7ms @ private/hook_pre_receive.go:105(private.HookPreReceive)
+    testlogger.go:60: 2026/07/01 14:50:05 ...eb/routing/logger.go:102:func1() [I] router: completed POST /api/internal/hook/post-receive/user2/my-noo-repo for 127.0.0.1:0, 200 OK in 50.2ms @ private/hook_post_receive.go:25(private.HookPostReceive)
+    testlogger.go:60: 2026/07/01 14:50:05 ...eb/routing/logger.go:102:func1() [I] router: completed POST /api/v1/repos/user2/my-noo-repo/branches for test-mock:12345, 201 Created in 335.8ms @ repo/branch.go:180(repo.CreateBranch)
+--- PASS: TestAPICreateBranch (2.69s)
+    --- PASS: TestAPICreateBranch/CreateRepo (0.91s)
+    --- PASS: TestAPICreateBranch/new_branch_from_default_branch (0.38s)
+    --- PASS: TestAPICreateBranch/new_branch_from_master_1 (0.36s)
+    --- PASS: TestAPICreateBranch/new_branch_from_master_1#01 (0.04s)
+    --- PASS: TestAPICreateBranch/branch_2 (0.36s)
+    --- PASS: TestAPICreateBranch/new_branch_from_non_existent (0.04s)
+    --- PASS: TestAPICreateBranch/test-👀 (0.36s)
+=== RUN   TestAPICreateBranchWithSyncBranches
+=== TestAPICreateBranchWithSyncBranches (tests/integration/api_branch_test.go:234)
+    testlogger.go:60: 2026/07/01 14:50:05 ...les/storage/local.go:33:NewLocalStorage() [I] Creating new Local Storage at /workspace/repo/tests/gitea-lfs-meta
+=== TestAPICreateBranchWithSyncBranches (tests/integration/api_branch_test.go:246)
+    testlogger.go:60: 2026/07/01 14:50:05 ...les/storage/local.go:33:NewLocalStorage() [I] Creating new Local Storage at /workspace/repo/tests/gitea-lfs-meta
+    testlogger.go:60: 2026/07/01 14:50:05 ...eb/routing/logger.go:102:func1() [I] router: completed GET /user/login for test-mock:12345, 200 OK in 1.5ms @ auth/auth.go:156(auth.SignIn)
+    testlogger.go:60: 2026/07/01 14:50:05 ...eb/routing/logger.go:102:func1() [I] router: completed POST /user/login for test-mock:12345, 303 See Other in 14.6ms @ auth/auth.go:183(auth.SignInPost)
+    testlogger.go:60: 2026/07/01 14:50:05 ...eb/routing/logger.go:102:func1() [I] router: completed GET /user/settings/applications for test-mock:12345, 200 OK in 3.3ms @ setting/applications.go:24(setting.Applications)
+    testlogger.go:60: 2026/07/01 14:50:05 ...eb/routing/logger.go:102:func1() [I] router: completed POST /user/settings/applications for test-mock:12345, 303 See Other in 15.2ms @ setting/applications.go:34(setting.ApplicationsPost)
+    testlogger.go:60: 2026/07/01 14:50:05 ...eb/routing/logger.go:102:func1() [I] router: completed GET /user/settings/applications for test-mock:12345, 200 OK in 3.4ms @ setting/applications.go:24(setting.Applications)
+    testlogger.go:60: 2026/07/01 14:50:05 ...eb/routing/logger.go:102:func1() [I] router: completed GET /user/settings/applications for test-mock:12345, 200 OK in 3.1ms @ setting/applications.go:24(setting.Applications)
+    testlogger.go:60: 2026/07/01 14:50:05 ...eb/routing/logger.go:102:func1() [I] router: completed POST /user/settings/applications for test-mock:12345, 303 See Other in 15.1ms @ setting/applications.go:34(setting.ApplicationsPost)
+    testlogger.go:60: 2026/07/01 14:50:05 ...eb/routing/logger.go:102:func1() [I] router: completed GET /user/settings/applications for test-mock:12345, 200 OK in 3.3ms @ setting/applications.go:24(setting.Applications)
+    testlogger.go:60: 2026/07/01 14:50:05 ...eb/routing/logger.go:102:func1() [I] router: completed POST /api/internal/hook/pre-receive/user2/repo1 for 127.0.0.1:0, 200 OK in 4.5ms @ private/hook_pre_receive.go:105(private.HookPreReceive)
+    testlogger.go:60: 2026/07/01 14:50:05 ...eb/routing/logger.go:102:func1() [I] router: completed POST /api/internal/hook/post-receive/user2/repo1 for 127.0.0.1:0, 200 OK in 86.9ms @ private/hook_post_receive.go:25(private.HookPostReceive)
+    testlogger.go:60: 2026/07/01 14:50:05 ...eb/routing/logger.go:102:func1() [I] router: completed POST /api/v1/repos/user2/repo1/branches for test-mock:12345, 201 Created in 407.8ms @ repo/branch.go:180(repo.CreateBranch)
+--- PASS: TestAPICreateBranchWithSyncBranches (0.86s)
+=== RUN   TestDatabaseCollation
+    db_collation_test.go:46: only MySQL and MSSQL requires the case-sensitive collation check at the moment
+--- SKIP: TestDatabaseCollation (0.02s)
+PASS
+ok  	code.gitea.io/gitea/tests/integration	9.942s
+reward=1 graded=9 found=0 failed=0 parsed=0 framework=go exit_code=0

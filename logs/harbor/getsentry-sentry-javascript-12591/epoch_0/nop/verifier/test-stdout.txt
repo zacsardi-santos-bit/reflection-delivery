@@ -23,114 +23,114 @@ ts-jest[ts-compiler] (WARN) [96mtest/lib/tracing/trace.test.ts[0m:[93m277[0m
 
 [7m1007[0m     const span = startInactiveSpan({ name: 'GET users/[id]', parentSpan });
 [7m    [0m [91m                                                             ~~~~~~~~~~[0m
-FAIL test/lib/tracing/trace.test.ts
+FAIL test/lib/tracing/trace.test.ts (9.787 s)
   startSpan
-    ✓ returns a non recording span if tracing is disabled (1 ms)
-    ✓ creates & finishes span (1 ms)
-    ✓ allows to pass a `startTime`
-    ✓ forks the scope (4 ms)
-    ✓ allows to pass a scope (1 ms)
+    ✓ returns a non recording span if tracing is disabled
+    ✓ creates & finishes span (2 ms)
+    ✓ allows to pass a `startTime` (1 ms)
+    ✓ forks the scope (1 ms)
+    ✓ allows to pass a scope (2 ms)
     ✕ allows to pass a parentSpan (2 ms)
-    ✓ allows to force a transaction with forceTransaction=true (3 ms)
+    ✓ allows to force a transaction with forceTransaction=true (5 ms)
     ✓ picks up the trace id off the parent scope's propagation context (1 ms)
-    ✓ samples with a tracesSampler (2 ms)
-    ✓ includes the scope at the time the span was started when finished (4 ms)
+    ✓ samples with a tracesSampler (3 ms)
+    ✓ includes the scope at the time the span was started when finished (6 ms)
     ✓ sets a child span reference on the parent span (1 ms)
     ✓ uses implementation from ACS, if it exists (1 ms)
     with async callback and error false
-      ✓ should return the same value as the callback (7 ms)
+      ✓ should return the same value as the callback (9 ms)
+      ✓ creates a transaction (2 ms)
+      ✓ allows for transaction to be mutated (1 ms)
+      ✓ creates a span with correct description (3 ms)
+      ✓ allows for span to be mutated (2 ms)
+      ✓ correctly sets the span origin (1 ms)
+    with sync callback and error false
+      ✓ should return the same value as the callback (1 ms)
       ✓ creates a transaction (2 ms)
       ✓ allows for transaction to be mutated (1 ms)
       ✓ creates a span with correct description (2 ms)
-      ✓ allows for span to be mutated (1 ms)
-      ✓ correctly sets the span origin (1 ms)
-    with sync callback and error false
-      ✓ should return the same value as the callback
-      ✓ creates a transaction (1 ms)
-      ✓ allows for transaction to be mutated (1 ms)
-      ✓ creates a span with correct description (1 ms)
-      ✓ allows for span to be mutated (1 ms)
-      ✓ correctly sets the span origin (1 ms)
+      ✓ allows for span to be mutated (2 ms)
+      ✓ correctly sets the span origin (33 ms)
     with async callback and error true
-      ✓ should return the same value as the callback (1 ms)
-      ✓ creates a transaction (1 ms)
+      ✓ should return the same value as the callback (2 ms)
+      ✓ creates a transaction (2 ms)
       ✓ allows for transaction to be mutated (1 ms)
-      ✓ creates a span with correct description (1 ms)
-      ✓ allows for span to be mutated (1 ms)
-      ✓ correctly sets the span origin (1 ms)
+      ✓ creates a span with correct description (2 ms)
+      ✓ allows for span to be mutated (2 ms)
+      ✓ correctly sets the span origin (2 ms)
     with sync callback and error true
       ✓ should return the same value as the callback (1 ms)
       ✓ creates a transaction (1 ms)
-      ✓ allows for transaction to be mutated
-      ✓ creates a span with correct description (1 ms)
+      ✓ allows for transaction to be mutated (1 ms)
+      ✓ creates a span with correct description (2 ms)
       ✓ allows for span to be mutated (1 ms)
-      ✓ correctly sets the span origin (1 ms)
+      ✓ correctly sets the span origin (2 ms)
     onlyIfParent
       ✓ starts a non recording span if there is no parent
-      ✓ creates a span if there is a parent (1 ms)
+      ✓ creates a span if there is a parent (2 ms)
     parentSpanIsAlwaysRootSpan
       ✓ creates a span as child of root span if parentSpanIsAlwaysRootSpan=true (1 ms)
-      ✓ does not creates a span as child of root span if parentSpanIsAlwaysRootSpan=false (1 ms)
+      ✓ does not creates a span as child of root span if parentSpanIsAlwaysRootSpan=false (2 ms)
     [experimental] standalone spans
       ✓ starts a standalone segment span if standalone is set (1 ms)
-      ✓ doesn't set segment properties if standalone is falsy (undefined)
+      ✓ doesn't set segment properties if standalone is falsy (undefined) (1 ms)
       ✓ doesn't set segment properties if standalone is falsy (false) (1 ms)
   startSpanManual
-    ✓ returns a non recording span if tracing is disabled (1 ms)
-    ✓ creates & finishes span
-    ✓ forks the scope automatically (1 ms)
+    ✓ returns a non recording span if tracing is disabled
+    ✓ creates & finishes span (1 ms)
+    ✓ forks the scope automatically (2 ms)
     ✓ allows to pass a scope (1 ms)
-    ✕ allows to pass a parentSpan
-    ✓ allows to force a transaction with forceTransaction=true (2 ms)
+    ✕ allows to pass a parentSpan (1 ms)
+    ✓ allows to force a transaction with forceTransaction=true (4 ms)
     ✓ allows to pass a `startTime` (1 ms)
-    ✓ picks up the trace id off the parent scope's propagation context
-    ✓ sets a child span reference on the parent span
+    ✓ picks up the trace id off the parent scope's propagation context (1 ms)
+    ✓ sets a child span reference on the parent span (1 ms)
     ✓ uses implementation from ACS, if it exists (1 ms)
     onlyIfParent
       ✓ does not create a span if there is no parent
       ✓ creates a span if there is a parent (1 ms)
     parentSpanIsAlwaysRootSpan
       ✓ creates a span as child of root span if parentSpanIsAlwaysRootSpan=true (1 ms)
-      ✓ does not creates a span as child of root span if parentSpanIsAlwaysRootSpan=false (1 ms)
+      ✓ does not creates a span as child of root span if parentSpanIsAlwaysRootSpan=false (2 ms)
   startInactiveSpan
     ✓ returns a non recording span if tracing is disabled
     ✓ creates & finishes span (1 ms)
-    ✓ does not set span on scope (3 ms)
-    ✓ allows to pass a scope (1 ms)
-    ✕ allows to pass a parentSpan
-    ✓ allows to force a transaction with forceTransaction=true (2 ms)
-    ✓ allows to pass a `startTime`
-    ✓ picks up the trace id off the parent scope's propagation context (1 ms)
-    ✓ includes the scope at the time the span was started when finished (6 ms)
+    ✓ does not set span on scope (1 ms)
+    ✓ allows to pass a scope
+    ✕ allows to pass a parentSpan (1 ms)
+    ✓ allows to force a transaction with forceTransaction=true (5 ms)
+    ✓ allows to pass a `startTime` (1 ms)
+    ✓ picks up the trace id off the parent scope's propagation context
+    ✓ includes the scope at the time the span was started when finished (28 ms)
     ✓ sets a child span reference on the parent span (1 ms)
-    ✓ uses implementation from ACS, if it exists
+    ✓ uses implementation from ACS, if it exists (1 ms)
     onlyIfParent
       ✓ does not create a span if there is no parent
       ✓ creates a span if there is a parent (1 ms)
     parentSpanIsAlwaysRootSpan
-      ✓ creates a span as child of root span if parentSpanIsAlwaysRootSpan=true (1 ms)
-      ✓ does not creates a span as child of root span if parentSpanIsAlwaysRootSpan=false (1 ms)
+      ✓ creates a span as child of root span if parentSpanIsAlwaysRootSpan=true (2 ms)
+      ✓ does not creates a span as child of root span if parentSpanIsAlwaysRootSpan=false (2 ms)
   continueTrace
-    ✓ works without trace & baggage data
+    ✓ works without trace & baggage data (1 ms)
     ✓ works with trace data (1 ms)
-    ✓ works with trace & baggage data
-    ✓ works with trace & 3rd party baggage data (1 ms)
-    ✓ returns response of callback
+    ✓ works with trace & baggage data (1 ms)
+    ✓ works with trace & 3rd party baggage data
+    ✓ returns response of callback (1 ms)
   getActiveSpan
     ✓ works without an active span on the scope
     ✓ works with an active span on the scope (1 ms)
     ✓ uses implementation from ACS, if it exists
   withActiveSpan()
     ✓ should set the active span within the callback (1 ms)
-    ✓ should create child spans when calling startSpan within the callback
+    ✓ should create child spans when calling startSpan within the callback (1 ms)
     ✓ when `null` is passed, no span should be active within the callback (1 ms)
-    ✓ uses implementation from ACS, if it exists
+    ✓ uses implementation from ACS, if it exists (1 ms)
   span hooks
-    ✓ correctly emits span hooks (1 ms)
+    ✓ correctly emits span hooks (2 ms)
   suppressTracing
     ✓ works for a root span
     ✓ works for a child span (1 ms)
-    ✓ works for a child span with forceTransaction=true (1 ms)
+    ✓ works for a child span with forceTransaction=true (2 ms)
   startNewTrace
     ✓ creates a new propagation context on the current scope
     ✓ keeps the propagation context on the isolation scope as-is (1 ms)
@@ -205,6 +205,6 @@ FAIL test/lib/tracing/trace.test.ts
 Test Suites: 1 failed, 1 total
 Tests:       3 failed, 87 passed, 90 total
 Snapshots:   0 total
-Time:        3.449 s
+Time:        9.843 s
 Ran all test suites matching /test\/lib\/tracing\/trace.test.ts/i.
 reward=0 graded=58 found=0 failed=0 parsed=0 framework=jest exit_code=1

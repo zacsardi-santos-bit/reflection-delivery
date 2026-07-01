@@ -1,0 +1,3 @@
+patching file packages/beacon-node/src/chain/archiveStore/errors.ts
+patching file packages/beacon-node/src/chain/archiveStore/interface.ts
+patching file packages/beacon-node/src/chain/archiveStore/utils/hierarchicalLayers.ts

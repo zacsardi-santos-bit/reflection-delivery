@@ -1,0 +1,123 @@
+patching file common/src/test/java/org/apache/sedona/common/ConstructorsTest.java
+patching file flink/src/test/java/org/apache/sedona/flink/ConstructorTest.java
+patching file python/tests/sql/test_constructor_test.py
+patching file python/tests/sql/test_dataframe_api.py
+patching file snowflake-tester/src/test/java/org/apache/sedona/snowflake/snowsql/TestConstructors.java
+patching file spark/common/src/test/scala/org/apache/sedona/sql/constructorTestScala.scala
+patching file spark/common/src/test/scala/org/apache/sedona/sql/dataFrameAPITestScala.scala
+[[1;34mINFO[m] Scanning for projects...
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.sedona:sedona-spark-common-3.0_2.12:jar:1.6.1-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.sedona:sedona-spark-common-${spark.compat.version}_${scala.compat.version}:1.6.1-SNAPSHOT, /workspace/repo/spark/common/pom.xml, line 28, column 14
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.sedona:sedona-spark-parent-${spark.compat.version}_${scala.compat.version}:1.6.1-SNAPSHOT, /workspace/repo/spark/pom.xml, line 28, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.sedona:sedona-spark-3.0_2.12:jar:1.6.1-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.sedona:sedona-spark-3.0_${scala.compat.version}:1.6.1-SNAPSHOT, /workspace/repo/spark/spark-3.0/pom.xml, line 28, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.sedona:sedona-spark-parent-3.0_2.12:pom:1.6.1-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.sedona:sedona-spark-parent-${spark.compat.version}_${scala.compat.version}:1.6.1-SNAPSHOT, /workspace/repo/spark/pom.xml, line 28, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.sedona:sedona-spark-shaded-3.0_2.12:jar:1.6.1-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.sedona:sedona-spark-shaded-${spark.compat.version}_${scala.compat.version}:1.6.1-SNAPSHOT, /workspace/repo/spark-shaded/pom.xml, line 27, column 17
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.sedona:sedona-flink_2.12:jar:1.6.1-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.sedona:sedona-flink_${scala.compat.version}:1.6.1-SNAPSHOT, /workspace/repo/flink/pom.xml, line 28, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.sedona:sedona-flink-shaded_2.12:jar:1.6.1-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.sedona:sedona-flink-shaded_${scala.compat.version}:1.6.1-SNAPSHOT, /workspace/repo/flink-shaded/pom.xml, line 27, column 17
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] It is highly recommended to fix these problems because they threaten the stability of your build.
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] For this reason, future Maven versions might no longer support building such malformed projects.
+[[1;33mWARNING[m] 
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m------------------< [0;36morg.apache.sedona:sedona-common[0;1m >-------------------[m
+[[1;34mINFO[m] [1mBuilding org.apache.sedona:sedona-common 1.6.1-SNAPSHOT[m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+Downloading from snapshots-repo: https://oss.sonatype.org/content/repositories/snapshots/org/eclipse/emf/org.eclipse.emf.common/maven-metadata.xml
+[[1;33mWARNING[m] Could not transfer metadata org.eclipse.emf:org.eclipse.emf.common/maven-metadata.xml from/to snapshots-repo (https://oss.sonatype.org/content/repositories/snapshots): transfer failed for https://oss.sonatype.org/content/repositories/snapshots/org/eclipse/emf/org.eclipse.emf.common/maven-metadata.xml
+[[1;33mWARNING[m] org.eclipse.emf:org.eclipse.emf.common/maven-metadata.xmlfailed to transfer from https://oss.sonatype.org/content/repositories/snapshots during a previous attempt. This failure was cached in the local repository and resolution will not be reattempted until the update interval of snapshots-repo has elapsed or updates are forced. Original error: Could not transfer metadata org.eclipse.emf:org.eclipse.emf.common/maven-metadata.xml from/to snapshots-repo (https://oss.sonatype.org/content/repositories/snapshots): transfer failed for https://oss.sonatype.org/content/repositories/snapshots/org/eclipse/emf/org.eclipse.emf.common/maven-metadata.xml
+[[1;33mWARNING[m] org.eclipse.emf:org.eclipse.emf.common/maven-metadata.xmlfailed to transfer from https://oss.sonatype.org/content/repositories/snapshots during a previous attempt. This failure was cached in the local repository and resolution will not be reattempted until the update interval of snapshots-repo has elapsed or updates are forced. Original error: Could not transfer metadata org.eclipse.emf:org.eclipse.emf.common/maven-metadata.xml from/to snapshots-repo (https://oss.sonatype.org/content/repositories/snapshots): transfer failed for https://oss.sonatype.org/content/repositories/snapshots/org/eclipse/emf/org.eclipse.emf.common/maven-metadata.xml
+[[1;33mWARNING[m] org.eclipse.emf:org.eclipse.emf.common/maven-metadata.xmlfailed to transfer from https://oss.sonatype.org/content/repositories/snapshots during a previous attempt. This failure was cached in the local repository and resolution will not be reattempted until the update interval of snapshots-repo has elapsed or updates are forced. Original error: Could not transfer metadata org.eclipse.emf:org.eclipse.emf.common/maven-metadata.xml from/to snapshots-repo (https://oss.sonatype.org/content/repositories/snapshots): transfer failed for https://oss.sonatype.org/content/repositories/snapshots/org/eclipse/emf/org.eclipse.emf.common/maven-metadata.xml
+[[1;33mWARNING[m] org.eclipse.emf:org.eclipse.emf.common/maven-metadata.xmlfailed to transfer from https://oss.sonatype.org/content/repositories/snapshots during a previous attempt. This failure was cached in the local repository and resolution will not be reattempted until the update interval of snapshots-repo has elapsed or updates are forced. Original error: Could not transfer metadata org.eclipse.emf:org.eclipse.emf.common/maven-metadata.xml from/to snapshots-repo (https://oss.sonatype.org/content/repositories/snapshots): transfer failed for https://oss.sonatype.org/content/repositories/snapshots/org/eclipse/emf/org.eclipse.emf.common/maven-metadata.xml
+[[1;33mWARNING[m] org.eclipse.emf:org.eclipse.emf.common/maven-metadata.xmlfailed to transfer from https://oss.sonatype.org/content/repositories/snapshots during a previous attempt. This failure was cached in the local repository and resolution will not be reattempted until the update interval of snapshots-repo has elapsed or updates are forced. Original error: Could not transfer metadata org.eclipse.emf:org.eclipse.emf.common/maven-metadata.xml from/to snapshots-repo (https://oss.sonatype.org/content/repositories/snapshots): transfer failed for https://oss.sonatype.org/content/repositories/snapshots/org/eclipse/emf/org.eclipse.emf.common/maven-metadata.xml
+[[1;33mWARNING[m] org.eclipse.emf:org.eclipse.emf.common/maven-metadata.xmlfailed to transfer from https://oss.sonatype.org/content/repositories/snapshots during a previous attempt. This failure was cached in the local repository and resolution will not be reattempted until the update interval of snapshots-repo has elapsed or updates are forced. Original error: Could not transfer metadata org.eclipse.emf:org.eclipse.emf.common/maven-metadata.xml from/to snapshots-repo (https://oss.sonatype.org/content/repositories/snapshots): transfer failed for https://oss.sonatype.org/content/repositories/snapshots/org/eclipse/emf/org.eclipse.emf.common/maven-metadata.xml
+[[1;33mWARNING[m] org.eclipse.emf:org.eclipse.emf.common/maven-metadata.xmlfailed to transfer from https://oss.sonatype.org/content/repositories/snapshots during a previous attempt. This failure was cached in the local repository and resolution will not be reattempted until the update interval of snapshots-repo has elapsed or updates are forced. Original error: Could not transfer metadata org.eclipse.emf:org.eclipse.emf.common/maven-metadata.xml from/to snapshots-repo (https://oss.sonatype.org/content/repositories/snapshots): transfer failed for https://oss.sonatype.org/content/repositories/snapshots/org/eclipse/emf/org.eclipse.emf.common/maven-metadata.xml
+[[1;33mWARNING[m] org.eclipse.emf:org.eclipse.emf.common/maven-metadata.xmlfailed to transfer from https://oss.sonatype.org/content/repositories/snapshots during a previous attempt. This failure was cached in the local repository and resolution will not be reattempted until the update interval of snapshots-repo has elapsed or updates are forced. Original error: Could not transfer metadata org.eclipse.emf:org.eclipse.emf.common/maven-metadata.xml from/to snapshots-repo (https://oss.sonatype.org/content/repositories/snapshots): transfer failed for https://oss.sonatype.org/content/repositories/snapshots/org/eclipse/emf/org.eclipse.emf.common/maven-metadata.xml
+[[1;33mWARNING[m] org.eclipse.emf:org.eclipse.emf.common/maven-metadata.xmlfailed to transfer from https://oss.sonatype.org/content/repositories/snapshots during a previous attempt. This failure was cached in the local repository and resolution will not be reattempted until the update interval of snapshots-repo has elapsed or updates are forced. Original error: Could not transfer metadata org.eclipse.emf:org.eclipse.emf.common/maven-metadata.xml from/to snapshots-repo (https://oss.sonatype.org/content/repositories/snapshots): transfer failed for https://oss.sonatype.org/content/repositories/snapshots/org/eclipse/emf/org.eclipse.emf.common/maven-metadata.xml
+[[1;33mWARNING[m] org.eclipse.emf:org.eclipse.emf.common/maven-metadata.xmlfailed to transfer from https://oss.sonatype.org/content/repositories/snapshots during a previous attempt. This failure was cached in the local repository and resolution will not be reattempted until the update interval of snapshots-repo has elapsed or updates are forced. Original error: Could not transfer metadata org.eclipse.emf:org.eclipse.emf.common/maven-metadata.xml from/to snapshots-repo (https://oss.sonatype.org/content/repositories/snapshots): transfer failed for https://oss.sonatype.org/content/repositories/snapshots/org/eclipse/emf/org.eclipse.emf.common/maven-metadata.xml
+[[1;33mWARNING[m] org.eclipse.emf:org.eclipse.emf.common/maven-metadata.xmlfailed to transfer from https://oss.sonatype.org/content/repositories/snapshots during a previous attempt. This failure was cached in the local repository and resolution will not be reattempted until the update interval of snapshots-repo has elapsed or updates are forced. Original error: Could not transfer metadata org.eclipse.emf:org.eclipse.emf.common/maven-metadata.xml from/to snapshots-repo (https://oss.sonatype.org/content/repositories/snapshots): transfer failed for https://oss.sonatype.org/content/repositories/snapshots/org/eclipse/emf/org.eclipse.emf.common/maven-metadata.xml
+[[1;33mWARNING[m] org.eclipse.emf:org.eclipse.emf.common/maven-metadata.xmlfailed to transfer from https://oss.sonatype.org/content/repositories/snapshots during a previous attempt. This failure was cached in the local repository and resolution will not be reattempted until the update interval of snapshots-repo has elapsed or updates are forced. Original error: Could not transfer metadata org.eclipse.emf:org.eclipse.emf.common/maven-metadata.xml from/to snapshots-repo (https://oss.sonatype.org/content/repositories/snapshots): transfer failed for https://oss.sonatype.org/content/repositories/snapshots/org/eclipse/emf/org.eclipse.emf.common/maven-metadata.xml
+[[1;33mWARNING[m] org.eclipse.emf:org.eclipse.emf.common/maven-metadata.xmlfailed to transfer from https://oss.sonatype.org/content/repositories/snapshots during a previous attempt. This failure was cached in the local repository and resolution will not be reattempted until the update interval of snapshots-repo has elapsed or updates are forced. Original error: Could not transfer metadata org.eclipse.emf:org.eclipse.emf.common/maven-metadata.xml from/to snapshots-repo (https://oss.sonatype.org/content/repositories/snapshots): transfer failed for https://oss.sonatype.org/content/repositories/snapshots/org/eclipse/emf/org.eclipse.emf.common/maven-metadata.xml
+[[1;33mWARNING[m] org.eclipse.emf:org.eclipse.emf.common/maven-metadata.xmlfailed to transfer from https://oss.sonatype.org/content/repositories/snapshots during a previous attempt. This failure was cached in the local repository and resolution will not be reattempted until the update interval of snapshots-repo has elapsed or updates are forced. Original error: Could not transfer metadata org.eclipse.emf:org.eclipse.emf.common/maven-metadata.xml from/to snapshots-repo (https://oss.sonatype.org/content/repositories/snapshots): transfer failed for https://oss.sonatype.org/content/repositories/snapshots/org/eclipse/emf/org.eclipse.emf.common/maven-metadata.xml
+[[1;33mWARNING[m] org.eclipse.emf:org.eclipse.emf.common/maven-metadata.xmlfailed to transfer from https://oss.sonatype.org/content/repositories/snapshots during a previous attempt. This failure was cached in the local repository and resolution will not be reattempted until the update interval of snapshots-repo has elapsed or updates are forced. Original error: Could not transfer metadata org.eclipse.emf:org.eclipse.emf.common/maven-metadata.xml from/to snapshots-repo (https://oss.sonatype.org/content/repositories/snapshots): transfer failed for https://oss.sonatype.org/content/repositories/snapshots/org/eclipse/emf/org.eclipse.emf.common/maven-metadata.xml
+[[1;33mWARNING[m] org.eclipse.emf:org.eclipse.emf.common/maven-metadata.xmlfailed to transfer from https://oss.sonatype.org/content/repositories/snapshots during a previous attempt. This failure was cached in the local repository and resolution will not be reattempted until the update interval of snapshots-repo has elapsed or updates are forced. Original error: Could not transfer metadata org.eclipse.emf:org.eclipse.emf.common/maven-metadata.xml from/to snapshots-repo (https://oss.sonatype.org/content/repositories/snapshots): transfer failed for https://oss.sonatype.org/content/repositories/snapshots/org/eclipse/emf/org.eclipse.emf.common/maven-metadata.xml
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:1.4.1:enforce[m [1m(enforce-maven-version)[m @ [36msedona-common[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-remote-resources-plugin:1.7.0:process[m [1m(process-resource-bundles)[m @ [36msedona-common[0;1m ---[m
+[[1;34mINFO[m] Preparing remote bundle org.apache:apache-jar-resource-bundle:1.4
+[[1;34mINFO[m] Copying 3 resources from 1 bundle.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.1.0:resources[m [1m(default-resources)[m @ [36msedona-common[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/common/src/main/resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.10.1:compile[m [1m(default-compile)[m @ [36msedona-common[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 75 source files to /workspace/repo/common/target/classes
+[[1;33mWARNING[m] /workspace/repo/common/src/main/java/org/apache/sedona/common/geometrySerde/UnsafeGeometryBuffer.java:[28,16] sun.misc.Unsafe is internal proprietary API and may be removed in a future release
+[[1;33mWARNING[m] /workspace/repo/common/src/main/java/org/apache/sedona/common/geometrySerde/UnsafeGeometryBuffer.java:[33,26] sun.misc.Unsafe is internal proprietary API and may be removed in a future release
+[[1;33mWARNING[m] /workspace/repo/common/src/main/java/org/apache/sedona/common/geometrySerde/UnsafeGeometryBuffer.java:[37,9] sun.misc.Unsafe is internal proprietary API and may be removed in a future release
+[[1;33mWARNING[m] /workspace/repo/common/src/main/java/org/apache/sedona/common/geometrySerde/UnsafeGeometryBuffer.java:[40,31] sun.misc.Unsafe is internal proprietary API and may be removed in a future release
+[[1;33mWARNING[m] /workspace/repo/common/src/main/java/org/apache/sedona/common/geometrySerde/UnsafeGeometryBuffer.java:[42,23] sun.misc.Unsafe is internal proprietary API and may be removed in a future release
+[[1;34mINFO[m] /workspace/repo/common/src/main/java/org/apache/sedona/common/raster/DeepCopiedRenderedImage.java: /workspace/repo/common/src/main/java/org/apache/sedona/common/raster/DeepCopiedRenderedImage.java uses or overrides a deprecated API.
+[[1;34mINFO[m] /workspace/repo/common/src/main/java/org/apache/sedona/common/raster/DeepCopiedRenderedImage.java: Recompile with -Xlint:deprecation for details.
+[[1;34mINFO[m] /workspace/repo/common/src/main/java/org/apache/sedona/common/utils/FormatUtils.java: Some input files use unchecked or unsafe operations.
+[[1;34mINFO[m] /workspace/repo/common/src/main/java/org/apache/sedona/common/utils/FormatUtils.java: Recompile with -Xlint:unchecked for details.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.10.1:compile[m [1m(default)[m @ [36msedona-common[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 75 source files to /workspace/repo/common/target/classes
+[[1;33mWARNING[m] /workspace/repo/common/src/main/java/org/apache/sedona/common/geometrySerde/UnsafeGeometryBuffer.java:[28,16] sun.misc.Unsafe is internal proprietary API and may be removed in a future release
+[[1;33mWARNING[m] /workspace/repo/common/src/main/java/org/apache/sedona/common/geometrySerde/UnsafeGeometryBuffer.java:[33,26] sun.misc.Unsafe is internal proprietary API and may be removed in a future release
+[[1;33mWARNING[m] /workspace/repo/common/src/main/java/org/apache/sedona/common/geometrySerde/UnsafeGeometryBuffer.java:[37,9] sun.misc.Unsafe is internal proprietary API and may be removed in a future release
+[[1;33mWARNING[m] /workspace/repo/common/src/main/java/org/apache/sedona/common/geometrySerde/UnsafeGeometryBuffer.java:[40,31] sun.misc.Unsafe is internal proprietary API and may be removed in a future release
+[[1;33mWARNING[m] /workspace/repo/common/src/main/java/org/apache/sedona/common/geometrySerde/UnsafeGeometryBuffer.java:[42,23] sun.misc.Unsafe is internal proprietary API and may be removed in a future release
+[[1;34mINFO[m] /workspace/repo/common/src/main/java/org/apache/sedona/common/raster/DeepCopiedRenderedImage.java: /workspace/repo/common/src/main/java/org/apache/sedona/common/raster/DeepCopiedRenderedImage.java uses or overrides a deprecated API.
+[[1;34mINFO[m] /workspace/repo/common/src/main/java/org/apache/sedona/common/raster/DeepCopiedRenderedImage.java: Recompile with -Xlint:deprecation for details.
+[[1;34mINFO[m] /workspace/repo/common/src/main/java/org/apache/sedona/common/utils/FormatUtils.java: Some input files use unchecked or unsafe operations.
+[[1;34mINFO[m] /workspace/repo/common/src/main/java/org/apache/sedona/common/utils/FormatUtils.java: Recompile with -Xlint:unchecked for details.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.1.0:testResources[m [1m(default-testResources)[m @ [36msedona-common[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] Copying 1 resource
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.10.1:testCompile[m [1m(default-testCompile)[m @ [36msedona-common[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 39 source files to /workspace/repo/common/target/test-classes
+[[1;34mINFO[m] /workspace/repo/common/src/test/java/org/apache/sedona/common/geometrySerde/SpatialIndexSerdeTest.java: /workspace/repo/common/src/test/java/org/apache/sedona/common/geometrySerde/SpatialIndexSerdeTest.java uses or overrides a deprecated API.
+[[1;34mINFO[m] /workspace/repo/common/src/test/java/org/apache/sedona/common/geometrySerde/SpatialIndexSerdeTest.java: Recompile with -Xlint:deprecation for details.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:2.18.1:test[m [1m(default-test)[m @ [36msedona-common[0;1m ---[m
+[[1;34mINFO[m] Surefire report directory: /workspace/repo/common/target/surefire-reports
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running org.apache.sedona.common.ConstructorsTest
+Tests run: 15, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.184 sec - in org.apache.sedona.common.ConstructorsTest
+
+Results :
+
+Tests run: 15, Failures: 0, Errors: 0, Skipped: 0
+
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1;32mBUILD SUCCESS[m
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] Total time:  19.112 s
+[[1;34mINFO[m] Finished at: 2026-07-01T14:21:35Z
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+reward=1 graded=15 found=15 failed=0 parsed=15 framework=maven exit_code=0

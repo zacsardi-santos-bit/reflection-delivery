@@ -1,0 +1,16 @@
+patching file packages/sanity/src/core/releases/tool/detail/__tests__/ReleaseDashboardFooter.test.tsx
+
+ RUN  v2.1.8 /workspace/repo/packages/sanity
+
+stderr | src/core/releases/tool/detail/__tests__/ReleaseDashboardFooter.test.tsx
+motion() is deprecated. Use motion.create() instead.
+
+ ✓ src/core/releases/tool/detail/__tests__/ReleaseDashboardFooter.test.tsx (5 tests) 1819ms
+   ✓ ReleaseDashboardFooter > for an active asap release > shows publish all button 1328ms
+
+ Test Files  1 passed (1)
+      Tests  5 passed (5)
+   Start at  15:10:05
+   Duration  74.29s (transform 61.51s, setup 546ms, collect 70.17s, tests 1.82s, environment 556ms, prepare 108ms)
+
+reward=1 graded=5 found=0 failed=0 parsed=0 framework=vitest exit_code=0

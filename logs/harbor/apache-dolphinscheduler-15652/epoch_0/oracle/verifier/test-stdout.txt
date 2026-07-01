@@ -1,0 +1,208 @@
+patching file dolphinscheduler-api/src/test/java/org/apache/dolphinscheduler/api/controller/ResourcesControllerTest.java
+patching file dolphinscheduler-api/src/test/java/org/apache/dolphinscheduler/api/service/ResourcesServiceTest.java
+[[1;34mINFO[m] Scanning for projects...
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m----------< [0;36morg.apache.dolphinscheduler:dolphinscheduler-api[0;1m >----------[m
+[[1;34mINFO[m] [1mBuilding dolphinscheduler-api dev-SNAPSHOT[m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0:enforce[m [1m(enforce-maven-version)[m @ [36mdolphinscheduler-api[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0:enforce[m [1m(enforce-java-version)[m @ [36mdolphinscheduler-api[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-remote-resources-plugin:1.7.0:process[m [1m(process-resource-bundles)[m @ [36mdolphinscheduler-api[0;1m ---[m
+[[1;34mINFO[m] Preparing remote bundle org.apache:apache-jar-resource-bundle:1.4
+[[1;34mINFO[m] Copying 3 resources from 1 bundle.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.2.0:resources[m [1m(default-resources)[m @ [36mdolphinscheduler-api[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered properties files.
+[[1;34mINFO[m] Copying 13 resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.3:compile[m [1m(default-compile)[m @ [36mdolphinscheduler-api[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 269 source files to /workspace/repo/dolphinscheduler-api/target/classes
+[[1;34mINFO[m] /workspace/repo/dolphinscheduler-api/src/main/java/org/apache/dolphinscheduler/api/interceptor/LocaleChangeInterceptor.java: Some input files use or override a deprecated API.
+[[1;34mINFO[m] /workspace/repo/dolphinscheduler-api/src/main/java/org/apache/dolphinscheduler/api/interceptor/LocaleChangeInterceptor.java: Recompile with -Xlint:deprecation for details.
+[[1;34mINFO[m] /workspace/repo/dolphinscheduler-api/src/main/java/org/apache/dolphinscheduler/api/controller/BaseController.java: Some input files use unchecked or unsafe operations.
+[[1;34mINFO[m] /workspace/repo/dolphinscheduler-api/src/main/java/org/apache/dolphinscheduler/api/controller/BaseController.java: Recompile with -Xlint:unchecked for details.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotless-maven-plugin:2.27.2:check[m [1m(default)[m @ [36mdolphinscheduler-api[0;1m ---[m
+[[1;34mINFO[m] Spotless check skipped
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mjacoco-maven-plugin:0.8.8:instrument[m [1m(default-instrument)[m @ [36mdolphinscheduler-api[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.2.0:testResources[m [1m(default-testResources)[m @ [36mdolphinscheduler-api[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered properties files.
+[[1;34mINFO[m] Copying 104 resources
+[[1;34mINFO[m] Copying 1 resource
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.3:testCompile[m [1m(default-testCompile)[m @ [36mdolphinscheduler-api[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 116 source files to /workspace/repo/dolphinscheduler-api/target/test-classes
+[[1;34mINFO[m] /workspace/repo/dolphinscheduler-api/src/test/java/org/apache/dolphinscheduler/api/service/SessionServiceTest.java: Some input files use or override a deprecated API.
+[[1;34mINFO[m] /workspace/repo/dolphinscheduler-api/src/test/java/org/apache/dolphinscheduler/api/service/SessionServiceTest.java: Recompile with -Xlint:deprecation for details.
+[[1;34mINFO[m] /workspace/repo/dolphinscheduler-api/src/test/java/org/apache/dolphinscheduler/api/service/ResourcesServiceTest.java: Some input files use unchecked or unsafe operations.
+[[1;34mINFO[m] /workspace/repo/dolphinscheduler-api/src/test/java/org/apache/dolphinscheduler/api/service/ResourcesServiceTest.java: Recompile with -Xlint:unchecked for details.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:3.0.0-M6:test[m [1m(default-test)[m @ [36mdolphinscheduler-api[0;1m ---[m
+[[1;34mINFO[m] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[[1;34mINFO[m] 
+[[1;34mINFO[m] -------------------------------------------------------
+[[1;34mINFO[m]  T E S T S
+[[1;34mINFO[m] -------------------------------------------------------
+[[1;34mINFO[m] Running org.apache.dolphinscheduler.api.service.[1mResourcesServiceTest[m
+SLF4J: Class path contains multiple SLF4J bindings.
+SLF4J: Found binding in [jar:file:/root/.m2/repository/ch/qos/logback/logback-classic/1.2.11/logback-classic-1.2.11.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/root/.m2/repository/org/slf4j/slf4j-reload4j/1.7.35/slf4j-reload4j-1.7.35.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
+SLF4J: Actual binding is of type [ch.qos.logback.classic.util.ContextSelectorStaticBinder]
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+14:44:20.131 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property remote.logging.s3.access.key.secret -> <access.key.secret>
+14:44:20.135 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property shell.env_source_list -> 
+14:44:20.135 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property ml.mlflow.preset_repository -> https://github.com/apache/dolphinscheduler-mlflow
+14:44:20.135 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property resource.hdfs.fs.defaultFS -> hdfs://mycluster:8020
+14:44:20.135 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property support.hive.oneSession -> false
+14:44:20.203 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property remote.logging.base.dir -> logs
+14:44:20.204 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property yarn.resourcemanager.ha.rm.ids -> 192.168.xx.xx,192.168.xx.xx
+14:44:20.204 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property resource.aws.s3.bucket.name -> dolphinscheduler
+14:44:20.204 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property resource.huawei.cloud.obs.endpoint -> obs.cn-southwest-2.huaweicloud.com
+14:44:20.204 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property datasource.encryption.salt -> !@#$%^&*
+14:44:20.204 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property conda.path -> /opt/anaconda3/etc/profile.d/conda.sh
+14:44:20.204 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property remote.logging.s3.bucket.name -> <bucket.name>
+14:44:20.204 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property remote.logging.enable -> false
+14:44:20.204 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property resource.azure.subId -> minioadmin
+14:44:20.205 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property resource.azure.blob.storage.account.name -> <your-account-name>
+14:44:20.205 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property resource.huawei.cloud.obs.bucket.name -> dolphinscheduler
+14:44:20.205 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property remote.logging.target -> OSS
+14:44:20.205 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property resource.azure.blob.storage.connection.string -> <your-connection-string>
+14:44:20.205 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property alert.rpc.port -> 50052
+14:44:20.205 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property resource.alibaba.cloud.region -> cn-hangzhou
+14:44:20.205 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property remote.logging.s3.region -> <region>
+14:44:20.205 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property resource.aws.secret.access.key -> minioadmin
+14:44:20.205 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property resource.huawei.cloud.access.key.id -> <your-access-key-id>
+14:44:20.205 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property task.resource.limit.state -> false
+14:44:20.205 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property datasource.encryption.enable -> false
+14:44:20.206 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property development.state -> false
+14:44:20.206 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property login.user.keytab.username -> hdfs-mycluster@ESZ.COM
+14:44:20.206 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property resource.storage.upload.base.path -> /dolphinscheduler
+14:44:20.206 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property resource.google.cloud.storage.bucket.name -> <your-bucket>
+14:44:20.206 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property resource.alibaba.cloud.oss.endpoint -> https://oss-cn-hangzhou.aliyuncs.com
+14:44:20.206 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property login.user.keytab.path -> /opt/hdfs.headless.keytab
+14:44:20.206 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property resource.alibaba.cloud.oss.bucket.name -> dolphinscheduler
+14:44:20.206 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property resource.azure.client.id -> minioadmin
+14:44:20.206 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property remote.logging.s3.endpoint -> <endpoint>
+14:44:20.206 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property appId.collect -> log
+14:44:20.206 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property resource.azure.blob.storage.container.name -> <your-container>
+14:44:20.206 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property resource.aws.access.key.id -> minioadmin
+14:44:20.206 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property resource.hdfs.root.user -> hdfs
+14:44:20.207 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property shell.interceptor.type -> bash
+14:44:20.207 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property kerberos.expire.time -> 2
+14:44:20.207 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property data.basedir.path -> /tmp/dolphinscheduler
+14:44:20.207 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property resource.azure.tenant.id -> minioadmin
+14:44:20.207 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property resource.alibaba.cloud.access.key.secret -> <your-access-key-secret>
+14:44:20.207 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property hadoop.security.authentication.startup.state -> false
+14:44:20.207 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property dolphin.scheduler.network.interface.restrict -> docker0
+14:44:20.207 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property resource.storage.type -> LOCAL
+14:44:20.207 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property remote.logging.oss.access.key.secret -> <access.key.secret>
+14:44:20.207 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property remote.logging.oss.bucket.name -> <bucket.name>
+14:44:20.207 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property yarn.job.history.status.address -> http://ds1:19888/ws/v1/history/mapreduce/jobs/%s
+14:44:20.208 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property yarn.application.status.address -> http://ds1:%s/ws/v1/cluster/apps/%s
+14:44:20.208 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property ml.mlflow.preset_repository_version -> "main"
+14:44:20.208 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property remote.logging.oss.access.key.id -> <access.key.id>
+14:44:20.208 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property resource.aws.region -> cn-north-1
+14:44:20.208 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property java.security.krb5.conf.path -> /opt/krb5.conf
+14:44:20.208 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property sudo.enable -> true
+14:44:20.208 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property remote.logging.s3.access.key.id -> <access.key.id>
+14:44:20.208 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property remote.logging.google.cloud.storage.credential -> /path/to/credential
+14:44:20.208 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property resource.aws.s3.endpoint -> http://localhost:9000
+14:44:20.208 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property resource.google.cloud.storage.credential -> /path/to/credential
+14:44:20.208 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property remote.logging.google.cloud.storage.bucket.name -> <your-bucket>
+14:44:20.208 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property remote.logging.oss.endpoint -> <endpoint>
+14:44:20.209 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property data-quality.jar.dir -> 
+14:44:20.209 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property remote.logging.thread.pool.size -> 10
+14:44:20.209 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property resource.manager.httpaddress.port -> 8088
+14:44:20.209 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property resource.azure.client.secret -> minioadmin
+14:44:20.209 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property resource.query.interval -> 10000
+14:44:20.209 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property resource.alibaba.cloud.access.key.id -> <your-access-key-id>
+14:44:20.209 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePropertyDelegate - Get property resource.huawei.cloud.access.key.secret -> <your-access-key-secret>
+14:44:20.211 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePriorityPropertyDelegate - Get config value from properties, key: resource.storage.upload.base.path actualKey: resource.storage.upload.base.path, value: /dolphinscheduler
+14:44:21.324 [main] DEBUG org.apache.dolphinscheduler.common.config.ImmutablePriorityPropertyDelegate - Get config value from properties, key: data.basedir.path actualKey: data.basedir.path, value: /tmp/dolphinscheduler
+14:44:22.823 [main] INFO org.apache.dolphinscheduler.api.service.impl.ResourcesServiceImpl - Resource path is , download local filename is null
+14:44:22.912 [main] INFO org.apache.dolphinscheduler.api.service.impl.ResourcesServiceImpl - Resource path is , download local filename is null
+14:44:23.012 [main] ERROR org.apache.dolphinscheduler.api.service.impl.ResourcesServiceImpl - Resource does not exist, resource full name:/dolphinscheduler/123/resources/ResourcesServiceTest.jar.
+14:44:23.014 [main] WARN org.apache.dolphinscheduler.api.service.impl.ResourcesServiceImpl - Resource suffix does not support view, resource full name:/dolphinscheduler/123/resources, suffix:null.
+14:44:23.014 [main] ERROR org.apache.dolphinscheduler.api.service.impl.ResourcesServiceImpl - user 1 not exists
+14:44:23.018 [main] INFO org.apache.dolphinscheduler.api.service.impl.ResourcesServiceImpl - resource  path is /dolphinscheduler/123/resources/ResourcesServiceTest, resource dir is /dolphinscheduler/123/resources
+14:44:23.018 [main] INFO org.apache.dolphinscheduler.api.service.impl.ResourcesServiceImpl - Create tenant dir because path /dolphinscheduler/123/resources does not exist, tenantCode:123.
+14:44:23.019 [main] INFO org.apache.dolphinscheduler.api.service.impl.ResourcesServiceImpl - Upload content to storage complete, tenantCode:123, destFileName:test.
+14:44:23.019 [main] INFO org.apache.dolphinscheduler.api.service.impl.ResourcesServiceImpl - Update resource content complete, resource full name:/dolphinscheduler/123/resources/ResourcesServiceTest.jar.
+14:44:23.019 [main] INFO org.apache.dolphinscheduler.api.service.ResourcesServiceTest - Status{code='0', msg='success', data=null}
+14:44:23.030 [main] ERROR org.apache.dolphinscheduler.api.service.impl.ResourcesServiceImpl - read file  not exist in storage
+14:44:23.031 [main] INFO org.apache.dolphinscheduler.api.service.ResourcesServiceTest - Status{code='20012', msg='resource file  not exists !', data=null}
+14:44:23.031 [main] ERROR org.apache.dolphinscheduler.api.service.impl.ResourcesServiceImpl - Resource suffix does not support view,resourceFullName:, suffix:null.
+14:44:23.032 [main] INFO org.apache.dolphinscheduler.api.service.ResourcesServiceTest - Status{code='20006', msg='resource suffix do not support online viewing', data=null}
+14:44:23.033 [main] ERROR org.apache.dolphinscheduler.api.service.impl.ResourcesServiceImpl - user 1 not exists
+14:44:23.033 [main] INFO org.apache.dolphinscheduler.api.service.ResourcesServiceTest - Status{code='10010', msg='user 1 not exists', data=null}
+14:44:23.038 [main] INFO org.apache.dolphinscheduler.api.service.ResourcesServiceTest - Status{code='0', msg='success', data={alias=test.jar, content=test}}
+14:44:23.113 [main] ERROR org.apache.dolphinscheduler.api.service.impl.ResourcesServiceImpl - current user does not have permission
+14:44:23.113 [main] INFO org.apache.dolphinscheduler.api.service.ResourcesServiceTest - Status{code='1400001', msg='The current user does not have this permission.', data=null}
+14:44:23.115 [main] INFO org.apache.dolphinscheduler.api.service.ResourcesServiceTest - Status{code='0', msg='success', data=null}
+14:44:23.117 [main] ERROR org.apache.dolphinscheduler.api.service.impl.ResourcesServiceImpl - resource /dolphinscheduler/123/resources/ResourcesServiceTest2.jar already exists, can't recreate
+14:44:23.117 [main] INFO org.apache.dolphinscheduler.api.service.ResourcesServiceTest - Status{code='20005', msg='resource already exists', data=null}
+14:44:23.118 [main] INFO org.apache.dolphinscheduler.api.service.ResourcesServiceTest - Status{code='0', msg='success', data=null}
+14:44:23.128 [main] WARN org.apache.dolphinscheduler.api.service.impl.ResourcesServiceImpl - Parameter file is empty, fileOriginalName:null.
+14:44:23.128 [main] INFO org.apache.dolphinscheduler.api.service.ResourcesServiceTest - Status{code='10062', msg='resource file is empty', data=null}
+14:44:23.129 [main] WARN org.apache.dolphinscheduler.api.service.impl.ResourcesServiceImpl - Rename file suffix and original suffix must be consistent, fileOriginalName:test.pdf.
+14:44:23.129 [main] INFO org.apache.dolphinscheduler.api.service.ResourcesServiceTest - Status{code='20008', msg='resource suffix not allowed to be modified', data=null}
+14:44:23.129 [main] WARN org.apache.dolphinscheduler.api.service.impl.ResourcesServiceImpl - UDF resource suffix name must be jar
+14:44:23.129 [main] INFO org.apache.dolphinscheduler.api.service.ResourcesServiceTest - Status{code='20009', msg='UDF resource suffix name must be jar', data=null}
+14:44:23.130 [main] ERROR org.apache.dolphinscheduler.api.service.impl.ResourcesServiceImpl - Resource file's name is longer than max full name length, fullName:jxapyypxtdqzvfjczkxlucemxgkoxhjyhzswvrvhvwdrughfbkecxbqjgneniqcnkwmguwqbtbevyxauzlwtqtvtccxckigobfgnsjeibwvlhwmazcgosmdoqxorlkru.pdf, fullNameSize:164, maxFullNameSize:128
+14:44:23.131 [main] INFO org.apache.dolphinscheduler.api.service.ResourcesServiceTest - Status{code='1300015', msg='resource's fullname is too long error', data=null}
+14:44:23.205 [main] INFO org.apache.dolphinscheduler.api.service.ResourcesServiceTest - {msg=success, data=[ResourceComponent(id=0, pid=null, name=ResourcesServiceTest, currentDir=null, fullName=/dolphinscheduler/123/resources/ResourcesServiceTest, description=null, isDirctory=false, idValue=0_0, type=FILE, children=[])], status=SUCCESS}
+14:44:23.208 [main] INFO org.apache.dolphinscheduler.api.service.ResourcesServiceTest - {msg=success, data=[ResourceComponent(id=0, pid=null, name=ResourcesServiceTest1.jar, currentDir=null, fullName=/dolphinscheduler/123/resources/ResourcesServiceTest1.jar, description=null, isDirctory=false, idValue=0_0, type=UDF, children=[])], status=SUCCESS}
+14:44:23.214 [main] ERROR org.apache.dolphinscheduler.api.service.impl.ResourcesServiceImpl - Resource with same name exists so can not create again, resourceType:FILE, resourceName:/ResourcesServiceTest.jar.
+14:44:23.214 [main] INFO org.apache.dolphinscheduler.api.service.ResourcesServiceTest - Status{code='20005', msg='resource already exists', data=null}
+14:44:23.214 [main] ERROR org.apache.dolphinscheduler.api.service.impl.ResourcesServiceImpl - Resource with same name exists so can not create again, resourceType:FILE, resourceName:/ResourcesServiceTest.jar.
+14:44:23.214 [main] INFO org.apache.dolphinscheduler.api.service.ResourcesServiceTest - Status{code='20005', msg='resource already exists', data=null}
+14:44:23.214 [main] INFO org.apache.dolphinscheduler.api.service.ResourcesServiceTest - Status{code='0', msg='success', data=null}
+14:44:23.227 [main] ERROR org.apache.dolphinscheduler.api.service.impl.ResourcesServiceImpl - Resource does not exist, resource full name:/dolphinscheduler/123/resources/ResNotExist.
+14:44:23.227 [main] INFO org.apache.dolphinscheduler.api.service.ResourcesServiceTest - Status{code='20004', msg='resource not exist', data=null}
+14:44:23.228 [main] INFO org.apache.dolphinscheduler.api.service.ResourcesServiceTest - Status{code='0', msg='success', data=null}
+14:44:23.304 [main] INFO org.apache.dolphinscheduler.api.service.ResourcesServiceTest - Status{code='0', msg='success', data=PageInfo(totalList=[StorageEntity(id=0, fullName=/dolphinscheduler/123/resources/ResourcesServiceTest, fileName=ResourcesServiceTest, alias=ResourcesServiceTest, pfullName=null, isDirectory=false, userId=0, userName=123, type=FILE, size=0, createTime=null, updateTime=null)], total=1, totalPage=1, pageSize=10, currentPage=1, pageNo=0)}
+14:44:23.316 [main] INFO org.apache.dolphinscheduler.api.service.impl.ResourcesServiceImpl - resource  path is /dolphinscheduler/123/resources/filename.txt, resource dir is /dolphinscheduler/123/resources/
+14:44:23.316 [main] INFO org.apache.dolphinscheduler.api.service.impl.ResourcesServiceImpl - Create tenant dir because path /dolphinscheduler/123/resources/ does not exist, tenantCode:tenantCode.
+14:44:23.317 [main] INFO org.apache.dolphinscheduler.api.service.impl.ResourcesServiceImpl - Upload content to storage complete, tenantCode:tenantCode, destFileName:test.
+14:44:23.326 [main] ERROR org.apache.dolphinscheduler.api.service.impl.ResourcesServiceImpl - resource directory /dolphinscheduler/123/resources/directoryTest has exist, can't recreate
+14:44:23.326 [main] INFO org.apache.dolphinscheduler.api.service.ResourcesServiceTest - Status{code='20005', msg='resource already exists', data=null}
+[[1;34mINFO[m] [1;32mTests run: [0;1;32m14[m, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 7.405 s - in org.apache.dolphinscheduler.api.service.[1mResourcesServiceTest[m
+[[1;34mINFO[m] Running org.apache.dolphinscheduler.api.controller.[1mResourcesControllerTest[m
+14:44:24.222 [main] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating CacheAwareContextLoaderDelegate from class [org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate]
+14:44:24.310 [main] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating BootstrapContext using constructor [public org.springframework.test.context.support.DefaultBootstrapContext(java.lang.Class,org.springframework.test.context.CacheAwareContextLoaderDelegate)]
+14:44:24.508 [main] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating TestContextBootstrapper for test class [org.apache.dolphinscheduler.api.controller.ResourcesControllerTest] from class [org.springframework.boot.test.context.SpringBootTestContextBootstrapper]
+14:44:24.530 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Neither @ContextConfiguration nor @ContextHierarchy found for test class [org.apache.dolphinscheduler.api.controller.ResourcesControllerTest], using SpringBootContextLoader
+14:44:24.534 [main] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [org.apache.dolphinscheduler.api.controller.ResourcesControllerTest]: class path resource [org/apache/dolphinscheduler/api/controller/ResourcesControllerTest-context.xml] does not exist
+14:44:24.536 [main] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [org.apache.dolphinscheduler.api.controller.ResourcesControllerTest]: class path resource [org/apache/dolphinscheduler/api/controller/ResourcesControllerTestContext.groovy] does not exist
+14:44:24.536 [main] INFO org.springframework.test.context.support.AbstractContextLoader - Could not detect default resource locations for test class [org.apache.dolphinscheduler.api.controller.ResourcesControllerTest]: no resource found for suffixes {-context.xml, Context.groovy}.
+14:44:24.815 [main] DEBUG org.springframework.test.context.support.ActiveProfilesUtils - Could not find an 'annotation declaring class' for annotation type [org.springframework.test.context.ActiveProfiles] and class [org.apache.dolphinscheduler.api.controller.ResourcesControllerTest]
+14:44:25.142 [main] DEBUG org.springframework.boot.test.context.SpringBootTestContextBootstrapper - @TestExecutionListeners is not present for class [org.apache.dolphinscheduler.api.controller.ResourcesControllerTest]: using defaults.
+14:44:25.143 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.event.ApplicationEventsTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.test.context.event.EventPublishingTestExecutionListener]
+14:44:25.214 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@73aaec54, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@239b98cb, org.springframework.test.context.event.ApplicationEventsTestExecutionListener@117b2cc6, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@6def0632, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@49038f97, org.springframework.test.context.support.DirtiesContextTestExecutionListener@36211bbc, org.springframework.test.context.transaction.TransactionalTestExecutionListener@7ef41ca2, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@6b3f4bd8, org.springframework.test.context.event.EventPublishingTestExecutionListener@3e151e1f, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@d70e9a, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@5e98032e, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@4fe8f2ae, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@591be8aa, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@61808ecd, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener@7f1f60a0]
+14:44:25.216 [main] DEBUG org.springframework.test.context.support.AbstractDirtiesContextTestExecutionListener - Before test class: context [DefaultTestContext@5b322873 testClass = ResourcesControllerTest, testInstance = [null], testMethod = [null], testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@35e2b89f testClass = ResourcesControllerTest, locations = '{}', classes = '{class org.apache.dolphinscheduler.api.ApiApplicationServer, class org.apache.dolphinscheduler.dao.DaoConfiguration, class org.apache.dolphinscheduler.api.controller.AbstractControllerTest$RegistryServer}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[[ImportsContextCustomizer@7ad889be key = [org.springframework.boot.test.autoconfigure.web.servlet.MockMvcAutoConfiguration, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcWebClientAutoConfiguration, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcWebDriverAutoConfiguration, org.springframework.boot.autoconfigure.security.oauth2.client.servlet.OAuth2ClientAutoConfiguration, org.springframework.boot.autoconfigure.security.oauth2.resource.servlet.OAuth2ResourceServerAutoConfiguration, org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration, org.springframework.boot.autoconfigure.security.servlet.SecurityFilterAutoConfiguration, org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcSecurityConfiguration, org.springframework.boot.test.autoconfigure.web.reactive.WebTestClientAutoConfiguration]], org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@3869a6e5, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@578c3fd9, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@320d3c3c, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@73a845cb, org.springframework.boot.test.autoconfigure.actuate.metrics.MetricsExportContextCustomizerFactory$DisableMetricExportContextCustomizer@77324a58, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@4b3fa0b3, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@48f2054d, org.springframework.boot.test.context.SpringBootTestArgs@1, org.springframework.boot.test.context.SpringBootTestWebEnvironment@368247b9], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -> true]], class annotated with @DirtiesContext [true] with mode [AFTER_CLASS].
+2026-07-01 14:44:42.011 +0000 INFO  [org.hibernate.validator.internal.util.Version] - HV000001: Hibernate Validator 6.2.2.Final
+[[1;34mINFO[m] [1;32mTests run: [0;1;32m15[m, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 41.632 s - in org.apache.dolphinscheduler.api.controller.[1mResourcesControllerTest[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] Results:
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1;32mTests run: 29, Failures: 0, Errors: 0, Skipped: 0[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1;32mBUILD SUCCESS[m
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] Total time:  01:45 min
+[[1;34mINFO[m] Finished at: 2026-07-01T14:45:06Z
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+reward=1 graded=29 found=29 failed=0 parsed=29 framework=maven exit_code=0

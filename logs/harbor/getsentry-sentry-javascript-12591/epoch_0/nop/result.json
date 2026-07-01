@@ -1,26 +1,26 @@
 {
-    "id": "59f8a790-7adc-49ab-94fa-b5e11aaa85c4",
+    "id": "abfd6ccd-fdc3-4a2c-8ccf-8b1285dd464a",
     "task_name": "offline/getsentry-sentry-javascript-12591",
-    "trial_name": "getsentry-sentry-javascript-1259__QL4hMVF",
-    "trial_uri": "file:///home/ubuntu/reflection_offline_harbor_delivery/nop_jobs_all/2026-06-29__15-12-04/getsentry-sentry-javascript-1259__QL4hMVF",
+    "trial_name": "getsentry-sentry-javascript-1259__7kSoxqE",
+    "trial_uri": "file:///tmp/nop/2026-07-01__14-53-01/getsentry-sentry-javascript-1259__7kSoxqE",
     "task_id": {
-        "path": "/home/ubuntu/reflection_offline_harbor_delivery/harbor/getsentry-sentry-javascript-12591"
+        "path": "getsentry-sentry-javascript-12591"
     },
-    "source": "harbor",
-    "task_checksum": "986dc3059cc5dd6773f2e7b18ab956ceee808c2eec09dd39d393a8e94a69a40a",
+    "source": "src",
+    "task_checksum": "c338121ed65afdbf29aa3297949104ef8f0e6b6d82c63f82693ab78989f469d1",
     "config": {
         "task": {
-            "path": "/home/ubuntu/reflection_offline_harbor_delivery/harbor/getsentry-sentry-javascript-12591",
+            "path": "getsentry-sentry-javascript-12591",
             "git_url": null,
             "git_commit_id": null,
             "name": null,
             "ref": null,
             "overwrite": false,
             "download_dir": null,
-            "source": "harbor"
+            "source": "src"
         },
-        "trial_name": "getsentry-sentry-javascript-1259__QL4hMVF",
-        "trials_dir": "/home/ubuntu/reflection_offline_harbor_delivery/nop_jobs_all/2026-06-29__15-12-04",
+        "trial_name": "getsentry-sentry-javascript-1259__7kSoxqE",
+        "trials_dir": "/tmp/nop/2026-07-01__14-53-01",
         "timeout_multiplier": 1.0,
         "agent_timeout_multiplier": null,
         "verifier_timeout_multiplier": null,
@@ -37,10 +37,10 @@
             "env": {}
         },
         "environment": {
-            "type": "modal",
+            "type": "docker",
             "import_path": null,
             "force_build": false,
-            "delete": false,
+            "delete": true,
             "override_cpus": null,
             "override_memory_mb": null,
             "override_storage_mb": null,
@@ -56,7 +56,7 @@
             "disable": false
         },
         "artifacts": [],
-        "job_id": "b069d7ef-a502-4a46-91d5-798d81044649"
+        "job_id": "7d84f4cf-5fe9-4ceb-ab72-c45a99b2c035"
     },
     "agent_info": {
         "name": "nop",
@@ -71,29 +71,28 @@
         "rollout_details": null,
         "metadata": null
     },
-    "verifier_result": null,
-    "exception_info": {
-        "exception_type": "RewardFileEmptyError",
-        "exception_message": "Reward file is empty at /home/ubuntu/reflection_offline_harbor_delivery/nop_jobs_all/2026-06-29__15-12-04/getsentry-sentry-javascript-1259__QL4hMVF/verifier/reward.txt",
-        "exception_traceback": "Traceback (most recent call last):\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/harbor/trial/trial.py\", line 562, in run\n    await self._run_verification()\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/harbor/trial/trial.py\", line 306, in _run_verification\n    await self._verify_with_retry()\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/tenacity/asyncio/__init__.py\", line 193, in async_wrapped\n    return await copy(fn, *args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/tenacity/asyncio/__init__.py\", line 112, in __call__\n    do = await self.iter(retry_state=retry_state)\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/tenacity/asyncio/__init__.py\", line 157, in iter\n    result = await action(retry_state)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/tenacity/_utils.py\", line 111, in inner\n    return call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/tenacity/__init__.py\", line 393, in <lambda>\n    self._add_action_func(lambda rs: rs.outcome.result())\n                                     ^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/concurrent/futures/_base.py\", line 449, in result\n    return self.__get_result()\n           ^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/concurrent/futures/_base.py\", line 401, in __get_result\n    raise self._exception\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/tenacity/asyncio/__init__.py\", line 116, in __call__\n    result = await fn(*args, **kwargs)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/harbor/trial/trial.py\", line 324, in _verify_with_retry\n    self.result.verifier_result = await asyncio.wait_for(\n                                  ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/asyncio/tasks.py\", line 520, in wait_for\n    return await fut\n           ^^^^^^^^^\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/harbor/verifier/verifier.py\", line 143, in verify\n    rewards = self._parse_reward_text()\n              ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/harbor/verifier/verifier.py\", line 48, in _parse_reward_text\n    raise RewardFileEmptyError(\nharbor.verifier.verifier.RewardFileEmptyError: Reward file is empty at /home/ubuntu/reflection_offline_harbor_delivery/nop_jobs_all/2026-06-29__15-12-04/getsentry-sentry-javascript-1259__QL4hMVF/verifier/reward.txt\n",
-        "occurred_at": "2026-06-29T15:16:21.745821"
+    "verifier_result": {
+        "rewards": {
+            "reward": 0.0
+        }
     },
-    "started_at": "2026-06-29T15:14:06.873600Z",
-    "finished_at": "2026-06-29T15:16:26.994787Z",
+    "exception_info": null,
+    "started_at": "2026-07-01T14:53:09.399948Z",
+    "finished_at": "2026-07-01T14:53:33.995389Z",
     "environment_setup": {
-        "started_at": "2026-06-29T15:14:06.874700Z",
-        "finished_at": "2026-06-29T15:14:56.910187Z"
+        "started_at": "2026-07-01T14:53:09.402195Z",
+        "finished_at": "2026-07-01T14:53:11.334534Z"
     },
     "agent_setup": {
-        "started_at": "2026-06-29T15:14:56.910193Z",
-        "finished_at": "2026-06-29T15:14:56.910215Z"
+        "started_at": "2026-07-01T14:53:11.334571Z",
+        "finished_at": "2026-07-01T14:53:11.334622Z"
     },
     "agent_execution": {
-        "started_at": "2026-06-29T15:14:56.910240Z",
-        "finished_at": "2026-06-29T15:14:56.910255Z"
+        "started_at": "2026-07-01T14:53:11.334677Z",
+        "finished_at": "2026-07-01T14:53:11.334712Z"
     },
     "verifier": {
-        "started_at": "2026-06-29T15:15:01.939092Z",
-        "finished_at": "2026-06-29T15:16:21.744483Z"
+        "started_at": "2026-07-01T14:53:11.334817Z",
+        "finished_at": "2026-07-01T14:53:23.644787Z"
     }
 }

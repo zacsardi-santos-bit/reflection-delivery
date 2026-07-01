@@ -1,0 +1,9 @@
+patching file libs/clients/coingecko/client_test.go
+patching file libs/middleware/rate_limiter_test.go
+patching file services/ratios/controllers_test.go
+patching file services/skus/service_test.go
+go: finding module for package github.com/redis/go-redis/v9
+# github.com/brave-intl/bat-go/libs/middleware
+middleware/rate_limiter_test.go:11:2: cannot find module providing package github.com/redis/go-redis/v9: module lookup disabled by GOPROXY=off
+FAIL	github.com/brave-intl/bat-go/libs/middleware [setup failed]
+reward=0 graded=6 found=0 failed=0 parsed=0 framework=go exit_code=1

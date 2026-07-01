@@ -1,0 +1,4 @@
+patching file ci/release/changelogs/next.md
+patching file d2ir/compile.go
+patching file testdata/d2compiler/TestCompile2/globs/connected-filter.exp.json
+patching file testdata/d2compiler/TestCompile2/globs/leaf-filter.exp.json

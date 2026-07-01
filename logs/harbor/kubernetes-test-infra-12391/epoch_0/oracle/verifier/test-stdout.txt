@@ -1,0 +1,128 @@
+patching file prow/pod-utils/gcs/metadata_test.go
+=== RUN   TestMetadataFromFileName
+=== RUN   TestMetadataFromFileName/txt
+=== RUN   TestMetadataFromFileName/txt.gz
+=== RUN   TestMetadataFromFileName/txt.gzip
+=== RUN   TestMetadataFromFileName/bare_gz
+=== RUN   TestMetadataFromFileName/gz
+=== RUN   TestMetadataFromFileName/gzip
+=== RUN   TestMetadataFromFileName/json
+=== RUN   TestMetadataFromFileName/json.gz
+=== RUN   TestMetadataFromFileName/log
+=== RUN   TestMetadataFromFileName/empty
+=== RUN   TestMetadataFromFileName/dot
+--- PASS: TestMetadataFromFileName (0.00s)
+    --- PASS: TestMetadataFromFileName/txt (0.00s)
+    --- PASS: TestMetadataFromFileName/txt.gz (0.00s)
+    --- PASS: TestMetadataFromFileName/txt.gzip (0.00s)
+    --- PASS: TestMetadataFromFileName/bare_gz (0.00s)
+    --- PASS: TestMetadataFromFileName/gz (0.00s)
+    --- PASS: TestMetadataFromFileName/gzip (0.00s)
+    --- PASS: TestMetadataFromFileName/json (0.00s)
+    --- PASS: TestMetadataFromFileName/json.gz (0.00s)
+    --- PASS: TestMetadataFromFileName/log (0.00s)
+    --- PASS: TestMetadataFromFileName/empty (0.00s)
+    --- PASS: TestMetadataFromFileName/dot (0.00s)
+=== RUN   TestPathForSpec
+--- PASS: TestPathForSpec (0.00s)
+=== RUN   TestAliasForSpec
+--- PASS: TestAliasForSpec (0.00s)
+=== RUN   TestLatestBuildForSpec
+--- PASS: TestLatestBuildForSpec (0.00s)
+=== RUN   TestRootForSpec
+--- PASS: TestRootForSpec (0.00s)
+=== RUN   TestNewLegacyRepoPathBuilder
+--- PASS: TestNewLegacyRepoPathBuilder (0.00s)
+=== RUN   TestNewSingleDefaultRepoPathBuilder
+--- PASS: TestNewSingleDefaultRepoPathBuilder (0.00s)
+=== RUN   TestNewExplicitRepoPathBuilder
+--- PASS: TestNewExplicitRepoPathBuilder (0.00s)
+=== RUN   TestUploadToGcs
+time="2026-07-01T14:52:08Z" level=info msg="Queued for upload" dest=pass-8
+time="2026-07-01T14:52:08Z" level=info msg="Queued for upload" dest=pass-1
+time="2026-07-01T14:52:08Z" level=info msg="Queued for upload" dest=pass-2
+time="2026-07-01T14:52:08Z" level=info msg="Queued for upload" dest=pass-3
+time="2026-07-01T14:52:08Z" level=info msg="Queued for upload" dest=pass-5
+time="2026-07-01T14:52:08Z" level=info msg="Queued for upload" dest=pass-7
+time="2026-07-01T14:52:08Z" level=info msg="Queued for upload" dest=pass-0
+time="2026-07-01T14:52:08Z" level=info msg="Queued for upload" dest=pass-4
+time="2026-07-01T14:52:08Z" level=info msg="Queued for upload" dest=pass-6
+time="2026-07-01T14:52:08Z" level=info msg="Queued for upload" dest=pass-9
+time="2026-07-01T14:52:08Z" level=info msg="Finished upload" dest=pass-9
+time="2026-07-01T14:52:08Z" level=info msg="Finished upload" dest=pass-4
+time="2026-07-01T14:52:08Z" level=info msg="Finished upload" dest=pass-3
+time="2026-07-01T14:52:08Z" level=info msg="Finished upload" dest=pass-6
+time="2026-07-01T14:52:08Z" level=info msg="Finished upload" dest=pass-1
+time="2026-07-01T14:52:08Z" level=info msg="Finished upload" dest=pass-2
+time="2026-07-01T14:52:08Z" level=info msg="Finished upload" dest=pass-8
+time="2026-07-01T14:52:08Z" level=info msg="Finished upload" dest=pass-5
+time="2026-07-01T14:52:08Z" level=info msg="Finished upload" dest=pass-0
+time="2026-07-01T14:52:08Z" level=info msg="Finished upload" dest=pass-7
+time="2026-07-01T14:52:08Z" level=info msg="Queued for upload" dest=pass-3
+time="2026-07-01T14:52:08Z" level=info msg="Queued for upload" dest=pass-5
+time="2026-07-01T14:52:08Z" level=info msg="Queued for upload" dest=pass-8
+time="2026-07-01T14:52:08Z" level=info msg="Queued for upload" dest=pass-9
+time="2026-07-01T14:52:08Z" level=info msg="Queued for upload" dest=pass-6
+time="2026-07-01T14:52:08Z" level=info msg="Queued for upload" dest=pass-7
+time="2026-07-01T14:52:08Z" level=info msg="Queued for upload" dest=fail-0
+time="2026-07-01T14:52:08Z" level=info msg="Queued for upload" dest=pass-0
+time="2026-07-01T14:52:08Z" level=info msg="Queued for upload" dest=pass-1
+time="2026-07-01T14:52:08Z" level=info msg="Queued for upload" dest=pass-2
+time="2026-07-01T14:52:08Z" level=info msg="Queued for upload" dest=pass-4
+time="2026-07-01T14:52:08Z" level=info msg="Finished upload" dest=pass-4
+time="2026-07-01T14:52:08Z" level=info msg="Finished upload" dest=pass-3
+time="2026-07-01T14:52:08Z" level=info msg="Finished upload" dest=pass-5
+time="2026-07-01T14:52:08Z" level=info msg="Finished upload" dest=pass-8
+time="2026-07-01T14:52:08Z" level=info msg="Finished upload" dest=pass-9
+time="2026-07-01T14:52:08Z" level=info msg="Finished upload" dest=pass-6
+time="2026-07-01T14:52:08Z" level=info msg="Finished upload" dest=pass-7
+time="2026-07-01T14:52:08Z" level=info msg="Finished upload" dest=fail-0
+time="2026-07-01T14:52:08Z" level=info msg="Finished upload" dest=pass-0
+time="2026-07-01T14:52:08Z" level=info msg="Finished upload" dest=pass-1
+time="2026-07-01T14:52:08Z" level=info msg="Finished upload" dest=pass-2
+time="2026-07-01T14:52:08Z" level=info msg="Queued for upload" dest=pass-0
+time="2026-07-01T14:52:08Z" level=info msg="Queued for upload" dest=fail-1
+time="2026-07-01T14:52:08Z" level=info msg="Queued for upload" dest=fail-3
+time="2026-07-01T14:52:08Z" level=info msg="Queued for upload" dest=fail-5
+time="2026-07-01T14:52:08Z" level=info msg="Queued for upload" dest=fail-8
+time="2026-07-01T14:52:08Z" level=info msg="Queued for upload" dest=fail-0
+time="2026-07-01T14:52:08Z" level=info msg="Queued for upload" dest=fail-2
+time="2026-07-01T14:52:08Z" level=info msg="Queued for upload" dest=fail-4
+time="2026-07-01T14:52:08Z" level=info msg="Queued for upload" dest=fail-6
+time="2026-07-01T14:52:08Z" level=info msg="Queued for upload" dest=fail-7
+time="2026-07-01T14:52:08Z" level=info msg="Queued for upload" dest=fail-9
+time="2026-07-01T14:52:08Z" level=info msg="Finished upload" dest=fail-9
+time="2026-07-01T14:52:08Z" level=info msg="Finished upload" dest=pass-0
+time="2026-07-01T14:52:08Z" level=info msg="Finished upload" dest=fail-1
+time="2026-07-01T14:52:08Z" level=info msg="Finished upload" dest=fail-3
+time="2026-07-01T14:52:08Z" level=info msg="Finished upload" dest=fail-5
+time="2026-07-01T14:52:08Z" level=info msg="Finished upload" dest=fail-8
+time="2026-07-01T14:52:08Z" level=info msg="Finished upload" dest=fail-0
+time="2026-07-01T14:52:08Z" level=info msg="Finished upload" dest=fail-2
+time="2026-07-01T14:52:08Z" level=info msg="Finished upload" dest=fail-4
+time="2026-07-01T14:52:08Z" level=info msg="Finished upload" dest=fail-6
+time="2026-07-01T14:52:08Z" level=info msg="Finished upload" dest=fail-7
+time="2026-07-01T14:52:08Z" level=info msg="Queued for upload" dest=fail-7
+time="2026-07-01T14:52:08Z" level=info msg="Queued for upload" dest=fail-1
+time="2026-07-01T14:52:08Z" level=info msg="Queued for upload" dest=fail-2
+time="2026-07-01T14:52:08Z" level=info msg="Queued for upload" dest=fail-4
+time="2026-07-01T14:52:08Z" level=info msg="Queued for upload" dest=fail-5
+time="2026-07-01T14:52:08Z" level=info msg="Queued for upload" dest=fail-9
+time="2026-07-01T14:52:08Z" level=info msg="Queued for upload" dest=fail-0
+time="2026-07-01T14:52:08Z" level=info msg="Queued for upload" dest=fail-3
+time="2026-07-01T14:52:08Z" level=info msg="Queued for upload" dest=fail-6
+time="2026-07-01T14:52:08Z" level=info msg="Queued for upload" dest=fail-8
+time="2026-07-01T14:52:08Z" level=info msg="Finished upload" dest=fail-8
+time="2026-07-01T14:52:08Z" level=info msg="Finished upload" dest=fail-7
+time="2026-07-01T14:52:08Z" level=info msg="Finished upload" dest=fail-1
+time="2026-07-01T14:52:08Z" level=info msg="Finished upload" dest=fail-2
+time="2026-07-01T14:52:08Z" level=info msg="Finished upload" dest=fail-4
+time="2026-07-01T14:52:08Z" level=info msg="Finished upload" dest=fail-5
+time="2026-07-01T14:52:08Z" level=info msg="Finished upload" dest=fail-9
+time="2026-07-01T14:52:08Z" level=info msg="Finished upload" dest=fail-0
+time="2026-07-01T14:52:08Z" level=info msg="Finished upload" dest=fail-3
+time="2026-07-01T14:52:08Z" level=info msg="Finished upload" dest=fail-6
+--- PASS: TestUploadToGcs (0.00s)
+PASS
+ok  	k8s.io/test-infra/prow/pod-utils/gcs	0.012s
+reward=1 graded=20 found=0 failed=0 parsed=0 framework=go exit_code=0

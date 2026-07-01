@@ -1,0 +1,16 @@
+patching file detox/src/client/Client.test.js
+patching file detox/src/configuration/composeSessionConfig.test.js
+patching file detox/src/errors/DetoxConfigErrorBuilder.test.js
+patching file detox/src/utils/isValidWebsocketURL.test.js
+patching file detox/test/package.json
+PASS src/configuration/composeSessionConfig.test.js
+PASS src/errors/DetoxConfigErrorBuilder.test.js
+PASS src/utils/isValidWebsocketURL.test.js
+PASS src/client/Client.test.js (6.097 s)
+
+Test Suites: 4 passed, 4 total
+Tests:       91 passed, 91 total
+Snapshots:   30 passed, 30 total
+Time:        6.883 s
+Ran all test suites matching /src\/client\/Client.test.js|src\/configuration\/composeSessionConfig.test.js|src\/errors\/DetoxConfigErrorBuilder.test.js|src\/utils\/isValidWebsocketURL.test.js/i.
+reward=1 graded=90 found=0 failed=0 parsed=0 framework=jest exit_code=0

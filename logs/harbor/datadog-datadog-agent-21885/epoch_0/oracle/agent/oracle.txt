@@ -1,0 +1,2 @@
+patching file pkg/compliance/k8sconfig/loader.go
+patching file pkg/compliance/k8sconfig/types.go

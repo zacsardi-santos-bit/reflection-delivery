@@ -1,0 +1,256 @@
+patching file docs/content.zh/docs/deployment/config.md
+patching file docs/content.zh/docs/ops/state/state_backends.md
+patching file docs/content.zh/docs/ops/traces.md
+patching file docs/content/docs/deployment/config.md
+patching file docs/content/docs/ops/state/state_backends.md
+patching file docs/content/docs/ops/traces.md
+patching file docs/layouts/shortcodes/generated/all_taskmanager_section.html
+patching file docs/layouts/shortcodes/generated/environment_configuration.html
+patching file docs/layouts/shortcodes/generated/task_manager_configuration.html
+patching file docs/layouts/shortcodes/generated/yarn_config_configuration.html
+patching file flink-clients/pom.xml
+patching file flink-clients/src/main/java/org/apache/flink/client/deployment/executors/LocalExecutor.java
+patching file flink-clients/src/main/java/org/apache/flink/client/program/PerJobMiniClusterFactory.java
+patching file flink-clients/src/test/java/org/apache/flink/client/deployment/application/FromClasspathEntryClassInformationProviderTest.java (renamed from flink-clients/src/test/java/org/apache/flink/client/deployment/application/FromClasspathEntryClassInformationProviderITCase.java)
+patching file flink-clients/src/test/java/org/apache/flink/client/program/DefaultPackagedProgramRetrieverTest.java (renamed from flink-clients/src/test/java/org/apache/flink/client/program/DefaultPackagedProgramRetrieverITCase.java)
+patching file flink-core/src/main/java/org/apache/flink/api/common/io/FileInputFormat.java
+patching file flink-core/src/main/java/org/apache/flink/api/connector/source/SplitEnumeratorContext.java
+patching file flink-core/src/main/java/org/apache/flink/configuration/ClusterOptions.java
+patching file flink-core/src/main/java/org/apache/flink/configuration/ConfigConstants.java
+patching file flink-core/src/main/java/org/apache/flink/configuration/Configuration.java
+patching file flink-core/src/main/java/org/apache/flink/configuration/CoreOptions.java
+patching file flink-core/src/main/java/org/apache/flink/configuration/DelegatingConfiguration.java
+patching file flink-core/src/main/java/org/apache/flink/configuration/TaskManagerOptions.java
+patching file flink-core/src/main/java/org/apache/flink/util/FileUtils.java
+patching file flink-core/src/test/java/org/apache/flink/configuration/ConfigurationTest.java
+patching file flink-core/src/test/java/org/apache/flink/configuration/DelegatingConfigurationTest.java
+patching file flink-core/src/test/java/org/apache/flink/util/FileUtilsTest.java
+patching file flink-dist/src/main/flink-bin/bin/config.sh
+patching file flink-end-to-end-tests/test-scripts/test_file_sink.sh
+patching file flink-filesystems/flink-gs-fs-hadoop/src/main/java/org/apache/flink/fs/gs/GSFileSystemFactory.java
+patching file flink-filesystems/flink-gs-fs-hadoop/src/main/java/org/apache/flink/fs/gs/utils/ConfigUtils.java
+patching file flink-filesystems/flink-gs-fs-hadoop/src/test/java/org/apache/flink/fs/gs/GSFileSystemFactoryTest.java
+patching file flink-kubernetes/src/main/java/org/apache/flink/kubernetes/highavailability/KubernetesStateHandleStore.java
+patching file flink-python/pyflink/pyflink_gateway_server.py
+patching file flink-python/src/main/java/org/apache/flink/table/runtime/operators/python/aggregate/PythonStreamGroupWindowAggregateOperator.java
+patching file flink-python/src/main/java/org/apache/flink/table/runtime/operators/python/aggregate/arrow/stream/StreamArrowPythonGroupWindowAggregateFunctionOperator.java
+patching file flink-python/src/test/java/org/apache/flink/table/runtime/operators/python/aggregate/PassThroughPythonStreamGroupWindowAggregateOperator.java
+patching file flink-python/src/test/java/org/apache/flink/table/runtime/operators/python/aggregate/PythonStreamGroupWindowAggregateOperatorTest.java
+patching file flink-python/src/test/java/org/apache/flink/table/runtime/operators/python/aggregate/arrow/stream/StreamArrowPythonGroupWindowAggregateFunctionOperatorTest.java
+patching file flink-queryable-state/flink-queryable-state-runtime/src/test/java/org/apache/flink/queryablestate/itcases/HAQueryableStateFsBackendITCase.java
+patching file flink-queryable-state/flink-queryable-state-runtime/src/test/java/org/apache/flink/queryablestate/itcases/HAQueryableStateRocksDBBackendITCase.java
+patching file flink-queryable-state/flink-queryable-state-runtime/src/test/java/org/apache/flink/queryablestate/itcases/NonHAQueryableStateFsBackendITCase.java
+patching file flink-queryable-state/flink-queryable-state-runtime/src/test/java/org/apache/flink/queryablestate/itcases/NonHAQueryableStateRocksDBBackendITCase.java
+patching file flink-runtime-web/src/test/java/org/apache/flink/runtime/webmonitor/WebFrontendITCase.java
+patching file flink-runtime-web/web-dashboard/src/app/pages/job-manager/profiler/job-manager-profiler.component.html
+patching file flink-runtime-web/web-dashboard/src/app/pages/task-manager/profiler/task-manager-profiler.component.html
+patching file flink-runtime-web/web-dashboard/src/app/pages/task-manager/profiler/task-manager-profiler.component.less
+patching file flink-runtime-web/web-dashboard/src/app/pages/task-manager/profiler/task-manager-profiler.component.ts
+patching file flink-runtime-web/web-dashboard/src/app/pages/task-manager/routes.ts
+patching file flink-runtime-web/web-dashboard/src/app/pages/task-manager/status/task-manager-status.component.ts
+patching file flink-runtime-web/web-dashboard/src/app/services/task-manager.service.ts
+patching file flink-runtime/pom.xml
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/checkpoint/CheckpointCoordinator.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/checkpoint/OperatorState.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/checkpoint/OperatorSubtaskState.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/checkpoint/StateObjectCollection.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/checkpoint/TaskState.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/checkpoint/TaskStateSnapshot.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/clusterframework/BootstrapTools.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/executiongraph/failover/ExecutionFailureHandler.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/executiongraph/failover/ExponentialDelayRestartBackoffTimeStrategy.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/executiongraph/failover/FailureHandlingResult.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/executiongraph/failover/FailureRateRestartBackoffTimeStrategy.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/executiongraph/failover/FixedDelayRestartBackoffTimeStrategy.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/executiongraph/failover/NoRestartBackoffTimeStrategy.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/executiongraph/failover/RestartBackoffTimeStrategy.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/io/network/partition/consumer/RecoveredInputChannel.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/metrics/MetricNames.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/resourcemanager/ResourceManager.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/resourcemanager/ResourceManagerGateway.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/resourcemanager/ResourceManagerRuntimeServices.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/resourcemanager/ResourceManagerRuntimeServicesConfiguration.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/resourcemanager/active/ActiveResourceManagerFactory.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/resourcemanager/slotmanager/DeclarativeSlotManager.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/rest/handler/LeaderRetrievalHandler.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/rest/handler/taskmanager/TaskManagerCustomLogHandler.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/rest/handler/taskmanager/TaskManagerProfilingFileHandler.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/rest/handler/taskmanager/TaskManagerProfilingHandler.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/rest/handler/taskmanager/TaskManagerProfilingListHandler.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/rest/messages/taskmanager/TaskManagerProfilingFileHeaders.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/rest/messages/taskmanager/TaskManagerProfilingFileMessageParameters.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/rest/messages/taskmanager/TaskManagerProfilingHeaders.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/rest/messages/taskmanager/TaskManagerProfilingListHeaders.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/scheduler/DefaultScheduler.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/scheduler/SchedulerBase.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/scheduler/exceptionhistory/FailureHandlingResultSnapshot.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/scheduler/exceptionhistory/RootExceptionHistoryEntry.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/state/AbstractChannelStateHandle.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/state/ChainedStateHandle.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/state/CompressibleFSDataInputStream.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/state/CompressibleFSDataOutputStream.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/state/DefaultOperatorStateBackendSnapshotStrategy.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/state/DirectoryStateHandle.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/state/IncrementalLocalKeyedStateHandle.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/state/IncrementalRemoteKeyedStateHandle.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/state/KeyGroupsStateHandle.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/state/OperatorStateRestoreOperation.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/state/OperatorStreamStateHandle.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/state/RetrievableStreamStateHandle.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/state/SnapshotDirectory.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/state/StateObject.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/state/changelog/ChangelogStateBackendHandle.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/state/changelog/inmemory/InMemoryChangelogStateHandle.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/state/filesystem/FileStateHandle.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/state/memory/ByteStreamStateHandle.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/taskexecutor/FileType.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/taskexecutor/TaskExecutor.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/taskexecutor/TaskExecutorGateway.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/taskexecutor/TaskExecutorGatewayDecoratorBase.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/taskexecutor/TaskManagerConfiguration.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/util/profiler/ProfilingService.java
+patching file flink-runtime/src/main/java/org/apache/flink/runtime/webmonitor/WebMonitorEndpoint.java
+patching file flink-runtime/src/test/java/org/apache/flink/runtime/clusterframework/BootstrapToolsTest.java
+patching file flink-runtime/src/test/java/org/apache/flink/runtime/io/network/partition/hybrid/tiered/netty/TestingNettyConnectionReader.java
+patching file flink-runtime/src/test/java/org/apache/flink/runtime/io/network/partition/hybrid/tiered/netty/TestingTierConsumerAgent.java
+patching file flink-runtime/src/test/java/org/apache/flink/runtime/minicluster/MiniClusterITCase.java
+patching file flink-runtime/src/test/java/org/apache/flink/runtime/resourcemanager/ResourceManagerTest.java
+patching file flink-runtime/src/test/java/org/apache/flink/runtime/resourcemanager/active/ActiveResourceManagerFactoryTest.java
+patching file flink-runtime/src/test/java/org/apache/flink/runtime/resourcemanager/slotmanager/DeclarativeSlotManagerBuilder.java
+patching file flink-runtime/src/test/java/org/apache/flink/runtime/resourcemanager/slotmanager/DeclarativeSlotManagerTest.java
+patching file flink-runtime/src/test/java/org/apache/flink/runtime/resourcemanager/utils/TestingResourceManagerGateway.java
+patching file flink-runtime/src/test/java/org/apache/flink/runtime/rest/handler/taskmanager/TaskManagerProfilingHandlerTest.java
+patching file flink-runtime/src/test/java/org/apache/flink/runtime/rest/handler/taskmanager/TaskManagerProfilingListHandlerTest.java
+patching file flink-runtime/src/test/java/org/apache/flink/runtime/state/CompressibleFSDataInputStreamTest.java
+patching file flink-runtime/src/test/java/org/apache/flink/runtime/state/IncrementalLocalKeyedStateHandleTest.java
+patching file flink-runtime/src/test/java/org/apache/flink/runtime/state/IncrementalRemoteKeyedStateHandleTest.java
+patching file flink-runtime/src/test/java/org/apache/flink/runtime/state/KeyGroupsStateHandleTest.java
+patching file flink-runtime/src/test/java/org/apache/flink/runtime/state/OperatorStateRestoreOperationTest.java
+patching file flink-runtime/src/test/java/org/apache/flink/runtime/state/filesystem/FileStateHandleTest.java
+patching file flink-runtime/src/test/java/org/apache/flink/runtime/state/memory/ByteStreamStateHandleTest.java
+patching file flink-runtime/src/test/java/org/apache/flink/runtime/taskexecutor/TaskExecutorTest.java
+patching file flink-runtime/src/test/java/org/apache/flink/runtime/taskexecutor/TestingTaskExecutorGateway.java
+patching file flink-runtime/src/test/java/org/apache/flink/runtime/taskexecutor/TestingTaskExecutorGatewayBuilder.java
+patching file flink-runtime/src/test/java/org/apache/flink/runtime/util/profiler/ProfilingServiceTest.java
+patching file flink-state-backends/flink-statebackend-rocksdb/src/main/java/org/apache/flink/contrib/streaming/state/RocksDBKeyedStateBackendBuilder.java
+patching file flink-state-backends/flink-statebackend-rocksdb/src/main/java/org/apache/flink/contrib/streaming/state/StateHandleDownloadSpec.java
+patching file flink-state-backends/flink-statebackend-rocksdb/src/main/java/org/apache/flink/contrib/streaming/state/snapshot/RocksIncrementalSnapshotStrategy.java
+patching file flink-state-backends/flink-statebackend-rocksdb/src/test/java/org/apache/flink/contrib/streaming/state/snapshot/RocksIncrementalSnapshotStrategyTest.java
+patching file flink-streaming-java/src/main/java/org/apache/flink/streaming/api/operators/BackendRestorerProcedure.java
+patching file flink-streaming-java/src/main/java/org/apache/flink/streaming/api/operators/StreamTaskStateInitializerImpl.java
+patching file flink-streaming-java/src/main/java/org/apache/flink/streaming/runtime/operators/sink/CommitterOperatorFactory.java
+patching file flink-streaming-java/src/main/java/org/apache/flink/streaming/runtime/operators/sink/SinkWriterOperator.java
+patching file flink-streaming-java/src/main/java/org/apache/flink/streaming/runtime/operators/sink/StatefulSinkWriterStateHandler.java
+patching file flink-streaming-java/src/main/java/org/apache/flink/streaming/runtime/translators/SinkTransformationTranslator.java
+patching file flink-streaming-java/src/test/java/org/apache/flink/streaming/api/graph/SinkV2TransformationTranslatorITCase.java
+patching file flink-streaming-java/src/test/java/org/apache/flink/streaming/api/graph/StreamGraphGeneratorTest.java
+patching file flink-streaming-java/src/test/java/org/apache/flink/streaming/api/operators/BackendRestorerProcedureTest.java
+patching file flink-streaming-java/src/test/java/org/apache/flink/streaming/api/operators/StreamTaskStateInitializerImplTest.java
+patching file flink-streaming-java/src/test/java/org/apache/flink/streaming/util/TestExpandingSinkWithMixin.java
+patching file flink-table/flink-sql-client/src/test/java/org/apache/flink/table/client/gateway/ExecutorImplITCase.java
+patching file flink-table/flink-table-planner/src/main/java/org/apache/flink/table/planner/operations/converters/SqlNodeConvertUtils.java
+patching file flink-table/flink-table-planner/src/main/java/org/apache/flink/table/planner/plan/logical/SliceAttachedWindowingStrategy.java
+patching file flink-table/flink-table-planner/src/main/java/org/apache/flink/table/planner/plan/nodes/exec/common/CommonExecMatch.java
+patching file flink-table/flink-table-planner/src/main/java/org/apache/flink/table/planner/plan/nodes/exec/common/CommonExecWindowTableFunction.java
+patching file flink-table/flink-table-planner/src/main/java/org/apache/flink/table/planner/plan/nodes/exec/stream/StreamExecGlobalWindowAggregate.java
+patching file flink-table/flink-table-planner/src/main/java/org/apache/flink/table/planner/plan/nodes/exec/stream/StreamExecGroupWindowAggregate.java
+patching file flink-table/flink-table-planner/src/main/java/org/apache/flink/table/planner/plan/nodes/exec/stream/StreamExecLocalWindowAggregate.java
+patching file flink-table/flink-table-planner/src/main/java/org/apache/flink/table/planner/plan/nodes/exec/stream/StreamExecPythonGroupWindowAggregate.java
+patching file flink-table/flink-table-planner/src/main/java/org/apache/flink/table/planner/plan/nodes/exec/stream/StreamExecWindowAggregate.java
+patching file flink-table/flink-table-planner/src/main/java/org/apache/flink/table/planner/plan/nodes/exec/stream/StreamExecWindowAggregateBase.java
+patching file flink-table/flink-table-planner/src/main/java/org/apache/flink/table/planner/plan/utils/WindowTableFunctionUtil.java
+patching file flink-table/flink-table-planner/src/main/scala/org/apache/flink/table/planner/codegen/agg/AggsHandlerCodeGenerator.scala
+patching file flink-table/flink-table-planner/src/main/scala/org/apache/flink/table/planner/plan/utils/WindowEmitStrategy.scala
+patching file flink-table/flink-table-planner/src/test/java/org/apache/flink/table/planner/operations/SqlDdlToOperationConverterTest.java
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/aggregate/window/LocalSlicingWindowAggOperator.java
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/aggregate/window/SlicingWindowAggOperatorBuilder.java
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/aggregate/window/buffers/RecordsWindowBuffer.java
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/aggregate/window/buffers/WindowBuffer.java
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/aggregate/window/combines/AggCombiner.java
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/aggregate/window/combines/GlobalAggCombiner.java
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/aggregate/window/combines/LocalAggCombiner.java
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/aggregate/window/processors/AbstractSliceWindowAggProcessor.java
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/aggregate/window/processors/AbstractWindowAggProcessor.java
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/aggregate/window/processors/SliceSharedWindowAggProcessor.java
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/aggregate/window/processors/SliceUnsharedWindowAggProcessor.java
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/deduplicate/window/RowTimeWindowDeduplicateOperatorBuilder.java
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/deduplicate/window/combines/RowTimeDeduplicateRecordsCombiner.java
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/deduplicate/window/processors/RowTimeWindowDeduplicateProcessor.java
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/join/lookup/KeyedLookupJoinWrapper.java
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/join/lookup/LookupJoinRunner.java
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/join/window/WindowJoinOperator.java
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/rank/window/WindowRankOperatorBuilder.java
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/rank/window/combines/TopNRecordsCombiner.java
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/rank/window/processors/WindowRankProcessor.java
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/sort/BaseTemporalSortOperator.java
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/AggregateWindowOperator.java (renamed from flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/groupwindow/operator/AggregateWindowOperator.java)
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/MergeCallback.java
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/TableAggregateWindowOperator.java (renamed from flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/groupwindow/operator/TableAggregateWindowOperator.java)
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/WindowOperator.java (renamed from flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/groupwindow/operator/WindowOperator.java)
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/WindowOperatorBuilder.java (renamed from flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/groupwindow/operator/WindowOperatorBuilder.java)
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/WindowTableFunctionOperator.java (renamed from flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/tvf/operator/WindowTableFunctionOperator.java)
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/assigners/CountSlidingWindowAssigner.java (renamed from flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/groupwindow/assigners/CountSlidingWindowAssigner.java)
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/assigners/CountTumblingWindowAssigner.java (renamed from flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/groupwindow/assigners/CountTumblingWindowAssigner.java)
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/assigners/CumulativeWindowAssigner.java (renamed from flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/groupwindow/assigners/CumulativeWindowAssigner.java)
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/assigners/InternalTimeWindowAssigner.java (renamed from flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/groupwindow/assigners/InternalTimeWindowAssigner.java)
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/assigners/MergingWindowAssigner.java (renamed from flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/groupwindow/assigners/MergingWindowAssigner.java)
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/assigners/PanedWindowAssigner.java (renamed from flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/groupwindow/assigners/PanedWindowAssigner.java)
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/assigners/SessionWindowAssigner.java (renamed from flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/groupwindow/assigners/SessionWindowAssigner.java)
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/assigners/SlidingWindowAssigner.java (renamed from flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/groupwindow/assigners/SlidingWindowAssigner.java)
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/assigners/TumblingWindowAssigner.java (renamed from flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/groupwindow/assigners/TumblingWindowAssigner.java)
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/assigners/WindowAssigner.java (renamed from flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/groupwindow/assigners/GroupWindowAssigner.java)
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/combines/RecordsCombiner.java (renamed from flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/tvf/combines/RecordsCombiner.java)
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/internal/GeneralWindowProcessFunction.java (renamed from flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/groupwindow/internal/GeneralWindowProcessFunction.java)
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/internal/InternalWindowProcessFunction.java (renamed from flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/groupwindow/internal/InternalWindowProcessFunction.java)
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/internal/MergingWindowProcessFunction.java (renamed from flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/groupwindow/internal/MergingWindowProcessFunction.java)
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/internal/MergingWindowSet.java (renamed from flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/groupwindow/internal/MergingWindowSet.java)
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/internal/PanedWindowProcessFunction.java (renamed from flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/groupwindow/internal/PanedWindowProcessFunction.java)
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/slicing/ClockService.java (renamed from flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/tvf/common/ClockService.java)
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/slicing/SliceAssigner.java (renamed from flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/tvf/slicing/SliceAssigner.java)
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/slicing/SliceAssigners.java (renamed from flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/tvf/slicing/SliceAssigners.java)
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/slicing/SliceSharedAssigner.java (renamed from flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/tvf/slicing/SliceSharedAssigner.java)
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/slicing/SliceUnsharedAssigner.java (renamed from flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/tvf/slicing/SliceUnsharedAssigner.java)
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/slicing/SlicingWindowOperator.java (renamed from flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/tvf/common/WindowOperatorBase.java)
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/slicing/SlicingWindowProcessor.java (renamed from flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/tvf/common/WindowProcessor.java)
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/slicing/WindowTimerService.java (renamed from flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/tvf/common/WindowTimerService.java)
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/slicing/WindowTimerServiceImpl.java (renamed from flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/tvf/slicing/SlicingWindowTimerServiceImpl.java)
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/state/StateKeyContext.java (renamed from flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/tvf/state/StateKeyContext.java)
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/state/WindowListState.java (renamed from flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/tvf/state/WindowListState.java)
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/state/WindowMapState.java (renamed from flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/tvf/state/WindowMapState.java)
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/state/WindowState.java (renamed from flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/tvf/state/WindowState.java)
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/state/WindowValueState.java (renamed from flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/tvf/state/WindowValueState.java)
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/triggers/ElementTriggers.java (renamed from flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/groupwindow/triggers/ElementTriggers.java)
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/triggers/EventTimeTriggers.java (renamed from flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/groupwindow/triggers/EventTimeTriggers.java)
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/triggers/ProcessingTimeTriggers.java (renamed from flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/groupwindow/triggers/ProcessingTimeTriggers.java)
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/triggers/Trigger.java (renamed from flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/groupwindow/triggers/Trigger.java)
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/triggers/WindowTrigger.java (renamed from flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/groupwindow/triggers/WindowTrigger.java)
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/tvf/common/WindowAssigner.java
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/tvf/common/WindowTimerServiceBase.java
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/tvf/slicing/SlicingWindowOperator.java
+patching file flink-table/flink-table-runtime/src/main/java/org/apache/flink/table/runtime/operators/window/tvf/slicing/SlicingWindowProcessor.java
+patching file flink-table/flink-table-runtime/src/test/java/org/apache/flink/table/runtime/operators/aggregate/window/SlicingWindowAggOperatorTest.java
+patching file flink-table/flink-table-runtime/src/test/java/org/apache/flink/table/runtime/operators/deduplicate/window/RowTimeWindowDeduplicateOperatorTest.java
+patching file flink-table/flink-table-runtime/src/test/java/org/apache/flink/table/runtime/operators/join/KeyedLookupJoinHarnessTest.java
+patching file flink-table/flink-table-runtime/src/test/java/org/apache/flink/table/runtime/operators/rank/window/WindowRankOperatorTest.java
+patching file flink-table/flink-table-runtime/src/test/java/org/apache/flink/table/runtime/operators/window/MergingWindowSetTest.java (renamed from flink-table/flink-table-runtime/src/test/java/org/apache/flink/table/runtime/operators/window/groupwindow/internal/MergingWindowSetTest.java)
+patching file flink-table/flink-table-runtime/src/test/java/org/apache/flink/table/runtime/operators/window/WindowOperatorContractTest.java (renamed from flink-table/flink-table-runtime/src/test/java/org/apache/flink/table/runtime/operators/window/groupwindow/operator/WindowOperatorContractTest.java)
+patching file flink-table/flink-table-runtime/src/test/java/org/apache/flink/table/runtime/operators/window/WindowOperatorTest.java (renamed from flink-table/flink-table-runtime/src/test/java/org/apache/flink/table/runtime/operators/window/groupwindow/operator/WindowOperatorTest.java)
+patching file flink-table/flink-table-runtime/src/test/java/org/apache/flink/table/runtime/operators/window/WindowTableFunctionOperatorTest.java (renamed from flink-table/flink-table-runtime/src/test/java/org/apache/flink/table/runtime/operators/window/tvf/operator/WindowTableFunctionOperatorTest.java)
+patching file flink-table/flink-table-runtime/src/test/java/org/apache/flink/table/runtime/operators/window/assigners/CumulativeWindowAssignerTest.java (renamed from flink-table/flink-table-runtime/src/test/java/org/apache/flink/table/runtime/operators/window/groupwindow/assigners/CumulativeWindowAssignerTest.java)
+patching file flink-table/flink-table-runtime/src/test/java/org/apache/flink/table/runtime/operators/window/assigners/SessionWindowAssignerTest.java (renamed from flink-table/flink-table-runtime/src/test/java/org/apache/flink/table/runtime/operators/window/groupwindow/assigners/SessionWindowAssignerTest.java)
+patching file flink-table/flink-table-runtime/src/test/java/org/apache/flink/table/runtime/operators/window/assigners/SlidingWindowAssignerTest.java (renamed from flink-table/flink-table-runtime/src/test/java/org/apache/flink/table/runtime/operators/window/groupwindow/assigners/SlidingWindowAssignerTest.java)
+patching file flink-table/flink-table-runtime/src/test/java/org/apache/flink/table/runtime/operators/window/assigners/TumblingWindowAssignerTest.java (renamed from flink-table/flink-table-runtime/src/test/java/org/apache/flink/table/runtime/operators/window/groupwindow/assigners/TumblingWindowAssignerTest.java)
+patching file flink-table/flink-table-runtime/src/test/java/org/apache/flink/table/runtime/operators/window/slicing/CumulativeSliceAssignerTest.java (renamed from flink-table/flink-table-runtime/src/test/java/org/apache/flink/table/runtime/operators/window/tvf/slicing/CumulativeSliceAssignerTest.java)
+patching file flink-table/flink-table-runtime/src/test/java/org/apache/flink/table/runtime/operators/window/slicing/HoppingSliceAssignerTest.java (renamed from flink-table/flink-table-runtime/src/test/java/org/apache/flink/table/runtime/operators/window/tvf/slicing/HoppingSliceAssignerTest.java)
+patching file flink-table/flink-table-runtime/src/test/java/org/apache/flink/table/runtime/operators/window/slicing/SliceAssignerTestBase.java (renamed from flink-table/flink-table-runtime/src/test/java/org/apache/flink/table/runtime/operators/window/tvf/slicing/SliceAssignerTestBase.java)
+patching file flink-table/flink-table-runtime/src/test/java/org/apache/flink/table/runtime/operators/window/slicing/TumblingSliceAssignerTest.java (renamed from flink-table/flink-table-runtime/src/test/java/org/apache/flink/table/runtime/operators/window/tvf/slicing/TumblingSliceAssignerTest.java)
+patching file flink-table/flink-table-runtime/src/test/java/org/apache/flink/table/runtime/operators/window/slicing/WindowedSliceAssignerTest.java (renamed from flink-table/flink-table-runtime/src/test/java/org/apache/flink/table/runtime/operators/window/tvf/slicing/WindowedSliceAssignerTest.java)
+patching file flink-table/flink-table-runtime/src/test/java/org/apache/flink/table/runtime/operators/window/triggers/TriggersTest.java (renamed from flink-table/flink-table-runtime/src/test/java/org/apache/flink/table/runtime/operators/window/groupwindow/triggers/TriggersTest.java)
+patching file flink-test-utils-parent/flink-test-utils/src/main/java/org/apache/flink/streaming/util/TestStreamEnvironment.java
+patching file flink-tests/src/test/java/org/apache/flink/test/checkpointing/utils/SnapshotMigrationTestBase.java
+patching file flink-tests/src/test/java/org/apache/flink/test/scheduling/AdaptiveBatchSchedulerITCase.java
+patching file flink-yarn/src/main/java/org/apache/flink/yarn/Utils.java
+patching file flink-yarn/src/main/java/org/apache/flink/yarn/YarnClusterDescriptor.java
+patching file flink-yarn/src/main/java/org/apache/flink/yarn/configuration/YarnConfigOptions.java
+patching file flink-yarn/src/test/java/org/apache/flink/yarn/UtilsTest.java
+patching file flink-yarn/src/test/java/org/apache/flink/yarn/YarnClusterDescriptorTest.java

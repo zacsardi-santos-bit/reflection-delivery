@@ -1,0 +1,17 @@
+patching file tests/integration/api_branch_test.go
+patching file tests/integration/db_collation_test.go
+# code.gitea.io/gitea/tests/integration [code.gitea.io/gitea/tests/integration.test]
+tests/integration/db_collation_test.go:51:16: undefined: db.CheckCollations
+tests/integration/db_collation_test.go:81:50: setting.Database.CharsetCollation undefined (type struct{Type "code.gitea.io/gitea/modules/setting".DatabaseType; Host string; Name string; User string; Passwd string; Schema string; SSLMode string; Path string; LogSQL bool; MysqlCharset string; Timeout int; SQLiteJournalMode string; DBConnectRetries int; DBConnectBackoff time.Duration; MaxIdleConns int; MaxOpenConns int; ConnMaxLifetime time.Duration; IterateBufferSize int; AutoMigration bool} has no field or method CharsetCollation)
+tests/integration/db_collation_test.go:82:24: undefined: db.ConvertDatabaseTable
+tests/integration/db_collation_test.go:83:16: undefined: db.CheckCollations
+tests/integration/db_collation_test.go:92:15: undefined: db.CheckCollations
+tests/integration/db_collation_test.go:98:50: setting.Database.CharsetCollation undefined (type struct{Type "code.gitea.io/gitea/modules/setting".DatabaseType; Host string; Name string; User string; Passwd string; Schema string; SSLMode string; Path string; LogSQL bool; MysqlCharset string; Timeout int; SQLiteJournalMode string; DBConnectRetries int; DBConnectBackoff time.Duration; MaxIdleConns int; MaxOpenConns int; ConnMaxLifetime time.Duration; IterateBufferSize int; AutoMigration bool} has no field or method CharsetCollation)
+tests/integration/db_collation_test.go:99:24: undefined: db.ConvertDatabaseTable
+tests/integration/db_collation_test.go:100:16: undefined: db.CheckCollations
+tests/integration/db_collation_test.go:109:15: undefined: db.CheckCollations
+tests/integration/db_collation_test.go:115:50: setting.Database.CharsetCollation undefined (type struct{Type "code.gitea.io/gitea/modules/setting".DatabaseType; Host string; Name string; User string; Passwd string; Schema string; SSLMode string; Path string; LogSQL bool; MysqlCharset string; Timeout int; SQLiteJournalMode string; DBConnectRetries int; DBConnectBackoff time.Duration; MaxIdleConns int; MaxOpenConns int; ConnMaxLifetime time.Duration; IterateBufferSize int; AutoMigration bool} has no field or method CharsetCollation)
+tests/integration/db_collation_test.go:115:50: too many errors
+FAIL	code.gitea.io/gitea/tests/integration [build failed]
+FAIL
+reward=0 graded=9 found=9 failed=9 parsed=1 framework=go exit_code=1

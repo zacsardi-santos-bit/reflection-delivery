@@ -1,0 +1,23 @@
+patching file apis/projectcontour/v1/httpproxy.go
+patching file apis/projectcontour/v1/httpproxy_helpers.go
+patching file apis/projectcontour/v1alpha1/contourdeployment.go
+patching file apis/projectcontour/v1alpha1/zz_generated.deepcopy.go
+patching file changelogs/unreleased/6073-lubronzhan-small.md
+patching file examples/contour/01-crds.yaml
+patching file examples/render/contour-deployment.yaml
+patching file examples/render/contour-gateway-provisioner.yaml
+patching file examples/render/contour-gateway.yaml
+patching file examples/render/contour.yaml
+patching file go.sum
+Hunk #1 succeeded at 433 (offset 319 lines).
+Hunk #2 succeeded at 836 with fuzz 3 (offset 457 lines).
+patching file internal/provisioner/controller/gateway.go
+patching file internal/provisioner/model/model.go
+patching file internal/provisioner/model/names.go
+patching file internal/provisioner/objects/deployment/deployment.go
+patching file internal/provisioner/objects/rbac/clusterrole/cluster_role.go
+patching file internal/provisioner/objects/rbac/rbac.go
+patching file internal/provisioner/objects/rbac/role/role.go
+patching file internal/provisioner/objects/rbac/rolebinding/role_binding.go
+patching file internal/provisioner/objects/rbac/util/util.go
+patching file site/content/docs/main/config/api-reference.html

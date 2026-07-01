@@ -1,0 +1,73 @@
+patching file tests/templates/test_subroutines/test_amplitude_amplification.py
+patching file tests/templates/test_subroutines/test_qubitization.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+benchmark: 5.2.3 (defaults: timer=time.perf_counter disable_gc=False min_rounds=5 min_time=0.000005 max_time=1.0 calibration_precision=10 warmup=False warmup_iterations=100000)
+rootdir: /workspace/repo/tests
+configfile: pytest.ini
+plugins: flaky-3.8.1, xdist-3.8.0, mock-3.15.1, cov-7.1.0, benchmark-5.2.3
+collecting ... collected 49 items
+
+tests/templates/test_subroutines/test_amplitude_amplification.py::TestInitialization::test_error_none_wire PASSED [  2%]
+tests/templates/test_subroutines/test_amplitude_amplification.py::TestInitialization::test_error_wrong_work_wire[wires0-True-2] PASSED [  4%]
+tests/templates/test_subroutines/test_amplitude_amplification.py::TestInitialization::test_error_wrong_work_wire[wires1-True-a] PASSED [  6%]
+tests/templates/test_subroutines/test_amplitude_amplification.py::test_compare_grover[3-items0-1] PASSED [  8%]
+tests/templates/test_subroutines/test_amplitude_amplification.py::test_compare_grover[3-items1-2] PASSED [ 10%]
+tests/templates/test_subroutines/test_amplitude_amplification.py::test_compare_grover[5-items2-3] PASSED [ 12%]
+tests/templates/test_subroutines/test_amplitude_amplification.py::test_compare_grover[5-items3-4] PASSED [ 14%]
+tests/templates/test_subroutines/test_amplitude_amplification.py::test_default_lightning_devices PASSED [ 16%]
+tests/templates/test_subroutines/test_amplitude_amplification.py::TestDifferentiability::test_qnode_autograd PASSED [ 18%]
+tests/templates/test_subroutines/test_amplitude_amplification.py::TestDifferentiability::test_qnode_jax[None-False] SKIPPED [ 20%]
+tests/templates/test_subroutines/test_amplitude_amplification.py::TestDifferentiability::test_qnode_jax[None-True] SKIPPED [ 22%]
+tests/templates/test_subroutines/test_amplitude_amplification.py::TestDifferentiability::test_qnode_jax[50000-False] SKIPPED [ 24%]
+tests/templates/test_subroutines/test_amplitude_amplification.py::TestDifferentiability::test_qnode_jax[50000-True] SKIPPED [ 26%]
+tests/templates/test_subroutines/test_amplitude_amplification.py::TestDifferentiability::test_qnode_torch[None] SKIPPED [ 28%]
+tests/templates/test_subroutines/test_amplitude_amplification.py::TestDifferentiability::test_qnode_torch[50000] SKIPPED [ 30%]
+tests/templates/test_subroutines/test_amplitude_amplification.py::TestDifferentiability::test_qnode_tf[None] SKIPPED [ 32%]
+tests/templates/test_subroutines/test_amplitude_amplification.py::TestDifferentiability::test_qnode_tf[50000] SKIPPED [ 34%]
+tests/templates/test_subroutines/test_amplitude_amplification.py::test_correct_queueing PASSED [ 36%]
+tests/templates/test_subroutines/test_amplitude_amplification.py::test_flatten_and_unflatten PASSED [ 38%]
+tests/templates/test_subroutines/test_amplitude_amplification.py::test_amplification PASSED [ 40%]
+tests/templates/test_subroutines/test_amplitude_amplification.py::test_p_min[0.7] PASSED [ 42%]
+tests/templates/test_subroutines/test_amplitude_amplification.py::test_p_min[0.8] PASSED [ 44%]
+tests/templates/test_subroutines/test_amplitude_amplification.py::test_p_min[0.9] PASSED [ 46%]
+tests/templates/test_subroutines/test_amplitude_amplification.py::test_fixed_point_angles_function[4-0.8] PASSED [ 48%]
+tests/templates/test_subroutines/test_amplitude_amplification.py::test_fixed_point_angles_function[5-0.9] PASSED [ 51%]
+tests/templates/test_subroutines/test_amplitude_amplification.py::test_fixed_point_angles_function[6-0.95] PASSED [ 53%]
+tests/templates/test_subroutines/test_qubitization.py::test_positive_coeffs_hamiltonian[hamiltonian0-expected_unitaries0] PASSED [ 55%]
+tests/templates/test_subroutines/test_qubitization.py::test_positive_coeffs_hamiltonian[hamiltonian1-expected_unitaries1] PASSED [ 57%]
+tests/templates/test_subroutines/test_qubitization.py::test_positive_coeffs_hamiltonian[hamiltonian2-expected_unitaries2] PASSED [ 59%]
+tests/templates/test_subroutines/test_qubitization.py::test_operator_definition_qpe[hamiltonian0] PASSED [ 61%]
+tests/templates/test_subroutines/test_qubitization.py::test_operator_definition_qpe[hamiltonian1] PASSED [ 63%]
+tests/templates/test_subroutines/test_qubitization.py::test_operator_definition_qpe[hamiltonian2] PASSED [ 65%]
+tests/templates/test_subroutines/test_qubitization.py::test_standard_validity PASSED [ 67%]
+tests/templates/test_subroutines/test_qubitization.py::test_legacy_new_opmath[disable_new_opmath_cm] PASSED [ 69%]
+tests/templates/test_subroutines/test_qubitization.py::test_legacy_new_opmath[enable_new_opmath_cm] PASSED [ 71%]
+tests/templates/test_subroutines/test_qubitization.py::test_decomposition[hamiltonian0-expected_decomposition0] PASSED [ 73%]
+tests/templates/test_subroutines/test_qubitization.py::test_decomposition[hamiltonian1-expected_decomposition1] PASSED [ 75%]
+tests/templates/test_subroutines/test_qubitization.py::test_lightning_qubit PASSED [ 77%]
+tests/templates/test_subroutines/test_qubitization.py::TestDifferentiability::test_qnode_autograd PASSED [ 79%]
+tests/templates/test_subroutines/test_qubitization.py::TestDifferentiability::test_qnode_jax[False-None] SKIPPED [ 81%]
+tests/templates/test_subroutines/test_qubitization.py::TestDifferentiability::test_qnode_jax[True-None] SKIPPED [ 83%]
+tests/templates/test_subroutines/test_qubitization.py::TestDifferentiability::test_qnode_jax[False-50000] SKIPPED [ 85%]
+tests/templates/test_subroutines/test_qubitization.py::TestDifferentiability::test_qnode_torch[None] SKIPPED [ 87%]
+tests/templates/test_subroutines/test_qubitization.py::TestDifferentiability::test_qnode_tf[None] SKIPPED [ 89%]
+tests/templates/test_subroutines/test_qubitization.py::TestDifferentiability::test_qnode_tf[50000] SKIPPED [ 91%]
+tests/templates/test_subroutines/test_qubitization.py::TestDifferentiability::test_legacy_new_opmath_diff[disable_new_opmath_cm] XFAIL [ 93%]
+tests/templates/test_subroutines/test_qubitization.py::TestDifferentiability::test_legacy_new_opmath_diff[enable_new_opmath_cm] XFAIL [ 95%]
+tests/templates/test_subroutines/test_qubitization.py::test_copy PASSED  [ 97%]
+tests/templates/test_subroutines/test_qubitization.py::test_map_wires PASSED [100%]
+
+=============================== warnings summary ===============================
+templates/test_subroutines/test_amplitude_amplification.py::test_default_lightning_devices
+  /usr/local/lib/python3.11/site-packages/pennylane_lightning/lightning_qubit/_state_vector.py:307: ComplexWarning: Casting complex values to real discards the imaginary part
+    method(wires, invert_param, param)
+
+templates/test_subroutines/test_amplitude_amplification.py::test_default_lightning_devices
+  /usr/local/lib/python3.11/site-packages/pennylane_lightning/lightning_qubit/_state_vector.py:242: ComplexWarning: Casting complex values to real discards the imaginary part
+    method(control_wires, control_values, target_wires, inv, param)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======= 33 passed, 14 skipped, 2 xfailed, 2 warnings in 71.58s (0:01:11) =======
+reward=1 graded=33 found=0 failed=0 parsed=11 framework=pytest exit_code=0

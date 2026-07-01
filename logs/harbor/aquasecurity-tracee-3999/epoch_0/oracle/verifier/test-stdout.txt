@@ -1,0 +1,271 @@
+patching file pkg/server/grpc/server_test.go
+patching file tests/e2e-inst-signatures/scripts/ds_writer/ds_writer.go
+patching file tests/e2e-install-deps.sh
+{"Time":"2026-07-01T14:53:09.898835616Z","Action":"start","Package":"github.com/aquasecurity/tracee/pkg/server/grpc"}
+{"Time":"2026-07-01T14:53:09.898997912Z","Action":"start","Package":"github.com/aquasecurity/tracee/tests/e2e-inst-signatures/scripts/ds_writer"}
+{"Time":"2026-07-01T14:53:09.899013578Z","Action":"output","Package":"github.com/aquasecurity/tracee/tests/e2e-inst-signatures/scripts/ds_writer","Output":"?   \tgithub.com/aquasecurity/tracee/tests/e2e-inst-signatures/scripts/ds_writer\t[no test files]\n"}
+{"Time":"2026-07-01T14:53:09.899050495Z","Action":"skip","Package":"github.com/aquasecurity/tracee/tests/e2e-inst-signatures/scripts/ds_writer","Elapsed":0}
+{"Time":"2026-07-01T14:53:09.957065928Z","Action":"run","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData"}
+{"Time":"2026-07-01T14:53:09.957102672Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData","Output":"=== RUN   Test_getEventData\n"}
+{"Time":"2026-07-01T14:53:09.95715017Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData","Output":"=== PAUSE Test_getEventData\n"}
+{"Time":"2026-07-01T14:53:09.957154642Z","Action":"pause","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData"}
+{"Time":"2026-07-01T14:53:09.957163872Z","Action":"run","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"TestEventTrigger"}
+{"Time":"2026-07-01T14:53:09.957170219Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"TestEventTrigger","Output":"=== RUN   TestEventTrigger\n"}
+{"Time":"2026-07-01T14:53:09.957218143Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"TestEventTrigger","Output":"--- PASS: TestEventTrigger (0.00s)\n"}
+{"Time":"2026-07-01T14:53:09.957227752Z","Action":"pass","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"TestEventTrigger","Elapsed":0}
+{"Time":"2026-07-01T14:53:09.957235928Z","Action":"run","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"TestServer"}
+{"Time":"2026-07-01T14:53:09.957240192Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"TestServer","Output":"=== RUN   TestServer\n"}
+{"Time":"2026-07-01T14:53:09.95727071Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"TestServer","Output":"=== PAUSE TestServer\n"}
+{"Time":"2026-07-01T14:53:09.957276108Z","Action":"pause","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"TestServer"}
+{"Time":"2026-07-01T14:53:09.957282516Z","Action":"run","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_convertEventWithProcessContext"}
+{"Time":"2026-07-01T14:53:09.95728892Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_convertEventWithProcessContext","Output":"=== RUN   Test_convertEventWithProcessContext\n"}
+{"Time":"2026-07-01T14:53:09.957297077Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_convertEventWithProcessContext","Output":"=== PAUSE Test_convertEventWithProcessContext\n"}
+{"Time":"2026-07-01T14:53:09.957301803Z","Action":"pause","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_convertEventWithProcessContext"}
+{"Time":"2026-07-01T14:53:09.957309763Z","Action":"run","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_convertEventWithStackaddresses"}
+{"Time":"2026-07-01T14:53:09.957314001Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_convertEventWithStackaddresses","Output":"=== RUN   Test_convertEventWithStackaddresses\n"}
+{"Time":"2026-07-01T14:53:09.957335405Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_convertEventWithStackaddresses","Output":"=== PAUSE Test_convertEventWithStackaddresses\n"}
+{"Time":"2026-07-01T14:53:09.957340747Z","Action":"pause","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_convertEventWithStackaddresses"}
+{"Time":"2026-07-01T14:53:09.957356596Z","Action":"run","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_convertEventWithContainerContext"}
+{"Time":"2026-07-01T14:53:09.957360825Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_convertEventWithContainerContext","Output":"=== RUN   Test_convertEventWithContainerContext\n"}
+{"Time":"2026-07-01T14:53:09.957367661Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_convertEventWithContainerContext","Output":"=== PAUSE Test_convertEventWithContainerContext\n"}
+{"Time":"2026-07-01T14:53:09.957372062Z","Action":"pause","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_convertEventWithContainerContext"}
+{"Time":"2026-07-01T14:53:09.957379409Z","Action":"run","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_convertEventWithK8sContext"}
+{"Time":"2026-07-01T14:53:09.957384347Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_convertEventWithK8sContext","Output":"=== RUN   Test_convertEventWithK8sContext\n"}
+{"Time":"2026-07-01T14:53:09.957410491Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_convertEventWithK8sContext","Output":"=== PAUSE Test_convertEventWithK8sContext\n"}
+{"Time":"2026-07-01T14:53:09.957415711Z","Action":"pause","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_convertEventWithK8sContext"}
+{"Time":"2026-07-01T14:53:09.95742201Z","Action":"run","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_convertEventWithThreat"}
+{"Time":"2026-07-01T14:53:09.957426767Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_convertEventWithThreat","Output":"=== RUN   Test_convertEventWithThreat\n"}
+{"Time":"2026-07-01T14:53:09.957447102Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_convertEventWithThreat","Output":"=== PAUSE Test_convertEventWithThreat\n"}
+{"Time":"2026-07-01T14:53:09.95745234Z","Action":"pause","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_convertEventWithThreat"}
+{"Time":"2026-07-01T14:53:09.957458986Z","Action":"cont","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData"}
+{"Time":"2026-07-01T14:53:09.957462766Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData","Output":"=== CONT  Test_getEventData\n"}
+{"Time":"2026-07-01T14:53:09.957490537Z","Action":"cont","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_convertEventWithContainerContext"}
+{"Time":"2026-07-01T14:53:09.957495231Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_convertEventWithContainerContext","Output":"=== CONT  Test_convertEventWithContainerContext\n"}
+{"Time":"2026-07-01T14:53:09.957503348Z","Action":"cont","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_convertEventWithProcessContext"}
+{"Time":"2026-07-01T14:53:09.957507264Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_convertEventWithProcessContext","Output":"=== CONT  Test_convertEventWithProcessContext\n"}
+{"Time":"2026-07-01T14:53:09.957529473Z","Action":"run","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/strT"}
+{"Time":"2026-07-01T14:53:09.957534602Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/strT","Output":"=== RUN   Test_getEventData/strT\n"}
+{"Time":"2026-07-01T14:53:09.957541904Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/strT","Output":"=== PAUSE Test_getEventData/strT\n"}
+{"Time":"2026-07-01T14:53:09.957545707Z","Action":"pause","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/strT"}
+{"Time":"2026-07-01T14:53:09.957557685Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_convertEventWithContainerContext","Output":"--- PASS: Test_convertEventWithContainerContext (0.00s)\n"}
+{"Time":"2026-07-01T14:53:09.957564679Z","Action":"pass","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_convertEventWithContainerContext","Elapsed":0}
+{"Time":"2026-07-01T14:53:09.957570226Z","Action":"cont","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_convertEventWithStackaddresses"}
+{"Time":"2026-07-01T14:53:09.957573892Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_convertEventWithStackaddresses","Output":"=== CONT  Test_convertEventWithStackaddresses\n"}
+{"Time":"2026-07-01T14:53:09.957634832Z","Action":"cont","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_convertEventWithK8sContext"}
+{"Time":"2026-07-01T14:53:09.957655061Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_convertEventWithK8sContext","Output":"=== CONT  Test_convertEventWithK8sContext\n"}
+{"Time":"2026-07-01T14:53:09.95766191Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_convertEventWithProcessContext","Output":"--- PASS: Test_convertEventWithProcessContext (0.00s)\n"}
+{"Time":"2026-07-01T14:53:09.957667907Z","Action":"pass","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_convertEventWithProcessContext","Elapsed":0}
+{"Time":"2026-07-01T14:53:09.957672169Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_convertEventWithK8sContext","Output":"--- PASS: Test_convertEventWithK8sContext (0.00s)\n"}
+{"Time":"2026-07-01T14:53:09.957685471Z","Action":"pass","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_convertEventWithK8sContext","Elapsed":0}
+{"Time":"2026-07-01T14:53:09.957689061Z","Action":"cont","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"TestServer"}
+{"Time":"2026-07-01T14:53:09.957691981Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"TestServer","Output":"=== CONT  TestServer\n"}
+{"Time":"2026-07-01T14:53:09.957697164Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_convertEventWithStackaddresses","Output":"--- PASS: Test_convertEventWithStackaddresses (0.00s)\n"}
+{"Time":"2026-07-01T14:53:09.957701968Z","Action":"pass","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_convertEventWithStackaddresses","Elapsed":0}
+{"Time":"2026-07-01T14:53:09.957705845Z","Action":"cont","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_convertEventWithThreat"}
+{"Time":"2026-07-01T14:53:09.957708603Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_convertEventWithThreat","Output":"=== CONT  Test_convertEventWithThreat\n"}
+{"Time":"2026-07-01T14:53:09.957712988Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_convertEventWithThreat","Output":"--- PASS: Test_convertEventWithThreat (0.00s)\n"}
+{"Time":"2026-07-01T14:53:09.957717484Z","Action":"pass","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_convertEventWithThreat","Elapsed":0}
+{"Time":"2026-07-01T14:53:09.957721273Z","Action":"run","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/intT"}
+{"Time":"2026-07-01T14:53:09.957725069Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/intT","Output":"=== RUN   Test_getEventData/intT\n"}
+{"Time":"2026-07-01T14:53:09.957731837Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/intT","Output":"=== PAUSE Test_getEventData/intT\n"}
+{"Time":"2026-07-01T14:53:09.957736211Z","Action":"pause","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/intT"}
+{"Time":"2026-07-01T14:53:09.957746544Z","Action":"run","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/uintT"}
+{"Time":"2026-07-01T14:53:09.957750918Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/uintT","Output":"=== RUN   Test_getEventData/uintT\n"}
+{"Time":"2026-07-01T14:53:09.957756936Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/uintT","Output":"=== PAUSE Test_getEventData/uintT\n"}
+{"Time":"2026-07-01T14:53:09.957760512Z","Action":"pause","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/uintT"}
+{"Time":"2026-07-01T14:53:09.957764866Z","Action":"run","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/longT"}
+{"Time":"2026-07-01T14:53:09.957767962Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/longT","Output":"=== RUN   Test_getEventData/longT\n"}
+{"Time":"2026-07-01T14:53:09.957772453Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/longT","Output":"=== PAUSE Test_getEventData/longT\n"}
+{"Time":"2026-07-01T14:53:09.957774958Z","Action":"pause","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/longT"}
+{"Time":"2026-07-01T14:53:09.957777923Z","Action":"run","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/ulongT"}
+{"Time":"2026-07-01T14:53:09.957780298Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/ulongT","Output":"=== RUN   Test_getEventData/ulongT\n"}
+{"Time":"2026-07-01T14:53:09.957783301Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/ulongT","Output":"=== PAUSE Test_getEventData/ulongT\n"}
+{"Time":"2026-07-01T14:53:09.957787108Z","Action":"pause","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/ulongT"}
+{"Time":"2026-07-01T14:53:09.957792607Z","Action":"run","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/offT"}
+{"Time":"2026-07-01T14:53:09.957796283Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/offT","Output":"=== RUN   Test_getEventData/offT\n"}
+{"Time":"2026-07-01T14:53:09.957800585Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/offT","Output":"=== PAUSE Test_getEventData/offT\n"}
+{"Time":"2026-07-01T14:53:09.957804171Z","Action":"pause","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/offT"}
+{"Time":"2026-07-01T14:53:09.957808728Z","Action":"run","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/modeT"}
+{"Time":"2026-07-01T14:53:09.957812544Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/modeT","Output":"=== RUN   Test_getEventData/modeT\n"}
+{"Time":"2026-07-01T14:53:09.957817795Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/modeT","Output":"=== PAUSE Test_getEventData/modeT\n"}
+{"Time":"2026-07-01T14:53:09.957821766Z","Action":"pause","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/modeT"}
+{"Time":"2026-07-01T14:53:09.957827484Z","Action":"run","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/devT"}
+{"Time":"2026-07-01T14:53:09.957831254Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/devT","Output":"=== RUN   Test_getEventData/devT\n"}
+{"Time":"2026-07-01T14:53:09.957835874Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/devT","Output":"=== PAUSE Test_getEventData/devT\n"}
+{"Time":"2026-07-01T14:53:09.957839727Z","Action":"pause","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/devT"}
+{"Time":"2026-07-01T14:53:09.957846549Z","Action":"run","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/sizeT"}
+{"Time":"2026-07-01T14:53:09.95784923Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/sizeT","Output":"=== RUN   Test_getEventData/sizeT\n"}
+{"Time":"2026-07-01T14:53:09.957856702Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/sizeT","Output":"=== PAUSE Test_getEventData/sizeT\n"}
+{"Time":"2026-07-01T14:53:09.957860317Z","Action":"pause","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/sizeT"}
+{"Time":"2026-07-01T14:53:09.957864288Z","Action":"run","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/strArrT"}
+{"Time":"2026-07-01T14:53:09.95786847Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/strArrT","Output":"=== RUN   Test_getEventData/strArrT\n"}
+{"Time":"2026-07-01T14:53:09.957874885Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/strArrT","Output":"=== PAUSE Test_getEventData/strArrT\n"}
+{"Time":"2026-07-01T14:53:09.957878599Z","Action":"pause","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/strArrT"}
+{"Time":"2026-07-01T14:53:09.957883673Z","Action":"run","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/bytesT"}
+{"Time":"2026-07-01T14:53:09.957887609Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/bytesT","Output":"=== RUN   Test_getEventData/bytesT\n"}
+{"Time":"2026-07-01T14:53:09.957894562Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/bytesT","Output":"=== PAUSE Test_getEventData/bytesT\n"}
+{"Time":"2026-07-01T14:53:09.957899441Z","Action":"pause","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/bytesT"}
+{"Time":"2026-07-01T14:53:09.957904533Z","Action":"run","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/argsArrT"}
+{"Time":"2026-07-01T14:53:09.957908302Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/argsArrT","Output":"=== RUN   Test_getEventData/argsArrT\n"}
+{"Time":"2026-07-01T14:53:09.957914975Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/argsArrT","Output":"=== PAUSE Test_getEventData/argsArrT\n"}
+{"Time":"2026-07-01T14:53:09.957918299Z","Action":"pause","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/argsArrT"}
+{"Time":"2026-07-01T14:53:09.957923635Z","Action":"run","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/u8"}
+{"Time":"2026-07-01T14:53:09.957926244Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/u8","Output":"=== RUN   Test_getEventData/u8\n"}
+{"Time":"2026-07-01T14:53:09.957930957Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/u8","Output":"=== PAUSE Test_getEventData/u8\n"}
+{"Time":"2026-07-01T14:53:09.957933595Z","Action":"pause","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/u8"}
+{"Time":"2026-07-01T14:53:09.957937699Z","Action":"run","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/u16T"}
+{"Time":"2026-07-01T14:53:09.957940391Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/u16T","Output":"=== RUN   Test_getEventData/u16T\n"}
+{"Time":"2026-07-01T14:53:09.957944583Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/u16T","Output":"=== PAUSE Test_getEventData/u16T\n"}
+{"Time":"2026-07-01T14:53:09.957949159Z","Action":"pause","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/u16T"}
+{"Time":"2026-07-01T14:53:09.9579535Z","Action":"run","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/boolT"}
+{"Time":"2026-07-01T14:53:09.957956151Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/boolT","Output":"=== RUN   Test_getEventData/boolT\n"}
+{"Time":"2026-07-01T14:53:09.957990851Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/boolT","Output":"=== PAUSE Test_getEventData/boolT\n"}
+{"Time":"2026-07-01T14:53:09.957996721Z","Action":"pause","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/boolT"}
+{"Time":"2026-07-01T14:53:09.958001489Z","Action":"run","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/pointerT"}
+{"Time":"2026-07-01T14:53:09.958005412Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/pointerT","Output":"=== RUN   Test_getEventData/pointerT\n"}
+{"Time":"2026-07-01T14:53:09.958011829Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/pointerT","Output":"=== PAUSE Test_getEventData/pointerT\n"}
+{"Time":"2026-07-01T14:53:09.958016682Z","Action":"pause","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/pointerT"}
+{"Time":"2026-07-01T14:53:09.958021495Z","Action":"run","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/intArr2T"}
+{"Time":"2026-07-01T14:53:09.958024973Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/intArr2T","Output":"=== RUN   Test_getEventData/intArr2T\n"}
+{"Time":"2026-07-01T14:53:09.958029522Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/intArr2T","Output":"=== PAUSE Test_getEventData/intArr2T\n"}
+{"Time":"2026-07-01T14:53:09.958032757Z","Action":"pause","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/intArr2T"}
+{"Time":"2026-07-01T14:53:09.958039381Z","Action":"run","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/uint64ArrT"}
+{"Time":"2026-07-01T14:53:09.958051772Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/uint64ArrT","Output":"=== RUN   Test_getEventData/uint64ArrT\n"}
+{"Time":"2026-07-01T14:53:09.95805883Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/uint64ArrT","Output":"=== PAUSE Test_getEventData/uint64ArrT\n"}
+{"Time":"2026-07-01T14:53:09.95806241Z","Action":"pause","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/uint64ArrT"}
+{"Time":"2026-07-01T14:53:09.958068489Z","Action":"run","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/timespecT"}
+{"Time":"2026-07-01T14:53:09.958073107Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/timespecT","Output":"=== RUN   Test_getEventData/timespecT\n"}
+{"Time":"2026-07-01T14:53:09.9580783Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/timespecT","Output":"=== PAUSE Test_getEventData/timespecT\n"}
+{"Time":"2026-07-01T14:53:09.958083876Z","Action":"pause","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/timespecT"}
+{"Time":"2026-07-01T14:53:09.958089346Z","Action":"run","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/sockAddrT_-_AF_INET"}
+{"Time":"2026-07-01T14:53:09.9580941Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/sockAddrT_-_AF_INET","Output":"=== RUN   Test_getEventData/sockAddrT_-_AF_INET\n"}
+{"Time":"2026-07-01T14:53:09.958102828Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/sockAddrT_-_AF_INET","Output":"=== PAUSE Test_getEventData/sockAddrT_-_AF_INET\n"}
+{"Time":"2026-07-01T14:53:09.958107115Z","Action":"pause","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/sockAddrT_-_AF_INET"}
+{"Time":"2026-07-01T14:53:09.958114459Z","Action":"run","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/sockAddrT_-_AF_UNIX"}
+{"Time":"2026-07-01T14:53:09.958119431Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/sockAddrT_-_AF_UNIX","Output":"=== RUN   Test_getEventData/sockAddrT_-_AF_UNIX\n"}
+{"Time":"2026-07-01T14:53:09.958125101Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/sockAddrT_-_AF_UNIX","Output":"=== PAUSE Test_getEventData/sockAddrT_-_AF_UNIX\n"}
+{"Time":"2026-07-01T14:53:09.95812903Z","Action":"pause","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/sockAddrT_-_AF_UNIX"}
+{"Time":"2026-07-01T14:53:09.958132194Z","Action":"run","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/credT"}
+{"Time":"2026-07-01T14:53:09.95813489Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/credT","Output":"=== RUN   Test_getEventData/credT\n"}
+{"Time":"2026-07-01T14:53:09.958139544Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/credT","Output":"=== PAUSE Test_getEventData/credT\n"}
+{"Time":"2026-07-01T14:53:09.958143046Z","Action":"pause","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/credT"}
+{"Time":"2026-07-01T14:53:09.958147889Z","Action":"run","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/multipe_arguments"}
+{"Time":"2026-07-01T14:53:09.958151331Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/multipe_arguments","Output":"=== RUN   Test_getEventData/multipe_arguments\n"}
+{"Time":"2026-07-01T14:53:09.958157798Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/multipe_arguments","Output":"=== PAUSE Test_getEventData/multipe_arguments\n"}
+{"Time":"2026-07-01T14:53:09.958160582Z","Action":"pause","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/multipe_arguments"}
+{"Time":"2026-07-01T14:53:09.958164266Z","Action":"run","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/syscall"}
+{"Time":"2026-07-01T14:53:09.958168302Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/syscall","Output":"=== RUN   Test_getEventData/syscall\n"}
+{"Time":"2026-07-01T14:53:09.958172916Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/syscall","Output":"=== PAUSE Test_getEventData/syscall\n"}
+{"Time":"2026-07-01T14:53:09.958176723Z","Action":"pause","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/syscall"}
+{"Time":"2026-07-01T14:53:09.958190606Z","Action":"run","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/syscall_-_multiple_arguments"}
+{"Time":"2026-07-01T14:53:09.958194705Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/syscall_-_multiple_arguments","Output":"=== RUN   Test_getEventData/syscall_-_multiple_arguments\n"}
+{"Time":"2026-07-01T14:53:09.958200024Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/syscall_-_multiple_arguments","Output":"=== PAUSE Test_getEventData/syscall_-_multiple_arguments\n"}
+{"Time":"2026-07-01T14:53:09.958208525Z","Action":"pause","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/syscall_-_multiple_arguments"}
+{"Time":"2026-07-01T14:53:09.958212878Z","Action":"cont","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/strT"}
+{"Time":"2026-07-01T14:53:09.958216404Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/strT","Output":"=== CONT  Test_getEventData/strT\n"}
+{"Time":"2026-07-01T14:53:09.958222686Z","Action":"cont","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/syscall"}
+{"Time":"2026-07-01T14:53:09.958226973Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/syscall","Output":"=== CONT  Test_getEventData/syscall\n"}
+{"Time":"2026-07-01T14:53:09.958233066Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/strT","Output":"--- PASS: Test_getEventData/strT (0.00s)\n"}
+{"Time":"2026-07-01T14:53:09.958238232Z","Action":"pass","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/strT","Elapsed":0}
+{"Time":"2026-07-01T14:53:09.95824236Z","Action":"cont","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/multipe_arguments"}
+{"Time":"2026-07-01T14:53:09.958246757Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/multipe_arguments","Output":"=== CONT  Test_getEventData/multipe_arguments\n"}
+{"Time":"2026-07-01T14:53:09.95825418Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/syscall","Output":"--- PASS: Test_getEventData/syscall (0.00s)\n"}
+{"Time":"2026-07-01T14:53:09.95825895Z","Action":"pass","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/syscall","Elapsed":0}
+{"Time":"2026-07-01T14:53:09.958263554Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/multipe_arguments","Output":"--- PASS: Test_getEventData/multipe_arguments (0.00s)\n"}
+{"Time":"2026-07-01T14:53:09.95826821Z","Action":"pass","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/multipe_arguments","Elapsed":0}
+{"Time":"2026-07-01T14:53:09.958272078Z","Action":"cont","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/syscall_-_multiple_arguments"}
+{"Time":"2026-07-01T14:53:09.958275911Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/syscall_-_multiple_arguments","Output":"=== CONT  Test_getEventData/syscall_-_multiple_arguments\n"}
+{"Time":"2026-07-01T14:53:09.958286906Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/syscall_-_multiple_arguments","Output":"--- PASS: Test_getEventData/syscall_-_multiple_arguments (0.00s)\n"}
+{"Time":"2026-07-01T14:53:09.958292345Z","Action":"pass","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/syscall_-_multiple_arguments","Elapsed":0}
+{"Time":"2026-07-01T14:53:09.9582967Z","Action":"cont","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/sockAddrT_-_AF_INET"}
+{"Time":"2026-07-01T14:53:09.958301168Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/sockAddrT_-_AF_INET","Output":"=== CONT  Test_getEventData/sockAddrT_-_AF_INET\n"}
+{"Time":"2026-07-01T14:53:09.958307461Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/sockAddrT_-_AF_INET","Output":"--- PASS: Test_getEventData/sockAddrT_-_AF_INET (0.00s)\n"}
+{"Time":"2026-07-01T14:53:09.95831299Z","Action":"pass","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/sockAddrT_-_AF_INET","Elapsed":0}
+{"Time":"2026-07-01T14:53:09.958316511Z","Action":"cont","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/timespecT"}
+{"Time":"2026-07-01T14:53:09.958323179Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/timespecT","Output":"=== CONT  Test_getEventData/timespecT\n"}
+{"Time":"2026-07-01T14:53:09.958329992Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/timespecT","Output":"--- PASS: Test_getEventData/timespecT (0.00s)\n"}
+{"Time":"2026-07-01T14:53:09.958335039Z","Action":"pass","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/timespecT","Elapsed":0}
+{"Time":"2026-07-01T14:53:09.958338444Z","Action":"cont","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/credT"}
+{"Time":"2026-07-01T14:53:09.958342075Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/credT","Output":"=== CONT  Test_getEventData/credT\n"}
+{"Time":"2026-07-01T14:53:09.958371529Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/credT","Output":"--- PASS: Test_getEventData/credT (0.00s)\n"}
+{"Time":"2026-07-01T14:53:09.958378604Z","Action":"pass","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/credT","Elapsed":0}
+{"Time":"2026-07-01T14:53:09.958384135Z","Action":"cont","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/intArr2T"}
+{"Time":"2026-07-01T14:53:09.95838879Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/intArr2T","Output":"=== CONT  Test_getEventData/intArr2T\n"}
+{"Time":"2026-07-01T14:53:09.958396555Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/intArr2T","Output":"--- PASS: Test_getEventData/intArr2T (0.00s)\n"}
+{"Time":"2026-07-01T14:53:09.958403283Z","Action":"pass","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/intArr2T","Elapsed":0}
+{"Time":"2026-07-01T14:53:09.958406834Z","Action":"cont","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/pointerT"}
+{"Time":"2026-07-01T14:53:09.95841161Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/pointerT","Output":"=== CONT  Test_getEventData/pointerT\n"}
+{"Time":"2026-07-01T14:53:09.958418267Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/pointerT","Output":"--- PASS: Test_getEventData/pointerT (0.00s)\n"}
+{"Time":"2026-07-01T14:53:09.958422833Z","Action":"pass","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/pointerT","Elapsed":0}
+{"Time":"2026-07-01T14:53:09.958434545Z","Action":"cont","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/boolT"}
+{"Time":"2026-07-01T14:53:09.958438649Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/boolT","Output":"=== CONT  Test_getEventData/boolT\n"}
+{"Time":"2026-07-01T14:53:09.958445801Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/boolT","Output":"--- PASS: Test_getEventData/boolT (0.00s)\n"}
+{"Time":"2026-07-01T14:53:09.958450461Z","Action":"pass","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/boolT","Elapsed":0}
+{"Time":"2026-07-01T14:53:09.958454264Z","Action":"cont","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/u16T"}
+{"Time":"2026-07-01T14:53:09.95845855Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/u16T","Output":"=== CONT  Test_getEventData/u16T\n"}
+{"Time":"2026-07-01T14:53:09.958465655Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/u16T","Output":"--- PASS: Test_getEventData/u16T (0.00s)\n"}
+{"Time":"2026-07-01T14:53:09.958474189Z","Action":"pass","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/u16T","Elapsed":0}
+{"Time":"2026-07-01T14:53:09.958478247Z","Action":"cont","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/u8"}
+{"Time":"2026-07-01T14:53:09.958482287Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/u8","Output":"=== CONT  Test_getEventData/u8\n"}
+{"Time":"2026-07-01T14:53:09.958489018Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/u8","Output":"--- PASS: Test_getEventData/u8 (0.00s)\n"}
+{"Time":"2026-07-01T14:53:09.95849584Z","Action":"pass","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/u8","Elapsed":0}
+{"Time":"2026-07-01T14:53:09.958499622Z","Action":"cont","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/argsArrT"}
+{"Time":"2026-07-01T14:53:09.9585038Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/argsArrT","Output":"=== CONT  Test_getEventData/argsArrT\n"}
+{"Time":"2026-07-01T14:53:09.958508782Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/argsArrT","Output":"--- PASS: Test_getEventData/argsArrT (0.00s)\n"}
+{"Time":"2026-07-01T14:53:09.958513386Z","Action":"pass","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/argsArrT","Elapsed":0}
+{"Time":"2026-07-01T14:53:09.958517188Z","Action":"cont","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/bytesT"}
+{"Time":"2026-07-01T14:53:09.958520908Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/bytesT","Output":"=== CONT  Test_getEventData/bytesT\n"}
+{"Time":"2026-07-01T14:53:09.958525673Z","Action":"cont","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/sockAddrT_-_AF_UNIX"}
+{"Time":"2026-07-01T14:53:09.95853039Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/sockAddrT_-_AF_UNIX","Output":"=== CONT  Test_getEventData/sockAddrT_-_AF_UNIX\n"}
+{"Time":"2026-07-01T14:53:09.958537832Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/bytesT","Output":"--- PASS: Test_getEventData/bytesT (0.00s)\n"}
+{"Time":"2026-07-01T14:53:09.958544455Z","Action":"pass","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/bytesT","Elapsed":0}
+{"Time":"2026-07-01T14:53:09.958547961Z","Action":"cont","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/strArrT"}
+{"Time":"2026-07-01T14:53:09.958552996Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/strArrT","Output":"=== CONT  Test_getEventData/strArrT\n"}
+{"Time":"2026-07-01T14:53:09.958558869Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/strArrT","Output":"--- PASS: Test_getEventData/strArrT (0.00s)\n"}
+{"Time":"2026-07-01T14:53:09.958563636Z","Action":"pass","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/strArrT","Elapsed":0}
+{"Time":"2026-07-01T14:53:09.958567344Z","Action":"cont","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/sizeT"}
+{"Time":"2026-07-01T14:53:09.9585715Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/sizeT","Output":"=== CONT  Test_getEventData/sizeT\n"}
+{"Time":"2026-07-01T14:53:09.95857646Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/sockAddrT_-_AF_UNIX","Output":"--- PASS: Test_getEventData/sockAddrT_-_AF_UNIX (0.00s)\n"}
+{"Time":"2026-07-01T14:53:09.958583968Z","Action":"pass","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/sockAddrT_-_AF_UNIX","Elapsed":0}
+{"Time":"2026-07-01T14:53:09.958590573Z","Action":"cont","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/devT"}
+{"Time":"2026-07-01T14:53:09.958594664Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/devT","Output":"=== CONT  Test_getEventData/devT\n"}
+{"Time":"2026-07-01T14:53:09.958600632Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/sizeT","Output":"--- PASS: Test_getEventData/sizeT (0.00s)\n"}
+{"Time":"2026-07-01T14:53:09.958605034Z","Action":"pass","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/sizeT","Elapsed":0}
+{"Time":"2026-07-01T14:53:09.958608932Z","Action":"cont","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/modeT"}
+{"Time":"2026-07-01T14:53:09.958613086Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/modeT","Output":"=== CONT  Test_getEventData/modeT\n"}
+{"Time":"2026-07-01T14:53:09.95862008Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/modeT","Output":"--- PASS: Test_getEventData/modeT (0.00s)\n"}
+{"Time":"2026-07-01T14:53:09.958624472Z","Action":"pass","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/modeT","Elapsed":0}
+{"Time":"2026-07-01T14:53:09.958628138Z","Action":"cont","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/offT"}
+{"Time":"2026-07-01T14:53:09.958631867Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/offT","Output":"=== CONT  Test_getEventData/offT\n"}
+{"Time":"2026-07-01T14:53:09.958636276Z","Action":"cont","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/ulongT"}
+{"Time":"2026-07-01T14:53:09.958640444Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/ulongT","Output":"=== CONT  Test_getEventData/ulongT\n"}
+{"Time":"2026-07-01T14:53:09.958644339Z","Action":"cont","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/longT"}
+{"Time":"2026-07-01T14:53:09.958649743Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/longT","Output":"=== CONT  Test_getEventData/longT\n"}
+{"Time":"2026-07-01T14:53:09.958654152Z","Action":"cont","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/uintT"}
+{"Time":"2026-07-01T14:53:09.958657812Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/uintT","Output":"=== CONT  Test_getEventData/uintT\n"}
+{"Time":"2026-07-01T14:53:09.958660734Z","Action":"cont","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/intT"}
+{"Time":"2026-07-01T14:53:09.958664676Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/intT","Output":"=== CONT  Test_getEventData/intT\n"}
+{"Time":"2026-07-01T14:53:09.958669634Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/devT","Output":"--- PASS: Test_getEventData/devT (0.00s)\n"}
+{"Time":"2026-07-01T14:53:09.95867432Z","Action":"pass","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/devT","Elapsed":0}
+{"Time":"2026-07-01T14:53:09.958678665Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/offT","Output":"--- PASS: Test_getEventData/offT (0.00s)\n"}
+{"Time":"2026-07-01T14:53:09.95868275Z","Action":"pass","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/offT","Elapsed":0}
+{"Time":"2026-07-01T14:53:09.95868655Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/ulongT","Output":"--- PASS: Test_getEventData/ulongT (0.00s)\n"}
+{"Time":"2026-07-01T14:53:09.958694893Z","Action":"pass","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/ulongT","Elapsed":0}
+{"Time":"2026-07-01T14:53:09.958699055Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/uintT","Output":"--- PASS: Test_getEventData/uintT (0.00s)\n"}
+{"Time":"2026-07-01T14:53:09.958703636Z","Action":"pass","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/uintT","Elapsed":0}
+{"Time":"2026-07-01T14:53:09.958707585Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/intT","Output":"--- PASS: Test_getEventData/intT (0.00s)\n"}
+{"Time":"2026-07-01T14:53:09.958712155Z","Action":"pass","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/intT","Elapsed":0}
+{"Time":"2026-07-01T14:53:09.958715923Z","Action":"cont","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/uint64ArrT"}
+{"Time":"2026-07-01T14:53:09.958720553Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/uint64ArrT","Output":"=== CONT  Test_getEventData/uint64ArrT\n"}
+{"Time":"2026-07-01T14:53:09.958726217Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/longT","Output":"--- PASS: Test_getEventData/longT (0.00s)\n"}
+{"Time":"2026-07-01T14:53:09.958734481Z","Action":"pass","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/longT","Elapsed":0}
+{"Time":"2026-07-01T14:53:09.958738827Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/uint64ArrT","Output":"--- PASS: Test_getEventData/uint64ArrT (0.00s)\n"}
+{"Time":"2026-07-01T14:53:09.958743973Z","Action":"pass","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData/uint64ArrT","Elapsed":0}
+{"Time":"2026-07-01T14:53:09.958747552Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData","Output":"--- PASS: Test_getEventData (0.00s)\n"}
+{"Time":"2026-07-01T14:53:09.958923545Z","Action":"pass","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"Test_getEventData","Elapsed":0}
+{"Time":"2026-07-01T14:53:09.958932621Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"TestServer","Output":"--- PASS: TestServer (0.00s)\n"}
+{"Time":"2026-07-01T14:53:09.958936957Z","Action":"pass","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Test":"TestServer","Elapsed":0}
+{"Time":"2026-07-01T14:53:09.958940515Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Output":"PASS\n"}
+{"Time":"2026-07-01T14:53:09.960828255Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Output":"ok  \tgithub.com/aquasecurity/tracee/pkg/server/grpc\t0.062s\n"}
+{"Time":"2026-07-01T14:53:09.960845807Z","Action":"pass","Package":"github.com/aquasecurity/tracee/pkg/server/grpc","Elapsed":0.062}
+reward=1 graded=33 found=33 failed=0 parsed=33 framework=go exit_code=0

@@ -1,0 +1,8 @@
+patching file pkg/controllers/webhook/controller_test.go
+patching file pkg/controllers/webhook/utils_test.go
+# github.com/kyverno/kyverno/pkg/controllers/webhook [github.com/kyverno/kyverno/pkg/controllers/webhook.test]
+pkg/controllers/webhook/utils_test.go:198:14: undefined: mergeOperations
+{"Time":"2026-07-01T15:00:27.692500254Z","Action":"start","Package":"github.com/kyverno/kyverno/pkg/controllers/webhook"}
+{"Time":"2026-07-01T15:00:27.692562702Z","Action":"output","Package":"github.com/kyverno/kyverno/pkg/controllers/webhook","Output":"FAIL\tgithub.com/kyverno/kyverno/pkg/controllers/webhook [build failed]\n"}
+{"Time":"2026-07-01T15:00:27.692577545Z","Action":"fail","Package":"github.com/kyverno/kyverno/pkg/controllers/webhook","Elapsed":0}
+reward=0 graded=27 found=0 failed=0 parsed=1 framework=go exit_code=1

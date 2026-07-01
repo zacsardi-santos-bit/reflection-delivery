@@ -1,0 +1,8 @@
+patching file crates/ide-assists/src/handlers/auto_import.rs
+patching file crates/ide-assists/src/handlers/merge_imports.rs
+patching file crates/ide-db/src/imports/insert_use.rs
+patching file crates/ide-db/src/imports/merge_imports.rs
+patching file crates/rust-analyzer/src/config.rs
+patching file crates/syntax/src/ast/edit_in_place.rs
+patching file crates/syntax/src/ast/node_ext.rs
+patching file editors/code/package.json

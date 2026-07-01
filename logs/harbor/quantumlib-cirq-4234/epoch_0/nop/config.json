@@ -1,16 +1,16 @@
 {
     "task": {
-        "path": "/home/ubuntu/reflection_offline_harbor_delivery/harbor/quantumlib-cirq-4234",
+        "path": "quantumlib-cirq-4234",
         "git_url": null,
         "git_commit_id": null,
         "name": null,
         "ref": null,
         "overwrite": false,
         "download_dir": null,
-        "source": "harbor"
+        "source": "src"
     },
-    "trial_name": "quantumlib-cirq-4234__igJKR6X",
-    "trials_dir": "/home/ubuntu/reflection_offline_harbor_delivery/nop_jobs_all/2026-06-29__15-12-04",
+    "trial_name": "quantumlib-cirq-4234__H9mTJDu",
+    "trials_dir": "/tmp/nop/2026-07-01__15-07-22",
     "timeout_multiplier": 1.0,
     "agent_timeout_multiplier": null,
     "verifier_timeout_multiplier": null,
@@ -27,10 +27,10 @@
         "env": {}
     },
     "environment": {
-        "type": "modal",
+        "type": "docker",
         "import_path": null,
         "force_build": false,
-        "delete": false,
+        "delete": true,
         "override_cpus": null,
         "override_memory_mb": null,
         "override_storage_mb": null,
@@ -46,5 +46,5 @@
         "disable": false
     },
     "artifacts": [],
-    "job_id": "b069d7ef-a502-4a46-91d5-798d81044649"
+    "job_id": "fad6ad11-9274-4a12-8776-95d26cd64fcd"
 }

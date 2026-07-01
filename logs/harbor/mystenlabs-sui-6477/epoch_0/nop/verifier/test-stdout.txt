@@ -1,0 +1,80 @@
+patching file crates/sui-config/tests/snapshots/snapshot_tests__populated_genesis_snapshot_matches-5.snap
+patching file crates/sui-open-rpc/spec/openrpc.json
+   Compiling sui-types v0.1.0 (/workspace/repo/crates/sui-types)
+   Compiling sui-verifier v0.1.0 (/workspace/repo/crates/sui-verifier)
+   Compiling sui-framework-build v0.0.0 (/workspace/repo/crates/sui-framework-build)
+   Compiling sui-json v0.0.0 (/workspace/repo/crates/sui-json)
+   Compiling sui-framework v0.1.0 (/workspace/repo/crates/sui-framework)
+   Compiling sui-adapter v0.1.0 (/workspace/repo/crates/sui-adapter)
+   Compiling sui-config v0.0.0 (/workspace/repo/crates/sui-config)
+    Finished test [unoptimized + debuginfo] target(s) in 2m 19s
+────────────
+ Nextest run ID 05775a31-e2fc-4453-8e4f-e8a52c536d97 with nextest profile: default
+    Starting 1 test across 2 binaries (9 tests skipped)
+        FAIL [   2.313s] (1/1) sui-config::snapshot_tests populated_genesis_snapshot_matches
+  stdout ───
+
+    running 1 test
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Snapshot Differences ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    Snapshot file: crates/sui-config/tests/snapshots/snapshot_tests__populated_genesis_snapshot_matches-5.snap
+    Snapshot: populated_genesis_snapshot_matches-5
+    Source: crates/sui-config/tests/snapshot_tests.rs:97
+    ────────────────────────────────────────────────────────────────────────────────
+    Expression: genesis.sui_system_object()
+    ────────────────────────────────────────────────────────────────────────────────
+    -old snapshot
+    +new results
+    ────────────┬───────────────────────────────────────────────────────────────────
+        5     5 │   delegation_stake: 0
+        6     6 │   quorum_stake_threshold: 1
+        7     7 │   active_validators:
+        8     8 │     - metadata:
+        9       │-        sui_address: "0x21b60aa9a8cb189ccbe20461dbfad2202fdef55b"
+              9 │+        sui_address: 21b60aa9a8cb189ccbe20461dbfad2202fdef55b
+       10    10 │         pubkey_bytes:
+       11    11 │           - 153
+       12    12 │           - 242
+       13    13 │           - 94
+    ┈┈┈┈┈┈┈┈┈┈┈┈┼┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈
+      209   209 │       pending_stake: 0
+      210   210 │       pending_withdraw: 0
+      211   211 │       gas_price: 1
+      212   212 │       delegation_staking_pool:
+      213       │-        validator_address: "0x21b60aa9a8cb189ccbe20461dbfad2202fdef55b"
+            213 │+        validator_address: 21b60aa9a8cb189ccbe20461dbfad2202fdef55b
+      214   214 │         starting_epoch: 1
+      215   215 │         sui_balance: 0
+      216   216 │         rewards_pool:
+      217   217 │           value: 0
+    ┈┈┈┈┈┈┈┈┈┈┈┈┼┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈
+      222   222 │       commission_rate: 0
+      223   223 │   pending_validators: []
+      224   224 │   pending_removals: []
+      225   225 │   next_epoch_validators:
+      226       │-    - sui_address: "0x21b60aa9a8cb189ccbe20461dbfad2202fdef55b"
+            226 │+    - sui_address: 21b60aa9a8cb189ccbe20461dbfad2202fdef55b
+      227   227 │       pubkey_bytes:
+      228   228 │         - 153
+      229   229 │         - 242
+      230   230 │         - 94
+    ────────────┴───────────────────────────────────────────────────────────────────
+    Stopped on the first failure. Run `cargo insta test` to run all snapshots.
+    test populated_genesis_snapshot_matches ... FAILED
+
+    failures:
+
+    failures:
+        populated_genesis_snapshot_matches
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 3 filtered out; finished in 2.28s
+
+  stderr ───
+    thread 'populated_genesis_snapshot_matches' panicked at 'snapshot assertion for 'populated_genesis_snapshot_matches-5' failed in line 97', /usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/insta-1.21.1/src/runtime.rs:516:9
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+  Cancelling due to test failure: 
+────────────
+     Summary [   2.316s] 1 test run: 0 passed, 1 failed, 9 skipped
+        FAIL [   2.313s] (1/1) sui-config::snapshot_tests populated_genesis_snapshot_matches
+error: test run failed
+reward=0 graded=1 found=1 failed=1 parsed=1 framework=cargo exit_code=100

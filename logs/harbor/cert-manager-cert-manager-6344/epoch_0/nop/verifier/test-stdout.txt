@@ -1,0 +1,388 @@
+patching file pkg/controller/certificaterequests/venafi/venafi_test.go
+patching file pkg/controller/certificatesigningrequests/venafi/venafi_test.go
+patching file pkg/issuer/venafi/client/request_test.go
+patching file pkg/issuer/venafi/client/venaficlient_test.go
+patching file test/e2e/LICENSES
+patching file test/e2e/go.mod
+patching file test/e2e/go.sum
+Hunk #1 FAILED at 4.
+Hunk #2 FAILED at 28.
+Hunk #3 succeeded at 120 with fuzz 1 (offset 75 lines).
+Hunk #4 succeeded at 141 with fuzz 2 (offset 81 lines).
+Hunk #5 succeeded at 191 (offset 104 lines).
+Hunk #6 FAILED at 101.
+Hunk #7 FAILED at 133.
+Hunk #8 FAILED at 165.
+Hunk #9 FAILED at 172.
+Hunk #10 FAILED at 197.
+Hunk #11 FAILED at 204.
+Hunk #12 FAILED at 227.
+Hunk #13 succeeded at 494 (offset 218 lines).
+Hunk #14 FAILED at 300.
+Hunk #15 succeeded at 551 (offset 235 lines).
+Hunk #16 FAILED at 336.
+11 out of 16 hunks FAILED -- saving rejects to file test/e2e/go.sum.rej
+patching file test/integration/LICENSES
+patching file test/integration/go.mod
+patching file test/integration/go.sum
+Hunk #1 FAILED at 18.
+Hunk #2 FAILED at 26.
+Hunk #3 FAILED at 59.
+Hunk #4 FAILED at 73.
+Hunk #5 FAILED at 82.
+Hunk #6 FAILED at 96.
+Hunk #7 FAILED at 112.
+Hunk #8 FAILED at 131.
+Hunk #9 FAILED at 164.
+Hunk #10 FAILED at 174.
+Hunk #11 FAILED at 193.
+Hunk #12 FAILED at 208.
+Hunk #13 FAILED at 229.
+Hunk #14 succeeded at 673 (offset 397 lines).
+Hunk #15 succeeded at 709 with fuzz 1 (offset 401 lines).
+Hunk #16 FAILED at 318.
+Hunk #17 FAILED at 334.
+Hunk #18 FAILED at 374.
+Hunk #19 succeeded at 813 (offset 422 lines).
+Hunk #20 FAILED at 413.
+Hunk #21 FAILED at 429.
+Hunk #22 FAILED at 442.
+Hunk #23 FAILED at 470.
+Hunk #24 FAILED at 485.
+Hunk #25 FAILED at 513.
+Hunk #26 FAILED at 581.
+Hunk #27 FAILED at 606.
+Hunk #28 FAILED at 636.
+Hunk #29 FAILED at 652.
+Hunk #30 FAILED at 689.
+Hunk #31 FAILED at 701.
+Hunk #32 FAILED at 729.
+Hunk #33 FAILED at 775.
+Hunk #34 FAILED at 799.
+Hunk #35 FAILED at 814.
+Hunk #36 FAILED at 830.
+Hunk #37 FAILED at 858.
+Hunk #38 succeeded at 1611 (offset 613 lines).
+Hunk #39 succeeded at 1721 (offset 613 lines).
+Hunk #40 succeeded at 1837 (offset 617 lines).
+Hunk #41 succeeded at 1881 (offset 617 lines).
+Hunk #42 succeeded at 1909 (offset 617 lines).
+Hunk #43 succeeded at 1923 with fuzz 1 (offset 617 lines).
+Hunk #44 FAILED at 1322.
+Hunk #45 FAILED at 1342.
+Hunk #46 FAILED at 1395.
+37 out of 46 hunks FAILED -- saving rejects to file test/integration/go.sum.rej
+patching file pkg/controller/certificaterequests/venafi/venafi_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/controller/certificaterequests/venafi/venafi_test.go.rej
+patching file pkg/controller/certificatesigningrequests/venafi/venafi_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/controller/certificatesigningrequests/venafi/venafi_test.go.rej
+patching file pkg/issuer/venafi/client/request_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/issuer/venafi/client/request_test.go.rej
+patching file pkg/issuer/venafi/client/venaficlient_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/issuer/venafi/client/venaficlient_test.go.rej
+patching file test/e2e/LICENSES
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file test/e2e/LICENSES.rej
+patching file test/e2e/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+6 out of 6 hunks ignored -- saving rejects to file test/e2e/go.mod.rej
+patching file test/e2e/go.sum
+Hunk #1 succeeded at 48 with fuzz 3 (offset 44 lines).
+Hunk #2 FAILED at 30.
+Hunk #3 FAILED at 47.
+Hunk #4 FAILED at 60.
+Hunk #5 FAILED at 87.
+Hunk #6 FAILED at 101.
+Hunk #7 succeeded at 257 with fuzz 3 (offset 124 lines).
+Hunk #8 succeeded at 291 with fuzz 3 (offset 124 lines).
+Hunk #9 succeeded at 325 with fuzz 3 (offset 150 lines).
+Hunk #10 succeeded at 350 with fuzz 3 (offset 150 lines).
+Hunk #11 succeeded at 358 with fuzz 3 (offset 150 lines).
+Hunk #12 succeeded at 450 with fuzz 3 (offset 218 lines).
+Hunk #13 FAILED at 281.
+Hunk #14 succeeded at 530 with fuzz 3 (offset 225 lines).
+Hunk #15 FAILED at 322.
+Hunk #16 succeeded at 591 with fuzz 3 (offset 248 lines).
+7 out of 16 hunks FAILED -- saving rejects to file test/e2e/go.sum.rej
+patching file test/integration/LICENSES
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+8 out of 8 hunks ignored -- saving rejects to file test/integration/LICENSES.rej
+patching file test/integration/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+11 out of 11 hunks ignored -- saving rejects to file test/integration/go.mod.rej
+patching file test/integration/go.sum
+Hunk #1 succeeded at 18 with fuzz 3.
+Hunk #2 succeeded at 76 with fuzz 3 (offset 50 lines).
+Hunk #3 succeeded at 111 with fuzz 3 (offset 50 lines).
+Hunk #4 succeeded at 335 with fuzz 3 (offset 259 lines).
+Hunk #5 succeeded at 346 with fuzz 3 (offset 259 lines).
+Hunk #6 FAILED at 102.
+Hunk #7 FAILED at 118.
+Hunk #8 FAILED at 137.
+Hunk #9 succeeded at 429 with fuzz 3 (offset 259 lines).
+Hunk #10 succeeded at 552 with fuzz 3 (offset 371 lines).
+Hunk #11 succeeded at 575 with fuzz 3 (offset 374 lines).
+Hunk #12 FAILED at 218.
+Hunk #13 succeeded at 620 with fuzz 3 (offset 381 lines).
+Hunk #14 FAILED at 288.
+Hunk #15 FAILED at 319.
+Hunk #16 succeeded at 709 with fuzz 3 (offset 381 lines).
+Hunk #17 succeeded at 760 with fuzz 3 (offset 415 lines).
+Hunk #18 succeeded at 801 with fuzz 3 (offset 415 lines).
+Hunk #19 FAILED at 404.
+Hunk #20 succeeded at 842 with fuzz 3 (offset 415 lines).
+Hunk #21 succeeded at 859 with fuzz 3 (offset 415 lines).
+Hunk #22 succeeded at 898 with fuzz 3 (offset 440 lines).
+Hunk #23 succeeded at 927 with fuzz 3 (offset 440 lines).
+Hunk #24 FAILED at 503.
+Hunk #25 succeeded at 1017 with fuzz 3 (offset 486 lines).
+Hunk #26 succeeded at 1098 with fuzz 3 (offset 499 lines).
+Hunk #27 succeeded at 1123 with fuzz 3 (offset 499 lines).
+Hunk #28 succeeded at 1183 with fuzz 3 (offset 528 lines).
+Hunk #29 succeeded at 1201 with fuzz 3 (offset 528 lines).
+Hunk #30 succeeded at 1262 with fuzz 3 (offset 551 lines).
+Hunk #31 succeeded at 1274 with fuzz 3 (offset 551 lines).
+Hunk #32 succeeded at 1303 with fuzz 3 (offset 551 lines).
+Hunk #33 succeeded at 1350 with fuzz 3 (offset 551 lines).
+Hunk #34 FAILED at 824.
+Hunk #35 FAILED at 839.
+Hunk #36 FAILED at 855.
+Hunk #37 succeeded at 1434 with fuzz 3 (offset 551 lines).
+Hunk #38 FAILED at 1024.
+Hunk #39 succeeded at 1686 with fuzz 3 (offset 551 lines).
+Hunk #40 FAILED at 1247.
+Hunk #41 FAILED at 1290.
+Hunk #42 FAILED at 1319.
+Hunk #43 FAILED at 1335.
+Hunk #44 succeeded at 1903 with fuzz 3 (offset 551 lines).
+Hunk #45 succeeded at 1924 with fuzz 3 (offset 551 lines).
+Hunk #46 succeeded at 2070 with fuzz 3 (offset 643 lines).
+16 out of 46 hunks FAILED -- saving rejects to file test/integration/go.sum.rej
+can't find file to patch at input line 5
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/controller/certificaterequests/venafi/venafi_test.go b/pkg/controller/certificaterequests/venafi/venafi_test.go
+|index 3219a499b..2fc7dee6e 100644
+|--- a/pkg/controller/certificaterequests/venafi/venafi_test.go
+|+++ b/pkg/controller/certificaterequests/venafi/venafi_test.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 18
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/controller/certificatesigningrequests/venafi/venafi_test.go b/pkg/controller/certificatesigningrequests/venafi/venafi_test.go
+|index 218971a4c..b9f7016c4 100644
+|--- a/pkg/controller/certificatesigningrequests/venafi/venafi_test.go
+|+++ b/pkg/controller/certificatesigningrequests/venafi/venafi_test.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 31
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/issuer/venafi/client/request_test.go b/pkg/issuer/venafi/client/request_test.go
+|index 047787526..8f7278e62 100644
+|--- a/pkg/issuer/venafi/client/request_test.go
+|+++ b/pkg/issuer/venafi/client/request_test.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 48
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/issuer/venafi/client/venaficlient_test.go b/pkg/issuer/venafi/client/venaficlient_test.go
+|index 1357b53e3..1fe8e72fe 100644
+|--- a/pkg/issuer/venafi/client/venaficlient_test.go
+|+++ b/pkg/issuer/venafi/client/venaficlient_test.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 61
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/test/e2e/LICENSES b/test/e2e/LICENSES
+|index f261c4b21..578be6aa3 100644
+|--- a/test/e2e/LICENSES
+|+++ b/test/e2e/LICENSES
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+4 out of 4 hunks ignored
+can't find file to patch at input line 119
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/test/e2e/go.mod b/test/e2e/go.mod
+|index 2164acf65..4f1ff5ff1 100644
+|--- a/test/e2e/go.mod
+|+++ b/test/e2e/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+6 out of 6 hunks ignored
+can't find file to patch at input line 196
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/test/e2e/go.sum b/test/e2e/go.sum
+|index 00cca0279..627f45505 100644
+|--- a/test/e2e/go.sum
+|+++ b/test/e2e/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+16 out of 16 hunks ignored
+can't find file to patch at input line 390
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/test/integration/LICENSES b/test/integration/LICENSES
+|index aee0368b1..db4128e8a 100644
+|--- a/test/integration/LICENSES
+|+++ b/test/integration/LICENSES
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+8 out of 8 hunks ignored
+can't find file to patch at input line 522
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/test/integration/go.mod b/test/integration/go.mod
+|index 605ca490b..7719eea24 100644
+|--- a/test/integration/go.mod
+|+++ b/test/integration/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+11 out of 11 hunks ignored
+can't find file to patch at input line 682
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/test/integration/go.sum b/test/integration/go.sum
+|index f1db79446..f4086d729 100644
+|--- a/test/integration/go.sum
+|+++ b/test/integration/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+46 out of 46 hunks ignored
+patching file pkg/controller/certificaterequests/venafi/venafi_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/controller/certificaterequests/venafi/venafi_test.go.rej
+patching file pkg/controller/certificatesigningrequests/venafi/venafi_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/controller/certificatesigningrequests/venafi/venafi_test.go.rej
+patching file pkg/issuer/venafi/client/request_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/issuer/venafi/client/request_test.go.rej
+patching file pkg/issuer/venafi/client/venaficlient_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/issuer/venafi/client/venaficlient_test.go.rej
+patching file test/e2e/LICENSES
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file test/e2e/LICENSES.rej
+patching file test/e2e/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+6 out of 6 hunks ignored -- saving rejects to file test/e2e/go.mod.rej
+patching file test/e2e/go.sum
+Hunk #1 succeeded at 49 with fuzz 3 (offset 45 lines).
+Hunk #2 FAILED at 30.
+Hunk #3 FAILED at 47.
+Hunk #4 FAILED at 60.
+Hunk #5 FAILED at 87.
+Hunk #6 FAILED at 101.
+Hunk #7 succeeded at 260 with fuzz 3 (offset 127 lines).
+Hunk #8 succeeded at 294 with fuzz 3 (offset 127 lines).
+Hunk #9 FAILED at 175.
+Hunk #10 succeeded at 327 with fuzz 3 (offset 127 lines).
+Hunk #11 succeeded at 335 with fuzz 3 (offset 127 lines).
+Hunk #12 FAILED at 232.
+Hunk #13 FAILED at 281.
+Hunk #14 FAILED at 305.
+Hunk #15 FAILED at 321.
+Hunk #16 FAILED at 342.
+11 out of 16 hunks FAILED -- saving rejects to file test/e2e/go.sum.rej
+patching file test/integration/LICENSES
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+8 out of 8 hunks ignored -- saving rejects to file test/integration/LICENSES.rej
+patching file test/integration/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+11 out of 11 hunks ignored -- saving rejects to file test/integration/go.mod.rej
+patching file test/integration/go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+46 out of 46 hunks ignored -- saving rejects to file test/integration/go.sum.rej
+WARN: test.patch did not apply cleanly
+go: finding module for package github.com/Venafi/vcert/v5/pkg/venafi/fake
+go: finding module for package github.com/Venafi/vcert/v5/pkg/endpoint
+go: finding module for package github.com/Venafi/vcert/v5
+go: finding module for package github.com/Venafi/vcert/v5/pkg/certificate
+# github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi
+pkg/controller/certificaterequests/venafi/venafi_test.go:30:2: cannot find module providing package github.com/Venafi/vcert/v5/pkg/endpoint: module lookup disabled by GOPROXY=off
+FAIL	github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi [setup failed]
+# github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi
+pkg/controller/certificaterequests/venafi/venafi_test.go:30:2: cannot find module providing package github.com/Venafi/vcert/v5/pkg/endpoint: module lookup disabled by GOPROXY=off
+FAIL	github.com/cert-manager/cert-manager/pkg/controller/certificatesigningrequests/venafi [setup failed]
+# github.com/cert-manager/cert-manager/pkg/issuer/venafi/client
+pkg/issuer/venafi/client/venaficlient_test.go:23:2: cannot find module providing package github.com/Venafi/vcert/v5: module lookup disabled by GOPROXY=off
+FAIL	github.com/cert-manager/cert-manager/pkg/issuer/venafi/client [setup failed]
+reward=0 graded=54 found=0 failed=0 parsed=0 framework=go exit_code=1

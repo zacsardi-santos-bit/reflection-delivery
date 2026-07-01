@@ -1,0 +1,30 @@
+patching file crates/testing/src/slt/tests.rs (renamed from crates/testing/tests/sqllogictests/tests.rs)
+patching file testdata/sqllogictests/create_table.slt
+patching file testdata/sqllogictests/csv.slt
+patching file testdata/sqllogictests/external_table.slt
+patching file testdata/sqllogictests/functions/csv_scan.slt
+patching file testdata/sqllogictests/functions/delta_scan.slt
+patching file testdata/sqllogictests/functions/json_scan.slt
+patching file testdata/sqllogictests/functions/lance_scan.slt
+patching file testdata/sqllogictests/functions/parquet_scan.slt
+patching file testdata/sqllogictests/functions/read_csv.slt
+patching file testdata/sqllogictests/functions/read_json.slt
+patching file testdata/sqllogictests/functions/read_parquet.slt
+patching file testdata/sqllogictests/glob.slt
+patching file testdata/sqllogictests/infer.slt
+patching file testdata/sqllogictests/prql.slt
+patching file testdata/sqllogictests/rpc.slt
+patching file testdata/sqllogictests/tunnels.slt
+patching file testdata/sqllogictests/views.slt
+error: no bin target named `slt`.
+Available bin targets:
+    bench_runner
+    glaredb
+    pgprototest
+    xtask
+
+FAIL [0.000s] testing sqllogictests/csv
+FAIL [0.000s] testing sqllogictests/infer
+FAIL [0.000s] testing sqllogictests/glob
+FAIL [0.000s] testing sqllogictests/create_table
+reward=0 graded=4 found=4 failed=4 parsed=4 framework=cargo exit_code=1

@@ -1,0 +1,215 @@
+patching file sdk/metric/config_test.go
+patching file sdk/metric/manual_reader_test.go
+patching file sdk/metric/periodic_reader_test.go
+{"Time":"2026-07-01T14:59:36.158262753Z","Action":"run","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestConfigReaderSignalsEmpty"}
+{"Time":"2026-07-01T14:59:36.158480322Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestConfigReaderSignalsEmpty","Output":"=== RUN   TestConfigReaderSignalsEmpty\n"}
+{"Time":"2026-07-01T14:59:36.158505541Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestConfigReaderSignalsEmpty","Output":"--- PASS: TestConfigReaderSignalsEmpty (0.00s)\n"}
+{"Time":"2026-07-01T14:59:36.158509412Z","Action":"pass","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestConfigReaderSignalsEmpty","Elapsed":0}
+{"Time":"2026-07-01T14:59:36.158520336Z","Action":"run","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestConfigReaderSignalsForwarded"}
+{"Time":"2026-07-01T14:59:36.158525496Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestConfigReaderSignalsForwarded","Output":"=== RUN   TestConfigReaderSignalsForwarded\n"}
+{"Time":"2026-07-01T14:59:36.158531631Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestConfigReaderSignalsForwarded","Output":"--- PASS: TestConfigReaderSignalsForwarded (0.00s)\n"}
+{"Time":"2026-07-01T14:59:36.15853787Z","Action":"pass","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestConfigReaderSignalsForwarded","Elapsed":0}
+{"Time":"2026-07-01T14:59:36.158540866Z","Action":"run","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestConfigReaderSignalsForwardedErrors"}
+{"Time":"2026-07-01T14:59:36.158543829Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestConfigReaderSignalsForwardedErrors","Output":"=== RUN   TestConfigReaderSignalsForwardedErrors\n"}
+{"Time":"2026-07-01T14:59:36.158547395Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestConfigReaderSignalsForwardedErrors","Output":"--- PASS: TestConfigReaderSignalsForwardedErrors (0.00s)\n"}
+{"Time":"2026-07-01T14:59:36.158552667Z","Action":"pass","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestConfigReaderSignalsForwardedErrors","Elapsed":0}
+{"Time":"2026-07-01T14:59:36.158561009Z","Action":"run","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestUnifyMultiError"}
+{"Time":"2026-07-01T14:59:36.158563868Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestUnifyMultiError","Output":"=== RUN   TestUnifyMultiError\n"}
+{"Time":"2026-07-01T14:59:36.158568466Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestUnifyMultiError","Output":"--- PASS: TestUnifyMultiError (0.00s)\n"}
+{"Time":"2026-07-01T14:59:36.158571376Z","Action":"pass","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestUnifyMultiError","Elapsed":0}
+{"Time":"2026-07-01T14:59:36.158573981Z","Action":"run","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestWithResource"}
+{"Time":"2026-07-01T14:59:36.158576639Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestWithResource","Output":"=== RUN   TestWithResource\n"}
+{"Time":"2026-07-01T14:59:36.158579792Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestWithResource","Output":"--- PASS: TestWithResource (0.00s)\n"}
+{"Time":"2026-07-01T14:59:36.158582809Z","Action":"pass","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestWithResource","Elapsed":0}
+{"Time":"2026-07-01T14:59:36.158585266Z","Action":"run","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestWithReader"}
+{"Time":"2026-07-01T14:59:36.158588789Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestWithReader","Output":"=== RUN   TestWithReader\n"}
+{"Time":"2026-07-01T14:59:36.158591912Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestWithReader","Output":"--- PASS: TestWithReader (0.00s)\n"}
+{"Time":"2026-07-01T14:59:36.158594734Z","Action":"pass","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestWithReader","Elapsed":0}
+{"Time":"2026-07-01T14:59:36.158597399Z","Action":"run","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestManualReader"}
+{"Time":"2026-07-01T14:59:36.15860447Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestManualReader","Output":"=== RUN   TestManualReader\n"}
+{"Time":"2026-07-01T14:59:36.159167116Z","Action":"run","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestManualReader/TestCollectAfterShutdown"}
+{"Time":"2026-07-01T14:59:36.159174056Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestManualReader/TestCollectAfterShutdown","Output":"=== RUN   TestManualReader/TestCollectAfterShutdown\n"}
+{"Time":"2026-07-01T14:59:36.159237401Z","Action":"run","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestManualReader/TestErrorForNotRegistered"}
+{"Time":"2026-07-01T14:59:36.159258897Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestManualReader/TestErrorForNotRegistered","Output":"=== RUN   TestManualReader/TestErrorForNotRegistered\n"}
+{"Time":"2026-07-01T14:59:36.159279847Z","Action":"run","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestManualReader/TestMethodConcurrency"}
+{"Time":"2026-07-01T14:59:36.159285477Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestManualReader/TestMethodConcurrency","Output":"=== RUN   TestManualReader/TestMethodConcurrency\n"}
+{"Time":"2026-07-01T14:59:36.159323093Z","Action":"run","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestManualReader/TestMultipleForceFlush"}
+{"Time":"2026-07-01T14:59:36.159329034Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestManualReader/TestMultipleForceFlush","Output":"=== RUN   TestManualReader/TestMultipleForceFlush\n"}
+{"Time":"2026-07-01T14:59:36.159352509Z","Action":"run","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestManualReader/TestMultipleRegister"}
+{"Time":"2026-07-01T14:59:36.1593583Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestManualReader/TestMultipleRegister","Output":"=== RUN   TestManualReader/TestMultipleRegister\n"}
+{"Time":"2026-07-01T14:59:36.159406392Z","Action":"cont","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestManualReader"}
+{"Time":"2026-07-01T14:59:36.159412638Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestManualReader","Output":"=== CONT  TestManualReader\n"}
+{"Time":"2026-07-01T14:59:36.159417986Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestManualReader","Output":"    internal_logging.go:55: \"msg\"=\"did not register manual reader\" \"error\"=\"duplicate reader registration\"\n"}
+{"Time":"2026-07-01T14:59:36.159432553Z","Action":"run","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestManualReader/TestProducer"}
+{"Time":"2026-07-01T14:59:36.159438035Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestManualReader/TestProducer","Output":"=== RUN   TestManualReader/TestProducer\n"}
+{"Time":"2026-07-01T14:59:36.159479327Z","Action":"run","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestManualReader/TestShutdownBeforeRegister"}
+{"Time":"2026-07-01T14:59:36.159485942Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestManualReader/TestShutdownBeforeRegister","Output":"=== RUN   TestManualReader/TestShutdownBeforeRegister\n"}
+{"Time":"2026-07-01T14:59:36.159516867Z","Action":"cont","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestManualReader"}
+{"Time":"2026-07-01T14:59:36.159522221Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestManualReader","Output":"=== CONT  TestManualReader\n"}
+{"Time":"2026-07-01T14:59:36.159528932Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestManualReader","Output":"    internal_logging.go:55: \"msg\"=\"did not register manual reader\" \"error\"=\"duplicate reader registration\"\n"}
+{"Time":"2026-07-01T14:59:36.159536427Z","Action":"run","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestManualReader/TestShutdownTwice"}
+{"Time":"2026-07-01T14:59:36.159548207Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestManualReader/TestShutdownTwice","Output":"=== RUN   TestManualReader/TestShutdownTwice\n"}
+{"Time":"2026-07-01T14:59:36.159578309Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestManualReader","Output":"--- PASS: TestManualReader (0.00s)\n"}
+{"Time":"2026-07-01T14:59:36.159587037Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestManualReader/TestCollectAfterShutdown","Output":"    --- PASS: TestManualReader/TestCollectAfterShutdown (0.00s)\n"}
+{"Time":"2026-07-01T14:59:36.159593475Z","Action":"pass","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestManualReader/TestCollectAfterShutdown","Elapsed":0}
+{"Time":"2026-07-01T14:59:36.159599691Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestManualReader/TestErrorForNotRegistered","Output":"    --- PASS: TestManualReader/TestErrorForNotRegistered (0.00s)\n"}
+{"Time":"2026-07-01T14:59:36.15960598Z","Action":"pass","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestManualReader/TestErrorForNotRegistered","Elapsed":0}
+{"Time":"2026-07-01T14:59:36.159612075Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestManualReader/TestMethodConcurrency","Output":"    --- PASS: TestManualReader/TestMethodConcurrency (0.00s)\n"}
+{"Time":"2026-07-01T14:59:36.159625689Z","Action":"pass","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestManualReader/TestMethodConcurrency","Elapsed":0}
+{"Time":"2026-07-01T14:59:36.159631142Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestManualReader/TestMultipleForceFlush","Output":"    --- PASS: TestManualReader/TestMultipleForceFlush (0.00s)\n"}
+{"Time":"2026-07-01T14:59:36.15963642Z","Action":"pass","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestManualReader/TestMultipleForceFlush","Elapsed":0}
+{"Time":"2026-07-01T14:59:36.159640637Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestManualReader/TestMultipleRegister","Output":"    --- PASS: TestManualReader/TestMultipleRegister (0.00s)\n"}
+{"Time":"2026-07-01T14:59:36.159646319Z","Action":"pass","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestManualReader/TestMultipleRegister","Elapsed":0}
+{"Time":"2026-07-01T14:59:36.159651089Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestManualReader/TestProducer","Output":"    --- PASS: TestManualReader/TestProducer (0.00s)\n"}
+{"Time":"2026-07-01T14:59:36.159656501Z","Action":"pass","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestManualReader/TestProducer","Elapsed":0}
+{"Time":"2026-07-01T14:59:36.159661309Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestManualReader/TestShutdownBeforeRegister","Output":"    --- PASS: TestManualReader/TestShutdownBeforeRegister (0.00s)\n"}
+{"Time":"2026-07-01T14:59:36.159667488Z","Action":"pass","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestManualReader/TestShutdownBeforeRegister","Elapsed":0}
+{"Time":"2026-07-01T14:59:36.159672495Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestManualReader/TestShutdownTwice","Output":"    --- PASS: TestManualReader/TestShutdownTwice (0.00s)\n"}
+{"Time":"2026-07-01T14:59:36.159686405Z","Action":"pass","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestManualReader/TestShutdownTwice","Elapsed":0}
+{"Time":"2026-07-01T14:59:36.159691414Z","Action":"pass","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestManualReader","Elapsed":0}
+{"Time":"2026-07-01T14:59:36.159695236Z","Action":"run","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestManualReaderTemporality"}
+{"Time":"2026-07-01T14:59:36.159699888Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestManualReaderTemporality","Output":"=== RUN   TestManualReaderTemporality\n"}
+{"Time":"2026-07-01T14:59:36.15970962Z","Action":"run","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestManualReaderTemporality/default"}
+{"Time":"2026-07-01T14:59:36.159714435Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestManualReaderTemporality/default","Output":"=== RUN   TestManualReaderTemporality/default\n"}
+{"Time":"2026-07-01T14:59:36.159720221Z","Action":"run","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestManualReaderTemporality/delta"}
+{"Time":"2026-07-01T14:59:36.159724632Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestManualReaderTemporality/delta","Output":"=== RUN   TestManualReaderTemporality/delta\n"}
+{"Time":"2026-07-01T14:59:36.159731392Z","Action":"run","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestManualReaderTemporality/repeats_overwrite"}
+{"Time":"2026-07-01T14:59:36.159736592Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestManualReaderTemporality/repeats_overwrite","Output":"=== RUN   TestManualReaderTemporality/repeats_overwrite\n"}
+{"Time":"2026-07-01T14:59:36.159742813Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestManualReaderTemporality","Output":"--- PASS: TestManualReaderTemporality (0.00s)\n"}
+{"Time":"2026-07-01T14:59:36.159749063Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestManualReaderTemporality/default","Output":"    --- PASS: TestManualReaderTemporality/default (0.00s)\n"}
+{"Time":"2026-07-01T14:59:36.159754282Z","Action":"pass","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestManualReaderTemporality/default","Elapsed":0}
+{"Time":"2026-07-01T14:59:36.159759239Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestManualReaderTemporality/delta","Output":"    --- PASS: TestManualReaderTemporality/delta (0.00s)\n"}
+{"Time":"2026-07-01T14:59:36.159765059Z","Action":"pass","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestManualReaderTemporality/delta","Elapsed":0}
+{"Time":"2026-07-01T14:59:36.159779877Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestManualReaderTemporality/repeats_overwrite","Output":"    --- PASS: TestManualReaderTemporality/repeats_overwrite (0.00s)\n"}
+{"Time":"2026-07-01T14:59:36.159787276Z","Action":"pass","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestManualReaderTemporality/repeats_overwrite","Elapsed":0}
+{"Time":"2026-07-01T14:59:36.159792205Z","Action":"pass","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestManualReaderTemporality","Elapsed":0}
+{"Time":"2026-07-01T14:59:36.159796141Z","Action":"run","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestMeterRegistry"}
+{"Time":"2026-07-01T14:59:36.159800972Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestMeterRegistry","Output":"=== RUN   TestMeterRegistry\n"}
+{"Time":"2026-07-01T14:59:36.159806365Z","Action":"run","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestMeterRegistry/ZeroValueGetDoesNotPanic"}
+{"Time":"2026-07-01T14:59:36.159810808Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestMeterRegistry/ZeroValueGetDoesNotPanic","Output":"=== RUN   TestMeterRegistry/ZeroValueGetDoesNotPanic\n"}
+{"Time":"2026-07-01T14:59:36.159817714Z","Action":"run","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestMeterRegistry/GetSameMeter"}
+{"Time":"2026-07-01T14:59:36.159822569Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestMeterRegistry/GetSameMeter","Output":"=== RUN   TestMeterRegistry/GetSameMeter\n"}
+{"Time":"2026-07-01T14:59:36.159845397Z","Action":"run","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestMeterRegistry/GetDifferentMeter"}
+{"Time":"2026-07-01T14:59:36.159851095Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestMeterRegistry/GetDifferentMeter","Output":"=== RUN   TestMeterRegistry/GetDifferentMeter\n"}
+{"Time":"2026-07-01T14:59:36.159879098Z","Action":"run","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestMeterRegistry/RangeComplete"}
+{"Time":"2026-07-01T14:59:36.159888685Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestMeterRegistry/RangeComplete","Output":"=== RUN   TestMeterRegistry/RangeComplete\n"}
+{"Time":"2026-07-01T14:59:36.159912507Z","Action":"run","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestMeterRegistry/RangeStopIteration"}
+{"Time":"2026-07-01T14:59:36.159918145Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestMeterRegistry/RangeStopIteration","Output":"=== RUN   TestMeterRegistry/RangeStopIteration\n"}
+{"Time":"2026-07-01T14:59:36.159943754Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestMeterRegistry","Output":"--- PASS: TestMeterRegistry (0.00s)\n"}
+{"Time":"2026-07-01T14:59:36.159950446Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestMeterRegistry/ZeroValueGetDoesNotPanic","Output":"    --- PASS: TestMeterRegistry/ZeroValueGetDoesNotPanic (0.00s)\n"}
+{"Time":"2026-07-01T14:59:36.159955872Z","Action":"pass","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestMeterRegistry/ZeroValueGetDoesNotPanic","Elapsed":0}
+{"Time":"2026-07-01T14:59:36.159961146Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestMeterRegistry/GetSameMeter","Output":"    --- PASS: TestMeterRegistry/GetSameMeter (0.00s)\n"}
+{"Time":"2026-07-01T14:59:36.159966392Z","Action":"pass","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestMeterRegistry/GetSameMeter","Elapsed":0}
+{"Time":"2026-07-01T14:59:36.159970987Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestMeterRegistry/GetDifferentMeter","Output":"    --- PASS: TestMeterRegistry/GetDifferentMeter (0.00s)\n"}
+{"Time":"2026-07-01T14:59:36.159979716Z","Action":"pass","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestMeterRegistry/GetDifferentMeter","Elapsed":0}
+{"Time":"2026-07-01T14:59:36.159984983Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestMeterRegistry/RangeComplete","Output":"    --- PASS: TestMeterRegistry/RangeComplete (0.00s)\n"}
+{"Time":"2026-07-01T14:59:36.159990289Z","Action":"pass","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestMeterRegistry/RangeComplete","Elapsed":0}
+{"Time":"2026-07-01T14:59:36.15999578Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestMeterRegistry/RangeStopIteration","Output":"    --- PASS: TestMeterRegistry/RangeStopIteration (0.00s)\n"}
+{"Time":"2026-07-01T14:59:36.16000395Z","Action":"pass","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestMeterRegistry/RangeStopIteration","Elapsed":0}
+{"Time":"2026-07-01T14:59:36.160008293Z","Action":"pass","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestMeterRegistry","Elapsed":0}
+{"Time":"2026-07-01T14:59:36.160012796Z","Action":"run","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestWithTimeout"}
+{"Time":"2026-07-01T14:59:36.160017287Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestWithTimeout","Output":"=== RUN   TestWithTimeout\n"}
+{"Time":"2026-07-01T14:59:36.160023075Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestWithTimeout","Output":"--- PASS: TestWithTimeout (0.00s)\n"}
+{"Time":"2026-07-01T14:59:36.1600285Z","Action":"pass","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestWithTimeout","Elapsed":0}
+{"Time":"2026-07-01T14:59:36.160032989Z","Action":"run","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestWithInterval"}
+{"Time":"2026-07-01T14:59:36.160037852Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestWithInterval","Output":"=== RUN   TestWithInterval\n"}
+{"Time":"2026-07-01T14:59:36.160044393Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestWithInterval","Output":"--- PASS: TestWithInterval (0.00s)\n"}
+{"Time":"2026-07-01T14:59:36.160048959Z","Action":"pass","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestWithInterval","Elapsed":0}
+{"Time":"2026-07-01T14:59:36.160057497Z","Action":"run","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodicReader"}
+{"Time":"2026-07-01T14:59:36.160062498Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodicReader","Output":"=== RUN   TestPeriodicReader\n"}
+{"Time":"2026-07-01T14:59:36.160730133Z","Action":"run","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodicReader/TestCollectAfterShutdown"}
+{"Time":"2026-07-01T14:59:36.160745173Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodicReader/TestCollectAfterShutdown","Output":"=== RUN   TestPeriodicReader/TestCollectAfterShutdown\n"}
+{"Time":"2026-07-01T14:59:36.160887442Z","Action":"run","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodicReader/TestErrorForNotRegistered"}
+{"Time":"2026-07-01T14:59:36.160894951Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodicReader/TestErrorForNotRegistered","Output":"=== RUN   TestPeriodicReader/TestErrorForNotRegistered\n"}
+{"Time":"2026-07-01T14:59:36.161042444Z","Action":"run","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodicReader/TestForceFlushPropagated"}
+{"Time":"2026-07-01T14:59:36.161048605Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodicReader/TestForceFlushPropagated","Output":"=== RUN   TestPeriodicReader/TestForceFlushPropagated\n"}
+{"Time":"2026-07-01T14:59:36.161109472Z","Action":"run","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodicReader/TestMethodConcurrency"}
+{"Time":"2026-07-01T14:59:36.16112183Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodicReader/TestMethodConcurrency","Output":"=== RUN   TestPeriodicReader/TestMethodConcurrency\n"}
+{"Time":"2026-07-01T14:59:36.161276196Z","Action":"run","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodicReader/TestMultipleForceFlush"}
+{"Time":"2026-07-01T14:59:36.161291134Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodicReader/TestMultipleForceFlush","Output":"=== RUN   TestPeriodicReader/TestMultipleForceFlush\n"}
+{"Time":"2026-07-01T14:59:36.161444241Z","Action":"run","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodicReader/TestMultipleRegister"}
+{"Time":"2026-07-01T14:59:36.161449181Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodicReader/TestMultipleRegister","Output":"=== RUN   TestPeriodicReader/TestMultipleRegister\n"}
+{"Time":"2026-07-01T14:59:36.161540641Z","Action":"cont","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodicReader"}
+{"Time":"2026-07-01T14:59:36.161545477Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodicReader","Output":"=== CONT  TestPeriodicReader\n"}
+{"Time":"2026-07-01T14:59:36.161550065Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodicReader","Output":"    internal_logging.go:55: \"msg\"=\"did not register periodic reader\" \"error\"=\"duplicate reader registration\"\n"}
+{"Time":"2026-07-01T14:59:36.161572173Z","Action":"run","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodicReader/TestProducer"}
+{"Time":"2026-07-01T14:59:36.161576881Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodicReader/TestProducer","Output":"=== RUN   TestPeriodicReader/TestProducer\n"}
+{"Time":"2026-07-01T14:59:36.16161724Z","Action":"run","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodicReader/TestShutdownBeforeRegister"}
+{"Time":"2026-07-01T14:59:36.161623443Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodicReader/TestShutdownBeforeRegister","Output":"=== RUN   TestPeriodicReader/TestShutdownBeforeRegister\n"}
+{"Time":"2026-07-01T14:59:36.161699486Z","Action":"cont","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodicReader"}
+{"Time":"2026-07-01T14:59:36.161712117Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodicReader","Output":"=== CONT  TestPeriodicReader\n"}
+{"Time":"2026-07-01T14:59:36.161715708Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodicReader","Output":"    internal_logging.go:55: \"msg\"=\"did not register periodic reader\" \"error\"=\"duplicate reader registration\"\n"}
+{"Time":"2026-07-01T14:59:36.161731532Z","Action":"run","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodicReader/TestShutdownPropagated"}
+{"Time":"2026-07-01T14:59:36.161735648Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodicReader/TestShutdownPropagated","Output":"=== RUN   TestPeriodicReader/TestShutdownPropagated\n"}
+{"Time":"2026-07-01T14:59:36.161785829Z","Action":"run","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodicReader/TestShutdownTwice"}
+{"Time":"2026-07-01T14:59:36.161790907Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodicReader/TestShutdownTwice","Output":"=== RUN   TestPeriodicReader/TestShutdownTwice\n"}
+{"Time":"2026-07-01T14:59:36.161854374Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodicReader","Output":"--- PASS: TestPeriodicReader (0.00s)\n"}
+{"Time":"2026-07-01T14:59:36.161863042Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodicReader/TestCollectAfterShutdown","Output":"    --- PASS: TestPeriodicReader/TestCollectAfterShutdown (0.00s)\n"}
+{"Time":"2026-07-01T14:59:36.161869037Z","Action":"pass","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodicReader/TestCollectAfterShutdown","Elapsed":0}
+{"Time":"2026-07-01T14:59:36.161876187Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodicReader/TestErrorForNotRegistered","Output":"    --- PASS: TestPeriodicReader/TestErrorForNotRegistered (0.00s)\n"}
+{"Time":"2026-07-01T14:59:36.161881735Z","Action":"pass","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodicReader/TestErrorForNotRegistered","Elapsed":0}
+{"Time":"2026-07-01T14:59:36.161886175Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodicReader/TestForceFlushPropagated","Output":"    --- PASS: TestPeriodicReader/TestForceFlushPropagated (0.00s)\n"}
+{"Time":"2026-07-01T14:59:36.161893341Z","Action":"pass","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodicReader/TestForceFlushPropagated","Elapsed":0}
+{"Time":"2026-07-01T14:59:36.161897747Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodicReader/TestMethodConcurrency","Output":"    --- PASS: TestPeriodicReader/TestMethodConcurrency (0.00s)\n"}
+{"Time":"2026-07-01T14:59:36.161902867Z","Action":"pass","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodicReader/TestMethodConcurrency","Elapsed":0}
+{"Time":"2026-07-01T14:59:36.161907413Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodicReader/TestMultipleForceFlush","Output":"    --- PASS: TestPeriodicReader/TestMultipleForceFlush (0.00s)\n"}
+{"Time":"2026-07-01T14:59:36.161912369Z","Action":"pass","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodicReader/TestMultipleForceFlush","Elapsed":0}
+{"Time":"2026-07-01T14:59:36.161917245Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodicReader/TestMultipleRegister","Output":"    --- PASS: TestPeriodicReader/TestMultipleRegister (0.00s)\n"}
+{"Time":"2026-07-01T14:59:36.161922611Z","Action":"pass","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodicReader/TestMultipleRegister","Elapsed":0}
+{"Time":"2026-07-01T14:59:36.161926929Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodicReader/TestProducer","Output":"    --- PASS: TestPeriodicReader/TestProducer (0.00s)\n"}
+{"Time":"2026-07-01T14:59:36.161937092Z","Action":"pass","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodicReader/TestProducer","Elapsed":0}
+{"Time":"2026-07-01T14:59:36.161941716Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodicReader/TestShutdownBeforeRegister","Output":"    --- PASS: TestPeriodicReader/TestShutdownBeforeRegister (0.00s)\n"}
+{"Time":"2026-07-01T14:59:36.161947366Z","Action":"pass","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodicReader/TestShutdownBeforeRegister","Elapsed":0}
+{"Time":"2026-07-01T14:59:36.161951731Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodicReader/TestShutdownPropagated","Output":"    --- PASS: TestPeriodicReader/TestShutdownPropagated (0.00s)\n"}
+{"Time":"2026-07-01T14:59:36.16195727Z","Action":"pass","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodicReader/TestShutdownPropagated","Elapsed":0}
+{"Time":"2026-07-01T14:59:36.16196209Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodicReader/TestShutdownTwice","Output":"    --- PASS: TestPeriodicReader/TestShutdownTwice (0.00s)\n"}
+{"Time":"2026-07-01T14:59:36.161970503Z","Action":"pass","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodicReader/TestShutdownTwice","Elapsed":0}
+{"Time":"2026-07-01T14:59:36.161975795Z","Action":"pass","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodicReader","Elapsed":0}
+{"Time":"2026-07-01T14:59:36.161980036Z","Action":"run","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodicReaderRun"}
+{"Time":"2026-07-01T14:59:36.161984364Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodicReaderRun","Output":"=== RUN   TestPeriodicReaderRun\n"}
+{"Time":"2026-07-01T14:59:36.161990263Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodicReaderRun","Output":"--- PASS: TestPeriodicReaderRun (0.00s)\n"}
+{"Time":"2026-07-01T14:59:36.161995685Z","Action":"pass","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodicReaderRun","Elapsed":0}
+{"Time":"2026-07-01T14:59:36.161999921Z","Action":"run","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodiclReaderTemporality"}
+{"Time":"2026-07-01T14:59:36.162004439Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodiclReaderTemporality","Output":"=== RUN   TestPeriodiclReaderTemporality\n"}
+{"Time":"2026-07-01T14:59:36.162009948Z","Action":"run","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodiclReaderTemporality/default"}
+{"Time":"2026-07-01T14:59:36.162014927Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodiclReaderTemporality/default","Output":"=== RUN   TestPeriodiclReaderTemporality/default\n"}
+{"Time":"2026-07-01T14:59:36.162022773Z","Action":"run","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodiclReaderTemporality/delta"}
+{"Time":"2026-07-01T14:59:36.162027757Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodiclReaderTemporality/delta","Output":"=== RUN   TestPeriodiclReaderTemporality/delta\n"}
+{"Time":"2026-07-01T14:59:36.162033097Z","Action":"run","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodiclReaderTemporality/repeats_overwrite"}
+{"Time":"2026-07-01T14:59:36.162037642Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodiclReaderTemporality/repeats_overwrite","Output":"=== RUN   TestPeriodiclReaderTemporality/repeats_overwrite\n"}
+{"Time":"2026-07-01T14:59:36.162045637Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodiclReaderTemporality","Output":"--- PASS: TestPeriodiclReaderTemporality (0.00s)\n"}
+{"Time":"2026-07-01T14:59:36.162051276Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodiclReaderTemporality/default","Output":"    --- PASS: TestPeriodiclReaderTemporality/default (0.00s)\n"}
+{"Time":"2026-07-01T14:59:36.162060983Z","Action":"pass","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodiclReaderTemporality/default","Elapsed":0}
+{"Time":"2026-07-01T14:59:36.162065735Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodiclReaderTemporality/delta","Output":"    --- PASS: TestPeriodiclReaderTemporality/delta (0.00s)\n"}
+{"Time":"2026-07-01T14:59:36.162070969Z","Action":"pass","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodiclReaderTemporality/delta","Elapsed":0}
+{"Time":"2026-07-01T14:59:36.16207567Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodiclReaderTemporality/repeats_overwrite","Output":"    --- PASS: TestPeriodiclReaderTemporality/repeats_overwrite (0.00s)\n"}
+{"Time":"2026-07-01T14:59:36.162082941Z","Action":"pass","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodiclReaderTemporality/repeats_overwrite","Elapsed":0}
+{"Time":"2026-07-01T14:59:36.16208745Z","Action":"pass","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestPeriodiclReaderTemporality","Elapsed":0}
+{"Time":"2026-07-01T14:59:36.162092072Z","Action":"run","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestMeterConcurrentSafe"}
+{"Time":"2026-07-01T14:59:36.162096659Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestMeterConcurrentSafe","Output":"=== RUN   TestMeterConcurrentSafe\n"}
+{"Time":"2026-07-01T14:59:36.162102244Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestMeterConcurrentSafe","Output":"--- PASS: TestMeterConcurrentSafe (0.00s)\n"}
+{"Time":"2026-07-01T14:59:36.16210777Z","Action":"pass","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestMeterConcurrentSafe","Elapsed":0}
+{"Time":"2026-07-01T14:59:36.162112437Z","Action":"run","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestForceFlushConcurrentSafe"}
+{"Time":"2026-07-01T14:59:36.162116706Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestForceFlushConcurrentSafe","Output":"=== RUN   TestForceFlushConcurrentSafe\n"}
+{"Time":"2026-07-01T14:59:36.16212485Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestForceFlushConcurrentSafe","Output":"--- PASS: TestForceFlushConcurrentSafe (0.00s)\n"}
+{"Time":"2026-07-01T14:59:36.162131693Z","Action":"pass","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestForceFlushConcurrentSafe","Elapsed":0}
+{"Time":"2026-07-01T14:59:36.162135882Z","Action":"run","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestShutdownConcurrentSafe"}
+{"Time":"2026-07-01T14:59:36.162141506Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestShutdownConcurrentSafe","Output":"=== RUN   TestShutdownConcurrentSafe\n"}
+{"Time":"2026-07-01T14:59:36.162147673Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestShutdownConcurrentSafe","Output":"--- PASS: TestShutdownConcurrentSafe (0.00s)\n"}
+{"Time":"2026-07-01T14:59:36.162152744Z","Action":"pass","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestShutdownConcurrentSafe","Elapsed":0}
+{"Time":"2026-07-01T14:59:36.162157312Z","Action":"run","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestMeterDoesNotPanicForEmptyMeterProvider"}
+{"Time":"2026-07-01T14:59:36.162162086Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestMeterDoesNotPanicForEmptyMeterProvider","Output":"=== RUN   TestMeterDoesNotPanicForEmptyMeterProvider\n"}
+{"Time":"2026-07-01T14:59:36.162169739Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestMeterDoesNotPanicForEmptyMeterProvider","Output":"--- PASS: TestMeterDoesNotPanicForEmptyMeterProvider (0.00s)\n"}
+{"Time":"2026-07-01T14:59:36.162174746Z","Action":"pass","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestMeterDoesNotPanicForEmptyMeterProvider","Elapsed":0}
+{"Time":"2026-07-01T14:59:36.162180851Z","Action":"run","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestForceFlushDoesNotPanicForEmptyMeterProvider"}
+{"Time":"2026-07-01T14:59:36.162188865Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestForceFlushDoesNotPanicForEmptyMeterProvider","Output":"=== RUN   TestForceFlushDoesNotPanicForEmptyMeterProvider\n"}
+{"Time":"2026-07-01T14:59:36.162194434Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestForceFlushDoesNotPanicForEmptyMeterProvider","Output":"--- PASS: TestForceFlushDoesNotPanicForEmptyMeterProvider (0.00s)\n"}
+{"Time":"2026-07-01T14:59:36.162199432Z","Action":"pass","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestForceFlushDoesNotPanicForEmptyMeterProvider","Elapsed":0}
+{"Time":"2026-07-01T14:59:36.162203201Z","Action":"run","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestShutdownDoesNotPanicForEmptyMeterProvider"}
+{"Time":"2026-07-01T14:59:36.162207524Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestShutdownDoesNotPanicForEmptyMeterProvider","Output":"=== RUN   TestShutdownDoesNotPanicForEmptyMeterProvider\n"}
+{"Time":"2026-07-01T14:59:36.162213604Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestShutdownDoesNotPanicForEmptyMeterProvider","Output":"--- PASS: TestShutdownDoesNotPanicForEmptyMeterProvider (0.00s)\n"}
+{"Time":"2026-07-01T14:59:36.16221944Z","Action":"pass","Package":"go.opentelemetry.io/otel/sdk/metric","Test":"TestShutdownDoesNotPanicForEmptyMeterProvider","Elapsed":0}
+{"Time":"2026-07-01T14:59:36.16222495Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Output":"PASS\n"}
+{"Time":"2026-07-01T14:59:36.162795703Z","Action":"output","Package":"go.opentelemetry.io/otel/sdk/metric","Output":"ok  \tgo.opentelemetry.io/otel/sdk/metric\t0.008s\n"}
+{"Time":"2026-07-01T14:59:36.162814256Z","Action":"pass","Package":"go.opentelemetry.io/otel/sdk/metric","Elapsed":0.008}
+reward=1 graded=49 found=49 failed=0 parsed=49 framework=go exit_code=0

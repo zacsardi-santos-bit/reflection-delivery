@@ -1,0 +1,8 @@
+patching file e2e/cases/image-compress/index.test.ts
+patching file e2e/cases/svg/svgo-minify-id-prefix/index.test.ts
+patching file e2e/cases/svg/svgo-minify-view-box/index.test.ts
+patching file e2e/cases/svg/svgo.test.ts
+FAIL [   0.000s] cases/image-compress/index.test.ts should compress image with use plugin-image-compress
+FAIL [   0.000s] cases/svg/svgo-minify-id-prefix/index.test.ts should add id prefix after svgo minification
+FAIL [   0.000s] cases/svg/svgo-minify-view-box/index.test.ts should preserve viewBox after svgo minification
+reward=0 graded=3 found=3 failed=3 parsed=3 framework=cargo exit_code=0

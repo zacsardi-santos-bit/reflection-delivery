@@ -1,0 +1,14 @@
+patching file docs/Fixup_Commits.md
+patching file docs/dev/Find_Base_Commit_For_Fixup_Design.md
+patching file docs/dev/README.md
+patching file go.mod
+patching file go.sum
+patching file pkg/gui/controllers/helpers/fixup_helper.go
+patching file pkg/i18n/english.go
+patching file pkg/i18n/polish.go
+patching file vendor/golang.org/x/sync/LICENSE
+patching file vendor/golang.org/x/sync/PATENTS
+patching file vendor/golang.org/x/sync/errgroup/errgroup.go
+patching file vendor/golang.org/x/sync/errgroup/go120.go
+patching file vendor/golang.org/x/sync/errgroup/pre_go120.go
+patching file vendor/modules.txt

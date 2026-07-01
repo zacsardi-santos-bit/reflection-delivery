@@ -1,26 +1,26 @@
 {
-    "id": "d7a15579-bb78-4799-8385-75d04f8b8dd3",
+    "id": "936a7c82-fa08-4dbd-8dbd-367652cc559a",
     "task_name": "offline/transformeroptimus-superagi-724",
-    "trial_name": "transformeroptimus-superagi-724__ZkQWqWE",
-    "trial_uri": "file:///home/ubuntu/reflection_offline_harbor_delivery/nop_jobs_all/2026-06-29__15-12-04/transformeroptimus-superagi-724__ZkQWqWE",
+    "trial_name": "transformeroptimus-superagi-724__2WWRvCB",
+    "trial_uri": "file:///tmp/nop/2026-07-01__15-19-13/transformeroptimus-superagi-724__2WWRvCB",
     "task_id": {
-        "path": "/home/ubuntu/reflection_offline_harbor_delivery/harbor/transformeroptimus-superagi-724"
+        "path": "transformeroptimus-superagi-724"
     },
-    "source": "harbor",
-    "task_checksum": "d441bccddaa624e949b5ba357cfa3e3e36a805f04570cf6ebc7eb98158656321",
+    "source": "src",
+    "task_checksum": "5fd2ead04d1c82350d782d5b9bbb5e6a305697c126a22e6527911395968c1d21",
     "config": {
         "task": {
-            "path": "/home/ubuntu/reflection_offline_harbor_delivery/harbor/transformeroptimus-superagi-724",
+            "path": "transformeroptimus-superagi-724",
             "git_url": null,
             "git_commit_id": null,
             "name": null,
             "ref": null,
             "overwrite": false,
             "download_dir": null,
-            "source": "harbor"
+            "source": "src"
         },
-        "trial_name": "transformeroptimus-superagi-724__ZkQWqWE",
-        "trials_dir": "/home/ubuntu/reflection_offline_harbor_delivery/nop_jobs_all/2026-06-29__15-12-04",
+        "trial_name": "transformeroptimus-superagi-724__2WWRvCB",
+        "trials_dir": "/tmp/nop/2026-07-01__15-19-13",
         "timeout_multiplier": 1.0,
         "agent_timeout_multiplier": null,
         "verifier_timeout_multiplier": null,
@@ -37,10 +37,10 @@
             "env": {}
         },
         "environment": {
-            "type": "modal",
+            "type": "docker",
             "import_path": null,
             "force_build": false,
-            "delete": false,
+            "delete": true,
             "override_cpus": null,
             "override_memory_mb": null,
             "override_storage_mb": null,
@@ -56,7 +56,7 @@
             "disable": false
         },
         "artifacts": [],
-        "job_id": "b069d7ef-a502-4a46-91d5-798d81044649"
+        "job_id": "2a9a5174-1657-4db5-ac34-8bf4f56581d2"
     },
     "agent_info": {
         "name": "nop",
@@ -71,29 +71,28 @@
         "rollout_details": null,
         "metadata": null
     },
-    "verifier_result": null,
-    "exception_info": {
-        "exception_type": "RewardFileEmptyError",
-        "exception_message": "Reward file is empty at /home/ubuntu/reflection_offline_harbor_delivery/nop_jobs_all/2026-06-29__15-12-04/transformeroptimus-superagi-724__ZkQWqWE/verifier/reward.txt",
-        "exception_traceback": "Traceback (most recent call last):\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/harbor/trial/trial.py\", line 562, in run\n    await self._run_verification()\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/harbor/trial/trial.py\", line 306, in _run_verification\n    await self._verify_with_retry()\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/tenacity/asyncio/__init__.py\", line 193, in async_wrapped\n    return await copy(fn, *args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/tenacity/asyncio/__init__.py\", line 112, in __call__\n    do = await self.iter(retry_state=retry_state)\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/tenacity/asyncio/__init__.py\", line 157, in iter\n    result = await action(retry_state)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/tenacity/_utils.py\", line 111, in inner\n    return call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/tenacity/__init__.py\", line 393, in <lambda>\n    self._add_action_func(lambda rs: rs.outcome.result())\n                                     ^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/concurrent/futures/_base.py\", line 449, in result\n    return self.__get_result()\n           ^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/concurrent/futures/_base.py\", line 401, in __get_result\n    raise self._exception\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/tenacity/asyncio/__init__.py\", line 116, in __call__\n    result = await fn(*args, **kwargs)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/harbor/trial/trial.py\", line 324, in _verify_with_retry\n    self.result.verifier_result = await asyncio.wait_for(\n                                  ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/asyncio/tasks.py\", line 520, in wait_for\n    return await fut\n           ^^^^^^^^^\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/harbor/verifier/verifier.py\", line 143, in verify\n    rewards = self._parse_reward_text()\n              ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/harbor/verifier/verifier.py\", line 48, in _parse_reward_text\n    raise RewardFileEmptyError(\nharbor.verifier.verifier.RewardFileEmptyError: Reward file is empty at /home/ubuntu/reflection_offline_harbor_delivery/nop_jobs_all/2026-06-29__15-12-04/transformeroptimus-superagi-724__ZkQWqWE/verifier/reward.txt\n",
-        "occurred_at": "2026-06-29T15:28:04.884324"
+    "verifier_result": {
+        "rewards": {
+            "reward": 0.0
+        }
     },
-    "started_at": "2026-06-29T15:26:19.077973Z",
-    "finished_at": "2026-06-29T15:28:08.163452Z",
+    "exception_info": null,
+    "started_at": "2026-07-01T15:19:17.899484Z",
+    "finished_at": "2026-07-01T15:19:34.314032Z",
     "environment_setup": {
-        "started_at": "2026-06-29T15:26:19.083889Z",
-        "finished_at": "2026-06-29T15:26:36.628093Z"
+        "started_at": "2026-07-01T15:19:17.900647Z",
+        "finished_at": "2026-07-01T15:19:19.941705Z"
     },
     "agent_setup": {
-        "started_at": "2026-06-29T15:26:36.628099Z",
-        "finished_at": "2026-06-29T15:26:36.628117Z"
+        "started_at": "2026-07-01T15:19:19.941743Z",
+        "finished_at": "2026-07-01T15:19:19.941794Z"
     },
     "agent_execution": {
-        "started_at": "2026-06-29T15:26:36.628138Z",
-        "finished_at": "2026-06-29T15:26:36.628151Z"
+        "started_at": "2026-07-01T15:19:19.941852Z",
+        "finished_at": "2026-07-01T15:19:19.941887Z"
     },
     "verifier": {
-        "started_at": "2026-06-29T15:26:44.330121Z",
-        "finished_at": "2026-06-29T15:28:04.882626Z"
+        "started_at": "2026-07-01T15:19:19.941989Z",
+        "finished_at": "2026-07-01T15:19:23.971471Z"
     }
 }

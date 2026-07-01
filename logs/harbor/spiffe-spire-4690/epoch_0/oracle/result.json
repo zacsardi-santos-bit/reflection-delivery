@@ -1,26 +1,26 @@
 {
-    "id": "2b9e0906-afc2-4d04-88fb-1fa27512ff08",
+    "id": "e8e943a4-2d21-4d08-b7b3-6c5fa2af12f3",
     "task_name": "offline/spiffe-spire-4690",
-    "trial_name": "spiffe-spire-4690__qyGrptx",
-    "trial_uri": "file:///home/ubuntu/reflection_offline_harbor_delivery/oracle_jobs_all/2026-06-29__15-12-04/spiffe-spire-4690__qyGrptx",
+    "trial_name": "spiffe-spire-4690__JDkZoQT",
+    "trial_uri": "file:///tmp/oracle/2026-07-01__15-10-36/spiffe-spire-4690__JDkZoQT",
     "task_id": {
-        "path": "/home/ubuntu/reflection_offline_harbor_delivery/harbor/spiffe-spire-4690"
+        "path": "spiffe-spire-4690"
     },
-    "source": "harbor",
-    "task_checksum": "5f17f04440abb51926c085fe22dac67f58ba3a5f5330faafd1f0caa99c44f781",
+    "source": "src",
+    "task_checksum": "76b11486f216bbca5afc1100f1725b82f4372eea70f7303c68b3cef412cf29db",
     "config": {
         "task": {
-            "path": "/home/ubuntu/reflection_offline_harbor_delivery/harbor/spiffe-spire-4690",
+            "path": "spiffe-spire-4690",
             "git_url": null,
             "git_commit_id": null,
             "name": null,
             "ref": null,
             "overwrite": false,
             "download_dir": null,
-            "source": "harbor"
+            "source": "src"
         },
-        "trial_name": "spiffe-spire-4690__qyGrptx",
-        "trials_dir": "/home/ubuntu/reflection_offline_harbor_delivery/oracle_jobs_all/2026-06-29__15-12-04",
+        "trial_name": "spiffe-spire-4690__JDkZoQT",
+        "trials_dir": "/tmp/oracle/2026-07-01__15-10-36",
         "timeout_multiplier": 1.0,
         "agent_timeout_multiplier": null,
         "verifier_timeout_multiplier": null,
@@ -37,10 +37,10 @@
             "env": {}
         },
         "environment": {
-            "type": "modal",
+            "type": "docker",
             "import_path": null,
             "force_build": false,
-            "delete": false,
+            "delete": true,
             "override_cpus": null,
             "override_memory_mb": null,
             "override_storage_mb": null,
@@ -56,7 +56,7 @@
             "disable": false
         },
         "artifacts": [],
-        "job_id": "8d8c11e2-61bb-4d33-b502-02a799419317"
+        "job_id": "303a856f-c51b-43c7-86b4-c4c574364529"
     },
     "agent_info": {
         "name": "oracle",
@@ -73,26 +73,26 @@
     },
     "verifier_result": {
         "rewards": {
-            "reward": 0.0
+            "reward": 1.0
         }
     },
     "exception_info": null,
-    "started_at": "2026-06-29T15:30:43.030180Z",
-    "finished_at": "2026-06-29T15:37:42.299713Z",
+    "started_at": "2026-07-01T15:10:45.785822Z",
+    "finished_at": "2026-07-01T15:17:48.582098Z",
     "environment_setup": {
-        "started_at": "2026-06-29T15:30:43.036210Z",
-        "finished_at": "2026-06-29T15:31:00.578209Z"
+        "started_at": "2026-07-01T15:10:45.787430Z",
+        "finished_at": "2026-07-01T15:16:13.550548Z"
     },
     "agent_setup": {
-        "started_at": "2026-06-29T15:31:00.578215Z",
-        "finished_at": "2026-06-29T15:31:00.578231Z"
+        "started_at": "2026-07-01T15:16:13.550593Z",
+        "finished_at": "2026-07-01T15:16:13.550643Z"
     },
     "agent_execution": {
-        "started_at": "2026-06-29T15:31:00.578248Z",
-        "finished_at": "2026-06-29T15:31:35.372221Z"
+        "started_at": "2026-07-01T15:16:13.550701Z",
+        "finished_at": "2026-07-01T15:16:13.826937Z"
     },
     "verifier": {
-        "started_at": "2026-06-29T15:31:54.440632Z",
-        "finished_at": "2026-06-29T15:36:42.614138Z"
+        "started_at": "2026-07-01T15:16:13.827086Z",
+        "finished_at": "2026-07-01T15:17:38.103788Z"
     }
 }

@@ -1,0 +1,814 @@
+patching file crates/bevy_ecs/src/system/mod.rs
+Hunk #1 succeeded at 1175 (offset -2 lines).
+   Compiling cfg-if v1.0.4
+   Compiling proc-macro2 v1.0.106
+   Compiling unicode-ident v1.0.24
+   Compiling quote v1.0.46
+   Compiling equivalent v1.0.2
+   Compiling libc v0.2.186
+   Compiling serde_core v1.0.228
+   Compiling syn v2.0.118
+   Compiling serde v1.0.228
+   Compiling hashbrown v0.17.1
+   Compiling parking_lot_core v0.9.12
+   Compiling crossbeam-utils v0.8.21
+   Compiling scopeguard v1.2.0
+   Compiling smallvec v1.15.2
+   Compiling lock_api v0.4.14
+   Compiling indexmap v2.14.0
+   Compiling getrandom v0.4.3
+   Compiling winnow v0.7.15
+   Compiling toml_datetime v0.6.11
+   Compiling parking_lot v0.12.5
+   Compiling hashbrown v0.15.5
+   Compiling toml_edit v0.22.27
+   Compiling unicode-xid v0.2.6
+   Compiling spin v0.10.0
+   Compiling typeid v1.0.3
+   Compiling foldhash v0.1.5
+   Compiling zerocopy v0.8.52
+   Compiling bevy_platform v0.16.0-dev (/workspace/repo/crates/bevy_platform)
+warning[E0602]: unknown lint: `mismatched_lifetime_syntaxes`
+  |
+  = note: requested on the command line with `-A mismatched_lifetime_syntaxes`
+  = note: `#[warn(unknown_lints)]` on by default
+
+For more information about this error, try `rustc --explain E0602`.
+warning: `bevy_platform` (lib) generated 1 warning
+   Compiling derive_more-impl v1.0.0
+   Compiling bevy_macro_utils v0.16.0-dev (/workspace/repo/crates/bevy_macro_utils)
+warning: `bevy_macro_utils` (lib) generated 1 warning (1 duplicate)
+   Compiling thiserror v2.0.18
+   Compiling futures-core v0.3.32
+   Compiling pin-project-lite v0.2.17
+   Compiling parking v2.2.1
+   Compiling futures-io v0.3.32
+   Compiling erased-serde v0.4.10
+   Compiling fastrand v2.4.1
+   Compiling futures-lite v2.6.1
+   Compiling derive_more v1.0.0
+   Compiling getrandom v0.2.17
+   Compiling uuid v1.23.4
+   Compiling concurrent-queue v2.5.0
+   Compiling thiserror-impl v2.0.18
+   Compiling thread_local v1.1.9
+   Compiling slab v0.4.12
+   Compiling async-task v4.7.1
+   Compiling async-executor v1.14.0
+   Compiling bevy_utils v0.16.0-dev (/workspace/repo/crates/bevy_utils)
+warning: `bevy_utils` (lib) generated 1 warning (1 duplicate)
+   Compiling bevy_reflect_derive v0.16.0-dev (/workspace/repo/crates/bevy_reflect/derive)
+   Compiling ppv-lite86 v0.2.21
+   Compiling rand_core v0.6.4
+   Compiling crossbeam-queue v0.3.12
+   Compiling variadics_please v1.1.0
+   Compiling assert_type_match v0.1.1
+   Compiling disqualified v1.0.0
+   Compiling downcast-rs v2.0.2
+   Compiling atomic-waker v1.1.2
+   Compiling bevy_ptr v0.16.0-dev (/workspace/repo/crates/bevy_ptr)
+warning: `bevy_ptr` (lib) generated 1 warning (1 duplicate)
+   Compiling bevy_tasks v0.16.0-dev (/workspace/repo/crates/bevy_tasks)
+warning: `bevy_reflect_derive` (lib) generated 1 warning (1 duplicate)
+   Compiling bevy_reflect v0.16.0-dev (/workspace/repo/crates/bevy_reflect)
+warning: `bevy_tasks` (lib) generated 1 warning (1 duplicate)
+   Compiling rand_chacha v0.3.1
+   Compiling bevy_ecs_macros v0.16.0-dev (/workspace/repo/crates/bevy_ecs/macros)
+warning: `bevy_ecs_macros` (lib) generated 1 warning (1 duplicate)
+   Compiling fixedbitset v0.5.7
+   Compiling bumpalo v3.20.3
+   Compiling log v0.4.33
+   Compiling bitflags v2.13.0
+   Compiling nonmax v0.5.5
+   Compiling rand v0.8.6
+   Compiling serde_test v1.0.177
+   Compiling static_assertions v1.1.0
+   Compiling bevy_ecs v0.16.0-dev (/workspace/repo/crates/bevy_ecs)
+warning: `bevy_reflect` (lib) generated 1 warning (1 duplicate)
+warning: `bevy_ecs` (lib) generated 1 warning (1 duplicate)
+warning: `bevy_ecs` (example "change_detection") generated 1 warning (1 duplicate)
+warning: `bevy_ecs` (example "resources") generated 1 warning (1 duplicate)
+warning: `bevy_ecs` (example "events") generated 1 warning (1 duplicate)
+warning: `bevy_ecs` (lib test) generated 1 warning (1 duplicate)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1m 17s
+────────────
+ Nextest run ID d80a2b33-85b6-4f9e-b8c4-d72572b62f82 with nextest profile: default
+    Starting 715 tests across 1 binary
+        PASS [   0.006s] (  1/715) bevy_ecs bundle::tests::can_spawn_bundle_without_extract
+        PASS [   0.006s] (  2/715) bevy_ecs bundle::tests::component_hook_order_insert_remove
+        PASS [   0.006s] (  3/715) bevy_ecs bundle::tests::component_hook_order_recursive
+        PASS [   0.006s] (  4/715) bevy_ecs bundle::tests::component_hook_order_recursive_multiple
+        PASS [   0.006s] (  5/715) bevy_ecs bundle::tests::component_hook_order_replace
+        PASS [   0.006s] (  6/715) bevy_ecs bundle::tests::component_hook_order_spawn_despawn
+        PASS [   0.005s] (  7/715) bevy_ecs bundle::tests::component_hook_order_spawn_despawn_with_macro_hooks
+        PASS [   0.005s] (  8/715) bevy_ecs bundle::tests::insert_if_new
+        PASS [   0.005s] (  9/715) bevy_ecs bundle::tests::sorted_remove
+        PASS [   0.006s] ( 10/715) bevy_ecs bundle::tests::new_archetype_created
+        PASS [   0.005s] ( 11/715) bevy_ecs bundle::tests::sparse_set_insert_if_new
+        PASS [   0.005s] ( 12/715) bevy_ecs change_detection::tests::as_deref_mut
+        PASS [   0.007s] ( 13/715) bevy_ecs change_detection::tests::change_expiration
+        PASS [   0.008s] ( 14/715) bevy_ecs change_detection::tests::change_tick_scan
+        PASS [   0.005s] ( 15/715) bevy_ecs change_detection::tests::map_mut
+        PASS [   0.006s] ( 16/715) bevy_ecs change_detection::tests::change_tick_wraparound
+        PASS [   0.007s] ( 17/715) bevy_ecs change_detection::tests::mut_from_non_send_mut
+        PASS [   0.006s] ( 18/715) bevy_ecs change_detection::tests::mut_from_res_mut
+        PASS [   0.005s] ( 19/715) bevy_ecs change_detection::tests::mut_new
+        PASS [   0.005s] ( 20/715) bevy_ecs change_detection::tests::mut_untyped_from_mut
+        PASS [   0.005s] ( 21/715) bevy_ecs change_detection::tests::mut_untyped_to_reflect
+        PASS [   0.006s] ( 22/715) bevy_ecs change_detection::tests::set_if_neq
+        PASS [   0.005s] ( 23/715) bevy_ecs entity::clone_entities::tests::clone_entity_using_clone
+        PASS [   0.006s] ( 24/715) bevy_ecs entity::clone_entities::tests::clone_entity_with_allow_filter
+        PASS [   0.005s] ( 25/715) bevy_ecs entity::clone_entities::tests::clone_entity_with_default_required_components
+        PASS [   0.005s] ( 26/715) bevy_ecs entity::clone_entities::tests::clone_entity_with_deny_filter
+        PASS [   0.005s] ( 27/715) bevy_ecs entity::clone_entities::tests::clone_entity_with_dynamic_components
+        PASS [   0.006s] ( 28/715) bevy_ecs entity::clone_entities::tests::clone_entity_with_override_allow_filter
+        PASS [   0.006s] ( 29/715) bevy_ecs entity::clone_entities::tests::clone_entity_with_override_bundle
+        PASS [   0.006s] ( 30/715) bevy_ecs entity::clone_entities::tests::clone_entity_with_required_components
+        PASS [   0.006s] ( 31/715) bevy_ecs entity::clone_entities::tests::clone_with_reflect_from_world
+        PASS [   0.005s] ( 32/715) bevy_ecs entity::clone_entities::tests::cloning_with_required_components_preserves_existing
+        PASS [   0.007s] ( 33/715) bevy_ecs entity::clone_entities::tests::recursive_clone
+        PASS [   0.007s] ( 34/715) bevy_ecs entity::clone_entities::tests::reflect::clone_entity_specialization
+        PASS [   0.006s] ( 35/715) bevy_ecs entity::clone_entities::tests::reflect::clone_entity_using_reflect
+        PASS [   0.007s] ( 36/715) bevy_ecs entity::clone_entities::tests::reflect::clone_entity_using_reflect_all_paths
+        PASS [   0.006s] ( 37/715) bevy_ecs entity::clone_entities::tests::reflect::clone_entity_using_reflect_should_skip_without_panic
+        PASS [   0.006s] ( 38/715) bevy_ecs entity::clone_entities::tests::reflect::read_source_component_reflect_should_return_none_on_invalid_reflect_from_ptr
+        PASS [   0.007s] ( 39/715) bevy_ecs entity::entity_set::tests::nesting_queries
+        PASS [   0.007s] ( 40/715) bevy_ecs entity::entity_set::tests::preserving_uniqueness
+        PASS [   0.007s] ( 41/715) bevy_ecs entity::map_entities::tests::entity_mapper
+        PASS [   0.007s] ( 42/715) bevy_ecs entity::map_entities::tests::entity_mapper_no_panic
+        PASS [   0.006s] ( 43/715) bevy_ecs entity::map_entities::tests::world_scope_reserves_generations
+        PASS [   0.005s] ( 44/715) bevy_ecs entity::tests::entity_bits_roundtrip
+        PASS [   0.005s] ( 45/715) bevy_ecs entity::tests::entity_comparison
+        PASS [   0.005s] ( 46/715) bevy_ecs entity::tests::entity_const
+        PASS [   0.005s] ( 47/715) bevy_ecs entity::tests::entity_debug
+        PASS [   0.005s] ( 48/715) bevy_ecs entity::tests::entity_display
+        PASS [   0.005s] ( 49/715) bevy_ecs entity::tests::entity_generation_is_approximately_ordered
+        PASS [   0.005s] ( 50/715) bevy_ecs entity::tests::entity_hash_id_bitflip_affects_high_7_bits
+        PASS [   0.005s] ( 51/715) bevy_ecs entity::tests::entity_hash_keeps_similar_ids_together
+        PASS [   0.005s] ( 52/715) bevy_ecs entity::tests::entity_niche_optimization
+        PASS [   0.005s] ( 53/715) bevy_ecs entity::tests::get_reserved_and_invalid
+        PASS [   0.005s] ( 54/715) bevy_ecs entity::tests::reserve_entity_len
+        PASS [   0.005s] ( 55/715) bevy_ecs entity::tests::reserve_generations
+        PASS [   0.005s] ( 56/715) bevy_ecs entity::tests::reserve_generations_and_alloc
+        PASS [   0.007s] ( 57/715) bevy_ecs entity_disabling::tests::filters_modify_access
+        PASS [   0.008s] ( 58/715) bevy_ecs entity_disabling::tests::multiple_disabling_components
+        PASS [   0.009s] ( 59/715) bevy_ecs event::collections::tests::iter_current_update_events_iterates_over_current_events
+        PASS [   0.005s] ( 60/715) bevy_ecs event::tests::ensure_reader_readonly
+        PASS [   0.005s] ( 61/715) bevy_ecs event::tests::test_event_cursor_clear
+        PASS [   0.005s] ( 62/715) bevy_ecs event::tests::test_event_cursor_iter_len_updated
+        PASS [   0.005s] ( 63/715) bevy_ecs event::tests::test_event_cursor_len_current
+        PASS [   0.005s] ( 64/715) bevy_ecs event::tests::test_event_cursor_len_empty
+        PASS [   0.005s] ( 65/715) bevy_ecs event::tests::test_event_cursor_len_filled
+        PASS [   0.045s] ( 66/715) bevy_ecs error::bevy_error::tests::filtered_backtrace_test
+        PASS [   0.006s] ( 67/715) bevy_ecs event::tests::test_event_cursor_len_update
+        PASS [   0.007s] ( 68/715) bevy_ecs event::tests::test_event_cursor_read
+        PASS [   0.007s] ( 69/715) bevy_ecs event::tests::test_event_cursor_read_mut
+        PASS [   0.006s] ( 70/715) bevy_ecs event::tests::test_event_mutator_iter_last
+        PASS [   0.006s] ( 71/715) bevy_ecs event::tests::test_event_mutator_iter_nth
+        PASS [   0.005s] ( 72/715) bevy_ecs event::tests::test_event_reader_iter_last
+        PASS [   0.006s] ( 73/715) bevy_ecs event::tests::test_event_reader_iter_nth
+        PASS [   0.005s] ( 74/715) bevy_ecs event::tests::test_event_registry_can_add_and_remove_events_to_world
+        PASS [   0.005s] ( 75/715) bevy_ecs event::tests::test_events
+        PASS [   0.005s] ( 76/715) bevy_ecs event::tests::test_events_clear_and_read
+        PASS [   0.005s] ( 77/715) bevy_ecs event::tests::test_events_drain_and_read
+        PASS [   0.005s] ( 78/715) bevy_ecs event::tests::test_events_empty
+        PASS [   0.005s] ( 79/715) bevy_ecs event::tests::test_events_extend_impl
+        PASS [   0.005s] ( 80/715) bevy_ecs event::tests::test_events_send_default
+        PASS [   0.005s] ( 81/715) bevy_ecs event::tests::test_events_update_drain
+        PASS [   0.006s] ( 82/715) bevy_ecs event::tests::test_send_events_ids
+        PASS [   0.007s] ( 83/715) bevy_ecs hierarchy::tests::add_children
+        PASS [   0.005s] ( 84/715) bevy_ecs hierarchy::tests::child_replace_hook_skip
+        PASS [   0.006s] ( 85/715) bevy_ecs hierarchy::tests::hierarchy
+        PASS [   0.006s] ( 86/715) bevy_ecs hierarchy::tests::insert_children
+        PASS [   0.005s] ( 87/715) bevy_ecs hierarchy::tests::insert_children_index_bound
+        PASS [   0.005s] ( 88/715) bevy_ecs hierarchy::tests::insert_same_child_twice
+        PASS [   0.011s] ( 89/715) bevy_ecs hierarchy::tests::missing_parent_invalid
+        PASS [   0.010s] ( 90/715) bevy_ecs hierarchy::tests::reinsert_same_parent
+        PASS [   0.006s] ( 91/715) bevy_ecs hierarchy::tests::remove_children
+        PASS [   0.006s] ( 92/715) bevy_ecs hierarchy::tests::replace_children
+        PASS [   0.006s] ( 93/715) bevy_ecs hierarchy::tests::replace_children_order
+        PASS [   0.006s] ( 94/715) bevy_ecs hierarchy::tests::replace_children_with_nothing
+        PASS [   0.006s] ( 95/715) bevy_ecs hierarchy::tests::replace_diff_invariant_newly_not_subset
+        PASS [   0.006s] ( 96/715) bevy_ecs hierarchy::tests::replace_diff_invariant_overlapping_unrelate_with_newly
+        PASS [   0.006s] ( 97/715) bevy_ecs hierarchy::tests::replace_diff_invariant_overlapping_unrelate_with_relate
+        PASS [   0.006s] ( 98/715) bevy_ecs hierarchy::tests::replace_with_difference
+        PASS [   0.005s] ( 99/715) bevy_ecs hierarchy::tests::replace_with_difference_on_empty
+        PASS [   0.006s] (100/715) bevy_ecs hierarchy::tests::replace_with_difference_totally_new_children
+        PASS [   0.005s] (101/715) bevy_ecs hierarchy::tests::self_parenting_invalid
+        PASS [   0.005s] (102/715) bevy_ecs hierarchy::tests::spawn_children
+        PASS [   0.007s] (103/715) bevy_ecs hierarchy::tests::spawn_many_children
+        PASS [   0.007s] (104/715) bevy_ecs hierarchy::tests::with_children
+        PASS [   0.005s] (105/715) bevy_ecs intern::tests::different_interned_content
+        PASS [   0.005s] (106/715) bevy_ecs intern::tests::fieldless_enum
+        PASS [   0.006s] (107/715) bevy_ecs intern::tests::same_interned_content
+        PASS [   0.006s] (108/715) bevy_ecs intern::tests::same_interned_instance
+        PASS [   0.005s] (109/715) bevy_ecs intern::tests::static_sub_strings
+        PASS [   0.006s] (110/715) bevy_ecs intern::tests::zero_sized_type
+        PASS [   0.006s] (111/715) bevy_ecs name::tests::test_display_of_debug_name
+        PASS [   0.006s] (112/715) bevy_ecs observer::entity_observer::tests::clone_entity_with_observer
+        PASS [   0.007s] (113/715) bevy_ecs observer::runner::tests::exclusive_system_cannot_be_observer
+        PASS [   0.007s] (114/715) bevy_ecs observer::runner::tests::test_fallible_observer
+        PASS [   0.006s] (115/715) bevy_ecs observer::runner::tests::test_fallible_observer_ignored_errors
+        PASS [   0.005s] (116/715) bevy_ecs observer::tests::observer_apply_deferred_from_param_set
+        PASS [   0.005s] (117/715) bevy_ecs observer::tests::observer_caller_location_command_archetype_move
+        PASS [   0.005s] (118/715) bevy_ecs observer::tests::observer_caller_location_event
+        PASS [   0.006s] (119/715) bevy_ecs observer::tests::observer_despawn
+        PASS [   0.007s] (120/715) bevy_ecs observer::tests::observer_despawn_archetype_flags
+        PASS [   0.006s] (121/715) bevy_ecs observer::tests::observer_dynamic_trigger
+        PASS [   0.011s] (122/715) bevy_ecs observer::tests::observer_dynamic_component
+        PASS [   0.006s] (123/715) bevy_ecs observer::tests::observer_entity_routing
+        PASS [   0.006s] (124/715) bevy_ecs observer::tests::observer_invalid_params
+        PASS [   0.006s] (125/715) bevy_ecs observer::tests::observer_modifies_relationship
+        PASS [   0.006s] (126/715) bevy_ecs observer::tests::observer_multiple_components
+        PASS [   0.006s] (127/715) bevy_ecs observer::tests::observer_multiple_events
+        PASS [   0.006s] (128/715) bevy_ecs observer::tests::observer_multiple_listeners
+        PASS [   0.006s] (129/715) bevy_ecs observer::tests::observer_multiple_matches
+        PASS [   0.007s] (130/715) bevy_ecs observer::tests::observer_multiple_targets
+        PASS [   0.006s] (131/715) bevy_ecs observer::tests::observer_no_target
+        PASS [   0.006s] (132/715) bevy_ecs observer::tests::observer_on_remove_during_despawn_spawn_empty
+        PASS [   0.006s] (133/715) bevy_ecs observer::tests::observer_order_insert_remove
+        PASS [   0.006s] (134/715) bevy_ecs observer::tests::observer_order_insert_remove_sparse
+        PASS [   0.006s] (135/715) bevy_ecs observer::tests::observer_order_recursive
+        PASS [   0.007s] (136/715) bevy_ecs observer::tests::observer_order_replace
+        PASS [   0.007s] (137/715) bevy_ecs observer::tests::observer_order_spawn_despawn
+        PASS [   0.006s] (138/715) bevy_ecs observer::tests::observer_propagating
+        PASS [   0.006s] (139/715) bevy_ecs observer::tests::observer_propagating_halt
+        PASS [   0.006s] (140/715) bevy_ecs observer::tests::observer_propagating_join
+        PASS [   0.006s] (141/715) bevy_ecs observer::tests::observer_propagating_no_next
+        PASS [   0.007s] (142/715) bevy_ecs observer::tests::observer_propagating_parallel_propagation
+        PASS [   0.006s] (143/715) bevy_ecs observer::tests::observer_propagating_redundant_dispatch_parent_child
+        PASS [   0.006s] (144/715) bevy_ecs observer::tests::observer_propagating_redundant_dispatch_same_entity
+        PASS [   0.006s] (145/715) bevy_ecs observer::tests::observer_propagating_world
+        PASS [   0.006s] (146/715) bevy_ecs observer::tests::observer_propagating_world_skipping
+        PASS [   0.006s] (147/715) bevy_ecs observer::tests::observer_trigger_ref
+        PASS [   0.006s] (148/715) bevy_ecs observer::tests::observer_trigger_targets_ref
+        PASS [   0.006s] (149/715) bevy_ecs observer::tests::observer_triggered_components
+        PASS [   0.006s] (150/715) bevy_ecs query::access::tests::access_get_conflicts
+        PASS [   0.006s] (151/715) bevy_ecs query::access::tests::filtered_access_extend
+        PASS [   0.005s] (152/715) bevy_ecs query::access::tests::filtered_access_extend_or
+        PASS [   0.005s] (153/715) bevy_ecs query::access::tests::filtered_combined_access
+        PASS [   0.009s] (154/715) bevy_ecs query::access::tests::invertible_difference_with_tests
+        PASS [   0.011s] (155/715) bevy_ecs query::access::tests::invertible_union_with_different_lengths
+        PASS [   0.005s] (156/715) bevy_ecs query::access::tests::invertible_union_with_tests
+        PASS [   0.005s] (157/715) bevy_ecs query::access::tests::read_all_access_conflicts
+        PASS [   0.005s] (158/715) bevy_ecs query::access::tests::test_access_clone
+        PASS [   0.005s] (159/715) bevy_ecs query::access::tests::test_access_clone_from
+        PASS [   0.005s] (160/715) bevy_ecs query::access::tests::test_access_filters_clone
+        PASS [   0.005s] (161/715) bevy_ecs query::access::tests::test_access_filters_clone_from
+        PASS [   0.006s] (162/715) bevy_ecs query::access::tests::test_filtered_access_clone
+        PASS [   0.006s] (163/715) bevy_ecs query::access::tests::test_filtered_access_clone_from
+        PASS [   0.005s] (164/715) bevy_ecs query::access::tests::test_filtered_access_set_clone
+        PASS [   0.005s] (165/715) bevy_ecs query::access::tests::test_filtered_access_set_from
+        PASS [   0.005s] (166/715) bevy_ecs query::access::tests::try_iter_component_access_simple
+        PASS [   0.006s] (167/715) bevy_ecs query::access::tests::try_iter_component_access_unbounded_read_all
+        PASS [   0.006s] (168/715) bevy_ecs query::access::tests::try_iter_component_access_unbounded_write_all
+        PASS [   0.006s] (169/715) bevy_ecs query::builder::tests::builder_dynamic_components
+        PASS [   0.006s] (170/715) bevy_ecs query::builder::tests::builder_or
+        PASS [   0.006s] (171/715) bevy_ecs query::builder::tests::builder_provide_access
+        PASS [   0.007s] (172/715) bevy_ecs query::builder::tests::builder_static_components
+        PASS [   0.007s] (173/715) bevy_ecs query::builder::tests::builder_static_dense_dynamic_sparse
+        PASS [   0.006s] (174/715) bevy_ecs query::builder::tests::builder_transmute
+        PASS [   0.006s] (175/715) bevy_ecs query::builder::tests::builder_with_without_dynamic
+        PASS [   0.005s] (176/715) bevy_ecs query::builder::tests::builder_with_without_static
+        PASS [   0.005s] (177/715) bevy_ecs query::error::test::query_does_not_match
+        PASS [   0.005s] (178/715) bevy_ecs query::fetch::tests::read_only_field_visibility
+        PASS [   0.006s] (179/715) bevy_ecs query::fetch::tests::test_entity_ref_query_with_ticks
+        PASS [   0.005s] (180/715) bevy_ecs query::fetch::tests::world_query_metadata_collision
+        PASS [   0.006s] (181/715) bevy_ecs query::fetch::tests::world_query_phantom_data
+        PASS [   0.006s] (182/715) bevy_ecs query::fetch::tests::world_query_struct_variants
+        PASS [   0.006s] (183/715) bevy_ecs query::iter::tests::empty_query_iter_sort_after_next_does_not_panic
+        PASS [   0.005s] (184/715) bevy_ecs query::iter::tests::query_iter_cursor_state_non_empty_after_next
+        PASS [   0.005s] (185/715) bevy_ecs query::iter::tests::query_iter_many_sort_doesnt_panic_after_next
+        PASS [   0.006s] (186/715) bevy_ecs query::iter::tests::query_iter_many_sorts
+        PASS [   0.010s] (187/715) bevy_ecs query::iter::tests::query_iter_many_sorts_duplicate_entities_no_ub
+        PASS [   0.011s] (188/715) bevy_ecs query::iter::tests::query_iter_sort_after_next
+        PASS [   0.007s] (189/715) bevy_ecs query::iter::tests::query_iter_sort_after_next_dense
+        PASS [   0.005s] (190/715) bevy_ecs query::state::tests::can_generalize_with_option
+        PASS [   0.008s] (191/715) bevy_ecs query::iter::tests::query_iter_sorts
+        PASS [   0.005s] (192/715) bevy_ecs query::state::tests::can_transmute_added
+        PASS [   0.006s] (193/715) bevy_ecs query::state::tests::can_transmute_changed
+        PASS [   0.005s] (194/715) bevy_ecs query::state::tests::can_transmute_empty_tuple
+        PASS [   0.005s] (195/715) bevy_ecs query::state::tests::can_transmute_entity_mut
+        PASS [   0.007s] (196/715) bevy_ecs query::state::tests::can_transmute_filtered_entity
+        PASS [   0.006s] (197/715) bevy_ecs query::state::tests::can_transmute_immut_fetch
+        PASS [   0.005s] (198/715) bevy_ecs query::state::tests::can_transmute_mut_fetch
+        PASS [   0.006s] (199/715) bevy_ecs query::state::tests::can_transmute_to_more_general
+        PASS [   0.006s] (200/715) bevy_ecs query::state::tests::cannot_get_data_not_in_original_query
+        PASS [   0.006s] (201/715) bevy_ecs query::state::tests::cannot_join_mutable_after_readonly
+        PASS [   0.005s] (202/715) bevy_ecs query::state::tests::cannot_join_wrong_fetch
+        PASS [   0.006s] (203/715) bevy_ecs query::state::tests::cannot_join_wrong_filter
+        PASS [   0.005s] (204/715) bevy_ecs query::state::tests::cannot_transmute_changed_without_access
+        PASS [   0.005s] (205/715) bevy_ecs query::state::tests::cannot_transmute_entity_ref
+        PASS [   0.007s] (206/715) bevy_ecs query::state::tests::cannot_transmute_immut_to_mut
+        PASS [   0.007s] (207/715) bevy_ecs query::state::tests::cannot_transmute_mutable_after_readonly
+        PASS [   0.006s] (208/715) bevy_ecs query::state::tests::cannot_transmute_option_to_immut
+        PASS [   0.006s] (209/715) bevy_ecs query::state::tests::cannot_transmute_to_include_data_not_in_original_query
+        PASS [   0.006s] (210/715) bevy_ecs query::state::tests::join
+        PASS [   0.006s] (211/715) bevy_ecs query::state::tests::join_to_filtered_entity_mut
+        PASS [   0.006s] (212/715) bevy_ecs query::state::tests::join_with_get
+        PASS [   0.006s] (213/715) bevy_ecs query::state::tests::query_default_filters_updates_is_dense
+        PASS [   0.007s] (214/715) bevy_ecs query::state::tests::query_respects_default_filters
+        PASS [   0.006s] (215/715) bevy_ecs query::state::tests::right_world_get
+        PASS [   0.005s] (216/715) bevy_ecs query::state::tests::right_world_get_many
+        PASS [   0.005s] (217/715) bevy_ecs query::state::tests::right_world_get_many_mut
+        PASS [   0.007s] (218/715) bevy_ecs query::state::tests::transmute_from_dense_to_sparse
+        PASS [   0.011s] (219/715) bevy_ecs query::state::tests::transmute_from_sparse_to_dense
+        PASS [   0.006s] (220/715) bevy_ecs query::state::tests::transmute_with_different_world
+        PASS [   0.006s] (221/715) bevy_ecs query::tests::any_query
+        PASS [   0.006s] (222/715) bevy_ecs query::tests::derived_worldqueries
+        PASS [   0.007s] (223/715) bevy_ecs query::tests::get_many_only_mut_checks_duplicates
+        PASS [   0.007s] (224/715) bevy_ecs query::tests::has_query
+        PASS [   0.006s] (225/715) bevy_ecs query::tests::many_entities
+        PASS [   0.006s] (226/715) bevy_ecs query::tests::multi_storage_query
+        PASS [   0.006s] (227/715) bevy_ecs query::tests::mut_to_immut_query_methods_have_immut_item
+        PASS [   0.006s] (228/715) bevy_ecs query::tests::par_iter_mut_change_detection
+        PASS [   0.006s] (229/715) bevy_ecs query::tests::query
+        PASS [   0.007s] (230/715) bevy_ecs query::tests::query_filtered_iter_combinations
+        PASS [   0.007s] (231/715) bevy_ecs query::tests::query_iter_combinations
+        PASS [   0.018s] (232/715) bevy_ecs query::tests::query_filtered_exactsizeiterator_len
+        PASS [   0.006s] (233/715) bevy_ecs query::tests::query_iter_combinations_sparse
+        PASS [   0.006s] (234/715) bevy_ecs query::tests::read_res_read_res_no_conflict
+        PASS [   0.005s] (235/715) bevy_ecs query::tests::self_conflicting_worldquery
+        PASS [   0.006s] (236/715) bevy_ecs reflect::entity_commands::tests::insert_reflect_bundle
+        PASS [   0.008s] (237/715) bevy_ecs reflect::entity_commands::tests::insert_reflect_bundle_with_registry
+        PASS [   0.007s] (238/715) bevy_ecs reflect::entity_commands::tests::insert_reflected
+        PASS [   0.007s] (239/715) bevy_ecs reflect::entity_commands::tests::insert_reflected_with_registry
+        PASS [   0.007s] (240/715) bevy_ecs reflect::entity_commands::tests::remove_reflected
+        PASS [   0.008s] (241/715) bevy_ecs reflect::entity_commands::tests::remove_reflected_bundle
+        PASS [   0.008s] (242/715) bevy_ecs reflect::entity_commands::tests::remove_reflected_bundle_with_registry
+        PASS [   0.006s] (243/715) bevy_ecs reflect::entity_commands::tests::remove_reflected_with_registry
+        PASS [   0.006s] (244/715) bevy_ecs relationship::related_methods::tests::insert_and_remove_recursive
+        PASS [   0.007s] (245/715) bevy_ecs relationship::related_methods::tests::remove_all_related
+        PASS [   0.007s] (246/715) bevy_ecs relationship::relationship_source_collection::tests::entity_index_map
+        PASS [   0.010s] (247/715) bevy_ecs relationship::relationship_source_collection::tests::entity_relationship_source_collection
+        PASS [   0.010s] (248/715) bevy_ecs relationship::relationship_source_collection::tests::one_to_one_relationship_reinsert
+        PASS [   0.006s] (249/715) bevy_ecs relationship::relationship_source_collection::tests::one_to_one_relationship_shared_target
+        PASS [   0.006s] (250/715) bevy_ecs relationship::relationship_source_collection::tests::one_to_one_relationships
+        PASS [   0.006s] (251/715) bevy_ecs relationship::relationship_source_collection::tests::smallvec_relationship_source_collection
+        PASS [   0.006s] (252/715) bevy_ecs relationship::relationship_source_collection::tests::vec_relationship_source_collection
+        PASS [   0.006s] (253/715) bevy_ecs relationship::tests::custom_relationship
+        PASS [   0.006s] (254/715) bevy_ecs relationship::tests::parent_child_relationship_with_custom_relationship
+        PASS [   0.005s] (255/715) bevy_ecs relationship::tests::relationship_target_with_multiple_non_target_fields_compiles
+        PASS [   0.006s] (256/715) bevy_ecs relationship::tests::relationship_with_missing_target_fails
+        PASS [   0.006s] (257/715) bevy_ecs relationship::tests::relationship_with_multiple_non_target_fields_compiles
+        PASS [   0.007s] (258/715) bevy_ecs relationship::tests::self_relationship_fails
+        PASS [   0.006s] (259/715) bevy_ecs schedule::condition::tests::distributive_run_if_compiles
+        PASS [   0.006s] (260/715) bevy_ecs schedule::condition::tests::multiple_run_conditions
+        PASS [   0.007s] (261/715) bevy_ecs schedule::condition::tests::multiple_run_conditions_is_and_operation
+        PASS [   0.007s] (262/715) bevy_ecs schedule::condition::tests::run_condition
+        PASS [   0.006s] (263/715) bevy_ecs schedule::condition::tests::run_condition_combinators
+        PASS [   0.006s] (264/715) bevy_ecs schedule::executor::multi_threaded::tests::check_spawn_exclusive_system_task_miri
+        PASS [   0.006s] (265/715) bevy_ecs schedule::executor::multi_threaded::tests::skipped_systems_notify_dependents
+        PASS [   0.006s] (266/715) bevy_ecs schedule::executor::simple::skip_automatic_sync_points
+        PASS [   0.007s] (267/715) bevy_ecs schedule::executor::tests::missing_resource_panics_multi_threaded
+        PASS [   0.007s] (268/715) bevy_ecs schedule::executor::tests::missing_resource_panics_simple
+        PASS [   0.006s] (269/715) bevy_ecs schedule::executor::tests::missing_resource_panics_single_threaded
+        PASS [   0.007s] (270/715) bevy_ecs schedule::executor::tests::piped_system_first_system_panics
+        PASS [   0.006s] (271/715) bevy_ecs schedule::executor::tests::piped_system_panic_and_panic
+        PASS [   0.006s] (272/715) bevy_ecs schedule::executor::tests::piped_system_panic_and_skip
+        PASS [   0.007s] (273/715) bevy_ecs schedule::executor::tests::piped_system_second_system_panics
+        PASS [   0.007s] (274/715) bevy_ecs schedule::executor::tests::piped_system_second_system_skipped
+        PASS [   0.006s] (275/715) bevy_ecs schedule::executor::tests::piped_system_skip_and_panic
+        PASS [   0.006s] (276/715) bevy_ecs schedule::executor::tests::piped_system_skip_and_skip
+        PASS [   0.011s] (277/715) bevy_ecs schedule::executor::tests::piped_systems_first_system_skipped
+        PASS [   0.006s] (278/715) bevy_ecs schedule::graph::graph_map::tests::node_order_preservation
+        PASS [   0.016s] (279/715) bevy_ecs schedule::executor::tests::single_and_populated_skipped_and_run
+        PASS [   0.005s] (280/715) bevy_ecs schedule::graph::graph_map::tests::strongly_connected_components
+        PASS [   0.006s] (281/715) bevy_ecs schedule::schedule::tests::add_systems_to_existing_schedule
+        PASS [   0.006s] (282/715) bevy_ecs schedule::schedule::tests::add_systems_to_non_existing_schedule
+        PASS [   0.006s] (283/715) bevy_ecs schedule::schedule::tests::adds_multiple_consecutive_syncs
+        PASS [   0.007s] (284/715) bevy_ecs schedule::schedule::tests::ambiguous_with_not_breaking_run_conditions
+        PASS [   0.007s] (285/715) bevy_ecs schedule::schedule::tests::bubble_sync_point_through_ignore_deferred_node
+        PASS [   0.006s] (286/715) bevy_ecs schedule::schedule::tests::conditional_explicit_sync_point_not_used_as_auto_sync_point
+        PASS [   0.006s] (287/715) bevy_ecs schedule::schedule::tests::conditional_explicit_sync_point_not_used_as_auto_sync_point_condition_on_chain
+        PASS [   0.007s] (288/715) bevy_ecs schedule::schedule::tests::conditional_explicit_sync_point_not_used_as_auto_sync_point_condition_on_nested_system_set
+        PASS [   0.007s] (289/715) bevy_ecs schedule::schedule::tests::conditional_explicit_sync_point_not_used_as_auto_sync_point_condition_on_system_set
+        PASS [   0.006s] (290/715) bevy_ecs schedule::schedule::tests::configure_set_on_existing_schedule
+        PASS [   0.006s] (291/715) bevy_ecs schedule::schedule::tests::configure_set_on_new_schedule
+        PASS [   0.007s] (292/715) bevy_ecs schedule::schedule::tests::disable_auto_sync_points
+        PASS [   0.007s] (293/715) bevy_ecs schedule::schedule::tests::do_not_consider_ignore_deferred_before_exclusive_system
+        PASS [   0.007s] (294/715) bevy_ecs schedule::schedule::tests::explicit_sync_point_used_as_auto_sync_point
+        PASS [   0.006s] (295/715) bevy_ecs schedule::schedule::tests::inserts_a_sync_point
+        PASS [   0.006s] (296/715) bevy_ecs schedule::schedule::tests::merges_sync_points_into_one
+        PASS [   0.007s] (297/715) bevy_ecs schedule::schedule::tests::no_sync_chain::chain_all
+        PASS [   0.009s] (298/715) bevy_ecs schedule::schedule::tests::no_sync_chain::chain_first
+        PASS [   0.008s] (299/715) bevy_ecs schedule::schedule::tests::no_sync_chain::chain_second
+        PASS [   0.007s] (300/715) bevy_ecs schedule::schedule::tests::no_sync_chain::only_chain_outside
+        PASS [   0.006s] (301/715) bevy_ecs schedule::schedule::tests::no_sync_edges::set_to_set_after
+        PASS [   0.008s] (302/715) bevy_ecs schedule::schedule::tests::no_sync_edges::set_to_set_before
+        PASS [   0.007s] (303/715) bevy_ecs schedule::schedule::tests::no_sync_edges::set_to_system_after
+        PASS [   0.006s] (304/715) bevy_ecs schedule::schedule::tests::no_sync_edges::set_to_system_before
+        PASS [   0.006s] (305/715) bevy_ecs schedule::schedule::tests::no_sync_edges::system_to_system_after
+        PASS [   0.006s] (306/715) bevy_ecs schedule::schedule::tests::no_sync_edges::system_to_system_before
+        PASS [   0.010s] (307/715) bevy_ecs schedule::schedule::tests::test_default_error_handler
+        PASS [   0.006s] (308/715) bevy_ecs schedule::schedule::tests::unchanged_auto_insert_apply_deferred_has_no_effect
+        PASS [   0.005s] (309/715) bevy_ecs schedule::set::tests::test_derive_schedule_label
+        PASS [   0.005s] (310/715) bevy_ecs schedule::set::tests::test_derive_system_set
+        PASS [   0.007s] (311/715) bevy_ecs schedule::set::tests::test_schedule_label
+        PASS [   0.007s] (312/715) bevy_ecs schedule::tests::conditions::mixed_conditions_and_change_detection
+        PASS [   0.006s] (313/715) bevy_ecs schedule::tests::conditions::multiple_conditions_on_system
+        PASS [   0.006s] (314/715) bevy_ecs schedule::tests::conditions::multiple_conditions_on_system_sets
+        PASS [   0.007s] (315/715) bevy_ecs schedule::tests::conditions::run_exclusive_system_with_condition
+        PASS [   0.007s] (316/715) bevy_ecs schedule::tests::conditions::system_conditions_and_change_detection
+        PASS [   0.006s] (317/715) bevy_ecs schedule::tests::conditions::system_set_conditions_and_change_detection
+        PASS [   0.005s] (318/715) bevy_ecs schedule::tests::conditions::system_with_condition_bool
+        PASS [   0.006s] (319/715) bevy_ecs schedule::tests::conditions::system_with_condition_result_bool
+        PASS [   0.006s] (320/715) bevy_ecs schedule::tests::conditions::system_with_condition_result_unit
+        PASS [   0.006s] (321/715) bevy_ecs schedule::tests::conditions::systems_nested_in_system_sets
+        PASS [   0.006s] (322/715) bevy_ecs schedule::tests::conditions::systems_with_distributive_condition
+        PASS [   0.006s] (323/715) bevy_ecs schedule::tests::schedule_build_errors::ambiguity
+        PASS [   0.005s] (324/715) bevy_ecs schedule::tests::schedule_build_errors::configure_system_type_set
+        PASS [   0.006s] (325/715) bevy_ecs schedule::tests::schedule_build_errors::cross_dependency
+        PASS [   0.007s] (326/715) bevy_ecs schedule::tests::schedule_build_errors::dependency_cycle
+        PASS [   0.005s] (327/715) bevy_ecs schedule::tests::schedule_build_errors::dependency_loop
+        PASS [   0.005s] (328/715) bevy_ecs schedule::tests::schedule_build_errors::hierarchy_cycle
+        PASS [   0.005s] (329/715) bevy_ecs schedule::tests::schedule_build_errors::hierarchy_loop
+        PASS [   0.006s] (330/715) bevy_ecs schedule::tests::schedule_build_errors::hierarchy_redundancy
+        PASS [   0.006s] (331/715) bevy_ecs schedule::tests::schedule_build_errors::sets_have_order_but_intersect
+        PASS [   0.006s] (332/715) bevy_ecs schedule::tests::schedule_build_errors::system_type_set_ambiguity
+        PASS [   0.007s] (333/715) bevy_ecs schedule::tests::system_ambiguity::ambiguous_with_label
+        PASS [   0.007s] (334/715) bevy_ecs schedule::tests::system_ambiguity::ambiguous_with_system
+        PASS [   0.006s] (335/715) bevy_ecs schedule::tests::system_ambiguity::anonymous_set_name
+        PASS [   0.007s] (336/715) bevy_ecs schedule::tests::system_ambiguity::before_and_after
+        PASS [   0.006s] (337/715) bevy_ecs schedule::tests::system_ambiguity::components
+        PASS [   0.008s] (338/715) bevy_ecs schedule::tests::system_ambiguity::correct_ambiguities
+        PASS [   0.006s] (339/715) bevy_ecs schedule::tests::system_ambiguity::events
+        PASS [   0.006s] (340/715) bevy_ecs schedule::tests::system_ambiguity::exclusive
+        PASS [   0.006s] (341/715) bevy_ecs schedule::tests::system_ambiguity::filtered_components
+        PASS [   0.006s] (342/715) bevy_ecs schedule::tests::system_ambiguity::ignore_all_ambiguities
+        PASS [   0.007s] (343/715) bevy_ecs schedule::tests::system_ambiguity::ignore_component_resource_ambiguities
+        PASS [   0.006s] (344/715) bevy_ecs schedule::tests::system_ambiguity::nonsend
+        PASS [   0.006s] (345/715) bevy_ecs schedule::tests::system_ambiguity::one_of_everything
+        PASS [   0.006s] (346/715) bevy_ecs schedule::tests::system_ambiguity::read_component_and_entity_mut
+        PASS [   0.006s] (347/715) bevy_ecs schedule::tests::system_ambiguity::read_only
+        PASS [   0.006s] (348/715) bevy_ecs schedule::tests::system_ambiguity::read_world
+        PASS [   0.006s] (349/715) bevy_ecs schedule::tests::system_ambiguity::resource_and_entity_mut
+        PASS [   0.006s] (350/715) bevy_ecs schedule::tests::system_ambiguity::resource_mut_and_entity_ref
+        PASS [   0.006s] (351/715) bevy_ecs schedule::tests::system_ambiguity::resources
+        PASS [   0.006s] (352/715) bevy_ecs schedule::tests::system_ambiguity::shared_resource_mut_component
+        PASS [   0.006s] (353/715) bevy_ecs schedule::tests::system_ambiguity::write_component_and_entity_ref
+        PASS [   0.006s] (354/715) bevy_ecs schedule::tests::system_execution::parallel_execution
+        PASS [   0.007s] (355/715) bevy_ecs schedule::tests::system_execution::run_exclusive_system
+        PASS [   0.006s] (356/715) bevy_ecs schedule::tests::system_execution::run_system
+        PASS [   0.006s] (357/715) bevy_ecs schedule::tests::system_ordering::add_systems_correct_order
+        PASS [   0.007s] (358/715) bevy_ecs schedule::tests::system_ordering::add_systems_correct_order_nested
+        PASS [   0.006s] (359/715) bevy_ecs schedule::tests::system_ordering::order_exclusive_systems
+        PASS [   0.007s] (360/715) bevy_ecs schedule::tests::system_ordering::order_systems
+        PASS [   0.006s] (361/715) bevy_ecs storage::blob_array::tests::make_sure_zst_components_get_dropped
+        PASS [   0.006s] (362/715) bevy_ecs storage::blob_vec::tests::aligned_zst
+        PASS [   0.005s] (363/715) bevy_ecs storage::blob_vec::tests::blob_vec
+        PASS [   0.005s] (364/715) bevy_ecs storage::blob_vec::tests::blob_vec_drop_empty_capacity
+        PASS [   0.005s] (365/715) bevy_ecs storage::blob_vec::tests::blob_vec_capacity_overflow
+        PASS [   0.005s] (366/715) bevy_ecs storage::blob_vec::tests::blob_vec_zst_size_overflow
+        PASS [   0.005s] (367/715) bevy_ecs storage::blob_vec::tests::resize_test
+        PASS [   0.005s] (368/715) bevy_ecs storage::sparse_set::tests::sparse_set
+        PASS [   0.005s] (369/715) bevy_ecs storage::sparse_set::tests::sparse_sets
+        PASS [   0.009s] (370/715) bevy_ecs storage::table::tests::only_one_empty_table
+        PASS [   0.010s] (371/715) bevy_ecs storage::table::tests::table
+        PASS [   0.006s] (372/715) bevy_ecs system::builder::tests::custom_param_builder
+        PASS [   0.006s] (373/715) bevy_ecs system::builder::tests::dyn_builder
+        PASS [   0.007s] (374/715) bevy_ecs system::builder::tests::filtered_resource_conflicts_read_all_with_resmut
+        PASS [   0.007s] (375/715) bevy_ecs system::builder::tests::filtered_resource_conflicts_read_with_res
+        PASS [   0.007s] (376/715) bevy_ecs system::builder::tests::filtered_resource_mut_conflicts_read_with_res
+        PASS [   0.008s] (377/715) bevy_ecs system::builder::tests::filtered_resource_conflicts_read_with_resmut
+        PASS [   0.007s] (378/715) bevy_ecs system::builder::tests::filtered_resource_mut_conflicts_read_with_resmut
+        PASS [   0.006s] (379/715) bevy_ecs system::builder::tests::filtered_resource_mut_conflicts_write_all_with_res
+        PASS [   0.006s] (380/715) bevy_ecs system::builder::tests::filtered_resource_mut_conflicts_write_with_res
+        PASS [   0.006s] (381/715) bevy_ecs system::builder::tests::filtered_resource_mut_conflicts_write_with_resmut
+        PASS [   0.006s] (382/715) bevy_ecs system::builder::tests::filtered_resource_reflect
+        PASS [   0.006s] (383/715) bevy_ecs system::builder::tests::local_builder
+        PASS [   0.006s] (384/715) bevy_ecs system::builder::tests::multi_param_builder
+        PASS [   0.006s] (385/715) bevy_ecs system::builder::tests::multi_param_builder_inference
+        PASS [   0.006s] (386/715) bevy_ecs system::builder::tests::param_set_builder
+        PASS [   0.006s] (387/715) bevy_ecs system::builder::tests::param_set_vec_builder
+        PASS [   0.006s] (388/715) bevy_ecs system::builder::tests::query_builder
+        PASS [   0.006s] (389/715) bevy_ecs system::builder::tests::query_builder_state
+        PASS [   0.007s] (390/715) bevy_ecs system::builder::tests::vec_builder
+        PASS [   0.007s] (391/715) bevy_ecs system::combinator::tests::exclusive_system_piping_is_possible
+        PASS [   0.007s] (392/715) bevy_ecs system::commands::tests::append
+        PASS [   0.008s] (393/715) bevy_ecs system::commands::tests::commands
+        PASS [   0.008s] (394/715) bevy_ecs system::commands::tests::entity_commands_entry
+        PASS [   0.007s] (395/715) bevy_ecs system::commands::tests::insert_components
+        PASS [   0.007s] (396/715) bevy_ecs system::commands::tests::remove_component_with_required_components
+        PASS [   0.008s] (397/715) bevy_ecs system::commands::tests::remove_components
+        PASS [   0.006s] (398/715) bevy_ecs system::commands::tests::remove_components_by_id
+        PASS [   0.005s] (399/715) bevy_ecs system::commands::tests::remove_resources
+        PASS [   0.006s] (400/715) bevy_ecs system::commands::tests::test_commands_are_send_and_sync
+        PASS [   0.010s] (401/715) bevy_ecs system::commands::tests::track_spawn_ticks
+        PASS [   0.006s] (402/715) bevy_ecs system::commands::tests::unregister_system_cached_commands
+        PASS [   0.006s] (403/715) bevy_ecs system::exclusive_function_system::tests::into_system_type_id_consistency
+        PASS [   0.007s] (404/715) bevy_ecs system::exclusive_system_param::tests::test_exclusive_system_params
+        PASS [   0.005s] (405/715) bevy_ecs system::function_system::tests::into_system_type_id_consistency
+        PASS [   0.005s] (406/715) bevy_ecs system::input::tests::two_tuple
+        PASS [   0.006s] (407/715) bevy_ecs system::observer_system::tests::test_piped_observer_systems_no_input
+        PASS [   0.006s] (408/715) bevy_ecs system::observer_system::tests::test_piped_observer_systems_with_inputs
+        PASS [   0.006s] (409/715) bevy_ecs system::query::tests::get_many_uniqueness
+        PASS [   0.006s] (410/715) bevy_ecs system::system::tests::command_processing
+        PASS [   0.007s] (411/715) bevy_ecs system::system::tests::non_send_resources
+        PASS [   0.006s] (412/715) bevy_ecs system::system::tests::run_system_once
+        PASS [   0.005s] (413/715) bevy_ecs system::system::tests::run_system_once_invalid_params
+        PASS [   0.005s] (414/715) bevy_ecs system::system::tests::run_two_systems
+        PASS [   0.005s] (415/715) bevy_ecs system::system_name::tests::test_closure_system_name_regular_param
+        PASS [   0.007s] (416/715) bevy_ecs system::system_name::tests::test_exclusive_closure_system_name_regular_param
+        PASS [   0.007s] (417/715) bevy_ecs system::system_name::tests::test_system_name_exclusive_param
+        PASS [   0.006s] (418/715) bevy_ecs system::system_name::tests::test_system_name_regular_param
+        PASS [   0.006s] (419/715) bevy_ecs system::system_param::tests::missing_event_error
+        PASS [   0.007s] (420/715) bevy_ecs system::system_param::tests::missing_resource_error
+        PASS [   0.007s] (421/715) bevy_ecs system::system_param::tests::non_sync_local
+        PASS [   0.006s] (422/715) bevy_ecs system::system_param::tests::param_set_non_send_first
+        PASS [   0.006s] (423/715) bevy_ecs system::system_param::tests::param_set_non_send_second
+        PASS [   0.005s] (424/715) bevy_ecs system::system_param::tests::system_param_const_generics
+        PASS [   0.005s] (425/715) bevy_ecs system::system_param::tests::system_param_field_limit
+        PASS [   0.005s] (426/715) bevy_ecs system::system_param::tests::system_param_flexibility
+        PASS [   0.006s] (427/715) bevy_ecs system::system_param::tests::system_param_generic_bounds
+        PASS [   0.007s] (428/715) bevy_ecs system::system_param::tests::system_param_invariant_lifetime
+        PASS [   0.006s] (429/715) bevy_ecs system::system_param::tests::system_param_name_collision
+        PASS [   0.005s] (430/715) bevy_ecs system::system_param::tests::system_param_phantom_data
+        PASS [   0.005s] (431/715) bevy_ecs system::system_param::tests::system_param_private_fields
+        PASS [   0.005s] (432/715) bevy_ecs system::system_param::tests::system_param_where_clause
+        PASS [   0.009s] (433/715) bevy_ecs system::system_param::tests::system_param_struct_variants
+        PASS [   0.006s] (434/715) bevy_ecs system::system_registry::tests::cached_system
+        PASS [   0.006s] (435/715) bevy_ecs system::system_registry::tests::cached_system_adapters
+        PASS [   0.007s] (436/715) bevy_ecs system::system_registry::tests::cached_system_commands
+        PASS [   0.007s] (437/715) bevy_ecs system::system_registry::tests::cached_system_into_same_system_type
+        PASS [   0.005s] (438/715) bevy_ecs system::system_registry::tests::change_detection
+        PASS [   0.006s] (439/715) bevy_ecs system::system_registry::tests::exclusive_system
+        PASS [   0.006s] (440/715) bevy_ecs system::system_registry::tests::input_values
+        PASS [   0.007s] (441/715) bevy_ecs system::system_registry::tests::local_variables
+        PASS [   0.006s] (442/715) bevy_ecs system::system_registry::tests::nested_systems
+        PASS [   0.006s] (443/715) bevy_ecs system::system_registry::tests::nested_systems_with_inputs
+        PASS [   0.005s] (444/715) bevy_ecs system::system_registry::tests::output_values
+        PASS [   0.006s] (445/715) bevy_ecs system::system_registry::tests::run_system_exclusive_adapters
+        PASS [   0.006s] (446/715) bevy_ecs system::system_registry::tests::run_system_invalid_params
+        PASS [   0.005s] (447/715) bevy_ecs system::system_registry::tests::run_system_recursive
+        PASS [   0.006s] (448/715) bevy_ecs system::system_registry::tests::system_with_input_mut
+        PASS [   0.006s] (449/715) bevy_ecs system::system_registry::tests::system_with_input_ref
+        PASS [   0.006s] (450/715) bevy_ecs system::tests::any_of_and_without
+        PASS [   0.006s] (451/715) bevy_ecs system::tests::any_of_doesnt_remove_unrelated_filter_with
+        PASS [   0.007s] (452/715) bevy_ecs system::tests::any_of_has_filter_with_when_both_have_it
+        PASS [   0.007s] (453/715) bevy_ecs system::tests::any_of_has_no_filter_with
+        PASS [   0.006s] (454/715) bevy_ecs system::tests::any_of_with_and_without_common
+        PASS [   0.006s] (455/715) bevy_ecs system::tests::any_of_with_conflicting
+        PASS [   0.006s] (456/715) bevy_ecs system::tests::any_of_with_empty_and_mut
+        PASS [   0.006s] (457/715) bevy_ecs system::tests::any_of_with_entity_and_mut
+        PASS [   0.006s] (458/715) bevy_ecs system::tests::any_of_with_mut_and_option
+        PASS [   0.006s] (459/715) bevy_ecs system::tests::any_of_with_mut_and_ref
+        PASS [   0.006s] (460/715) bevy_ecs system::tests::any_of_with_ref_and_mut
+        PASS [   0.006s] (461/715) bevy_ecs system::tests::any_of_working
+        PASS [   0.006s] (462/715) bevy_ecs system::tests::assert_deferred_world_and_empty_query_does_not_conflict_first
+        PASS [   0.006s] (463/715) bevy_ecs system::tests::assert_deferred_world_and_empty_query_does_not_conflict_second
+        PASS [   0.010s] (464/715) bevy_ecs system::tests::assert_deferred_world_and_entity_ref_system_does_conflict_first
+        PASS [   0.008s] (465/715) bevy_ecs system::tests::assert_deferred_world_and_entity_ref_system_does_conflict_second
+        PASS [   0.006s] (466/715) bevy_ecs system::tests::assert_entity_mut_system_does_conflict
+        PASS [   0.006s] (467/715) bevy_ecs system::tests::assert_entity_ref_and_entity_mut_system_does_conflict
+        PASS [   0.006s] (468/715) bevy_ecs system::tests::assert_system_does_not_conflict
+        PASS [   0.006s] (469/715) bevy_ecs system::tests::assert_systems
+        PASS [   0.007s] (470/715) bevy_ecs system::tests::assert_world_and_entity_mut_system_does_conflict_first
+        PASS [   0.006s] (471/715) bevy_ecs system::tests::assert_world_and_entity_mut_system_does_conflict_second
+        PASS [   0.006s] (472/715) bevy_ecs system::tests::can_have_16_parameters
+        PASS [   0.006s] (473/715) bevy_ecs system::tests::changed_resource_system
+        PASS [   0.006s] (474/715) bevy_ecs system::tests::changed_trackers_or_conflict
+        PASS [   0.006s] (475/715) bevy_ecs system::tests::commands_param_set
+        PASS [   0.006s] (476/715) bevy_ecs system::tests::conflicting_query_immut_system
+        PASS [   0.006s] (477/715) bevy_ecs system::tests::conflicting_query_mut_system
+        PASS [   0.007s] (478/715) bevy_ecs system::tests::conflicting_query_sets_system
+        PASS [   0.007s] (479/715) bevy_ecs system::tests::conflicting_query_with_query_set_system
+        PASS [   0.006s] (480/715) bevy_ecs system::tests::conflicting_system_resources
+        PASS [   0.006s] (481/715) bevy_ecs system::tests::conflicting_system_resources_multiple_mutable
+        PASS [   0.008s] (482/715) bevy_ecs system::tests::conflicting_system_resources_reverse_order
+        PASS [   0.007s] (483/715) bevy_ecs system::tests::convert_mut_to_immut
+        PASS [   0.007s] (484/715) bevy_ecs system::tests::disjoint_query_mut_read_component_system
+        PASS [   0.007s] (485/715) bevy_ecs system::tests::disjoint_query_mut_system
+        PASS [   0.006s] (486/715) bevy_ecs system::tests::get_system_conflicts
+        PASS [   0.006s] (487/715) bevy_ecs system::tests::immutable_mut_test
+        PASS [   0.006s] (488/715) bevy_ecs system::tests::into_iter_impl
+        PASS [   0.018s] (489/715) bevy_ecs system::tests::get_many_is_ordered
+        PASS [   0.005s] (490/715) bevy_ecs system::tests::long_life_test
+        PASS [   0.006s] (491/715) bevy_ecs system::tests::local_system
+        PASS [   0.006s] (492/715) bevy_ecs system::tests::non_send_option_system
+        PASS [   0.006s] (493/715) bevy_ecs system::tests::non_send_system
+        PASS [   0.007s] (494/715) bevy_ecs system::tests::nondiverging_never_trait_impls
+        PASS [   0.010s] (495/715) bevy_ecs system::tests::nonconflicting_system_resources
+        PASS [   0.007s] (496/715) bevy_ecs system::tests::option_doesnt_remove_unrelated_filter_with
+        PASS [   0.006s] (497/715) bevy_ecs system::tests::option_has_no_filter_with
+        PASS [   0.006s] (498/715) bevy_ecs system::tests::or_doesnt_remove_unrelated_filter_with
+        PASS [   0.006s] (499/715) bevy_ecs system::tests::or_expanded_nested_or_with_and_disjoint_without
+        PASS [   0.006s] (500/715) bevy_ecs system::tests::or_expanded_nested_with_and_common_nested_without
+        PASS [   0.006s] (501/715) bevy_ecs system::tests::or_expanded_nested_with_and_disjoint_nested_without
+        PASS [   0.006s] (502/715) bevy_ecs system::tests::or_expanded_nested_with_and_disjoint_without
+        PASS [   0.007s] (503/715) bevy_ecs system::tests::or_expanded_nested_with_and_without_common
+        PASS [   0.006s] (504/715) bevy_ecs system::tests::or_expanded_with_and_disjoint_nested_without
+        PASS [   0.006s] (505/715) bevy_ecs system::tests::or_expanded_with_and_without_common
+        PASS [   0.005s] (506/715) bevy_ecs system::tests::or_has_filter_with
+        PASS [   0.005s] (507/715) bevy_ecs system::tests::or_has_filter_with_when_both_have_it
+        PASS [   0.006s] (508/715) bevy_ecs system::tests::or_has_no_filter_with
+        PASS [   0.006s] (509/715) bevy_ecs system::tests::or_param_set_system
+        PASS [   0.006s] (510/715) bevy_ecs system::tests::or_with_without_and_compatible_with_without
+        PASS [   0.006s] (511/715) bevy_ecs system::tests::panic_inside_system
+        PASS [   0.007s] (512/715) bevy_ecs system::tests::pipe_change_detection
+        PASS [   0.007s] (513/715) bevy_ecs system::tests::query_is_empty
+        PASS [   0.007s] (514/715) bevy_ecs system::tests::query_set_system
+        PASS [   0.006s] (515/715) bevy_ecs system::tests::read_system_state
+        PASS [   0.006s] (516/715) bevy_ecs system::tests::removal_tracking
+        PASS [   0.006s] (517/715) bevy_ecs system::tests::simple_fallible_system
+        PASS [   0.006s] (518/715) bevy_ecs system::tests::simple_system
+        PASS [   0.006s] (519/715) bevy_ecs system::tests::system_initialize_returns_access_set
+        PASS [   0.007s] (520/715) bevy_ecs system::tests::system_state_archetype_update
+        PASS [   0.007s] (521/715) bevy_ecs system::tests::system_state_change_detection
+        PASS [   0.005s] (522/715) bevy_ecs system::tests::system_state_invalid_world
+        PASS [   0.005s] (523/715) bevy_ecs system::tests::system_state_spawned
+        PASS [   0.006s] (524/715) bevy_ecs system::tests::with_and_disjoint_or_empty_without
+        PASS [   0.011s] (525/715) bevy_ecs system::tests::test_combinator_clone
+        PASS [   0.005s] (526/715) bevy_ecs system::tests::with_input
+        PASS [   0.005s] (527/715) bevy_ecs system::tests::with_input_from
+        PASS [   0.006s] (528/715) bevy_ecs system::tests::world_collections_system
+        PASS [   0.006s] (529/715) bevy_ecs system::tests::write_system_state
+        PASS [   0.006s] (530/715) bevy_ecs tests::add_remove_components
+        PASS [   0.006s] (531/715) bevy_ecs tests::added_queries
+        PASS [   0.006s] (532/715) bevy_ecs tests::added_tracking
+        PASS [   0.006s] (533/715) bevy_ecs tests::bundle_derive
+        PASS [   0.005s] (534/715) bevy_ecs tests::changed_query
+        PASS [   0.007s] (535/715) bevy_ecs tests::changed_trackers
+        PASS [   0.007s] (536/715) bevy_ecs tests::changed_trackers_sparse
+        PASS [   0.006s] (537/715) bevy_ecs tests::clear_entities
+        PASS [   0.005s] (538/715) bevy_ecs tests::clone_entities
+        PASS [   0.006s] (539/715) bevy_ecs tests::despawn_mixed_storage
+        PASS [   0.006s] (540/715) bevy_ecs tests::despawn_table_storage
+        PASS [   0.006s] (541/715) bevy_ecs tests::duplicate_components_panic
+        PASS [   0.006s] (542/715) bevy_ecs tests::dynamic_required_components
+        PASS [   0.006s] (543/715) bevy_ecs tests::empty_spawn
+        PASS [   0.006s] (544/715) bevy_ecs tests::entity_mut_and_entity_mut_query_panic
+        PASS [   0.006s] (545/715) bevy_ecs tests::entity_ref_and_entity_ref_query_no_panic
+        PASS [   0.007s] (546/715) bevy_ecs tests::entity_ref_and_entity_mut_query_panic
+        PASS [   0.006s] (547/715) bevy_ecs tests::entity_ref_and_mut_query_panic
+        PASS [   0.006s] (548/715) bevy_ecs tests::exact_size_query
+        PASS [   0.005s] (549/715) bevy_ecs tests::filtered_query_access
+        PASS [   0.006s] (550/715) bevy_ecs tests::generic_required_components
+        PASS [   0.007s] (551/715) bevy_ecs tests::insert_batch
+        PASS [   0.007s] (552/715) bevy_ecs tests::insert_batch_if_new
+        PASS [   0.007s] (553/715) bevy_ecs tests::insert_overwrite_drop
+        PASS [   0.008s] (554/715) bevy_ecs tests::insert_batch_same_archetype
+        PASS [   0.013s] (555/715) bevy_ecs tests::insert_overwrite_drop_sparse
+        PASS [   0.013s] (556/715) bevy_ecs tests::map_enum_entities
+        PASS [   0.005s] (557/715) bevy_ecs tests::map_struct_entities
+        PASS [   0.006s] (558/715) bevy_ecs tests::multiple_worlds_same_query_for_each
+        PASS [   0.007s] (559/715) bevy_ecs tests::multiple_worlds_same_query_get
+        PASS [   0.007s] (560/715) bevy_ecs tests::multiple_worlds_same_query_iter
+        PASS [   0.006s] (561/715) bevy_ecs tests::mut_and_entity_ref_query_panic
+        PASS [   0.006s] (562/715) bevy_ecs tests::mut_and_mut_query_panic
+        PASS [   0.006s] (563/715) bevy_ecs tests::mut_and_ref_query_panic
+        PASS [   0.006s] (564/715) bevy_ecs tests::non_send_resource
+        PASS [   0.008s] (565/715) bevy_ecs tests::non_send_resource_drop_from_different_thread
+        PASS [   0.007s] (566/715) bevy_ecs tests::non_send_resource_drop_from_same_thread
+        PASS [   0.007s] (567/715) bevy_ecs tests::non_send_resource_points_to_distinct_data
+        PASS [   0.008s] (568/715) bevy_ecs tests::non_send_resource_panic
+        PASS [   0.007s] (569/715) bevy_ecs tests::par_for_each_sparse
+        PASS [   0.008s] (570/715) bevy_ecs tests::par_for_each_dense
+        PASS [   0.006s] (571/715) bevy_ecs tests::query_all
+        PASS [   0.007s] (572/715) bevy_ecs tests::query_all_for_each
+        PASS [   0.008s] (573/715) bevy_ecs tests::query_filter_with
+        PASS [   0.007s] (574/715) bevy_ecs tests::query_filter_with_for_each
+        PASS [   0.006s] (575/715) bevy_ecs tests::query_filter_with_sparse_for_each
+        PASS [   0.006s] (576/715) bevy_ecs tests::query_filter_with_sparse
+        PASS [   0.006s] (577/715) bevy_ecs tests::query_filter_without
+        PASS [   0.006s] (578/715) bevy_ecs tests::query_filters_dont_collide_with_fetches
+        PASS [   0.006s] (579/715) bevy_ecs tests::query_get
+        PASS [   0.006s] (580/715) bevy_ecs tests::query_get_works_across_sparse_removal
+        PASS [   0.006s] (581/715) bevy_ecs tests::query_missing_component
+        PASS [   0.006s] (582/715) bevy_ecs tests::query_optional_component_sparse
+        PASS [   0.006s] (583/715) bevy_ecs tests::query_optional_component_sparse_no_match
+        PASS [   0.006s] (584/715) bevy_ecs tests::query_optional_component_table
+        PASS [   0.007s] (585/715) bevy_ecs tests::query_single_component
+        PASS [   0.010s] (586/715) bevy_ecs tests::query_single_component_for_each
+        PASS [   0.007s] (587/715) bevy_ecs tests::query_sparse_component
+        PASS [   0.006s] (588/715) bevy_ecs tests::random_access
+        PASS [   0.006s] (589/715) bevy_ecs tests::ref_and_mut_query_panic
+        PASS [   0.006s] (590/715) bevy_ecs tests::remove
+        PASS [   0.006s] (591/715) bevy_ecs tests::remove_bundle_and_his_required_components
+        PASS [   0.006s] (592/715) bevy_ecs tests::remove_component_and_its_required_components
+        PASS [   0.006s] (593/715) bevy_ecs tests::remove_component_and_its_runtime_required_components
+        PASS [   0.006s] (594/715) bevy_ecs tests::remove_missing
+        PASS [   0.007s] (595/715) bevy_ecs tests::remove_tracking
+        PASS [   0.006s] (596/715) bevy_ecs tests::required_components
+        PASS [   0.006s] (597/715) bevy_ecs tests::required_components_inheritance_depth
+        PASS [   0.006s] (598/715) bevy_ecs tests::required_components_inheritance_depth_bias
+        PASS [   0.005s] (599/715) bevy_ecs tests::required_components_insert_existing_hooks
+        PASS [   0.005s] (600/715) bevy_ecs tests::required_components_recursion_errors
+        PASS [   0.005s] (601/715) bevy_ecs tests::required_components_retain_keeps_required
+        PASS [   0.005s] (602/715) bevy_ecs tests::required_components_self_errors
+        PASS [   0.006s] (603/715) bevy_ecs tests::required_components_spawn_nonexistent_hooks
+        PASS [   0.006s] (604/715) bevy_ecs tests::required_components_spawn_then_insert_no_overwrite
+        PASS [   0.005s] (605/715) bevy_ecs tests::required_components_take_leaves_required
+        PASS [   0.005s] (606/715) bevy_ecs tests::reserve_and_spawn
+        PASS [   0.005s] (607/715) bevy_ecs tests::resource
+        PASS [   0.005s] (608/715) bevy_ecs tests::resource_scope
+        PASS [   0.007s] (609/715) bevy_ecs tests::runtime_required_components
+        PASS [   0.007s] (610/715) bevy_ecs tests::runtime_required_components_deep_require_does_not_override_shallow_require
+        PASS [   0.006s] (611/715) bevy_ecs tests::runtime_required_components_deep_require_does_not_override_shallow_require_deep_subtree_after_shallow
+        PASS [   0.005s] (612/715) bevy_ecs tests::runtime_required_components_existing_archetype
+        PASS [   0.005s] (613/715) bevy_ecs tests::runtime_required_components_fail_with_duplicate
+        PASS [   0.005s] (614/715) bevy_ecs tests::runtime_required_components_override_1
+        PASS [   0.005s] (615/715) bevy_ecs tests::runtime_required_components_override_2
+        PASS [   0.005s] (616/715) bevy_ecs tests::runtime_required_components_propagate_up
+        PASS [   0.006s] (617/715) bevy_ecs tests::runtime_required_components_propagate_up_even_more
+        PASS [   0.006s] (618/715) bevy_ecs tests::sparse_set_add_remove_many
+        PASS [   0.006s] (619/715) bevy_ecs tests::stateful_query_handles_new_archetype
+        PASS [   0.011s] (620/715) bevy_ecs tests::spawn_batch
+        PASS [   0.007s] (621/715) bevy_ecs tests::take
+        PASS [   0.006s] (622/715) bevy_ecs tests::test_is_archetypal_size_hints
+        PASS [   0.006s] (623/715) bevy_ecs tests::try_insert_batch
+        PASS [   0.007s] (624/715) bevy_ecs tests::try_insert_batch_if_new
+        PASS [   0.005s] (625/715) bevy_ecs world::command_queue::test::test_command_is_send
+        PASS [   0.005s] (626/715) bevy_ecs world::command_queue::test::test_command_queue_inner
+        PASS [   0.005s] (627/715) bevy_ecs world::command_queue::test::test_command_queue_inner_drop
+        PASS [   0.005s] (628/715) bevy_ecs world::command_queue::test::test_command_queue_inner_drop_early
+        PASS [   0.005s] (629/715) bevy_ecs world::command_queue::test::test_command_queue_inner_nested_panic_safe
+        PASS [   0.005s] (630/715) bevy_ecs world::command_queue::test::test_command_queue_inner_panic_safe
+        PASS [   0.005s] (631/715) bevy_ecs world::entity_ref::tests::adding_observer_updates_location
+        PASS [   0.007s] (632/715) bevy_ecs world::entity_ref::tests::archetype_modifications_trigger_flush
+        PASS [   0.006s] (633/715) bevy_ecs world::entity_ref::tests::bundle_remove_only_triggers_for_present_components
+        PASS [   0.007s] (634/715) bevy_ecs world::entity_ref::tests::command_ordering_is_correct
+        PASS [   0.006s] (635/715) bevy_ecs world::entity_ref::tests::despawning_entity_updates_archetype_row
+        PASS [   0.091s] (636/715) bevy_ecs tests::table_add_remove_many
+        PASS [   0.006s] (637/715) bevy_ecs world::entity_ref::tests::despawning_entity_updates_table_row
+        PASS [   0.006s] (638/715) bevy_ecs world::entity_ref::tests::disjoint_access
+        PASS [   0.006s] (639/715) bevy_ecs world::entity_ref::tests::entity_mut_except
+        PASS [   0.006s] (640/715) bevy_ecs world::entity_ref::tests::entity_mut_except_conflicts_with_other
+        PASS [   0.006s] (641/715) bevy_ecs world::entity_ref::tests::entity_mut_except_conflicts_with_self
+        PASS [   0.007s] (642/715) bevy_ecs world::entity_ref::tests::entity_mut_except_doesnt_conflict
+        PASS [   0.007s] (643/715) bevy_ecs world::entity_ref::tests::entity_mut_get_by_id
+        PASS [   0.006s] (644/715) bevy_ecs world::entity_ref::tests::entity_mut_get_by_id_invalid_component_id
+        PASS [   0.006s] (645/715) bevy_ecs world::entity_ref::tests::entity_mut_insert_bundle_by_id
+        PASS [   0.006s] (646/715) bevy_ecs world::entity_ref::tests::entity_mut_insert_by_id
+        PASS [   0.005s] (647/715) bevy_ecs world::entity_ref::tests::entity_mut_remove_by_id
+        PASS [   0.006s] (648/715) bevy_ecs world::entity_ref::tests::entity_mut_world_scope_panic
+        PASS [   0.005s] (649/715) bevy_ecs world::entity_ref::tests::entity_ref_except
+        PASS [   0.006s] (650/715) bevy_ecs world::entity_ref::tests::entity_ref_except_conflicts_with_other
+        PASS [   0.007s] (651/715) bevy_ecs world::entity_ref::tests::entity_ref_except_conflicts_with_self
+        PASS [   0.007s] (652/715) bevy_ecs world::entity_ref::tests::entity_ref_except_doesnt_conflict
+        PASS [   0.007s] (653/715) bevy_ecs world::entity_ref::tests::entity_ref_get_by_id
+        PASS [   0.006s] (654/715) bevy_ecs world::entity_ref::tests::entity_ref_get_by_id_invalid_component_id
+        PASS [   0.006s] (655/715) bevy_ecs world::entity_ref::tests::entity_world_mut_clone_and_move_components
+        PASS [   0.006s] (656/715) bevy_ecs world::entity_ref::tests::entity_world_mut_clone_with_move_and_require
+        PASS [   0.005s] (657/715) bevy_ecs world::entity_ref::tests::filtered_entity_mut_missing
+        PASS [   0.005s] (658/715) bevy_ecs world::entity_ref::tests::filtered_entity_mut_normal
+        PASS [   0.005s] (659/715) bevy_ecs world::entity_ref::tests::filtered_entity_ref_missing
+        PASS [   0.005s] (660/715) bevy_ecs world::entity_ref::tests::filtered_entity_ref_normal
+        PASS [   0.007s] (661/715) bevy_ecs world::entity_ref::tests::get_by_id_array
+        PASS [   0.007s] (662/715) bevy_ecs world::entity_ref::tests::get_by_id_vec
+        PASS [   0.005s] (663/715) bevy_ecs world::entity_ref::tests::get_components
+        PASS [   0.005s] (664/715) bevy_ecs world::entity_ref::tests::get_mut_by_id_array
+        PASS [   0.005s] (665/715) bevy_ecs world::entity_ref::tests::get_mut_by_id_unchecked
+        PASS [   0.006s] (666/715) bevy_ecs world::entity_ref::tests::get_mut_by_id_vec
+        PASS [   0.007s] (667/715) bevy_ecs world::entity_ref::tests::inserting_dense_updates_archetype_row
+        PASS [   0.007s] (668/715) bevy_ecs world::entity_ref::tests::inserting_dense_updates_table_row
+        PASS [   0.013s] (669/715) bevy_ecs world::entity_ref::tests::inserting_sparse_updates_archetype_row
+        PASS [   0.012s] (670/715) bevy_ecs world::entity_ref::tests::location_on_despawned_entity_panics
+        PASS [   0.005s] (671/715) bevy_ecs world::entity_ref::tests::mut_compatible_with_resource
+        PASS [   0.006s] (672/715) bevy_ecs world::entity_ref::tests::mut_compatible_with_entity
+        PASS [   0.006s] (673/715) bevy_ecs world::entity_ref::tests::mut_compatible_with_resource_mut
+        PASS [   0.006s] (674/715) bevy_ecs world::entity_ref::tests::mut_incompatible_with_mutable_component
+        PASS [   0.006s] (675/715) bevy_ecs world::entity_ref::tests::mut_incompatible_with_mutable_query
+        PASS [   0.006s] (676/715) bevy_ecs world::entity_ref::tests::mut_incompatible_with_read_only_component
+        PASS [   0.005s] (677/715) bevy_ecs world::entity_ref::tests::mut_incompatible_with_read_only_query
+        PASS [   0.006s] (678/715) bevy_ecs world::entity_ref::tests::ref_compatible
+        PASS [   0.005s] (679/715) bevy_ecs world::entity_ref::tests::ref_compatible_with_resource
+        PASS [   0.005s] (680/715) bevy_ecs world::entity_ref::tests::ref_compatible_with_resource_mut
+        PASS [   0.005s] (681/715) bevy_ecs world::entity_ref::tests::ref_incompatible_with_mutable_component
+        PASS [   0.006s] (682/715) bevy_ecs world::entity_ref::tests::ref_incompatible_with_mutable_query
+        PASS [   0.006s] (683/715) bevy_ecs world::entity_ref::tests::removing_dense_updates_table_row
+        PASS [   0.006s] (684/715) bevy_ecs world::entity_ref::tests::removing_sparse_updates_archetype_row
+        PASS [   0.005s] (685/715) bevy_ecs world::entity_ref::tests::retain_nothing
+        PASS [   0.006s] (686/715) bevy_ecs world::entity_ref::tests::retain_some_components
+        PASS [   0.006s] (687/715) bevy_ecs world::entity_ref::tests::update_despawned_by_after_observers
+        PASS [   0.005s] (688/715) bevy_ecs world::entity_ref::tests::with_component_activates_hooks
+        PASS [   0.006s] (689/715) bevy_ecs world::identifier::tests::world_id_exclusive_system_param
+        PASS [   0.006s] (690/715) bevy_ecs world::identifier::tests::world_id_system_param
+        PASS [   0.006s] (691/715) bevy_ecs world::identifier::tests::world_ids_unique
+        PASS [   0.006s] (692/715) bevy_ecs world::reflect::tests::get_component_as_mut_reflect
+        PASS [   0.005s] (693/715) bevy_ecs world::reflect::tests::get_component_as_reflect
+        PASS [   0.005s] (694/715) bevy_ecs world::tests::custom_resource_with_layout
+        PASS [   0.005s] (695/715) bevy_ecs world::tests::dynamic_resource
+        PASS [   0.005s] (696/715) bevy_ecs world::tests::entities_and_commands
+        PASS [   0.006s] (697/715) bevy_ecs world::tests::entities_and_commands_deferred
+        PASS [   0.006s] (698/715) bevy_ecs world::tests::entity_spawn_despawn_tracking
+        PASS [   0.005s] (699/715) bevy_ecs world::tests::get_entity
+        PASS [   0.005s] (700/715) bevy_ecs world::tests::get_entity_mut
+        PASS [   0.005s] (701/715) bevy_ecs world::tests::get_resource_by_id
+        PASS [   0.005s] (702/715) bevy_ecs world::tests::get_resource_mut_by_id
+        PASS [   0.005s] (703/715) bevy_ecs world::tests::init_non_send_resource_does_not_overwrite
+        PASS [   0.005s] (704/715) bevy_ecs world::tests::init_resource_does_not_overwrite
+        PASS [   0.007s] (705/715) bevy_ecs world::tests::inspect_entity_components
+        PASS [   0.006s] (706/715) bevy_ecs world::tests::iter_resources
+        PASS [   0.005s] (707/715) bevy_ecs world::tests::iter_resources_mut
+        PASS [   0.006s] (708/715) bevy_ecs world::tests::iterate_entities
+        PASS [   0.006s] (709/715) bevy_ecs world::tests::iterate_entities_mut
+        PASS [   0.005s] (710/715) bevy_ecs world::tests::new_world_has_disabling
+        PASS [   0.006s] (711/715) bevy_ecs world::tests::panic_while_overwriting_component
+        PASS [   0.006s] (712/715) bevy_ecs world::tests::spawn_empty_bundle
+        PASS [   0.006s] (713/715) bevy_ecs world::unsafe_world_cell::tests::as_unsafe_world_cell_readonly_component_mut_forbidden
+        PASS [   0.006s] (714/715) bevy_ecs world::unsafe_world_cell::tests::as_unsafe_world_cell_readonly_resource_mut_forbidden
+        PASS [   0.005s] (715/715) bevy_ecs world::unsafe_world_cell::tests::as_unsafe_world_cell_readonly_world_mut_forbidden
+────────────
+     Summary [   2.307s] 715 tests run: 715 passed, 0 skipped
+reward=1 graded=715 found=89 failed=0 parsed=715 framework=cargo exit_code=0

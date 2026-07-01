@@ -1,0 +1,43 @@
+patching file source/rust_verify_test/tests/hash.rs
+vargo info [1]: building rust_verify
+   Compiling rust_verify v0.1.0 (/workspace/repo/source/rust_verify)
+    Finished dev [unoptimized + debuginfo] target(s) in 15.40s
+vargo info [1]: building builtin
+    Finished dev [unoptimized + debuginfo] target(s) in 0.04s
+vargo info [1]: building builtin_macros
+    Finished dev [unoptimized + debuginfo] target(s) in 0.06s
+vargo info [1]: building state_machines_macros
+    Finished dev [unoptimized + debuginfo] target(s) in 0.05s
+vargo info [1]: building vstd_build
+    Finished dev [unoptimized + debuginfo] target(s) in 0.04s
+vargo info [1]: building verus
+    Finished dev [unoptimized + debuginfo] target(s) in 0.17s
+vargo info [1]: vstd outdated, rebuilding
+    Finished dev [unoptimized + debuginfo] target(s) in 0.04s
+     Running `target/debug/vstd_build target-verus/debug`
+verification results:: 780 verified, 0 errors
+vargo info [0]: rebuilding: done
+   Compiling console v0.15.7
+   Compiling serde_json v1.0.107
+   Compiling indicatif v0.16.2
+   Compiling z3tracer v0.11.2 (https://github.com/verus-lang/smt2utils.git?rev=ec4c894d04d7cd39c9a8aa1eda51db71cc54fe61#ec4c894d)
+   Compiling rust_verify_test_macros v0.1.0 (/workspace/repo/source/rust_verify_test_macros)
+   Compiling air v0.1.0 (/workspace/repo/source/air)
+   Compiling vir v0.1.0 (/workspace/repo/source/vir)
+   Compiling rust_verify_test v0.1.0 (/workspace/repo/source/rust_verify_test)
+    Finished test [unoptimized + debuginfo] target(s) in 24.85s
+     Running tests/hash.rs (target/debug/deps/hash-0a5f3e15d87f8597)
+
+running 8 tests
+PASS [   0.000s] test_default_hasher
+PASS [   0.000s] test_hash_map
+PASS [   0.000s] test_hash_map_box
+PASS [   0.000s] test_hash_map_struct
+PASS [   0.000s] test_hash_map_struct_fails
+PASS [   0.000s] test_hash_map_with_view
+PASS [   0.000s] test_hash_map_with_view_fails
+PASS [   0.000s] test_string_hash_map
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.44s
+
+reward=1 graded=8 found=8 failed=0 parsed=8 framework=cargo exit_code=0

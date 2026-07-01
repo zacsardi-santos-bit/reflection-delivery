@@ -1,0 +1,65 @@
+patching file tests/providers/google/suite/hooks/test_sheets.py
+patching file tests/providers/google/suite/operators/test_sheets.py
+patching file tests/providers/google/suite/operators/test_sheets_system.py
+patching file tests/test_utils/gcp_system_helpers.py
+============================= test session starts ==============================
+platform linux -- Python 3.8.20, pytest-5.4.3, py-1.11.0, pluggy-0.13.1 -- /usr/local/bin/python3.8
+cachedir: .pytest_cache
+rootdir: /workspace/repo, inifile: pytest.ini
+plugins: cov-5.0.0
+collecting ... collected 16 items
+
+tests/providers/google/suite/hooks/test_sheets.py::TestGSheetsHook::test_append_values PASSED [  6%]
+tests/providers/google/suite/hooks/test_sheets.py::TestGSheetsHook::test_batch_clear_values PASSED [ 12%]
+tests/providers/google/suite/hooks/test_sheets.py::TestGSheetsHook::test_batch_get_values PASSED [ 18%]
+tests/providers/google/suite/hooks/test_sheets.py::TestGSheetsHook::test_batch_update_values PASSED [ 25%]
+tests/providers/google/suite/hooks/test_sheets.py::TestGSheetsHook::test_batch_update_values_with_bad_data PASSED [ 31%]
+tests/providers/google/suite/hooks/test_sheets.py::TestGSheetsHook::test_clear_values PASSED [ 37%]
+tests/providers/google/suite/hooks/test_sheets.py::TestGSheetsHook::test_create_spreadsheet PASSED [ 43%]
+tests/providers/google/suite/hooks/test_sheets.py::TestGSheetsHook::test_get_sheet_titles PASSED [ 50%]
+tests/providers/google/suite/hooks/test_sheets.py::TestGSheetsHook::test_get_spreadsheet PASSED [ 56%]
+tests/providers/google/suite/hooks/test_sheets.py::TestGSheetsHook::test_get_values PASSED [ 62%]
+tests/providers/google/suite/hooks/test_sheets.py::TestGSheetsHook::test_gsheets_client_creation PASSED [ 68%]
+tests/providers/google/suite/hooks/test_sheets.py::TestGSheetsHook::test_update_values PASSED [ 75%]
+tests/providers/google/suite/operators/test_sheets.py::TestGoogleSheetsCreateSpreadsheet::test_execute PASSED [ 81%]
+tests/providers/google/suite/operators/test_sheets.py::TestGoogleSheetsToGCSOperator::test_upload_data PASSED [ 87%]
+tests/providers/google/suite/operators/test_sheets.py::TestGoogleSheetsToGCSOperator::test_execute PASSED [ 93%]
+tests/providers/google/suite/operators/test_sheets.py::TestGCStoGoogleSheets::test_execute PASSED [100%]
+
+=============================== warnings summary ===============================
+airflow/configuration.py:34
+  /workspace/repo/airflow/configuration.py:34: CryptographyDeprecationWarning: Python 3.8 is no longer supported by the Python core team and support for it is deprecated in cryptography. The next release of cryptography will remove support for Python 3.8.
+    from cryptography.fernet import Fernet
+
+airflow/models/base.py:33
+  /workspace/repo/airflow/models/base.py:33: MovedIn20Warning: Deprecated API features detected! These feature(s) are not compatible with SQLAlchemy 2.0. To prevent incompatible upgrades prior to updating applications, ensure requirements files are pinned to "sqlalchemy<2.0". Set environment variable SQLALCHEMY_WARN_20=1 to show all deprecation warnings.  Set environment variable SQLALCHEMY_SILENCE_UBER_WARNING=1 to silence this message. (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
+    Base = declarative_base(metadata=metadata)  # type: Any
+
+airflow/plugins_manager.py:30
+  /workspace/repo/airflow/plugins_manager.py:30: DeprecationWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html
+    import pkg_resources
+
+/usr/local/lib/python3.8/site-packages/pkg_resources/__init__.py:3154
+/usr/local/lib/python3.8/site-packages/pkg_resources/__init__.py:3154
+/usr/local/lib/python3.8/site-packages/pkg_resources/__init__.py:3154
+  /usr/local/lib/python3.8/site-packages/pkg_resources/__init__.py:3154: DeprecationWarning: Deprecated call to `pkg_resources.declare_namespace('google')`.
+  Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
+    declare_namespace(pkg)
+
+/usr/local/lib/python3.8/site-packages/pkg_resources/__init__.py:3154
+  /usr/local/lib/python3.8/site-packages/pkg_resources/__init__.py:3154: DeprecationWarning: Deprecated call to `pkg_resources.declare_namespace('google.cloud')`.
+  Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
+    declare_namespace(pkg)
+
+/usr/local/lib/python3.8/site-packages/pkg_resources/__init__.py:2563
+  /usr/local/lib/python3.8/site-packages/pkg_resources/__init__.py:2563: DeprecationWarning: Deprecated call to `pkg_resources.declare_namespace('google')`.
+  Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
+    declare_namespace(parent)
+
+/usr/local/lib/python3.8/site-packages/tenacity/_asyncio.py:38
+  /usr/local/lib/python3.8/site-packages/tenacity/_asyncio.py:38: DeprecationWarning: "@coroutine" decorator is deprecated since Python 3.8, use "async def" instead
+    def call(self, fn, *args, **kwargs):
+
+-- Docs: https://docs.pytest.org/en/latest/warnings.html
+======================== 16 passed, 9 warnings in 1.03s ========================
+reward=1 graded=16 found=0 failed=0 parsed=16 framework=pytest exit_code=0

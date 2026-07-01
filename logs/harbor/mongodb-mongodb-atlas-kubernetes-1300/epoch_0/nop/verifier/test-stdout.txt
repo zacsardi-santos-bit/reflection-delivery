@@ -1,0 +1,7 @@
+patching file pkg/controller/atlasdeployment/atlasdeployment_controller_test.go
+patching file pkg/controller/statushandler/patch_test.go
+patching file pkg/controller/watch/watched_resource_handler_test.go
+patching file test/helper/e2e/k8s/operator.go
+go: finding module for package github.com/mongodb/mongodb-atlas-kubernetes/v2/pkg/controller
+test/helper/e2e/k8s/operator.go:29:2: cannot find module providing package github.com/mongodb/mongodb-atlas-kubernetes/v2/pkg/controller: module lookup disabled by GOPROXY=off
+reward=0 graded=97 found=0 failed=0 parsed=0 framework=go exit_code=1

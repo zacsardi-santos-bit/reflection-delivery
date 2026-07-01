@@ -1,0 +1,197 @@
+patching file go.mod
+patching file go.sum
+Hunk #1 FAILED at 20.
+Hunk #2 succeeded at 423 (offset 284 lines).
+Hunk #3 succeeded at 465 with fuzz 3 (offset 284 lines).
+Hunk #4 succeeded at 497 with fuzz 2 (offset 298 lines).
+Hunk #5 succeeded at 510 with fuzz 3 (offset 298 lines).
+Hunk #6 succeeded at 534 with fuzz 3 (offset 311 lines).
+Hunk #7 succeeded at 617 with fuzz 3 (offset 311 lines).
+Hunk #8 succeeded at 814 with fuzz 3 (offset 311 lines).
+Hunk #9 succeeded at 933 (offset 410 lines).
+Hunk #10 FAILED at 531.
+Hunk #11 FAILED at 546.
+Hunk #12 succeeded at 1021 with fuzz 3 (offset 430 lines).
+Hunk #13 succeeded at 1034 with fuzz 3 (offset 430 lines).
+Hunk #14 succeeded at 1160 with fuzz 1 (offset 478 lines).
+Hunk #15 succeeded at 1230 (offset 491 lines).
+Hunk #16 succeeded at 1243 with fuzz 2 (offset 492 lines).
+Hunk #17 FAILED at 771.
+Hunk #18 succeeded at 1493 with fuzz 3 (offset 492 lines).
+Hunk #19 succeeded at 1764 (offset 614 lines).
+Hunk #20 succeeded at 1859 (offset 618 lines).
+Hunk #21 succeeded at 1891 (offset 618 lines).
+Hunk #22 succeeded at 1919 (offset 618 lines).
+Hunk #23 succeeded at 1981 (offset 618 lines).
+Hunk #24 succeeded at 2022 (offset 618 lines).
+Hunk #25 succeeded at 2107 (offset 618 lines).
+Hunk #26 succeeded at 2118 with fuzz 3 (offset 618 lines).
+Hunk #27 succeeded at 2147 with fuzz 3 (offset 618 lines).
+Hunk #28 succeeded at 2232 (offset 624 lines).
+Hunk #29 succeeded at 2321 (offset 624 lines).
+Hunk #30 succeeded at 2353 with fuzz 1 (offset 624 lines).
+Hunk #31 succeeded at 2364 with fuzz 3 (offset 624 lines).
+4 out of 31 hunks FAILED -- saving rejects to file go.sum.rej
+patching file pkg/recipes/terraform/execute.go
+patching file pkg/recipes/terraform/module.go
+patching file pkg/recipes/terraform/testdata/.terraform/modules/test-submodule/submodule/main.tf
+patching file go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file go.mod.rej
+patching file go.sum
+Hunk #1 FAILED at 20.
+Hunk #2 succeeded at 139 with fuzz 3.
+Hunk #3 succeeded at 181 with fuzz 3.
+Hunk #4 succeeded at 199 with fuzz 3.
+Hunk #5 succeeded at 212 with fuzz 3.
+Hunk #6 succeeded at 541 with fuzz 3 (offset 318 lines).
+Hunk #7 succeeded at 624 with fuzz 3 (offset 318 lines).
+Hunk #8 succeeded at 821 with fuzz 3 (offset 318 lines).
+Hunk #9 succeeded at 841 with fuzz 3 (offset 318 lines).
+Hunk #10 FAILED at 531.
+Hunk #11 FAILED at 546.
+Hunk #12 succeeded at 1038 with fuzz 3 (offset 447 lines).
+Hunk #13 succeeded at 1051 with fuzz 3 (offset 447 lines).
+Hunk #14 succeeded at 1129 with fuzz 3 (offset 447 lines).
+Hunk #15 succeeded at 1186 with fuzz 3 (offset 447 lines).
+Hunk #16 succeeded at 1198 with fuzz 3 (offset 447 lines).
+Hunk #17 FAILED at 771.
+Hunk #18 succeeded at 1448 with fuzz 3 (offset 447 lines).
+Hunk #19 succeeded at 1597 with fuzz 3 (offset 447 lines).
+Hunk #20 FAILED at 1241.
+Hunk #21 succeeded at 1708 with fuzz 3 (offset 447 lines).
+Hunk #22 succeeded at 1961 with fuzz 3 (offset 672 lines).
+Hunk #23 FAILED at 1351.
+Hunk #24 succeeded at 2045 with fuzz 3 (offset 672 lines).
+Hunk #25 succeeded at 2130 with fuzz 3 (offset 672 lines).
+Hunk #26 succeeded at 2141 with fuzz 3 (offset 672 lines).
+Hunk #27 succeeded at 2170 with fuzz 3 (offset 672 lines).
+Hunk #28 FAILED at 1577.
+Hunk #29 FAILED at 1606.
+Hunk #30 succeeded at 2295 with fuzz 3 (offset 672 lines).
+Hunk #31 succeeded at 2306 with fuzz 3 (offset 672 lines).
+8 out of 31 hunks FAILED -- saving rejects to file go.sum.rej
+patching file pkg/recipes/terraform/execute.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/recipes/terraform/execute.go.rej
+patching file pkg/recipes/terraform/module.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file pkg/recipes/terraform/module.go.rej
+The next patch would create the file pkg/recipes/terraform/testdata/.terraform/modules/test-submodule/submodule/main.tf,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 5
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/go.mod b/go.mod
+|index 919b7d40f..1b7f8da63 100644
+|--- a/go.mod
+|+++ b/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 57
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/go.sum b/go.sum
+|index 571a18704..65d127ad6 100644
+|--- a/go.sum
+|+++ b/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+31 out of 31 hunks ignored
+can't find file to patch at input line 702
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/recipes/terraform/execute.go b/pkg/recipes/terraform/execute.go
+|index 0efa3d576..b10ec88fa 100644
+|--- a/pkg/recipes/terraform/execute.go
+|+++ b/pkg/recipes/terraform/execute.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 715
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/recipes/terraform/module.go b/pkg/recipes/terraform/module.go
+|index 373eee0f4..e5ca3601e 100644
+|--- a/pkg/recipes/terraform/module.go
+|+++ b/pkg/recipes/terraform/module.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+patching file b/pkg/recipes/terraform/testdata/.terraform/modules/test-submodule/submodule/main.tf
+patching file go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file go.mod.rej
+patching file go.sum
+Hunk #1 FAILED at 20.
+Hunk #2 succeeded at 139 with fuzz 3.
+Hunk #3 succeeded at 181 with fuzz 3.
+Hunk #4 succeeded at 199 with fuzz 3.
+Hunk #5 succeeded at 212 with fuzz 3.
+Hunk #6 succeeded at 548 with fuzz 3 (offset 325 lines).
+Hunk #7 succeeded at 631 with fuzz 3 (offset 325 lines).
+Hunk #8 succeeded at 828 with fuzz 3 (offset 325 lines).
+Hunk #9 succeeded at 848 with fuzz 3 (offset 325 lines).
+Hunk #10 FAILED at 531.
+Hunk #11 FAILED at 546.
+Hunk #12 succeeded at 1055 with fuzz 3 (offset 464 lines).
+Hunk #13 succeeded at 1068 with fuzz 3 (offset 464 lines).
+Hunk #14 succeeded at 1146 with fuzz 3 (offset 464 lines).
+Hunk #15 succeeded at 1203 with fuzz 3 (offset 464 lines).
+Hunk #16 succeeded at 1215 with fuzz 3 (offset 464 lines).
+Hunk #17 FAILED at 771.
+Hunk #18 succeeded at 1465 with fuzz 3 (offset 464 lines).
+Hunk #19 succeeded at 1614 with fuzz 3 (offset 464 lines).
+Hunk #20 FAILED at 1241.
+Hunk #21 succeeded at 1725 with fuzz 3 (offset 464 lines).
+Hunk #22 succeeded at 2003 with fuzz 3 (offset 714 lines).
+Hunk #23 FAILED at 1351.
+Hunk #24 succeeded at 2087 with fuzz 3 (offset 714 lines).
+Hunk #25 succeeded at 2172 with fuzz 3 (offset 714 lines).
+Hunk #26 succeeded at 2183 with fuzz 3 (offset 714 lines).
+Hunk #27 succeeded at 2212 with fuzz 3 (offset 714 lines).
+Hunk #28 FAILED at 1577.
+Hunk #29 FAILED at 1606.
+Hunk #30 succeeded at 2337 with fuzz 3 (offset 714 lines).
+Hunk #31 succeeded at 2348 with fuzz 3 (offset 714 lines).
+8 out of 31 hunks FAILED -- saving rejects to file go.sum.rej
+patching file pkg/recipes/terraform/execute.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/recipes/terraform/execute.go.rej
+patching file pkg/recipes/terraform/module.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file pkg/recipes/terraform/module.go.rej
+The next patch would create the file pkg/recipes/terraform/testdata/.terraform/modules/test-submodule/submodule/main.tf,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+ERROR: golden patch failed to apply by all strategies

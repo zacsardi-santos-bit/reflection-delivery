@@ -1,0 +1,49 @@
+patching file packages/app/src/admin/SuperAdminPage.test.tsx
+patching file packages/server/src/fhir/operations/explain.test.ts
+Browserslist: browsers data (caniuse-lite) is 11 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+  console.log
+    BEFORE
+
+      at Object.log (src/admin/SuperAdminPage.test.tsx:591:15)
+
+  console.log
+    returning forbidden...
+
+      at log (src/admin/SuperAdminPage.test.tsx:581:17)
+
+PASS src/admin/SuperAdminPage.test.tsx (20.504 s)
+  SuperAdminPage
+    ✓ Rebuild StructureDefinitions (732 ms)
+    ✓ Rebuild SearchParameters (683 ms)
+    ✓ Rebuild ValueSets (642 ms)
+    ✓ Start data migration (476 ms)
+    ✓ Reindex resource type (508 ms)
+    ✓ Purge resources (536 ms)
+    ✓ Remove Bot ID Jobs from Queue (534 ms)
+    ✓ Force set password (581 ms)
+    ✓ Invalid indexes (1018 ms)
+    ✓ Database Stats (818 ms)
+    ✓ Database Stats - Specified table names (582 ms)
+    ✓ Get Database Schema Drift (477 ms)
+    ✓ Reconcile Database Schema Drift - Success (375 ms)
+    ✓ Reconcile Database Schema Drift - Forbidden (393 ms)
+    ✓ Reload cron resources (391 ms)
+    ✓ Access denied (19 ms)
+    ExplainSearchForm
+      ✓ Explain search with valid data (456 ms)
+      ✓ Explain search with analyze checkbox (519 ms)
+      ✓ Explain search validation - missing query (333 ms)
+      ✓ Explain search with direct ProjectMembership entry (643 ms)
+      ✓ Explain search via project and practitioner (865 ms)
+      ✓ Explain search error handling (597 ms)
+      ✓ ExplainSearchForm access denied for non-super admin (42 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       23 passed, 23 total
+Snapshots:   0 total
+Time:        22.284 s
+Ran all test suites matching /src\/admin\/SuperAdminPage.test.tsx/i.
+{"numFailedTestSuites":0,"numFailedTests":0,"numPassedTestSuites":1,"numPassedTests":23,"numPendingTestSuites":0,"numPendingTests":0,"numRuntimeErrorTestSuites":0,"numTodoTests":0,"numTotalTestSuites":1,"numTotalTests":23,"openHandles":[],"snapshot":{"added":0,"didUpdate":false,"failure":false,"filesAdded":0,"filesRemoved":0,"filesRemovedList":[],"filesUnmatched":0,"filesUpdated":0,"matched":0,"total":0,"unchecked":0,"uncheckedKeysByFile":[],"unmatched":0,"updated":0},"startTime":1782918400083,"success":true,"testResults":[{"assertionResults":[{"ancestorTitles":["SuperAdminPage"],"duration":732,"failureDetails":[],"failureMessages":[],"fullName":"SuperAdminPage Rebuild StructureDefinitions","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"Rebuild StructureDefinitions"},{"ancestorTitles":["SuperAdminPage"],"duration":683,"failureDetails":[],"failureMessages":[],"fullName":"SuperAdminPage Rebuild SearchParameters","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"Rebuild SearchParameters"},{"ancestorTitles":["SuperAdminPage"],"duration":642,"failureDetails":[],"failureMessages":[],"fullName":"SuperAdminPage Rebuild ValueSets","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"Rebuild ValueSets"},{"ancestorTitles":["SuperAdminPage"],"duration":476,"failureDetails":[],"failureMessages":[],"fullName":"SuperAdminPage Start data migration","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"Start data migration"},{"ancestorTitles":["SuperAdminPage"],"duration":508,"failureDetails":[],"failureMessages":[],"fullName":"SuperAdminPage Reindex resource type","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"Reindex resource type"},{"ancestorTitles":["SuperAdminPage"],"duration":536,"failureDetails":[],"failureMessages":[],"fullName":"SuperAdminPage Purge resources","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"Purge resources"},{"ancestorTitles":["SuperAdminPage"],"duration":534,"failureDetails":[],"failureMessages":[],"fullName":"SuperAdminPage Remove Bot ID Jobs from Queue","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"Remove Bot ID Jobs from Queue"},{"ancestorTitles":["SuperAdminPage"],"duration":581,"failureDetails":[],"failureMessages":[],"fullName":"SuperAdminPage Force set password","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"Force set password"},{"ancestorTitles":["SuperAdminPage"],"duration":1018,"failureDetails":[],"failureMessages":[],"fullName":"SuperAdminPage Invalid indexes","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"Invalid indexes"},{"ancestorTitles":["SuperAdminPage"],"duration":818,"failureDetails":[],"failureMessages":[],"fullName":"SuperAdminPage Database Stats","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"Database Stats"},{"ancestorTitles":["SuperAdminPage"],"duration":582,"failureDetails":[],"failureMessages":[],"fullName":"SuperAdminPage Database Stats - Specified table names","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Database Stats - Specified table names"},{"ancestorTitles":["SuperAdminPage"],"duration":477,"failureDetails":[],"failureMessages":[],"fullName":"SuperAdminPage Get Database Schema Drift","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"Get Database Schema Drift"},{"ancestorTitles":["SuperAdminPage"],"duration":375,"failureDetails":[],"failureMessages":[],"fullName":"SuperAdminPage Reconcile Database Schema Drift - Success","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Reconcile Database Schema Drift - Success"},{"ancestorTitles":["SuperAdminPage"],"duration":393,"failureDetails":[],"failureMessages":[],"fullName":"SuperAdminPage Reconcile Database Schema Drift - Forbidden","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Reconcile Database Schema Drift - Forbidden"},{"ancestorTitles":["SuperAdminPage"],"duration":391,"failureDetails":[],"failureMessages":[],"fullName":"SuperAdminPage Reload cron resources","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"Reload cron resources"},{"ancestorTitles":["SuperAdminPage"],"duration":19,"failureDetails":[],"failureMessages":[],"fullName":"SuperAdminPage Access denied","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"Access denied"},{"ancestorTitles":["SuperAdminPage","ExplainSearchForm"],"duration":456,"failureDetails":[],"failureMessages":[],"fullName":"SuperAdminPage ExplainSearchForm Explain search with valid data","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"Explain search with valid data"},{"ancestorTitles":["SuperAdminPage","ExplainSearchForm"],"duration":519,"failureDetails":[],"failureMessages":[],"fullName":"SuperAdminPage ExplainSearchForm Explain search with analyze checkbox","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"Explain search with analyze checkbox"},{"ancestorTitles":["SuperAdminPage","ExplainSearchForm"],"duration":333,"failureDetails":[],"failureMessages":[],"fullName":"SuperAdminPage ExplainSearchForm Explain search validation - missing query","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"Explain search validation - missing query"},{"ancestorTitles":["SuperAdminPage","ExplainSearchForm"],"duration":643,"failureDetails":[],"failureMessages":[],"fullName":"SuperAdminPage ExplainSearchForm Explain search with direct ProjectMembership entry","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"Explain search with direct ProjectMembership entry"},{"ancestorTitles":["SuperAdminPage","ExplainSearchForm"],"duration":865,"failureDetails":[],"failureMessages":[],"fullName":"SuperAdminPage ExplainSearchForm Explain search via project and practitioner","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"Explain search via project and practitioner"},{"ancestorTitles":["SuperAdminPage","ExplainSearchForm"],"duration":597,"failureDetails":[],"failureMessages":[],"fullName":"SuperAdminPage ExplainSearchForm Explain search error handling","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"Explain search error handling"},{"ancestorTitles":["SuperAdminPage","ExplainSearchForm"],"duration":42,"failureDetails":[],"failureMessages":[],"fullName":"SuperAdminPage ExplainSearchForm ExplainSearchForm access denied for non-super admin","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"ExplainSearchForm access denied for non-super admin"}],"endTime":1782918422362,"message":"","name":"/workspace/repo/packages/app/src/admin/SuperAdminPage.test.tsx","startTime":1782918401858,"status":"passed","summary":""}],"wasInterrupted":false}
+reward=1 graded=23 found=23 failed=0 parsed=23 framework=jest exit_code=0

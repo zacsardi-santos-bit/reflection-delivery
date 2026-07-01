@@ -1,0 +1,7 @@
+patching file sea-orm-migration/src/migrator.rs
+patching file src/database/db_connection.rs
+patching file src/database/stream/query.rs
+patching file src/database/stream/transaction.rs
+patching file src/entity/active_enum.rs
+patching file src/entity/active_model.rs
+patching file src/error.rs

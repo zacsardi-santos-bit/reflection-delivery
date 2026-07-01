@@ -1,0 +1,91 @@
+patching file api/filesys/fsinmemory_test.go
+patching file api/filesys/util_test.go
+{"Time":"2026-07-01T14:50:59.184394572Z","Action":"start","Package":"sigs.k8s.io/kustomize/api/filesys"}
+{"Time":"2026-07-01T14:50:59.185719143Z","Action":"run","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestJoin"}
+{"Time":"2026-07-01T14:50:59.185740337Z","Action":"output","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestJoin","Output":"=== RUN   TestJoin\n"}
+{"Time":"2026-07-01T14:50:59.185756389Z","Action":"output","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestJoin","Output":"--- PASS: TestJoin (0.00s)\n"}
+{"Time":"2026-07-01T14:50:59.185762633Z","Action":"pass","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestJoin","Elapsed":0}
+{"Time":"2026-07-01T14:50:59.185772421Z","Action":"run","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestHasPrefix_Slash"}
+{"Time":"2026-07-01T14:50:59.18577694Z","Action":"output","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestHasPrefix_Slash","Output":"=== RUN   TestHasPrefix_Slash\n"}
+{"Time":"2026-07-01T14:50:59.185784623Z","Action":"output","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestHasPrefix_Slash","Output":"--- PASS: TestHasPrefix_Slash (0.00s)\n"}
+{"Time":"2026-07-01T14:50:59.185790573Z","Action":"pass","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestHasPrefix_Slash","Elapsed":0}
+{"Time":"2026-07-01T14:50:59.185800299Z","Action":"run","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestHasPrefix_SlashFoo"}
+{"Time":"2026-07-01T14:50:59.185804044Z","Action":"output","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestHasPrefix_SlashFoo","Output":"=== RUN   TestHasPrefix_SlashFoo\n"}
+{"Time":"2026-07-01T14:50:59.185809253Z","Action":"output","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestHasPrefix_SlashFoo","Output":"--- PASS: TestHasPrefix_SlashFoo (0.00s)\n"}
+{"Time":"2026-07-01T14:50:59.185811935Z","Action":"pass","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestHasPrefix_SlashFoo","Elapsed":0}
+{"Time":"2026-07-01T14:50:59.185814792Z","Action":"run","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestHasPrefix_SlashFooBar"}
+{"Time":"2026-07-01T14:50:59.185817244Z","Action":"output","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestHasPrefix_SlashFooBar","Output":"=== RUN   TestHasPrefix_SlashFooBar\n"}
+{"Time":"2026-07-01T14:50:59.185822125Z","Action":"output","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestHasPrefix_SlashFooBar","Output":"--- PASS: TestHasPrefix_SlashFooBar (0.00s)\n"}
+{"Time":"2026-07-01T14:50:59.185827234Z","Action":"pass","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestHasPrefix_SlashFooBar","Elapsed":0}
+{"Time":"2026-07-01T14:50:59.185829788Z","Action":"run","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestNewTempConfirmDir"}
+{"Time":"2026-07-01T14:50:59.185832173Z","Action":"output","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestNewTempConfirmDir","Output":"=== RUN   TestNewTempConfirmDir\n"}
+{"Time":"2026-07-01T14:50:59.185839414Z","Action":"output","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestNewTempConfirmDir","Output":"--- PASS: TestNewTempConfirmDir (0.00s)\n"}
+{"Time":"2026-07-01T14:50:59.185842098Z","Action":"pass","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestNewTempConfirmDir","Elapsed":0}
+{"Time":"2026-07-01T14:50:59.18584477Z","Action":"run","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestOldExists"}
+{"Time":"2026-07-01T14:50:59.18584719Z","Action":"output","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestOldExists","Output":"=== RUN   TestOldExists\n"}
+{"Time":"2026-07-01T14:50:59.185852973Z","Action":"output","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestOldExists","Output":"--- PASS: TestOldExists (0.00s)\n"}
+{"Time":"2026-07-01T14:50:59.185857214Z","Action":"pass","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestOldExists","Elapsed":0}
+{"Time":"2026-07-01T14:50:59.185861553Z","Action":"run","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestIsDir"}
+{"Time":"2026-07-01T14:50:59.185864236Z","Action":"output","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestIsDir","Output":"=== RUN   TestIsDir\n"}
+{"Time":"2026-07-01T14:50:59.185873929Z","Action":"output","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestIsDir","Output":"--- PASS: TestIsDir (0.00s)\n"}
+{"Time":"2026-07-01T14:50:59.185876557Z","Action":"pass","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestIsDir","Elapsed":0}
+{"Time":"2026-07-01T14:50:59.185879141Z","Action":"run","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestRemoveAll"}
+{"Time":"2026-07-01T14:50:59.185881449Z","Action":"output","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestRemoveAll","Output":"=== RUN   TestRemoveAll\n"}
+{"Time":"2026-07-01T14:50:59.185885781Z","Action":"output","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestRemoveAll","Output":"--- PASS: TestRemoveAll (0.00s)\n"}
+{"Time":"2026-07-01T14:50:59.185888295Z","Action":"pass","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestRemoveAll","Elapsed":0}
+{"Time":"2026-07-01T14:50:59.185890783Z","Action":"run","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestIsDirDeeper"}
+{"Time":"2026-07-01T14:50:59.185893022Z","Action":"output","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestIsDirDeeper","Output":"=== RUN   TestIsDirDeeper\n"}
+{"Time":"2026-07-01T14:50:59.185898174Z","Action":"output","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestIsDirDeeper","Output":"--- PASS: TestIsDirDeeper (0.00s)\n"}
+{"Time":"2026-07-01T14:50:59.185900673Z","Action":"pass","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestIsDirDeeper","Elapsed":0}
+{"Time":"2026-07-01T14:50:59.185903307Z","Action":"run","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestCreate"}
+{"Time":"2026-07-01T14:50:59.185905685Z","Action":"output","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestCreate","Output":"=== RUN   TestCreate\n"}
+{"Time":"2026-07-01T14:50:59.185908535Z","Action":"output","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestCreate","Output":"--- PASS: TestCreate (0.00s)\n"}
+{"Time":"2026-07-01T14:50:59.185911053Z","Action":"pass","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestCreate","Elapsed":0}
+{"Time":"2026-07-01T14:50:59.185914739Z","Action":"run","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestReadFile"}
+{"Time":"2026-07-01T14:50:59.185917076Z","Action":"output","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestReadFile","Output":"=== RUN   TestReadFile\n"}
+{"Time":"2026-07-01T14:50:59.185919781Z","Action":"output","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestReadFile","Output":"--- PASS: TestReadFile (0.00s)\n"}
+{"Time":"2026-07-01T14:50:59.185922248Z","Action":"pass","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestReadFile","Elapsed":0}
+{"Time":"2026-07-01T14:50:59.185926204Z","Action":"run","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestWriteFile"}
+{"Time":"2026-07-01T14:50:59.185930261Z","Action":"output","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestWriteFile","Output":"=== RUN   TestWriteFile\n"}
+{"Time":"2026-07-01T14:50:59.185934726Z","Action":"output","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestWriteFile","Output":"--- PASS: TestWriteFile (0.00s)\n"}
+{"Time":"2026-07-01T14:50:59.185938977Z","Action":"pass","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestWriteFile","Elapsed":0}
+{"Time":"2026-07-01T14:50:59.185941907Z","Action":"run","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestOldGlob"}
+{"Time":"2026-07-01T14:50:59.185944114Z","Action":"output","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestOldGlob","Output":"=== RUN   TestOldGlob\n"}
+{"Time":"2026-07-01T14:50:59.185948848Z","Action":"output","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestOldGlob","Output":"--- PASS: TestOldGlob (0.00s)\n"}
+{"Time":"2026-07-01T14:50:59.185952087Z","Action":"pass","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestOldGlob","Elapsed":0}
+{"Time":"2026-07-01T14:50:59.185956127Z","Action":"run","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestCleanedAbs_1"}
+{"Time":"2026-07-01T14:50:59.185961448Z","Action":"output","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestCleanedAbs_1","Output":"=== RUN   TestCleanedAbs_1\n"}
+{"Time":"2026-07-01T14:50:59.186053856Z","Action":"output","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestCleanedAbs_1","Output":"--- PASS: TestCleanedAbs_1 (0.00s)\n"}
+{"Time":"2026-07-01T14:50:59.186057386Z","Action":"pass","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestCleanedAbs_1","Elapsed":0}
+{"Time":"2026-07-01T14:50:59.186061224Z","Action":"run","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestCleanedAbs_2"}
+{"Time":"2026-07-01T14:50:59.186064123Z","Action":"output","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestCleanedAbs_2","Output":"=== RUN   TestCleanedAbs_2\n"}
+{"Time":"2026-07-01T14:50:59.186119781Z","Action":"output","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestCleanedAbs_2","Output":"--- PASS: TestCleanedAbs_2 (0.00s)\n"}
+{"Time":"2026-07-01T14:50:59.186123896Z","Action":"pass","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestCleanedAbs_2","Elapsed":0}
+{"Time":"2026-07-01T14:50:59.186127852Z","Action":"run","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestCleanedAbs_3"}
+{"Time":"2026-07-01T14:50:59.186130294Z","Action":"output","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestCleanedAbs_3","Output":"=== RUN   TestCleanedAbs_3\n"}
+{"Time":"2026-07-01T14:50:59.186276147Z","Action":"output","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestCleanedAbs_3","Output":"--- PASS: TestCleanedAbs_3 (0.00s)\n"}
+{"Time":"2026-07-01T14:50:59.186279674Z","Action":"pass","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestCleanedAbs_3","Elapsed":0}
+{"Time":"2026-07-01T14:50:59.186285065Z","Action":"run","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestCleanedAbs_4"}
+{"Time":"2026-07-01T14:50:59.186288053Z","Action":"output","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestCleanedAbs_4","Output":"=== RUN   TestCleanedAbs_4\n"}
+{"Time":"2026-07-01T14:50:59.186520198Z","Action":"output","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestCleanedAbs_4","Output":"--- PASS: TestCleanedAbs_4 (0.00s)\n"}
+{"Time":"2026-07-01T14:50:59.18652394Z","Action":"pass","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestCleanedAbs_4","Elapsed":0}
+{"Time":"2026-07-01T14:50:59.186528528Z","Action":"run","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestReadFilesRealFS"}
+{"Time":"2026-07-01T14:50:59.186530992Z","Action":"output","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestReadFilesRealFS","Output":"=== RUN   TestReadFilesRealFS\n"}
+{"Time":"2026-07-01T14:50:59.186687833Z","Action":"output","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestReadFilesRealFS","Output":"--- PASS: TestReadFilesRealFS (0.00s)\n"}
+{"Time":"2026-07-01T14:50:59.186693191Z","Action":"pass","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestReadFilesRealFS","Elapsed":0}
+{"Time":"2026-07-01T14:50:59.186699773Z","Action":"run","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestFilePathMatch"}
+{"Time":"2026-07-01T14:50:59.186702438Z","Action":"output","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestFilePathMatch","Output":"=== RUN   TestFilePathMatch\n"}
+{"Time":"2026-07-01T14:50:59.186707201Z","Action":"output","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestFilePathMatch","Output":"--- PASS: TestFilePathMatch (0.00s)\n"}
+{"Time":"2026-07-01T14:50:59.18671001Z","Action":"pass","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestFilePathMatch","Elapsed":0}
+{"Time":"2026-07-01T14:50:59.186717309Z","Action":"run","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestFilePathSplit"}
+{"Time":"2026-07-01T14:50:59.186719798Z","Action":"output","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestFilePathSplit","Output":"=== RUN   TestFilePathSplit\n"}
+{"Time":"2026-07-01T14:50:59.18673638Z","Action":"output","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestFilePathSplit","Output":"--- PASS: TestFilePathSplit (0.00s)\n"}
+{"Time":"2026-07-01T14:50:59.18674293Z","Action":"pass","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestFilePathSplit","Elapsed":0}
+{"Time":"2026-07-01T14:50:59.186747367Z","Action":"run","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestStripTrailingSeps"}
+{"Time":"2026-07-01T14:50:59.186749798Z","Action":"output","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestStripTrailingSeps","Output":"=== RUN   TestStripTrailingSeps\n"}
+{"Time":"2026-07-01T14:50:59.186753247Z","Action":"output","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestStripTrailingSeps","Output":"--- PASS: TestStripTrailingSeps (0.00s)\n"}
+{"Time":"2026-07-01T14:50:59.186757988Z","Action":"pass","Package":"sigs.k8s.io/kustomize/api/filesys","Test":"TestStripTrailingSeps","Elapsed":0}
+{"Time":"2026-07-01T14:50:59.186761816Z","Action":"output","Package":"sigs.k8s.io/kustomize/api/filesys","Output":"PASS\n"}
+{"Time":"2026-07-01T14:50:59.186986819Z","Action":"output","Package":"sigs.k8s.io/kustomize/api/filesys","Output":"ok  \tsigs.k8s.io/kustomize/api/filesys\t0.002s\n"}
+{"Time":"2026-07-01T14:50:59.186998793Z","Action":"pass","Package":"sigs.k8s.io/kustomize/api/filesys","Elapsed":0.003}
+reward=1 graded=21 found=21 failed=0 parsed=21 framework=go exit_code=0

@@ -1,0 +1,6 @@
+patching file .dependency-cruiser.json
+patching file src/enrich/derive/reachable/index.js
+patching file src/schema/cruise-result.schema.json
+patching file src/validate/match-module-rule.js
+patching file tools/schema/modules.mjs
+patching file types/cruise-result.d.ts

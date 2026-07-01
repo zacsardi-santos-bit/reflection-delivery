@@ -1,0 +1,24 @@
+patching file packages/trampoline/test/fixture/a.txt
+patching file packages/trampoline/test/fixture/b.txt
+patching file packages/trampoline/test/fixture/c.txt
+patching file packages/trampoline/test/fixture/d.txt
+patching file packages/trampoline/test/fixture/initial.txt
+patching file packages/trampoline/test/trampoline-example.test.js
+patching file packages/trampoline/test/trampoline.test-d.ts
+patching file packages/trampoline/test/trampoline.test.js
+
+  ✓ trampoline-example › synchronous execution - example code
+  ✓ trampoline-example › asynchronous execution - example code
+  ✓ trampoline-example › asynchronous execution w/ sync thunk - example code
+  ✓ trampoline › synchronous execution - recursion
+  ✓ trampoline › synchronous execution
+  ✓ trampoline › sync error handling
+  ✓ trampoline › asynchronous execution w/ sync thunk
+  ✓ trampoline › asynchronous execution
+  ✓ trampoline › async error handling
+  ✓ trampoline › asynchronous execution w/ sync thunk - recursion
+  ✓ trampoline › asynchronous execution - recursion
+  ─
+
+  11 tests passed
+reward=1 graded=11 found=11 failed=0 parsed=11 framework=bun exit_code=0

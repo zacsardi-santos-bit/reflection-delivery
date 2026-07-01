@@ -1,0 +1,80 @@
+patching file go.mod
+patching file go.sum
+Hunk #1 FAILED at 48.
+Hunk #2 succeeded at 554 with fuzz 1 (offset 321 lines).
+Hunk #3 succeeded at 736 with fuzz 3 (offset 399 lines).
+Hunk #4 succeeded at 867 with fuzz 1 (offset 462 lines).
+1 out of 4 hunks FAILED -- saving rejects to file go.sum.rej
+patching file storage/storage_dest.go
+patching file go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file go.mod.rej
+patching file go.sum
+Hunk #1 FAILED at 48.
+Hunk #2 FAILED at 233.
+Hunk #3 FAILED at 337.
+Hunk #4 FAILED at 405.
+4 out of 4 hunks FAILED -- saving rejects to file go.sum.rej
+patching file storage/storage_dest.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+20 out of 20 hunks ignored -- saving rejects to file storage/storage_dest.go.rej
+can't find file to patch at input line 5
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/go.mod b/go.mod
+|index a19024a1..c9f289dd 100644
+|--- a/go.mod
+|+++ b/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+5 out of 5 hunks ignored
+can't find file to patch at input line 58
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/go.sum b/go.sum
+|index ffca0114..b1df07f1 100644
+|--- a/go.sum
+|+++ b/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+4 out of 4 hunks ignored
+can't find file to patch at input line 126
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/storage/storage_dest.go b/storage/storage_dest.go
+|index be906810..0af4523f 100644
+|--- a/storage/storage_dest.go
+|+++ b/storage/storage_dest.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+20 out of 20 hunks ignored
+patching file go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file go.mod.rej
+patching file go.sum
+Hunk #1 FAILED at 48.
+Hunk #2 FAILED at 233.
+Hunk #3 FAILED at 337.
+Hunk #4 FAILED at 405.
+4 out of 4 hunks FAILED -- saving rejects to file go.sum.rej
+patching file storage/storage_dest.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+20 out of 20 hunks ignored -- saving rejects to file storage/storage_dest.go.rej
+ERROR: golden patch failed to apply by all strategies

@@ -1,0 +1,281 @@
+patching file eng/config.json
+patching file sdk/security/keyvault/azcertificates/CHANGELOG.md
+patching file sdk/security/keyvault/azcertificates/_metadata.json
+patching file sdk/security/keyvault/azcertificates/client.go
+patching file sdk/security/keyvault/azcertificates/fake/custom_server.go
+patching file sdk/security/keyvault/azcertificates/fake/internal.go
+patching file sdk/security/keyvault/azcertificates/fake/server.go
+patching file sdk/security/keyvault/azcertificates/go.mod
+patching file sdk/security/keyvault/azcertificates/go.sum
+Hunk #2 FAILED at 34.
+1 out of 2 hunks FAILED -- saving rejects to file sdk/security/keyvault/azcertificates/go.sum.rej
+patching file sdk/security/keyvault/azcertificates/internal/transforms.go
+patching file sdk/security/keyvault/azcertificates/testdata/perf/go.mod
+patching file sdk/security/keyvault/azcertificates/testdata/perf/go.sum
+Hunk #2 FAILED at 30.
+1 out of 2 hunks FAILED -- saving rejects to file sdk/security/keyvault/azcertificates/testdata/perf/go.sum.rej
+patching file sdk/security/keyvault/azcertificates/tsp-location.yaml
+patching file eng/config.json
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file eng/config.json.rej
+patching file sdk/security/keyvault/azcertificates/CHANGELOG.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file sdk/security/keyvault/azcertificates/CHANGELOG.md.rej
+patching file sdk/security/keyvault/azcertificates/_metadata.json
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file sdk/security/keyvault/azcertificates/_metadata.json.rej
+patching file sdk/security/keyvault/azcertificates/client.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+31 out of 31 hunks ignored -- saving rejects to file sdk/security/keyvault/azcertificates/client.go.rej
+The next patch would create the file sdk/security/keyvault/azcertificates/fake/custom_server.go,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file sdk/security/keyvault/azcertificates/fake/internal.go,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file sdk/security/keyvault/azcertificates/fake/server.go,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file sdk/security/keyvault/azcertificates/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file sdk/security/keyvault/azcertificates/go.mod.rej
+patching file sdk/security/keyvault/azcertificates/go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file sdk/security/keyvault/azcertificates/go.sum.rej
+patching file sdk/security/keyvault/azcertificates/internal/transforms.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file sdk/security/keyvault/azcertificates/internal/transforms.go.rej
+patching file sdk/security/keyvault/azcertificates/testdata/perf/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file sdk/security/keyvault/azcertificates/testdata/perf/go.mod.rej
+patching file sdk/security/keyvault/azcertificates/testdata/perf/go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file sdk/security/keyvault/azcertificates/testdata/perf/go.sum.rej
+patching file sdk/security/keyvault/azcertificates/tsp-location.yaml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file sdk/security/keyvault/azcertificates/tsp-location.yaml.rej
+can't find file to patch at input line 5
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/eng/config.json b/eng/config.json
+|index ce4145647c..4e64700ae0 100644
+|--- a/eng/config.json
+|+++ b/eng/config.json
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 18
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/sdk/security/keyvault/azcertificates/CHANGELOG.md b/sdk/security/keyvault/azcertificates/CHANGELOG.md
+|index 8e93edcdaf..79149b36ac 100644
+|--- a/sdk/security/keyvault/azcertificates/CHANGELOG.md
+|+++ b/sdk/security/keyvault/azcertificates/CHANGELOG.md
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 37
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/sdk/security/keyvault/azcertificates/_metadata.json b/sdk/security/keyvault/azcertificates/_metadata.json
+|index 2b3030477b..a5de6037c9 100644
+|--- a/sdk/security/keyvault/azcertificates/_metadata.json
+|+++ b/sdk/security/keyvault/azcertificates/_metadata.json
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 47
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/sdk/security/keyvault/azcertificates/client.go b/sdk/security/keyvault/azcertificates/client.go
+|index 7ca6945cf0..5866d30a71 100644
+|--- a/sdk/security/keyvault/azcertificates/client.go
+|+++ b/sdk/security/keyvault/azcertificates/client.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+31 out of 31 hunks ignored
+patching file b/sdk/security/keyvault/azcertificates/fake/custom_server.go
+patching file b/sdk/security/keyvault/azcertificates/fake/internal.go
+patching file b/sdk/security/keyvault/azcertificates/fake/server.go
+can't find file to patch at input line 1639
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/sdk/security/keyvault/azcertificates/go.mod b/sdk/security/keyvault/azcertificates/go.mod
+|index 7c6cd4236a..1861926b59 100644
+|--- a/sdk/security/keyvault/azcertificates/go.mod
+|+++ b/sdk/security/keyvault/azcertificates/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 1669
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/sdk/security/keyvault/azcertificates/go.sum b/sdk/security/keyvault/azcertificates/go.sum
+|index 6e0655e734..4894493f2c 100644
+|--- a/sdk/security/keyvault/azcertificates/go.sum
+|+++ b/sdk/security/keyvault/azcertificates/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 1723
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/sdk/security/keyvault/azcertificates/internal/transforms.go b/sdk/security/keyvault/azcertificates/internal/transforms.go
+|index 7001a83867..0130b52db4 100644
+|--- a/sdk/security/keyvault/azcertificates/internal/transforms.go
+|+++ b/sdk/security/keyvault/azcertificates/internal/transforms.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 1754
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/sdk/security/keyvault/azcertificates/testdata/perf/go.mod b/sdk/security/keyvault/azcertificates/testdata/perf/go.mod
+|index b5004e7c50..b089be5e18 100644
+|--- a/sdk/security/keyvault/azcertificates/testdata/perf/go.mod
+|+++ b/sdk/security/keyvault/azcertificates/testdata/perf/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 1785
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/sdk/security/keyvault/azcertificates/testdata/perf/go.sum b/sdk/security/keyvault/azcertificates/testdata/perf/go.sum
+|index af7a95cbe7..b41b12b0ad 100644
+|--- a/sdk/security/keyvault/azcertificates/testdata/perf/go.sum
+|+++ b/sdk/security/keyvault/azcertificates/testdata/perf/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 1836
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/sdk/security/keyvault/azcertificates/tsp-location.yaml b/sdk/security/keyvault/azcertificates/tsp-location.yaml
+|index 9a073fd974..9530285dfd 100644
+|--- a/sdk/security/keyvault/azcertificates/tsp-location.yaml
+|+++ b/sdk/security/keyvault/azcertificates/tsp-location.yaml
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file eng/config.json
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file eng/config.json.rej
+patching file sdk/security/keyvault/azcertificates/CHANGELOG.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file sdk/security/keyvault/azcertificates/CHANGELOG.md.rej
+patching file sdk/security/keyvault/azcertificates/_metadata.json
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file sdk/security/keyvault/azcertificates/_metadata.json.rej
+patching file sdk/security/keyvault/azcertificates/client.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+31 out of 31 hunks ignored -- saving rejects to file sdk/security/keyvault/azcertificates/client.go.rej
+The next patch would create the file sdk/security/keyvault/azcertificates/fake/custom_server.go,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file sdk/security/keyvault/azcertificates/fake/internal.go,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file sdk/security/keyvault/azcertificates/fake/server.go,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file sdk/security/keyvault/azcertificates/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file sdk/security/keyvault/azcertificates/go.mod.rej
+patching file sdk/security/keyvault/azcertificates/go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file sdk/security/keyvault/azcertificates/go.sum.rej
+patching file sdk/security/keyvault/azcertificates/internal/transforms.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file sdk/security/keyvault/azcertificates/internal/transforms.go.rej
+patching file sdk/security/keyvault/azcertificates/testdata/perf/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file sdk/security/keyvault/azcertificates/testdata/perf/go.mod.rej
+patching file sdk/security/keyvault/azcertificates/testdata/perf/go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file sdk/security/keyvault/azcertificates/testdata/perf/go.sum.rej
+patching file sdk/security/keyvault/azcertificates/tsp-location.yaml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file sdk/security/keyvault/azcertificates/tsp-location.yaml.rej
+ERROR: golden patch failed to apply by all strategies

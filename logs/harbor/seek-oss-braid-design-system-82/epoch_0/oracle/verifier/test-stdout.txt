@@ -1,0 +1,437 @@
+patching file lib/components/Alert/Alert.test.tsx (renamed from lib/components/Alert/Alert.test.js)
+patching file lib/components/Box/Box.test.tsx (renamed from lib/components/Box/Box.test.js)
+patching file lib/components/Bullet/Bullet.test.tsx (renamed from lib/components/Bullet/Bullet.test.js)
+patching file lib/components/BulletList/BulletList.test.tsx (renamed from lib/components/BulletList/BulletList.test.js)
+patching file lib/components/Card/Card.test.tsx (renamed from lib/components/Card/Card.test.js)
+patching file lib/components/Checkbox/Checkbox.test.tsx (renamed from lib/components/Checkbox/Checkbox.test.js)
+patching file lib/components/ChecklistCard/ChecklistCard.test.tsx (renamed from lib/components/ChecklistCard/ChecklistCard.test.js)
+patching file lib/components/Divider/Divider.test.tsx (renamed from lib/components/Divider/Divider.test.js)
+patching file lib/components/FieldLabel/FieldLabel.test.tsx (renamed from lib/components/FieldLabel/FieldLabel.test.js)
+patching file lib/components/FieldMessage/FieldMessage.test.tsx (renamed from lib/components/FieldMessage/FieldMessage.test.js)
+patching file lib/components/Radio/Radio.test.tsx (renamed from lib/components/Radio/Radio.test.js)
+patching file lib/components/Reset/Reset.test.tsx (renamed from lib/components/Reset/Reset.test.js)
+patching file lib/components/Strong/Strong.test.tsx (renamed from lib/components/Strong/Strong.test.js)
+patching file lib/components/Text/Text.test.tsx (renamed from lib/components/Text/Text.test.js)
+patching file lib/components/icons/ChevronIcon/ChevronIcon.test.tsx (renamed from lib/components/icons/ChevronIcon/ChevronIcon.test.js)
+patching file lib/components/icons/ErrorIcon/ErrorIcon.test.tsx (renamed from lib/components/icons/ErrorIcon/ErrorIcon.test.js)
+patching file lib/components/icons/InfoIcon/InfoIcon.test.tsx (renamed from lib/components/icons/InfoIcon/InfoIcon.test.js)
+patching file lib/components/icons/TickCircleIcon/TickCircleIcon.test.tsx (renamed from lib/components/icons/TickCircleIcon/TickCircleIcon.test.js)
+patching file lib/components/icons/TickIcon/TickIcon.test.tsx (renamed from lib/components/icons/TickIcon/TickIcon.test.js)
+patching file lib/test/utils/forEachTheme.js
+patching file lib/test/utils/forEachTheme.tsx
+patching file lib/themes/themes.test.js
+patching file lib/themes/utils/toUnit.test.ts (renamed from lib/themes/utils/toUnit.test.js)
+
+> braid-design-system@0.0.1 unit /workspace/repo
+> sku test "--watchAll=false" "--verbose" "--ci" "--testMatch=**/?(*.)+(spec|test).[jt]s?(x)" "lib/components/Alert"
+
+Browserslist: caniuse-lite is outdated. Please run next command `yarn upgrade caniuse-lite browserslist`
+Browserslist: caniuse-lite is outdated. Please run next command `yarn upgrade caniuse-lite browserslist`
+Browserslist: caniuse-lite is outdated. Please run next command `yarn upgrade caniuse-lite browserslist`
+Browserslist: caniuse-lite is outdated. Please run next command `yarn upgrade caniuse-lite browserslist`
+PASS lib/components/Box/Box.test.tsx (28.895s)
+  Box
+    Theme: jobStreet
+      ✓ No props (78ms)
+      ✓ All props (2ms)
+      ✓ Unknown values (1ms)
+    Theme: seekAnz
+      ✓ No props (2ms)
+      ✓ All props (74ms)
+      ✓ Unknown values (2ms)
+    Theme: seekAsia
+      ✓ No props (2ms)
+      ✓ All props (2ms)
+      ✓ Unknown values (2ms)
+    Theme: wireframe
+      ✓ No props (1ms)
+      ✓ All props (1ms)
+      ✓ Unknown values (1ms)
+
+PASS lib/components/icons/ChevronIcon/ChevronIcon.test.tsx
+  ChevronIcon
+    Theme: jobStreet
+      ✓ Default (7ms)
+      ✓ Sized (3ms)
+      ✓ Inline (2ms)
+      ✓ Up (3ms)
+      ✓ Down (2ms)
+      ✓ Left (2ms)
+      ✓ Right (1ms)
+    Theme: seekAnz
+      ✓ Default (2ms)
+      ✓ Sized (1ms)
+      ✓ Inline (1ms)
+      ✓ Up (71ms)
+      ✓ Down (2ms)
+      ✓ Left (2ms)
+      ✓ Right (2ms)
+    Theme: seekAsia
+      ✓ Default (2ms)
+      ✓ Sized (2ms)
+      ✓ Inline (2ms)
+      ✓ Up (2ms)
+      ✓ Down (2ms)
+      ✓ Left (3ms)
+      ✓ Right (1ms)
+    Theme: wireframe
+      ✓ Default (2ms)
+      ✓ Sized (2ms)
+      ✓ Inline (74ms)
+      ✓ Up (3ms)
+      ✓ Down (2ms)
+      ✓ Left (2ms)
+      ✓ Right (2ms)
+
+PASS lib/components/Radio/Radio.test.tsx (29.698s)
+  Radio
+    Theme: jobStreet
+      ✓ Unchecked (191ms)
+      ✓ Checked (12ms)
+      ✓ Children when unchecked (83ms)
+      ✓ Children when checked (11ms)
+      ✓ With message (14ms)
+    Theme: seekAnz
+      ✓ Unchecked (74ms)
+      ✓ Checked (9ms)
+      ✓ Children when unchecked (90ms)
+      ✓ Children when checked (9ms)
+      ✓ With message (10ms)
+    Theme: seekAsia
+      ✓ Unchecked (6ms)
+      ✓ Checked (72ms)
+      ✓ Children when unchecked (10ms)
+      ✓ Children when checked (9ms)
+      ✓ With message (85ms)
+    Theme: wireframe
+      ✓ Unchecked (11ms)
+      ✓ Checked (94ms)
+      ✓ Children when unchecked (10ms)
+      ✓ Children when checked (83ms)
+      ✓ With message (9ms)
+
+PASS lib/components/Checkbox/Checkbox.test.tsx (29.599s)
+  Checkbox
+    Theme: jobStreet
+      ✓ Unchecked (194ms)
+      ✓ Checked (13ms)
+      ✓ Children when unchecked (11ms)
+      ✓ Children when checked (84ms)
+      ✓ With message (16ms)
+    Theme: seekAnz
+      ✓ Unchecked (80ms)
+      ✓ Checked (10ms)
+      ✓ Children when unchecked (8ms)
+      ✓ Children when checked (80ms)
+      ✓ With message (12ms)
+    Theme: seekAsia
+      ✓ Unchecked (88ms)
+      ✓ Checked (12ms)
+      ✓ Children when unchecked (11ms)
+      ✓ Children when checked (20ms)
+      ✓ With message (87ms)
+    Theme: wireframe
+      ✓ Unchecked (9ms)
+      ✓ Checked (8ms)
+      ✓ Children when unchecked (85ms)
+      ✓ Children when checked (8ms)
+      ✓ With message (6ms)
+
+PASS lib/components/Reset/Reset.test.tsx
+  Reset
+    Theme: jobStreet
+      ✓ Known element (4ms)
+      ✓ Unknown element (2ms)
+      ✓ Component (79ms)
+    Theme: seekAnz
+      ✓ Known element (2ms)
+      ✓ Unknown element (2ms)
+      ✓ Component (2ms)
+    Theme: seekAsia
+      ✓ Known element (1ms)
+      ✓ Unknown element (2ms)
+      ✓ Component (1ms)
+    Theme: wireframe
+      ✓ Known element (1ms)
+      ✓ Unknown element (1ms)
+      ✓ Component (2ms)
+
+PASS lib/components/Text/Text.test.tsx
+  Text
+    Theme: jobStreet
+      ✓ Default (4ms)
+      ✓ Size (2ms)
+      ✓ Color (12ms)
+      ✓ Weight (3ms)
+      ✓ Baseline disabled (2ms)
+      ✓ List item (2ms)
+    Theme: seekAnz
+      ✓ Default (2ms)
+      ✓ Size (2ms)
+      ✓ Color (80ms)
+      ✓ Weight (2ms)
+      ✓ Baseline disabled (1ms)
+      ✓ List item (2ms)
+    Theme: seekAsia
+      ✓ Default (1ms)
+      ✓ Size (1ms)
+      ✓ Color (1ms)
+      ✓ Weight (1ms)
+      ✓ Baseline disabled (2ms)
+      ✓ List item (2ms)
+    Theme: wireframe
+      ✓ Default (1ms)
+      ✓ Size (3ms)
+      ✓ Color (1ms)
+      ✓ Weight (1ms)
+      ✓ Baseline disabled (1ms)
+      ✓ List item (1ms)
+
+PASS lib/components/FieldMessage/FieldMessage.test.tsx
+  FieldMessage
+    Theme: jobStreet
+      ✓ False (3ms)
+      ✓ Empty (3ms)
+      ✓ Default (3ms)
+      ✓ Critical (76ms)
+      ✓ Positive (8ms)
+    Theme: seekAnz
+      ✓ False (1ms)
+      ✓ Empty (2ms)
+      ✓ Default (1ms)
+      ✓ Critical (2ms)
+      ✓ Positive (2ms)
+    Theme: seekAsia
+      ✓ False
+      ✓ Empty (2ms)
+      ✓ Default (1ms)
+      ✓ Critical (2ms)
+      ✓ Positive (3ms)
+    Theme: wireframe
+      ✓ False
+      ✓ Empty (2ms)
+      ✓ Default (2ms)
+      ✓ Critical (71ms)
+      ✓ Positive (4ms)
+
+PASS lib/components/icons/TickCircleIcon/TickCircleIcon.test.tsx
+  TickCircleIcon
+    Theme: jobStreet
+      ✓ Default (4ms)
+      ✓ Sized (3ms)
+      ✓ Inline (92ms)
+    Theme: seekAnz
+      ✓ Default (13ms)
+      ✓ Sized (2ms)
+      ✓ Inline (2ms)
+    Theme: seekAsia
+      ✓ Default (2ms)
+      ✓ Sized (1ms)
+      ✓ Inline (1ms)
+    Theme: wireframe
+      ✓ Default (2ms)
+      ✓ Sized (1ms)
+      ✓ Inline (1ms)
+
+PASS lib/components/icons/TickIcon/TickIcon.test.tsx
+  TickIcon
+    Theme: jobStreet
+      ✓ Default (4ms)
+      ✓ Sized (3ms)
+      ✓ Inline (3ms)
+    Theme: seekAnz
+      ✓ Default (2ms)
+      ✓ Sized (3ms)
+      ✓ Inline (2ms)
+    Theme: seekAsia
+      ✓ Default (1ms)
+      ✓ Sized (2ms)
+      ✓ Inline (74ms)
+    Theme: wireframe
+      ✓ Default (2ms)
+      ✓ Sized (2ms)
+      ✓ Inline (2ms)
+
+PASS lib/components/icons/ErrorIcon/ErrorIcon.test.tsx
+  ErrorIcon
+    Theme: jobStreet
+      ✓ Default (7ms)
+      ✓ Sized (3ms)
+      ✓ Inline (89ms)
+    Theme: seekAnz
+      ✓ Default (3ms)
+      ✓ Sized (2ms)
+      ✓ Inline (2ms)
+    Theme: seekAsia
+      ✓ Default (2ms)
+      ✓ Sized (78ms)
+      ✓ Inline (3ms)
+    Theme: wireframe
+      ✓ Default (2ms)
+      ✓ Sized (2ms)
+      ✓ Inline (2ms)
+
+PASS lib/components/icons/InfoIcon/InfoIcon.test.tsx
+  InfoIcon
+    Theme: jobStreet
+      ✓ Default (5ms)
+      ✓ Sized (3ms)
+      ✓ Inline (5ms)
+    Theme: seekAnz
+      ✓ Default (3ms)
+      ✓ Sized (3ms)
+      ✓ Inline (2ms)
+    Theme: seekAsia
+      ✓ Default (1ms)
+      ✓ Sized (71ms)
+      ✓ Inline (3ms)
+    Theme: wireframe
+      ✓ Default (2ms)
+      ✓ Sized (3ms)
+      ✓ Inline (2ms)
+
+PASS lib/components/Alert/Alert.test.tsx
+  Alert
+    Theme: jobStreet
+      Tones
+        ✓ critical (8ms)
+        ✓ info (6ms)
+        ✓ default (4ms)
+    Theme: seekAnz
+      Tones
+        ✓ critical (4ms)
+        ✓ info (76ms)
+        ✓ default (4ms)
+    Theme: seekAsia
+      Tones
+        ✓ critical (3ms)
+        ✓ info (2ms)
+        ✓ default (2ms)
+    Theme: wireframe
+      Tones
+        ✓ critical (2ms)
+        ✓ info (3ms)
+        ✓ default (3ms)
+
+PASS lib/components/BulletList/BulletList.test.tsx
+  BulletList
+    Theme: jobStreet
+      ✓ Default (5ms)
+    Theme: seekAnz
+      ✓ Default (2ms)
+    Theme: seekAsia
+      ✓ Default (2ms)
+    Theme: wireframe
+      ✓ Default (75ms)
+
+PASS lib/components/ChecklistCard/ChecklistCard.test.tsx
+  ChecklistCard
+    Theme: jobStreet
+      ✓ Default (191ms)
+    Theme: seekAnz
+      ✓ Default (98ms)
+    Theme: seekAsia
+      ✓ Default (94ms)
+    Theme: wireframe
+      ✓ Default (99ms)
+
+PASS lib/components/FieldLabel/FieldLabel.test.tsx
+  FieldLabel
+    Theme: jobStreet
+      ✓ Default (72ms)
+    Theme: seekAnz
+      ✓ Default (2ms)
+    Theme: seekAsia
+      ✓ Default (2ms)
+    Theme: wireframe
+      ✓ Default (1ms)
+
+PASS lib/components/Bullet/Bullet.test.tsx
+  Bullet
+    Theme: jobStreet
+      ✓ Default (5ms)
+    Theme: seekAnz
+      ✓ Default (2ms)
+    Theme: seekAsia
+      ✓ Default (2ms)
+    Theme: wireframe
+      ✓ Default (2ms)
+
+PASS lib/components/Strong/Strong.test.tsx
+  Strong
+    Theme: jobStreet
+      ✓ Default (3ms)
+    Theme: seekAnz
+      ✓ Default (2ms)
+    Theme: seekAsia
+      ✓ Default (2ms)
+    Theme: wireframe
+      ✓ Default (1ms)
+
+PASS lib/components/Card/Card.test.tsx
+  Card
+    Theme: jobStreet
+      ✓ Default (8ms)
+    Theme: seekAnz
+      ✓ Default (2ms)
+    Theme: seekAsia
+      ✓ Default (1ms)
+    Theme: wireframe
+      ✓ Default (74ms)
+
+PASS lib/themes/utils/toUnit.test.ts
+  toUnit
+    ✓ should convert '1' to '1px' (2ms)
+    ✓ should convert '0' to '0'
+    ✓ should convert '123.23' to '123.23px'
+
+PASS lib/components/Divider/Divider.test.tsx
+  Divider
+    Theme: jobStreet
+      ✓ Default (72ms)
+    Theme: seekAnz
+      ✓ Default (2ms)
+    Theme: seekAsia
+      ✓ Default (3ms)
+    Theme: wireframe
+      ✓ Default (2ms)
+
+PASS lib/themes/utils/sizeRulesForTokens.test.js
+  sizeRulesForTokens
+    Theme: jobStreet
+      ✓ Rules (2ms)
+    Theme: seekAnz
+      ✓ Rules
+    Theme: seekAsia
+      ✓ Rules
+    Theme: wireframe
+      ✓ Rules
+
+PASS lib/themes/utils/transformForTokens.test.js
+  transformForTokens
+    Theme: jobStreet
+      ✓ Rules (1ms)
+    Theme: seekAnz
+      ✓ Rules (1ms)
+    Theme: seekAsia
+      ✓ Rules
+    Theme: wireframe
+      ✓ Rules (1ms)
+
+PASS lib/themes/utils/fontSizeRulesForTokens.test.js
+  fontSizeRulesForTokens
+    Theme: jobStreet
+      ✓ Rules (1ms)
+    Theme: seekAnz
+      ✓ Rules
+    Theme: seekAsia
+      ✓ Rules
+    Theme: wireframe
+      ✓ Rules (1ms)
+
+Test Suites: 23 passed, 23 total
+Tests:       239 passed, 239 total
+Snapshots:   236 passed, 236 total
+Time:        35.733s
+Ran all test suites.
+reward=1 graded=239 found=0 failed=0 parsed=0 framework=jest exit_code=0

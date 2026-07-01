@@ -1,0 +1,8 @@
+patching file .vscode/settings.json
+patching file custom-words.txt
+patching file packages/graphql-language-service-server/package.json
+patching file packages/graphql-language-service-server/src/MessageProcessor.ts
+patching file packages/graphql-language-service-server/src/findGraphQLTags.ts
+patching file packages/graphql-language-service-server/src/parseDocument.ts
+patching file packages/graphql-language-service/src/interface/getDiagnostics.ts
+patching file yarn.lock

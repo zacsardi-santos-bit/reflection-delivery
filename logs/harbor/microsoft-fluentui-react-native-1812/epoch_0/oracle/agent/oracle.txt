@@ -1,0 +1,8 @@
+patching file apps/fluent-tester/src/FluentTester/TestComponents/Shadow/ShadowDepthTestSection.tsx
+patching file change/@fluentui-react-native-experimental-shadow-fa8b6bd2-8965-4206-b82a-d07d2ded7927.json
+patching file change/@fluentui-react-native-tester-7d376ead-ccfd-4d50-9e3d-85a780d4a74f.json
+patching file packages/experimental/Shadow/package.json
+patching file packages/experimental/Shadow/src/Shadow.tsx
+patching file packages/experimental/Shadow/src/Shadow.types.ts
+patching file packages/experimental/Shadow/src/index.ts
+patching file packages/experimental/Shadow/src/shadowStyle.ts

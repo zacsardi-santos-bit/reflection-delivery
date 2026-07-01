@@ -1,0 +1,9 @@
+patching file hack/test/patches/openebs-cp.yaml
+patching file hack/test/patches/openebs.yaml
+?   	github.com/siderolabs/talos/internal/integration/api	[no test files]
+?   	github.com/siderolabs/talos/internal/integration/base	[no test files]
+?   	github.com/siderolabs/talos/internal/integration/cli	[no test files]
+?   	github.com/siderolabs/talos/internal/integration/k8s	[no test files]
+?   	github.com/siderolabs/talos/internal/integration/provision	[no test files]
+ok  	github.com/siderolabs/talos/internal/integration	0.024s
+reward=1 graded=1 found=0 failed=0 parsed=0 framework=go exit_code=0

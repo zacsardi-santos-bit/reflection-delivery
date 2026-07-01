@@ -1,0 +1,8 @@
+patching file pkg/internal/netolly/flow/deduper_test.go
+patching file test/integration/docker-compose-netolly.yml
+patching file test/integration/suites_network_test.go
+# github.com/grafana/beyla/pkg/internal/netolly/flow [github.com/grafana/beyla/pkg/internal/netolly/flow.test]
+pkg/internal/netolly/flow/deduper_test.go:152:24: undefined: ebpf.InterfaceUnset
+pkg/internal/netolly/flow/deduper_test.go:153:26: undefined: ebpf.DirectionUnset
+FAIL	github.com/grafana/beyla/pkg/internal/netolly/flow [build failed]
+reward=0 graded=11 found=11 failed=11 parsed=1 framework=go exit_code=1

@@ -1,0 +1,118 @@
+patching file tests/test-posix-socket.js
+cd build; cmake ../ -DCMAKE_BUILD_TYPE=Release
+-- Building in Release mode
+-- Building with GNU 13.3.0 on Linux-4.14.355-282.733.amzn2.x86_64
+-- C flags:         
+-- C Debug flags:   -g -ggdb -O0 -fno-omit-frame-pointer
+-- C Release flags: -O3 -DNDEBUG -g
+--   BUILD_WITH_ASAN: OFF
+CMake Deprecation Warning at deps/quickjs/CMakeLists.txt:1 (cmake_minimum_required):
+  Compatibility with CMake < 3.5 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value or use a ...<max> suffix to tell
+  CMake that the project does not need compatibility with older versions.
+
+
+CMake Deprecation Warning at deps/libuv/CMakeLists.txt:1 (cmake_minimum_required):
+  Compatibility with CMake < 3.5 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value or use a ...<max> suffix to tell
+  CMake that the project does not need compatibility with older versions.
+
+
+-- summary of build options:
+    Install prefix:  /usr/local
+    Target system:   Linux
+    Compiler:
+      C compiler:    /usr/bin/cc (GNU)
+      CFLAGS:         
+
+----
+Generator:  Unix Makefiles
+Compiler:   GNU
+Build Type: Release
+LTO:        ON
+Flags:          -Dd_m3HasTracer -Wall -Wextra -Wparentheses -Wundef -Wpointer-arith -Wstrict-aliasing=2 -Werror=implicit-function-declaration -Wno-unused-function -Wno-unused-variable -Wno-unused-parameter -Wno-missing-field-initializers -Wjump-misses-init -Dd_m3HasWASI
+Debug flags:   -g -ggdb -O0 -fno-omit-frame-pointer -ggdb -O0
+Release flags: -O3 -Wfatal-errors -fomit-frame-pointer -fno-stack-check -fno-stack-protector -march=native
+----
+-- Configuring done (0.5s)
+-- Generating done (0.0s)
+-- Build files have been written to: /workspace/repo/build
+cmake --build build
+gmake[1]: Entering directory '/workspace/repo/build'
+gmake[2]: Entering directory '/workspace/repo/build'
+gmake[3]: Entering directory '/workspace/repo/build'
+gmake[3]: Leaving directory '/workspace/repo/build'
+[ 17%] Built target m3
+gmake[3]: Entering directory '/workspace/repo/build'
+gmake[3]: Leaving directory '/workspace/repo/build'
+[ 25%] Built target libffi
+gmake[3]: Entering directory '/workspace/repo/build'
+gmake[3]: Leaving directory '/workspace/repo/build'
+[ 32%] Built target qjs
+gmake[3]: Entering directory '/workspace/repo/build'
+gmake[3]: Leaving directory '/workspace/repo/build'
+[ 72%] Built target uv_a
+gmake[3]: Entering directory '/workspace/repo/build'
+gmake[3]: Leaving directory '/workspace/repo/build'
+gmake[3]: Entering directory '/workspace/repo/build'
+[ 72%] Building C object CMakeFiles/tjs.dir/src/bootstrap.c.o
+[ 74%] Building C object CMakeFiles/tjs.dir/src/cli.c.o
+[ 75%] Building C object CMakeFiles/tjs.dir/src/curl-utils.c.o
+[ 77%] Building C object CMakeFiles/tjs.dir/src/dns.c.o
+[ 77%] Building C object CMakeFiles/tjs.dir/src/error.c.o
+[ 78%] Building C object CMakeFiles/tjs.dir/src/ffi.c.o
+/workspace/repo/src/ffi.c: In function 'js_ffi_type_create_struct':
+/workspace/repo/src/ffi.c:150:47: warning: format '%d' expects argument of type 'int', but argument 3 has type 'long int' [-Wformat=]
+  150 |             JS_ThrowTypeError(ctx, "argument %d is not a FfiType", (types - argv) + i + 1);
+      |                                              ~^                    ~~~~~~~~~~~~~~~~~~~~~~
+      |                                               |                                       |
+      |                                               int                                     long int
+      |                                              %ld
+/workspace/repo/src/ffi.c: In function 'js_ffi_type_from_buffer':
+/workspace/repo/src/ffi.c:507:65: warning: format '%d' expects argument of type 'int', but argument 3 has type 'size_t' {aka 'long unsigned int'} [-Wformat=]
+  507 |         JS_ThrowRangeError(ctx, "expected buffer to be of size %d", typesz);
+      |                                                                ~^   ~~~~~~
+      |                                                                 |   |
+      |                                                                 int size_t {aka long unsigned int}
+      |                                                                %ld
+[ 80%] Building C object CMakeFiles/tjs.dir/src/fs.c.o
+[ 81%] Building C object CMakeFiles/tjs.dir/src/fswatch.c.o
+[ 81%] Building C object CMakeFiles/tjs.dir/src/modules.c.o
+[ 82%] Building C object CMakeFiles/tjs.dir/src/os.c.o
+[ 84%] Building C object CMakeFiles/tjs.dir/src/process.c.o
+[ 85%] Building C object CMakeFiles/tjs.dir/src/streams.c.o
+[ 85%] Building C object CMakeFiles/tjs.dir/src/signals.c.o
+[ 87%] Building C object CMakeFiles/tjs.dir/src/sys.c.o
+[ 88%] Building C object CMakeFiles/tjs.dir/src/timers.c.o
+[ 90%] Building C object CMakeFiles/tjs.dir/src/udp.c.o
+[ 90%] Building C object CMakeFiles/tjs.dir/src/utils.c.o
+[ 91%] Building C object CMakeFiles/tjs.dir/src/version.c.o
+[ 92%] Building C object CMakeFiles/tjs.dir/src/vm.c.o
+[ 94%] Building C object CMakeFiles/tjs.dir/src/wasm.c.o
+[ 94%] Building C object CMakeFiles/tjs.dir/src/worker.c.o
+[ 95%] Building C object CMakeFiles/tjs.dir/src/xhr.c.o
+/workspace/repo/src/xhr.c: In function 'curl__progress_cb':
+/workspace/repo/src/xhr.c:282:9: warning: 'CURLINFO_CONTENT_LENGTH_DOWNLOAD' is deprecated: since 7.55.0. Use CURLINFO_CONTENT_LENGTH_DOWNLOAD_T [-Wdeprecated-declarations]
+  282 |         curl_easy_getinfo(x->curl_h, CURLINFO_CONTENT_LENGTH_DOWNLOAD, &cl);
+      |         ^~~~~~~~~~~~~~~~~
+In file included from /workspace/repo/src/private.h:33,
+                 from /workspace/repo/src/curl-utils.h:25,
+                 from /workspace/repo/src/xhr.c:25:
+/usr/include/x86_64-linux-gnu/curl/curl.h:2874:3: note: declared here
+ 2874 |   CURLINFO_CONTENT_LENGTH_DOWNLOAD
+      |   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[ 97%] Building C object CMakeFiles/tjs.dir/src/posix-socket.c.o
+[ 97%] Linking C executable tjs
+gmake[3]: Leaving directory '/workspace/repo/build'
+[ 98%] Built target tjs
+gmake[3]: Entering directory '/workspace/repo/build'
+gmake[3]: Leaving directory '/workspace/repo/build'
+[100%] Built target ffi-test
+gmake[2]: Leaving directory '/workspace/repo/build'
+gmake[1]: Leaving directory '/workspace/repo/build'
+{"numFailedTestSuites": 0, "numPassedTestSuites": 1, "numFailedTests": 0, "numPassedTests": 1, "numPendingTests": 0, "numTotalTests": 1, "numTotalTestSuites": 1, "success": true, "testResults": [{"name": "tests/test-posix-socket.js", "status": "passed", "message": "", "assertionResults": [{"title": "posix-socket", "status": "passed", "ancestorTitles": [], "fullName": "posix-socket", "failureMessages": [], "numPassingAsserts": 1}]}]}
+reward=1 graded=1 found=1 failed=0 parsed=1 framework=jest exit_code=0

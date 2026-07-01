@@ -1,0 +1,13 @@
+patching file sdks/java/nexmark/src/main/java/org/apache/beam/sdk/nexmark/NexmarkLauncher.java
+patching file sdks/java/nexmark/src/main/java/org/apache/beam/sdk/nexmark/queries/sql/SqlQuery7.java
+patching file sdks/python/apache_beam/metrics/cells.py
+patching file sdks/python/apache_beam/metrics/cells_test.py
+patching file sdks/python/apache_beam/metrics/execution.pxd
+patching file sdks/python/apache_beam/metrics/execution.py
+patching file sdks/python/apache_beam/metrics/execution_test.py
+patching file sdks/python/apache_beam/metrics/metric.py
+patching file sdks/python/apache_beam/metrics/metric_test.py
+patching file sdks/python/apache_beam/metrics/metricbase.py
+patching file sdks/python/apache_beam/runners/dataflow/dataflow_metrics.py
+patching file sdks/python/apache_beam/runners/direct/direct_metrics.py
+patching file sdks/python/apache_beam/runners/runner_test.py

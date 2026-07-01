@@ -1,0 +1,15 @@
+patching file .travis.yml
+patching file CHANGELOG.md
+patching file gulpfile.js
+patching file misc/api-doc.ts (renamed from misc/api-doc.js)
+patching file misc/copy-static-files.ts
+patching file misc/demo-gen-utils.js
+patching file misc/demo-gen.js
+patching file misc/generate-docs.ts
+patching file misc/generate-stackblitzes.ts (renamed from misc/stackblitz-gen.js)
+patching file misc/get-doc.js
+patching file misc/tsconfig.json
+patching file package.json
+patching file src/modal/modal.ts
+patching file src/package.json
+patching file yarn.lock

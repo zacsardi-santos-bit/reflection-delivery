@@ -1,0 +1,4 @@
+patching file hadoop-ozone/interface-storage/src/main/java/org/apache/hadoop/ozone/om/helpers/OmPrefixInfo.java
+patching file hadoop-ozone/ozone-manager/src/main/java/org/apache/hadoop/ozone/om/PrefixManagerImpl.java
+patching file hadoop-ozone/ozone-manager/src/main/java/org/apache/hadoop/ozone/om/request/key/acl/prefix/OMPrefixAclRequest.java
+patching file hadoop-ozone/ozone-manager/src/main/java/org/apache/hadoop/ozone/om/request/util/ObjectParser.java

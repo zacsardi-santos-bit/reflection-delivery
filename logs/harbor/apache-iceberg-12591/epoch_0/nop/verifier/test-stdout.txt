@@ -1,0 +1,208 @@
+patching file aws/src/test/java/org/apache/iceberg/aws/s3/TestS3FileIO.java
+patching file core/src/test/java/org/apache/iceberg/TestCatalogUtil.java
+patching file core/src/test/java/org/apache/iceberg/io/TestResolvingIO.java
+patching file core/src/test/java/org/apache/iceberg/io/TestStorageCredential.java
+patching file gcp/src/test/java/org/apache/iceberg/gcp/gcs/GCSFileIOTest.java
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.13/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+Configuration on demand is an incubating feature.
+> Task :generateGitProperties
+> Task :buildInfo
+> Task :iceberg-bundled-guava:compileJava UP-TO-DATE
+> Task :iceberg-bundled-guava:processResources NO-SOURCE
+> Task :iceberg-bundled-guava:classes UP-TO-DATE
+> Task :iceberg-bundled-guava:compileTestJava NO-SOURCE
+> Task :iceberg-bundled-guava:shadowJar FROM-CACHE
+> Task :iceberg-api:compileJava UP-TO-DATE
+> Task :iceberg-api:processResources NO-SOURCE
+> Task :iceberg-api:classes UP-TO-DATE
+> Task :iceberg-api:jar
+> Task :iceberg-api:compileTestJava UP-TO-DATE
+> Task :spotlessInternalRegisterDependencies UP-TO-DATE
+> Task :iceberg-api:processTestResources
+> Task :iceberg-api:testClasses
+
+> Task :iceberg-api:testJar
+file '/workspace/repo/build/iceberg-build.properties' will be copied to 'iceberg-build.properties', overwriting file '/workspace/repo/api/build/resources/test/iceberg-build.properties', which has already been copied there.
+
+> Task :iceberg-common:compileJava UP-TO-DATE
+> Task :iceberg-common:processResources NO-SOURCE
+> Task :iceberg-common:classes UP-TO-DATE
+> Task :iceberg-common:jar
+> Task :iceberg-core:compileJava UP-TO-DATE
+> Task :iceberg-core:processResources NO-SOURCE
+> Task :iceberg-core:classes UP-TO-DATE
+
+> Task :iceberg-core:compileTestJava
+/workspace/repo/core/src/test/java/org/apache/iceberg/TestCatalogUtil.java:35: error: cannot find symbol
+import org.apache.iceberg.io.StorageCredential;
+                            ^
+  symbol:   class StorageCredential
+  location: package org.apache.iceberg.io
+/workspace/repo/core/src/test/java/org/apache/iceberg/TestCatalogUtil.java:36: error: cannot find symbol
+import org.apache.iceberg.io.SupportsStorageCredentials;
+                            ^
+  symbol:   class SupportsStorageCredentials
+  location: package org.apache.iceberg.io
+/workspace/repo/core/src/test/java/org/apache/iceberg/TestCatalogUtil.java:516: error: cannot find symbol
+      implements FileIO, SupportsStorageCredentials {
+                         ^
+  symbol:   class SupportsStorageCredentials
+  location: class TestCatalogUtil
+/workspace/repo/core/src/test/java/org/apache/iceberg/TestCatalogUtil.java:518: error: cannot find symbol
+    private List<StorageCredential> storageCredentials;
+                 ^
+  symbol:   class StorageCredential
+  location: class TestFileIOWithStorageCredentials
+/workspace/repo/core/src/test/java/org/apache/iceberg/TestCatalogUtil.java:536: error: cannot find symbol
+    public void setCredentials(List<StorageCredential> credentials) {
+                                    ^
+  symbol:   class StorageCredential
+  location: class TestFileIOWithStorageCredentials
+/workspace/repo/core/src/test/java/org/apache/iceberg/TestCatalogUtil.java:541: error: cannot find symbol
+    public List<StorageCredential> credentials() {
+                ^
+  symbol:   class StorageCredential
+  location: class TestFileIOWithStorageCredentials
+/workspace/repo/core/src/test/java/org/apache/iceberg/TestCatalogUtil.java:164: error: cannot find symbol
+    StorageCredential gcsCredential =
+    ^
+  symbol:   class StorageCredential
+  location: class TestCatalogUtil
+/workspace/repo/core/src/test/java/org/apache/iceberg/TestCatalogUtil.java:165: error: cannot find symbol
+        StorageCredential.create(
+        ^
+  symbol:   variable StorageCredential
+  location: class TestCatalogUtil
+/workspace/repo/core/src/test/java/org/apache/iceberg/TestCatalogUtil.java:168: error: cannot find symbol
+    StorageCredential s3Credential =
+    ^
+  symbol:   class StorageCredential
+  location: class TestCatalogUtil
+/workspace/repo/core/src/test/java/org/apache/iceberg/TestCatalogUtil.java:169: error: cannot find symbol
+        StorageCredential.create(
+        ^
+  symbol:   variable StorageCredential
+  location: class TestCatalogUtil
+/workspace/repo/core/src/test/java/org/apache/iceberg/TestCatalogUtil.java:179: error: cannot find symbol
+    List<StorageCredential> storageCredentials = List.of(gcsCredential, s3Credential);
+         ^
+  symbol:   class StorageCredential
+  location: class TestCatalogUtil
+/workspace/repo/core/src/test/java/org/apache/iceberg/TestCatalogUtil.java:535: error: method does not override or implement a method from a supertype
+    @Override
+    ^
+/workspace/repo/core/src/test/java/org/apache/iceberg/TestCatalogUtil.java:540: error: method does not override or implement a method from a supertype
+    @Override
+    ^
+/workspace/repo/core/src/test/java/org/apache/iceberg/io/TestResolvingIO.java:191: error: cannot find symbol
+    StorageCredential credential = StorageCredential.create("prefix", Map.of("key1", "val1"));
+    ^
+  symbol:   class StorageCredential
+  location: class TestResolvingIO
+/workspace/repo/core/src/test/java/org/apache/iceberg/io/TestResolvingIO.java:191: error: cannot find symbol
+    StorageCredential credential = StorageCredential.create("prefix", Map.of("key1", "val1"));
+                                   ^
+  symbol:   variable StorageCredential
+  location: class TestResolvingIO
+/workspace/repo/core/src/test/java/org/apache/iceberg/io/TestResolvingIO.java:192: error: cannot find symbol
+    List<StorageCredential> storageCredentials = ImmutableList.of(credential);
+         ^
+  symbol:   class StorageCredential
+  location: class TestResolvingIO
+/workspace/repo/core/src/test/java/org/apache/iceberg/io/TestResolvingIO.java:201: error: cannot find symbol
+    assertThat(TestHelpers.KryoHelpers.roundTripSerialize(resolvingFileIO).credentials())
+                                                                          ^
+  symbol:   method credentials()
+  location: class ResolvingFileIO
+/workspace/repo/core/src/test/java/org/apache/iceberg/io/TestResolvingIO.java:203: error: cannot find symbol
+        .isEqualTo(resolvingFileIO.credentials());
+                                  ^
+  symbol:   method credentials()
+  location: variable resolvingFileIO of type ResolvingFileIO
+/workspace/repo/core/src/test/java/org/apache/iceberg/io/TestResolvingIO.java:209: error: cannot find symbol
+    StorageCredential credential = StorageCredential.create("prefix", Map.of("key1", "val1"));
+    ^
+  symbol:   class StorageCredential
+  location: class TestResolvingIO
+/workspace/repo/core/src/test/java/org/apache/iceberg/io/TestResolvingIO.java:209: error: cannot find symbol
+    StorageCredential credential = StorageCredential.create("prefix", Map.of("key1", "val1"));
+                                   ^
+  symbol:   variable StorageCredential
+  location: class TestResolvingIO
+/workspace/repo/core/src/test/java/org/apache/iceberg/io/TestResolvingIO.java:210: error: cannot find symbol
+    List<StorageCredential> storageCredentials = ImmutableList.of(credential);
+         ^
+  symbol:   class StorageCredential
+  location: class TestResolvingIO
+/workspace/repo/core/src/test/java/org/apache/iceberg/io/TestResolvingIO.java:219: error: cannot find symbol
+    assertThat(TestHelpers.roundTripSerialize(resolvingFileIO).credentials())
+                                                              ^
+  symbol:   method credentials()
+  location: class ResolvingFileIO
+/workspace/repo/core/src/test/java/org/apache/iceberg/io/TestResolvingIO.java:221: error: cannot find symbol
+        .isEqualTo(resolvingFileIO.credentials());
+                                  ^
+  symbol:   method credentials()
+  location: variable resolvingFileIO of type ResolvingFileIO
+/workspace/repo/core/src/test/java/org/apache/iceberg/io/TestStorageCredential.java:32: error: cannot find symbol
+    assertThatThrownBy(() -> StorageCredential.create("", Map.of()))
+                             ^
+  symbol:   variable StorageCredential
+  location: class TestStorageCredential
+/workspace/repo/core/src/test/java/org/apache/iceberg/io/TestStorageCredential.java:39: error: cannot find symbol
+    assertThatThrownBy(() -> StorageCredential.create("prefix", Map.of()))
+                             ^
+  symbol:   variable StorageCredential
+  location: class TestStorageCredential
+/workspace/repo/core/src/test/java/org/apache/iceberg/io/TestStorageCredential.java:46: error: cannot find symbol
+    StorageCredential credential =
+    ^
+  symbol:   class StorageCredential
+  location: class TestStorageCredential
+/workspace/repo/core/src/test/java/org/apache/iceberg/io/TestStorageCredential.java:47: error: cannot find symbol
+        StorageCredential.create("randomPrefix", Map.of("token", "storageToken"));
+        ^
+  symbol:   variable StorageCredential
+  location: class TestStorageCredential
+/workspace/repo/core/src/test/java/org/apache/iceberg/io/TestStorageCredential.java:53: error: cannot find symbol
+    StorageCredential credential =
+    ^
+  symbol:   class StorageCredential
+  location: class TestStorageCredential
+/workspace/repo/core/src/test/java/org/apache/iceberg/io/TestStorageCredential.java:54: error: cannot find symbol
+        StorageCredential.create("randomPrefix", Map.of("token", "storageToken"));
+        ^
+  symbol:   variable StorageCredential
+  location: class TestStorageCredential
+29 errors
+
+> Task :iceberg-core:compileTestJava FAILED
+
+[Incubating] Problems report is available at: file:///workspace/repo/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':iceberg-core:compileTestJava'.
+> Compilation failed; see the compiler output below.
+  /workspace/repo/core/src/test/java/org/apache/iceberg/TestCatalogUtil.java:35: error: cannot find symbol
+  import org.apache.iceberg.io.StorageCredential;
+                              ^
+    symbol:   class StorageCredential
+    location: package org.apache.iceberg.io
+  29 errors
+
+* Try:
+> Check your code and dependencies to fix the compilation error(s)
+> Run with --scan to get full insights.
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.13/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD FAILED in 41s
+13 actionable tasks: 6 executed, 1 from cache, 6 up-to-date
+reward=0 graded=17 found=0 failed=0 parsed=0 framework=maven exit_code=1

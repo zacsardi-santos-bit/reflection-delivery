@@ -1,0 +1,12 @@
+patching file docs/semantics.md
+patching file internal/cache/metadata/type_cache.go
+patching file internal/config/mount_config.go
+patching file internal/config/testdata/metadata_cache_config_invalid_type-cache-max-entries.yaml
+patching file internal/config/testdata/metadata_cache_config_type-cache-max-entries_unset.yaml
+patching file internal/config/testdata/valid_config.yaml
+patching file internal/config/yaml_parser.go
+patching file internal/fs/fs.go
+patching file internal/fs/inode/core.go
+patching file internal/fs/inode/dir.go
+patching file internal/fs/inode/explicit_dir.go
+patching file internal/fs/inode/type_cache.go

@@ -1,0 +1,17 @@
+patching file migrations/versions/467e85d5e1cd_updated_resources_added_exec_id.py
+patching file superagi/controllers/resources.py
+patching file superagi/controllers/toolkit.py
+patching file superagi/helper/resource_helper.py
+patching file superagi/helper/twitter_helper.py
+patching file superagi/jobs/agent_executor.py
+patching file superagi/models/agent.py
+patching file superagi/models/agent_execution.py
+patching file superagi/models/resource.py
+patching file superagi/resource_manager/file_manager.py
+patching file superagi/resource_manager/resource_manager.py
+patching file superagi/tools/email/send_email_attachment.py
+patching file superagi/tools/file/append_file.py
+patching file superagi/tools/file/list_files.py
+patching file superagi/tools/file/read_file.py
+patching file superagi/tools/twitter/send_tweets.py
+patching file tests/unit_tests/test_migrations_multiheads.py

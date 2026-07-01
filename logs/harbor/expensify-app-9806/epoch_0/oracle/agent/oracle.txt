@@ -1,0 +1,14 @@
+patching file .github/actions/javascript/awaitStagingDeploys/index.js
+patching file .github/actions/javascript/checkDeployBlockers/checkDeployBlockers.js
+patching file .github/actions/javascript/checkDeployBlockers/index.js
+patching file .github/actions/javascript/createOrUpdateStagingDeploy/createOrUpdateStagingDeploy.js
+patching file .github/actions/javascript/createOrUpdateStagingDeploy/index.js
+patching file .github/actions/javascript/getPullRequestDetails/index.js
+patching file .github/actions/javascript/getReleaseBody/index.js
+patching file .github/actions/javascript/isPullRequestMergeable/index.js
+patching file .github/actions/javascript/isStagingDeployLocked/index.js
+patching file .github/actions/javascript/markPullRequestsAsDeployed/index.js
+patching file .github/actions/javascript/reopenIssueWithComment/index.js
+patching file .github/actions/javascript/triggerWorkflowAndWait/index.js
+patching file .github/actions/javascript/verifySignedCommits/index.js
+patching file .github/libs/GithubUtils.js

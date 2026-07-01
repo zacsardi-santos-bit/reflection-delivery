@@ -1,0 +1,265 @@
+patching file pkg/envoy/resource_monitor_test.go
+{"Time":"2026-07-01T15:06:47.098618984Z","Action":"start","Package":"github.com/pomerium/pomerium/pkg/envoy"}
+{"Time":"2026-07-01T15:06:47.11464009Z","Action":"run","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestServer_handleLogs"}
+{"Time":"2026-07-01T15:06:47.114664083Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestServer_handleLogs","Output":"=== RUN   TestServer_handleLogs\n"}
+{"Time":"2026-07-01T15:06:47.114704173Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestServer_handleLogs","Output":"--- PASS: TestServer_handleLogs (0.00s)\n"}
+{"Time":"2026-07-01T15:06:47.114708879Z","Action":"pass","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestServer_handleLogs","Elapsed":0}
+{"Time":"2026-07-01T15:06:47.114713835Z","Action":"run","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestClean"}
+{"Time":"2026-07-01T15:06:47.114716875Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestClean","Output":"=== RUN   TestClean\n"}
+{"Time":"2026-07-01T15:06:47.114723786Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestClean","Output":"=== PAUSE TestClean\n"}
+{"Time":"2026-07-01T15:06:47.11472769Z","Action":"pause","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestClean"}
+{"Time":"2026-07-01T15:06:47.114731178Z","Action":"run","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver"}
+{"Time":"2026-07-01T15:06:47.114734034Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver","Output":"=== RUN   TestCgroupV2Driver\n"}
+{"Time":"2026-07-01T15:06:47.114756477Z","Action":"run","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/Path"}
+{"Time":"2026-07-01T15:06:47.114760894Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/Path","Output":"=== RUN   TestCgroupV2Driver/Path\n"}
+{"Time":"2026-07-01T15:06:47.114805638Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/Path","Output":"--- PASS: TestCgroupV2Driver/Path (0.00s)\n"}
+{"Time":"2026-07-01T15:06:47.114809862Z","Action":"pass","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/Path","Elapsed":0}
+{"Time":"2026-07-01T15:06:47.114814814Z","Action":"run","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/CgroupForPid"}
+{"Time":"2026-07-01T15:06:47.114817849Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/CgroupForPid","Output":"=== RUN   TestCgroupV2Driver/CgroupForPid\n"}
+{"Time":"2026-07-01T15:06:47.114844036Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/CgroupForPid","Output":"--- PASS: TestCgroupV2Driver/CgroupForPid (0.00s)\n"}
+{"Time":"2026-07-01T15:06:47.114850884Z","Action":"pass","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/CgroupForPid","Elapsed":0}
+{"Time":"2026-07-01T15:06:47.114855181Z","Action":"run","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/MemoryUsage"}
+{"Time":"2026-07-01T15:06:47.114858666Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/MemoryUsage","Output":"=== RUN   TestCgroupV2Driver/MemoryUsage\n"}
+{"Time":"2026-07-01T15:06:47.114873694Z","Action":"run","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/MemoryUsage/case_0"}
+{"Time":"2026-07-01T15:06:47.114876834Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/MemoryUsage/case_0","Output":"=== RUN   TestCgroupV2Driver/MemoryUsage/case_0\n"}
+{"Time":"2026-07-01T15:06:47.114900226Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/MemoryUsage/case_0","Output":"--- PASS: TestCgroupV2Driver/MemoryUsage/case_0 (0.00s)\n"}
+{"Time":"2026-07-01T15:06:47.1149068Z","Action":"pass","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/MemoryUsage/case_0","Elapsed":0}
+{"Time":"2026-07-01T15:06:47.114917112Z","Action":"run","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/MemoryUsage/case_1"}
+{"Time":"2026-07-01T15:06:47.114919868Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/MemoryUsage/case_1","Output":"=== RUN   TestCgroupV2Driver/MemoryUsage/case_1\n"}
+{"Time":"2026-07-01T15:06:47.114926152Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/MemoryUsage/case_1","Output":"--- PASS: TestCgroupV2Driver/MemoryUsage/case_1 (0.00s)\n"}
+{"Time":"2026-07-01T15:06:47.114933552Z","Action":"pass","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/MemoryUsage/case_1","Elapsed":0}
+{"Time":"2026-07-01T15:06:47.114938012Z","Action":"run","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/MemoryUsage/case_2"}
+{"Time":"2026-07-01T15:06:47.114940522Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/MemoryUsage/case_2","Output":"=== RUN   TestCgroupV2Driver/MemoryUsage/case_2\n"}
+{"Time":"2026-07-01T15:06:47.114957095Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/MemoryUsage/case_2","Output":"--- PASS: TestCgroupV2Driver/MemoryUsage/case_2 (0.00s)\n"}
+{"Time":"2026-07-01T15:06:47.114961715Z","Action":"pass","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/MemoryUsage/case_2","Elapsed":0}
+{"Time":"2026-07-01T15:06:47.114966099Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/MemoryUsage","Output":"--- PASS: TestCgroupV2Driver/MemoryUsage (0.00s)\n"}
+{"Time":"2026-07-01T15:06:47.114970281Z","Action":"pass","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/MemoryUsage","Elapsed":0}
+{"Time":"2026-07-01T15:06:47.114974612Z","Action":"run","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/MemoryLimit"}
+{"Time":"2026-07-01T15:06:47.114977198Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/MemoryLimit","Output":"=== RUN   TestCgroupV2Driver/MemoryLimit\n"}
+{"Time":"2026-07-01T15:06:47.11499491Z","Action":"run","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/MemoryLimit/case_0"}
+{"Time":"2026-07-01T15:06:47.114997938Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/MemoryLimit/case_0","Output":"=== RUN   TestCgroupV2Driver/MemoryLimit/case_0\n"}
+{"Time":"2026-07-01T15:06:47.115005207Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/MemoryLimit/case_0","Output":"--- PASS: TestCgroupV2Driver/MemoryLimit/case_0 (0.00s)\n"}
+{"Time":"2026-07-01T15:06:47.115012323Z","Action":"pass","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/MemoryLimit/case_0","Elapsed":0}
+{"Time":"2026-07-01T15:06:47.115017569Z","Action":"run","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/MemoryLimit/case_1"}
+{"Time":"2026-07-01T15:06:47.115019962Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/MemoryLimit/case_1","Output":"=== RUN   TestCgroupV2Driver/MemoryLimit/case_1\n"}
+{"Time":"2026-07-01T15:06:47.115034944Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/MemoryLimit/case_1","Output":"--- PASS: TestCgroupV2Driver/MemoryLimit/case_1 (0.00s)\n"}
+{"Time":"2026-07-01T15:06:47.115039574Z","Action":"pass","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/MemoryLimit/case_1","Elapsed":0}
+{"Time":"2026-07-01T15:06:47.115043581Z","Action":"run","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/MemoryLimit/case_2"}
+{"Time":"2026-07-01T15:06:47.115046031Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/MemoryLimit/case_2","Output":"=== RUN   TestCgroupV2Driver/MemoryLimit/case_2\n"}
+{"Time":"2026-07-01T15:06:47.115057583Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/MemoryLimit/case_2","Output":"--- PASS: TestCgroupV2Driver/MemoryLimit/case_2 (0.00s)\n"}
+{"Time":"2026-07-01T15:06:47.115062333Z","Action":"pass","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/MemoryLimit/case_2","Elapsed":0}
+{"Time":"2026-07-01T15:06:47.115068275Z","Action":"run","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/MemoryLimit/case_3"}
+{"Time":"2026-07-01T15:06:47.115070713Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/MemoryLimit/case_3","Output":"=== RUN   TestCgroupV2Driver/MemoryLimit/case_3\n"}
+{"Time":"2026-07-01T15:06:47.115086995Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/MemoryLimit/case_3","Output":"--- PASS: TestCgroupV2Driver/MemoryLimit/case_3 (0.00s)\n"}
+{"Time":"2026-07-01T15:06:47.115092215Z","Action":"pass","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/MemoryLimit/case_3","Elapsed":0}
+{"Time":"2026-07-01T15:06:47.115095369Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/MemoryLimit","Output":"--- PASS: TestCgroupV2Driver/MemoryLimit (0.00s)\n"}
+{"Time":"2026-07-01T15:06:47.115099473Z","Action":"pass","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/MemoryLimit","Elapsed":0}
+{"Time":"2026-07-01T15:06:47.115103459Z","Action":"run","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/Validate"}
+{"Time":"2026-07-01T15:06:47.115108402Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/Validate","Output":"=== RUN   TestCgroupV2Driver/Validate\n"}
+{"Time":"2026-07-01T15:06:47.115126305Z","Action":"run","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/Validate/case_0"}
+{"Time":"2026-07-01T15:06:47.115129183Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/Validate/case_0","Output":"=== RUN   TestCgroupV2Driver/Validate/case_0\n"}
+{"Time":"2026-07-01T15:06:47.115144314Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/Validate/case_0","Output":"--- PASS: TestCgroupV2Driver/Validate/case_0 (0.00s)\n"}
+{"Time":"2026-07-01T15:06:47.115148966Z","Action":"pass","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/Validate/case_0","Elapsed":0}
+{"Time":"2026-07-01T15:06:47.115155966Z","Action":"run","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/Validate/case_1"}
+{"Time":"2026-07-01T15:06:47.115178732Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/Validate/case_1","Output":"=== RUN   TestCgroupV2Driver/Validate/case_1\n"}
+{"Time":"2026-07-01T15:06:47.115193735Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/Validate/case_1","Output":"--- PASS: TestCgroupV2Driver/Validate/case_1 (0.00s)\n"}
+{"Time":"2026-07-01T15:06:47.11519851Z","Action":"pass","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/Validate/case_1","Elapsed":0}
+{"Time":"2026-07-01T15:06:47.115217276Z","Action":"run","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/Validate/case_2"}
+{"Time":"2026-07-01T15:06:47.115220412Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/Validate/case_2","Output":"=== RUN   TestCgroupV2Driver/Validate/case_2\n"}
+{"Time":"2026-07-01T15:06:47.115228109Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/Validate/case_2","Output":"--- PASS: TestCgroupV2Driver/Validate/case_2 (0.00s)\n"}
+{"Time":"2026-07-01T15:06:47.115244517Z","Action":"pass","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/Validate/case_2","Elapsed":0}
+{"Time":"2026-07-01T15:06:47.115247747Z","Action":"run","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/Validate/case_3"}
+{"Time":"2026-07-01T15:06:47.115250289Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/Validate/case_3","Output":"=== RUN   TestCgroupV2Driver/Validate/case_3\n"}
+{"Time":"2026-07-01T15:06:47.115254805Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/Validate/case_3","Output":"--- PASS: TestCgroupV2Driver/Validate/case_3 (0.00s)\n"}
+{"Time":"2026-07-01T15:06:47.11526111Z","Action":"pass","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/Validate/case_3","Elapsed":0}
+{"Time":"2026-07-01T15:06:47.1152652Z","Action":"run","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/Validate/case_4"}
+{"Time":"2026-07-01T15:06:47.115269162Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/Validate/case_4","Output":"=== RUN   TestCgroupV2Driver/Validate/case_4\n"}
+{"Time":"2026-07-01T15:06:47.115285217Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/Validate/case_4","Output":"--- PASS: TestCgroupV2Driver/Validate/case_4 (0.00s)\n"}
+{"Time":"2026-07-01T15:06:47.115289909Z","Action":"pass","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/Validate/case_4","Elapsed":0}
+{"Time":"2026-07-01T15:06:47.115294917Z","Action":"run","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/Validate/case_5"}
+{"Time":"2026-07-01T15:06:47.115297591Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/Validate/case_5","Output":"=== RUN   TestCgroupV2Driver/Validate/case_5\n"}
+{"Time":"2026-07-01T15:06:47.115313116Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/Validate/case_5","Output":"--- PASS: TestCgroupV2Driver/Validate/case_5 (0.00s)\n"}
+{"Time":"2026-07-01T15:06:47.115318072Z","Action":"pass","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/Validate/case_5","Elapsed":0}
+{"Time":"2026-07-01T15:06:47.115322252Z","Action":"run","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/Validate/case_6"}
+{"Time":"2026-07-01T15:06:47.115324854Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/Validate/case_6","Output":"=== RUN   TestCgroupV2Driver/Validate/case_6\n"}
+{"Time":"2026-07-01T15:06:47.115340133Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/Validate/case_6","Output":"--- PASS: TestCgroupV2Driver/Validate/case_6 (0.00s)\n"}
+{"Time":"2026-07-01T15:06:47.115344664Z","Action":"pass","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/Validate/case_6","Elapsed":0}
+{"Time":"2026-07-01T15:06:47.115349102Z","Action":"run","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/Validate/case_7"}
+{"Time":"2026-07-01T15:06:47.11535149Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/Validate/case_7","Output":"=== RUN   TestCgroupV2Driver/Validate/case_7\n"}
+{"Time":"2026-07-01T15:06:47.115370274Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/Validate/case_7","Output":"--- PASS: TestCgroupV2Driver/Validate/case_7 (0.00s)\n"}
+{"Time":"2026-07-01T15:06:47.115374643Z","Action":"pass","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/Validate/case_7","Elapsed":0}
+{"Time":"2026-07-01T15:06:47.115379785Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/Validate","Output":"--- PASS: TestCgroupV2Driver/Validate (0.00s)\n"}
+{"Time":"2026-07-01T15:06:47.115386576Z","Action":"pass","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver/Validate","Elapsed":0}
+{"Time":"2026-07-01T15:06:47.115389694Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver","Output":"--- PASS: TestCgroupV2Driver (0.00s)\n"}
+{"Time":"2026-07-01T15:06:47.115393879Z","Action":"pass","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV2Driver","Elapsed":0}
+{"Time":"2026-07-01T15:06:47.115399329Z","Action":"run","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver"}
+{"Time":"2026-07-01T15:06:47.115401925Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver","Output":"=== RUN   TestCgroupV1Driver\n"}
+{"Time":"2026-07-01T15:06:47.115417488Z","Action":"run","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/Path"}
+{"Time":"2026-07-01T15:06:47.115420299Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/Path","Output":"=== RUN   TestCgroupV1Driver/Path\n"}
+{"Time":"2026-07-01T15:06:47.115435529Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/Path","Output":"--- PASS: TestCgroupV1Driver/Path (0.00s)\n"}
+{"Time":"2026-07-01T15:06:47.115439848Z","Action":"pass","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/Path","Elapsed":0}
+{"Time":"2026-07-01T15:06:47.115443632Z","Action":"run","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/CgroupForPid"}
+{"Time":"2026-07-01T15:06:47.115445969Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/CgroupForPid","Output":"=== RUN   TestCgroupV1Driver/CgroupForPid\n"}
+{"Time":"2026-07-01T15:06:47.115470437Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/CgroupForPid","Output":"--- PASS: TestCgroupV1Driver/CgroupForPid (0.00s)\n"}
+{"Time":"2026-07-01T15:06:47.115474724Z","Action":"pass","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/CgroupForPid","Elapsed":0}
+{"Time":"2026-07-01T15:06:47.115478611Z","Action":"run","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/MemoryUsage"}
+{"Time":"2026-07-01T15:06:47.115481158Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/MemoryUsage","Output":"=== RUN   TestCgroupV1Driver/MemoryUsage\n"}
+{"Time":"2026-07-01T15:06:47.115498282Z","Action":"run","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/MemoryUsage/case_0"}
+{"Time":"2026-07-01T15:06:47.115501138Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/MemoryUsage/case_0","Output":"=== RUN   TestCgroupV1Driver/MemoryUsage/case_0\n"}
+{"Time":"2026-07-01T15:06:47.115515279Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/MemoryUsage/case_0","Output":"--- PASS: TestCgroupV1Driver/MemoryUsage/case_0 (0.00s)\n"}
+{"Time":"2026-07-01T15:06:47.115522855Z","Action":"pass","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/MemoryUsage/case_0","Elapsed":0}
+{"Time":"2026-07-01T15:06:47.115528785Z","Action":"run","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/MemoryUsage/case_1"}
+{"Time":"2026-07-01T15:06:47.115531292Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/MemoryUsage/case_1","Output":"=== RUN   TestCgroupV1Driver/MemoryUsage/case_1\n"}
+{"Time":"2026-07-01T15:06:47.115548303Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/MemoryUsage/case_1","Output":"--- PASS: TestCgroupV1Driver/MemoryUsage/case_1 (0.00s)\n"}
+{"Time":"2026-07-01T15:06:47.115552909Z","Action":"pass","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/MemoryUsage/case_1","Elapsed":0}
+{"Time":"2026-07-01T15:06:47.115559159Z","Action":"run","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/MemoryUsage/case_2"}
+{"Time":"2026-07-01T15:06:47.115561692Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/MemoryUsage/case_2","Output":"=== RUN   TestCgroupV1Driver/MemoryUsage/case_2\n"}
+{"Time":"2026-07-01T15:06:47.115576898Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/MemoryUsage/case_2","Output":"--- PASS: TestCgroupV1Driver/MemoryUsage/case_2 (0.00s)\n"}
+{"Time":"2026-07-01T15:06:47.115581622Z","Action":"pass","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/MemoryUsage/case_2","Elapsed":0}
+{"Time":"2026-07-01T15:06:47.115585985Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/MemoryUsage","Output":"--- PASS: TestCgroupV1Driver/MemoryUsage (0.00s)\n"}
+{"Time":"2026-07-01T15:06:47.115589935Z","Action":"pass","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/MemoryUsage","Elapsed":0}
+{"Time":"2026-07-01T15:06:47.115595921Z","Action":"run","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/MemoryLimit"}
+{"Time":"2026-07-01T15:06:47.115598488Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/MemoryLimit","Output":"=== RUN   TestCgroupV1Driver/MemoryLimit\n"}
+{"Time":"2026-07-01T15:06:47.115616203Z","Action":"run","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/MemoryLimit/case_0"}
+{"Time":"2026-07-01T15:06:47.1156192Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/MemoryLimit/case_0","Output":"=== RUN   TestCgroupV1Driver/MemoryLimit/case_0\n"}
+{"Time":"2026-07-01T15:06:47.115626498Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/MemoryLimit/case_0","Output":"--- PASS: TestCgroupV1Driver/MemoryLimit/case_0 (0.00s)\n"}
+{"Time":"2026-07-01T15:06:47.115633025Z","Action":"pass","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/MemoryLimit/case_0","Elapsed":0}
+{"Time":"2026-07-01T15:06:47.115636884Z","Action":"run","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/MemoryLimit/case_1"}
+{"Time":"2026-07-01T15:06:47.115639238Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/MemoryLimit/case_1","Output":"=== RUN   TestCgroupV1Driver/MemoryLimit/case_1\n"}
+{"Time":"2026-07-01T15:06:47.115655908Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/MemoryLimit/case_1","Output":"--- PASS: TestCgroupV1Driver/MemoryLimit/case_1 (0.00s)\n"}
+{"Time":"2026-07-01T15:06:47.115660559Z","Action":"pass","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/MemoryLimit/case_1","Elapsed":0}
+{"Time":"2026-07-01T15:06:47.115669122Z","Action":"run","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/MemoryLimit/case_2"}
+{"Time":"2026-07-01T15:06:47.115671587Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/MemoryLimit/case_2","Output":"=== RUN   TestCgroupV1Driver/MemoryLimit/case_2\n"}
+{"Time":"2026-07-01T15:06:47.115677862Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/MemoryLimit/case_2","Output":"--- PASS: TestCgroupV1Driver/MemoryLimit/case_2 (0.00s)\n"}
+{"Time":"2026-07-01T15:06:47.115685094Z","Action":"pass","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/MemoryLimit/case_2","Elapsed":0}
+{"Time":"2026-07-01T15:06:47.115689056Z","Action":"run","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/MemoryLimit/case_3"}
+{"Time":"2026-07-01T15:06:47.115691608Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/MemoryLimit/case_3","Output":"=== RUN   TestCgroupV1Driver/MemoryLimit/case_3\n"}
+{"Time":"2026-07-01T15:06:47.115709634Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/MemoryLimit/case_3","Output":"--- PASS: TestCgroupV1Driver/MemoryLimit/case_3 (0.00s)\n"}
+{"Time":"2026-07-01T15:06:47.115714437Z","Action":"pass","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/MemoryLimit/case_3","Elapsed":0}
+{"Time":"2026-07-01T15:06:47.115717839Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/MemoryLimit","Output":"--- PASS: TestCgroupV1Driver/MemoryLimit (0.00s)\n"}
+{"Time":"2026-07-01T15:06:47.115723214Z","Action":"pass","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/MemoryLimit","Elapsed":0}
+{"Time":"2026-07-01T15:06:47.115727344Z","Action":"run","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/Validate"}
+{"Time":"2026-07-01T15:06:47.115729973Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/Validate","Output":"=== RUN   TestCgroupV1Driver/Validate\n"}
+{"Time":"2026-07-01T15:06:47.115759008Z","Action":"run","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/Validate/case_0"}
+{"Time":"2026-07-01T15:06:47.115762064Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/Validate/case_0","Output":"=== RUN   TestCgroupV1Driver/Validate/case_0\n"}
+{"Time":"2026-07-01T15:06:47.115776811Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/Validate/case_0","Output":"--- PASS: TestCgroupV1Driver/Validate/case_0 (0.00s)\n"}
+{"Time":"2026-07-01T15:06:47.115781172Z","Action":"pass","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/Validate/case_0","Elapsed":0}
+{"Time":"2026-07-01T15:06:47.115785183Z","Action":"run","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/Validate/case_1"}
+{"Time":"2026-07-01T15:06:47.115787631Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/Validate/case_1","Output":"=== RUN   TestCgroupV1Driver/Validate/case_1\n"}
+{"Time":"2026-07-01T15:06:47.115803455Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/Validate/case_1","Output":"--- PASS: TestCgroupV1Driver/Validate/case_1 (0.00s)\n"}
+{"Time":"2026-07-01T15:06:47.115807979Z","Action":"pass","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/Validate/case_1","Elapsed":0}
+{"Time":"2026-07-01T15:06:47.115811927Z","Action":"run","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/Validate/case_2"}
+{"Time":"2026-07-01T15:06:47.115814326Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/Validate/case_2","Output":"=== RUN   TestCgroupV1Driver/Validate/case_2\n"}
+{"Time":"2026-07-01T15:06:47.115831329Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/Validate/case_2","Output":"--- PASS: TestCgroupV1Driver/Validate/case_2 (0.00s)\n"}
+{"Time":"2026-07-01T15:06:47.115835825Z","Action":"pass","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/Validate/case_2","Elapsed":0}
+{"Time":"2026-07-01T15:06:47.115839659Z","Action":"run","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/Validate/case_3"}
+{"Time":"2026-07-01T15:06:47.115842057Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/Validate/case_3","Output":"=== RUN   TestCgroupV1Driver/Validate/case_3\n"}
+{"Time":"2026-07-01T15:06:47.115860725Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/Validate/case_3","Output":"--- PASS: TestCgroupV1Driver/Validate/case_3 (0.00s)\n"}
+{"Time":"2026-07-01T15:06:47.11586722Z","Action":"pass","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/Validate/case_3","Elapsed":0}
+{"Time":"2026-07-01T15:06:47.115871155Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/Validate","Output":"--- PASS: TestCgroupV1Driver/Validate (0.00s)\n"}
+{"Time":"2026-07-01T15:06:47.115875055Z","Action":"pass","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/Validate","Elapsed":0}
+{"Time":"2026-07-01T15:06:47.115880089Z","Action":"run","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/Container_FS"}
+{"Time":"2026-07-01T15:06:47.115882505Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/Container_FS","Output":"=== RUN   TestCgroupV1Driver/Container_FS\n"}
+{"Time":"2026-07-01T15:06:47.115908294Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/Container_FS","Output":"--- PASS: TestCgroupV1Driver/Container_FS (0.00s)\n"}
+{"Time":"2026-07-01T15:06:47.115914057Z","Action":"pass","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/Container_FS","Elapsed":0}
+{"Time":"2026-07-01T15:06:47.115918026Z","Action":"run","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/Hybrid_FS"}
+{"Time":"2026-07-01T15:06:47.115920466Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/Hybrid_FS","Output":"=== RUN   TestCgroupV1Driver/Hybrid_FS\n"}
+{"Time":"2026-07-01T15:06:47.115953573Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/Hybrid_FS","Output":"--- PASS: TestCgroupV1Driver/Hybrid_FS (0.00s)\n"}
+{"Time":"2026-07-01T15:06:47.115958826Z","Action":"pass","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver/Hybrid_FS","Elapsed":0}
+{"Time":"2026-07-01T15:06:47.11596306Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver","Output":"--- PASS: TestCgroupV1Driver (0.00s)\n"}
+{"Time":"2026-07-01T15:06:47.115967755Z","Action":"pass","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestCgroupV1Driver","Elapsed":0}
+{"Time":"2026-07-01T15:06:47.115973486Z","Action":"run","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestFindMountpoint"}
+{"Time":"2026-07-01T15:06:47.115976194Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestFindMountpoint","Output":"=== RUN   TestFindMountpoint\n"}
+{"Time":"2026-07-01T15:06:47.115998272Z","Action":"run","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestFindMountpoint/case_0"}
+{"Time":"2026-07-01T15:06:47.116001264Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestFindMountpoint/case_0","Output":"=== RUN   TestFindMountpoint/case_0\n"}
+{"Time":"2026-07-01T15:06:47.116018183Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestFindMountpoint/case_0","Output":"--- PASS: TestFindMountpoint/case_0 (0.00s)\n"}
+{"Time":"2026-07-01T15:06:47.116022768Z","Action":"pass","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestFindMountpoint/case_0","Elapsed":0}
+{"Time":"2026-07-01T15:06:47.116026557Z","Action":"run","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestFindMountpoint/case_1"}
+{"Time":"2026-07-01T15:06:47.116029329Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestFindMountpoint/case_1","Output":"=== RUN   TestFindMountpoint/case_1\n"}
+{"Time":"2026-07-01T15:06:47.116051838Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestFindMountpoint/case_1","Output":"--- PASS: TestFindMountpoint/case_1 (0.00s)\n"}
+{"Time":"2026-07-01T15:06:47.116056486Z","Action":"pass","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestFindMountpoint/case_1","Elapsed":0}
+{"Time":"2026-07-01T15:06:47.116060416Z","Action":"run","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestFindMountpoint/case_2"}
+{"Time":"2026-07-01T15:06:47.116067857Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestFindMountpoint/case_2","Output":"=== RUN   TestFindMountpoint/case_2\n"}
+{"Time":"2026-07-01T15:06:47.116083176Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestFindMountpoint/case_2","Output":"--- PASS: TestFindMountpoint/case_2 (0.00s)\n"}
+{"Time":"2026-07-01T15:06:47.116088086Z","Action":"pass","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestFindMountpoint/case_2","Elapsed":0}
+{"Time":"2026-07-01T15:06:47.116092357Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestFindMountpoint","Output":"--- PASS: TestFindMountpoint (0.00s)\n"}
+{"Time":"2026-07-01T15:06:47.116096323Z","Action":"pass","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestFindMountpoint","Elapsed":0}
+{"Time":"2026-07-01T15:06:47.116103301Z","Action":"run","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestSharedResourceMonitor"}
+{"Time":"2026-07-01T15:06:47.116105879Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestSharedResourceMonitor","Output":"=== RUN   TestSharedResourceMonitor\n"}
+{"Time":"2026-07-01T15:06:47.116224393Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestSharedResourceMonitor","Output":"    resource_monitor_test.go:571: updating memory.current to 100\n"}
+{"Time":"2026-07-01T15:06:47.116267463Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestSharedResourceMonitor","Output":"    resource_monitor_test.go:579: updating memory.max to 200\n"}
+{"Time":"2026-07-01T15:06:47.121488591Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestSharedResourceMonitor","Output":"{\"level\":\"info\",\"service\":\"envoy\",\"cgroup\":\"/test\",\"time\":\"2026-07-01T15:06:47Z\",\"message\":\"starting resource monitor\"}\n"}
+{"Time":"2026-07-01T15:06:47.121504618Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestSharedResourceMonitor","Output":"{\"level\":\"debug\",\"file\":\"/tmp/TestSharedResourceMonitor1044350642/001/.fs/memory.max\",\"time\":\"2026-07-01T15:06:47Z\",\"message\":\"starting watch\"}\n"}
+{"Time":"2026-07-01T15:06:47.121511489Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestSharedResourceMonitor","Output":"{\"level\":\"debug\",\"bytes\":200,\"time\":\"2026-07-01T15:06:47Z\",\"message\":\"current memory limit\"}\n"}
+{"Time":"2026-07-01T15:06:47.123551448Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestSharedResourceMonitor","Output":"{\"level\":\"debug\",\"service\":\"envoy\",\"metric\":\"cgroup_memory_saturation\",\"value\":\"0.500000\",\"interval_ms\":55,\"time\":\"2026-07-01T15:06:47Z\",\"message\":\"updated metric\"}\n"}
+{"Time":"2026-07-01T15:06:47.131739272Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestSharedResourceMonitor","Output":"    resource_monitor_test.go:571: updating memory.current to 150\n"}
+{"Time":"2026-07-01T15:06:47.181442071Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestSharedResourceMonitor","Output":"{\"level\":\"debug\",\"service\":\"envoy\",\"metric\":\"cgroup_memory_saturation\",\"value\":\"0.750000\",\"interval_ms\":32,\"time\":\"2026-07-01T15:06:47Z\",\"message\":\"updated metric\"}\n"}
+{"Time":"2026-07-01T15:06:47.183614233Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestSharedResourceMonitor","Output":"    resource_monitor_test.go:579: updating memory.max to 300\n"}
+{"Time":"2026-07-01T15:06:47.184595091Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestSharedResourceMonitor","Output":"{\"level\":\"debug\",\"prev\":200,\"current\":300,\"time\":\"2026-07-01T15:06:47Z\",\"message\":\"memory limit updated\"}\n"}
+{"Time":"2026-07-01T15:06:47.216041777Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestSharedResourceMonitor","Output":"{\"level\":\"debug\",\"service\":\"envoy\",\"metric\":\"cgroup_memory_saturation\",\"value\":\"0.500000\",\"interval_ms\":55,\"time\":\"2026-07-01T15:06:47Z\",\"message\":\"updated metric\"}\n"}
+{"Time":"2026-07-01T15:06:47.225294044Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestSharedResourceMonitor","Output":"    resource_monitor_test.go:579: updating memory.max to max\n"}
+{"Time":"2026-07-01T15:06:47.22539741Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestSharedResourceMonitor","Output":"{\"level\":\"error\",\"error\":\"strconv.ParseUint: parsing \\\"\\\": invalid syntax\",\"time\":\"2026-07-01T15:06:47Z\",\"message\":\"error reading memory limit\"}\n"}
+{"Time":"2026-07-01T15:06:47.225407921Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestSharedResourceMonitor","Output":"{\"level\":\"debug\",\"prev\":300,\"current\":0,\"time\":\"2026-07-01T15:06:47Z\",\"message\":\"memory limit updated\"}\n"}
+{"Time":"2026-07-01T15:06:47.273929067Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestSharedResourceMonitor","Output":"{\"level\":\"debug\",\"service\":\"envoy\",\"metric\":\"cgroup_memory_saturation\",\"value\":\"0.000000\",\"interval_ms\":100,\"time\":\"2026-07-01T15:06:47Z\",\"message\":\"updated metric\"}\n"}
+{"Time":"2026-07-01T15:06:47.27615962Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestSharedResourceMonitor","Output":"    resource_monitor_test.go:579: updating memory.max to 145\n"}
+{"Time":"2026-07-01T15:06:47.277229924Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestSharedResourceMonitor","Output":"{\"level\":\"debug\",\"prev\":0,\"current\":145,\"time\":\"2026-07-01T15:06:47Z\",\"message\":\"memory limit updated\"}\n"}
+{"Time":"2026-07-01T15:06:47.37660674Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestSharedResourceMonitor","Output":"{\"level\":\"debug\",\"service\":\"envoy\",\"metric\":\"cgroup_memory_saturation\",\"value\":\"1.000000\",\"interval_ms\":10,\"time\":\"2026-07-01T15:06:47Z\",\"message\":\"updated metric\"}\n"}
+{"Time":"2026-07-01T15:06:47.377646503Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestSharedResourceMonitor","Output":"    resource_monitor_test.go:579: updating memory.max to 150\n"}
+{"Time":"2026-07-01T15:06:47.377707392Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestSharedResourceMonitor","Output":"{\"level\":\"debug\",\"prev\":145,\"current\":150,\"time\":\"2026-07-01T15:06:47Z\",\"message\":\"memory limit updated\"}\n"}
+{"Time":"2026-07-01T15:06:47.398905921Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestSharedResourceMonitor","Output":"{\"level\":\"debug\",\"service\":\"envoy\",\"metric\":\"cgroup_memory_saturation\",\"value\":\"0.000000\",\"interval_ms\":100,\"time\":\"2026-07-01T15:06:47Z\",\"message\":\"updated metric\"}\n"}
+{"Time":"2026-07-01T15:06:47.398952115Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestSharedResourceMonitor","Output":"    resource_monitor_test.go:579: updating memory.max to 150\n"}
+{"Time":"2026-07-01T15:06:47.501415562Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestSharedResourceMonitor","Output":"{\"level\":\"debug\",\"service\":\"envoy\",\"metric\":\"cgroup_memory_saturation\",\"value\":\"1.000000\",\"interval_ms\":10,\"time\":\"2026-07-01T15:06:47Z\",\"message\":\"updated metric\"}\n"}
+{"Time":"2026-07-01T15:06:47.509489898Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestSharedResourceMonitor","Output":"{\"level\":\"debug\",\"file\":\"/tmp/TestSharedResourceMonitor1044350642/001/.fs/memory.max\",\"time\":\"2026-07-01T15:06:47Z\",\"message\":\"stopping watch\"}\n"}
+{"Time":"2026-07-01T15:06:47.509518169Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestSharedResourceMonitor","Output":"{\"level\":\"debug\",\"time\":\"2026-07-01T15:06:47Z\",\"message\":\"stopping memory limit watcher\"}\n"}
+{"Time":"2026-07-01T15:06:47.509527307Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestSharedResourceMonitor","Output":"{\"level\":\"info\",\"file\":\"/tmp/TestSharedResourceMonitor1044350642/001/.fs/memory.max\",\"time\":\"2026-07-01T15:06:47Z\",\"message\":\"watched file removed\"}\n"}
+{"Time":"2026-07-01T15:06:47.523274469Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestSharedResourceMonitor","Output":"    resource_monitor_test.go:571: updating memory.current to 150\n"}
+{"Time":"2026-07-01T15:06:47.523354464Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestSharedResourceMonitor","Output":"    resource_monitor_test.go:579: updating memory.max to 300\n"}
+{"Time":"2026-07-01T15:06:47.525276235Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestSharedResourceMonitor","Output":"{\"level\":\"info\",\"service\":\"envoy\",\"cgroup\":\"/test\",\"time\":\"2026-07-01T15:06:47Z\",\"message\":\"starting resource monitor\"}\n"}
+{"Time":"2026-07-01T15:06:47.525286288Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestSharedResourceMonitor","Output":"{\"level\":\"debug\",\"file\":\"/tmp/TestSharedResourceMonitor1044350642/001/.fs/memory.max\",\"time\":\"2026-07-01T15:06:47Z\",\"message\":\"starting watch\"}\n"}
+{"Time":"2026-07-01T15:06:47.525296662Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestSharedResourceMonitor","Output":"{\"level\":\"debug\",\"bytes\":300,\"time\":\"2026-07-01T15:06:47Z\",\"message\":\"current memory limit\"}\n"}
+{"Time":"2026-07-01T15:06:47.527296725Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestSharedResourceMonitor","Output":"{\"level\":\"debug\",\"service\":\"envoy\",\"metric\":\"cgroup_memory_saturation\",\"value\":\"0.500000\",\"interval_ms\":55,\"time\":\"2026-07-01T15:06:47Z\",\"message\":\"updated metric\"}\n"}
+{"Time":"2026-07-01T15:06:47.535563677Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestSharedResourceMonitor","Output":"{\"level\":\"info\",\"file\":\"/tmp/TestSharedResourceMonitor1044350642/001/.fs/memory.max\",\"time\":\"2026-07-01T15:06:47Z\",\"message\":\"watched file removed\"}\n"}
+{"Time":"2026-07-01T15:06:47.535574567Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestSharedResourceMonitor","Output":"{\"level\":\"debug\",\"file\":\"/tmp/TestSharedResourceMonitor1044350642/001/.fs/memory.max\",\"time\":\"2026-07-01T15:06:47Z\",\"message\":\"stopping watch\"}\n"}
+{"Time":"2026-07-01T15:06:47.535578107Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestSharedResourceMonitor","Output":"{\"level\":\"debug\",\"time\":\"2026-07-01T15:06:47Z\",\"message\":\"stopping memory limit watcher\"}\n"}
+{"Time":"2026-07-01T15:06:47.555522845Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestSharedResourceMonitor","Output":"--- PASS: TestSharedResourceMonitor (0.44s)\n"}
+{"Time":"2026-07-01T15:06:47.555556528Z","Action":"pass","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestSharedResourceMonitor","Elapsed":0.44}
+{"Time":"2026-07-01T15:06:47.555579923Z","Action":"run","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestBootstrapConfig"}
+{"Time":"2026-07-01T15:06:47.555584684Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestBootstrapConfig","Output":"=== RUN   TestBootstrapConfig\n"}
+{"Time":"2026-07-01T15:06:47.559148881Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestBootstrapConfig","Output":"--- PASS: TestBootstrapConfig (0.00s)\n"}
+{"Time":"2026-07-01T15:06:47.559157636Z","Action":"pass","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestBootstrapConfig","Elapsed":0}
+{"Time":"2026-07-01T15:06:47.559188479Z","Action":"run","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestComputeScaledTickInterval"}
+{"Time":"2026-07-01T15:06:47.559193727Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestComputeScaledTickInterval","Output":"=== RUN   TestComputeScaledTickInterval\n"}
+{"Time":"2026-07-01T15:06:47.559198944Z","Action":"run","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestComputeScaledTickInterval/case_0"}
+{"Time":"2026-07-01T15:06:47.559201463Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestComputeScaledTickInterval/case_0","Output":"=== RUN   TestComputeScaledTickInterval/case_0\n"}
+{"Time":"2026-07-01T15:06:47.559207189Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestComputeScaledTickInterval/case_0","Output":"--- PASS: TestComputeScaledTickInterval/case_0 (0.00s)\n"}
+{"Time":"2026-07-01T15:06:47.559213467Z","Action":"pass","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestComputeScaledTickInterval/case_0","Elapsed":0}
+{"Time":"2026-07-01T15:06:47.559221156Z","Action":"run","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestComputeScaledTickInterval/case_1"}
+{"Time":"2026-07-01T15:06:47.559223759Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestComputeScaledTickInterval/case_1","Output":"=== RUN   TestComputeScaledTickInterval/case_1\n"}
+{"Time":"2026-07-01T15:06:47.559242862Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestComputeScaledTickInterval/case_1","Output":"--- PASS: TestComputeScaledTickInterval/case_1 (0.00s)\n"}
+{"Time":"2026-07-01T15:06:47.559246715Z","Action":"pass","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestComputeScaledTickInterval/case_1","Elapsed":0}
+{"Time":"2026-07-01T15:06:47.559253155Z","Action":"run","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestComputeScaledTickInterval/case_2"}
+{"Time":"2026-07-01T15:06:47.559257345Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestComputeScaledTickInterval/case_2","Output":"=== RUN   TestComputeScaledTickInterval/case_2\n"}
+{"Time":"2026-07-01T15:06:47.55926452Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestComputeScaledTickInterval/case_2","Output":"--- PASS: TestComputeScaledTickInterval/case_2 (0.00s)\n"}
+{"Time":"2026-07-01T15:06:47.559270932Z","Action":"pass","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestComputeScaledTickInterval/case_2","Elapsed":0}
+{"Time":"2026-07-01T15:06:47.559275396Z","Action":"run","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestComputeScaledTickInterval/case_3"}
+{"Time":"2026-07-01T15:06:47.559279256Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestComputeScaledTickInterval/case_3","Output":"=== RUN   TestComputeScaledTickInterval/case_3\n"}
+{"Time":"2026-07-01T15:06:47.559286222Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestComputeScaledTickInterval/case_3","Output":"--- PASS: TestComputeScaledTickInterval/case_3 (0.00s)\n"}
+{"Time":"2026-07-01T15:06:47.559292706Z","Action":"pass","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestComputeScaledTickInterval/case_3","Elapsed":0}
+{"Time":"2026-07-01T15:06:47.559297203Z","Action":"run","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestComputeScaledTickInterval/case_4"}
+{"Time":"2026-07-01T15:06:47.559299683Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestComputeScaledTickInterval/case_4","Output":"=== RUN   TestComputeScaledTickInterval/case_4\n"}
+{"Time":"2026-07-01T15:06:47.559319196Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestComputeScaledTickInterval/case_4","Output":"--- PASS: TestComputeScaledTickInterval/case_4 (0.00s)\n"}
+{"Time":"2026-07-01T15:06:47.559327774Z","Action":"pass","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestComputeScaledTickInterval/case_4","Elapsed":0}
+{"Time":"2026-07-01T15:06:47.559332894Z","Action":"run","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestComputeScaledTickInterval/case_5"}
+{"Time":"2026-07-01T15:06:47.559337038Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestComputeScaledTickInterval/case_5","Output":"=== RUN   TestComputeScaledTickInterval/case_5\n"}
+{"Time":"2026-07-01T15:06:47.55934418Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestComputeScaledTickInterval/case_5","Output":"--- PASS: TestComputeScaledTickInterval/case_5 (0.00s)\n"}
+{"Time":"2026-07-01T15:06:47.559348465Z","Action":"pass","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestComputeScaledTickInterval/case_5","Elapsed":0}
+{"Time":"2026-07-01T15:06:47.559353439Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestComputeScaledTickInterval","Output":"--- PASS: TestComputeScaledTickInterval (0.00s)\n"}
+{"Time":"2026-07-01T15:06:47.559356214Z","Action":"pass","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestComputeScaledTickInterval","Elapsed":0}
+{"Time":"2026-07-01T15:06:47.559378989Z","Action":"cont","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestClean"}
+{"Time":"2026-07-01T15:06:47.559382548Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestClean","Output":"=== CONT  TestClean\n"}
+{"Time":"2026-07-01T15:06:47.559625695Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestClean","Output":"--- PASS: TestClean (0.00s)\n"}
+{"Time":"2026-07-01T15:06:47.559633132Z","Action":"pass","Package":"github.com/pomerium/pomerium/pkg/envoy","Test":"TestClean","Elapsed":0}
+{"Time":"2026-07-01T15:06:47.559636159Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Output":"PASS\n"}
+{"Time":"2026-07-01T15:06:47.56083996Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Output":"ok  \tgithub.com/pomerium/pomerium/pkg/envoy\t0.462s\n"}
+{"Time":"2026-07-01T15:06:47.560854158Z","Action":"pass","Package":"github.com/pomerium/pomerium/pkg/envoy","Elapsed":0.462}
+reward=1 graded=55 found=55 failed=0 parsed=55 framework=go exit_code=0

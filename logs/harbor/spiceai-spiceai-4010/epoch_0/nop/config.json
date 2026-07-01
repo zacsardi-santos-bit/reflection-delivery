@@ -1,16 +1,16 @@
 {
     "task": {
-        "path": "/home/ubuntu/reflection_offline_harbor_delivery/harbor/spiceai-spiceai-4010",
+        "path": "/home/ubuntu/staging_reflection/tasks/spiceai-spiceai-4010",
         "git_url": null,
         "git_commit_id": null,
         "name": null,
         "ref": null,
         "overwrite": false,
         "download_dir": null,
-        "source": "harbor"
+        "source": null
     },
-    "trial_name": "spiceai-spiceai-4010__qJ38i6p",
-    "trials_dir": "/home/ubuntu/reflection_offline_harbor_delivery/nop_jobs_all/2026-06-29__15-12-04",
+    "trial_name": "spiceai-spiceai-4010__B75zXHs",
+    "trials_dir": "/home/ubuntu/staging_reflection/logs/val_residual20/nop/spiceai-spiceai-4010/2026-07-01__15-35-32",
     "timeout_multiplier": 1.0,
     "agent_timeout_multiplier": null,
     "verifier_timeout_multiplier": null,
@@ -46,5 +46,5 @@
         "disable": false
     },
     "artifacts": [],
-    "job_id": "b069d7ef-a502-4a46-91d5-798d81044649"
+    "job_id": "5a7b4012-d153-4013-964d-f1743818ea62"
 }

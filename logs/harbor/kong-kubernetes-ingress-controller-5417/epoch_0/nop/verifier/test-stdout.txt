@@ -1,0 +1,11 @@
+patching file internal/controllers/configuration/kongupstreampolicy_utils_test.go
+# github.com/kong/kubernetes-ingress-controller/v3/internal/controllers/configuration [github.com/kong/kubernetes-ingress-controller/v3/internal/controllers/configuration.test]
+internal/controllers/configuration/kongupstreampolicy_utils_test.go:477:37: undefined: indexedServiceStatus
+internal/controllers/configuration/kongupstreampolicy_utils_test.go:484:39: undefined: indexedServiceStatus
+internal/controllers/configuration/kongupstreampolicy_utils_test.go:507:39: undefined: indexedServiceStatus
+internal/controllers/configuration/kongupstreampolicy_utils_test.go:530:39: undefined: indexedServiceStatus
+internal/controllers/configuration/kongupstreampolicy_utils_test.go:558:39: undefined: indexedServiceStatus
+internal/controllers/configuration/kongupstreampolicy_utils_test.go:583:39: undefined: indexedServiceStatus
+internal/controllers/configuration/kongupstreampolicy_utils_test.go:610:5: undefined: httpRouteHasUpstreamPolicyConflictedBackendRefsWithService
+FAIL	github.com/kong/kubernetes-ingress-controller/v3/internal/controllers/configuration [build failed]
+reward=0 graded=31 found=31 failed=31 parsed=1 framework=go exit_code=1

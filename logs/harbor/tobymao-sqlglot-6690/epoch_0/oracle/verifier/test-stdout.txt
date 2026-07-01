@@ -1,0 +1,122 @@
+patching file tests/dialects/test_snowflake.py
+patching file tests/fixtures/optimizer/annotate_functions.sql
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: pyproject.toml
+collecting ... collected 76 items
+
+tests/dialects/test_snowflake.py::TestSnowflake::test_alter_session PASSED [  1%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_alter_set_unset PASSED [  2%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_bit_aggs 
+tests/dialects/test_snowflake.py::TestSnowflake::test_bit_aggs PASSED    [  3%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_bitmap_or_agg PASSED [  5%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_ceil 
+tests/dialects/test_snowflake.py::TestSnowflake::test_ceil PASSED        [  6%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_copy 
+tests/dialects/test_snowflake.py::TestSnowflake::test_copy PASSED        [  7%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_corr 
+tests/dialects/test_snowflake.py::TestSnowflake::test_corr PASSED        [  9%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_create_sequence 
+tests/dialects/test_snowflake.py::TestSnowflake::test_create_sequence PASSED [ 10%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_create_view_copy_grants PASSED [ 11%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_ddl 
+tests/dialects/test_snowflake.py::TestSnowflake::test_ddl PASSED         [ 13%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_decfloat 
+tests/dialects/test_snowflake.py::TestSnowflake::test_decfloat PASSED    [ 14%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_describe 
+tests/dialects/test_snowflake.py::TestSnowflake::test_describe PASSED    [ 15%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_encryption_functions PASSED [ 17%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_flatten 
+tests/dialects/test_snowflake.py::TestSnowflake::test_flatten PASSED     [ 18%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_float_interval PASSED [ 19%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_floor 
+tests/dialects/test_snowflake.py::TestSnowflake::test_floor PASSED       [ 21%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_from_changes PASSED [ 22%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_get_bit 
+tests/dialects/test_snowflake.py::TestSnowflake::test_get_bit PASSED     [ 23%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_get_extract 
+tests/dialects/test_snowflake.py::TestSnowflake::test_get_extract PASSED [ 25%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_get_from_stage PASSED [ 26%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_grant 
+tests/dialects/test_snowflake.py::TestSnowflake::test_grant PASSED       [ 27%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_historical_data 
+tests/dialects/test_snowflake.py::TestSnowflake::test_historical_data PASSED [ 28%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_listagg 
+tests/dialects/test_snowflake.py::TestSnowflake::test_listagg PASSED     [ 30%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_match_recognize 
+tests/dialects/test_snowflake.py::TestSnowflake::test_match_recognize PASSED [ 31%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_max_by_min_by 
+tests/dialects/test_snowflake.py::TestSnowflake::test_max_by_min_by PASSED [ 32%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_md5_functions PASSED [ 34%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_minus 
+tests/dialects/test_snowflake.py::TestSnowflake::test_minus PASSED       [ 35%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_model_attribute PASSED [ 36%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_null_treatment 
+tests/dialects/test_snowflake.py::TestSnowflake::test_null_treatment PASSED [ 38%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_offset_without_limit 
+tests/dialects/test_snowflake.py::TestSnowflake::test_offset_without_limit PASSED [ 39%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_parameter PASSED   [ 40%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_parse_like_any PASSED [ 42%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_put_to_stage PASSED [ 43%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_querying_semi_structured_data 
+tests/dialects/test_snowflake.py::TestSnowflake::test_querying_semi_structured_data PASSED [ 44%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_quoting PASSED     [ 46%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_regexp_replace 
+tests/dialects/test_snowflake.py::TestSnowflake::test_regexp_replace PASSED [ 47%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_regexp_substr 
+tests/dialects/test_snowflake.py::TestSnowflake::test_regexp_substr PASSED [ 48%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_rely_options PASSED [ 50%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_replace 
+tests/dialects/test_snowflake.py::TestSnowflake::test_replace PASSED     [ 51%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_revoke 
+tests/dialects/test_snowflake.py::TestSnowflake::test_revoke PASSED      [ 52%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_round 
+tests/dialects/test_snowflake.py::TestSnowflake::test_round PASSED       [ 53%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_sample 
+tests/dialects/test_snowflake.py::TestSnowflake::test_sample PASSED      [ 55%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_semantic_view 
+tests/dialects/test_snowflake.py::TestSnowflake::test_semantic_view PASSED [ 56%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_semi_structured_types 
+tests/dialects/test_snowflake.py::TestSnowflake::test_semi_structured_types PASSED [ 57%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_set_item_kind_attribute PASSED [ 59%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_show_columns PASSED [ 60%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_show_databases PASSED [ 61%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_show_file_formats PASSED [ 63%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_show_functions PASSED [ 64%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_show_imported_keys PASSED [ 65%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_show_objects PASSED [ 67%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_show_primary_keys PASSED [ 68%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_show_procedures PASSED [ 69%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_show_schemas PASSED [ 71%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_show_sequences PASSED [ 72%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_show_stages PASSED [ 73%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_show_tables PASSED [ 75%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_show_unique_keys PASSED [ 76%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_show_users PASSED  [ 77%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_show_views PASSED  [ 78%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_show_warehouses PASSED [ 80%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_snowflake 
+tests/dialects/test_snowflake.py::TestSnowflake::test_snowflake PASSED   [ 81%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_staged_files PASSED [ 82%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_storage_integration PASSED [ 84%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_stored_procedures PASSED [ 85%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_swap PASSED        [ 86%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_table_function PASSED [ 88%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_timestamps 
+tests/dialects/test_snowflake.py::TestSnowflake::test_timestamps PASSED  [ 89%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_to_binary PASSED   [ 90%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_transpile_bitwise_ops PASSED [ 92%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_try_cast 
+tests/dialects/test_snowflake.py::TestSnowflake::test_try_cast PASSED    [ 93%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_type_sensitive_bitshift_transpilation PASSED [ 94%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_update_statement PASSED [ 96%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_user_defined_functions 
+tests/dialects/test_snowflake.py::TestSnowflake::test_user_defined_functions PASSED [ 97%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_values 
+tests/dialects/test_snowflake.py::TestSnowflake::test_values PASSED      [ 98%]
+tests/dialects/test_snowflake.py::TestSnowflake::test_window_function_arg PASSED [100%]
+
+=================== 76 passed, 1011 subtests passed in 1.86s ===================
+reward=1 graded=76 found=0 failed=0 parsed=76 framework=pytest exit_code=0

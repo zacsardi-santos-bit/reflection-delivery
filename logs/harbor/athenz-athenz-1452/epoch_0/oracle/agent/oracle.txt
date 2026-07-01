@@ -1,0 +1,2 @@
+patching file libs/java/auth_core/src/main/java/com/yahoo/athenz/auth/token/AccessToken.java
+patching file libs/java/auth_core/src/main/java/com/yahoo/athenz/auth/util/Crypto.java

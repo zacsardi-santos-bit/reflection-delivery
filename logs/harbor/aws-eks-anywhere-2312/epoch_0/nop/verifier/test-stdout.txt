@@ -1,0 +1,109 @@
+patching file internal/test/e2e/crypto.go
+patching file internal/test/e2e/fluxGit.go
+patching file internal/test/e2e/github.go
+patching file pkg/git/gitclient/gitclient_test.go
+patching file pkg/git/gogithub/gogithub_test.go
+patching file test/framework/flux.go
+# github.com/aws/eks-anywhere/pkg/git/gogithub_test [github.com/aws/eks-anywhere/pkg/git/gogithub.test]
+pkg/git/gogithub/gogithub_test.go:323:11: undefined: git.AddDeployKeyOpts
+pkg/git/gogithub/gogithub_test.go:328:10: undefined: git.AddDeployKeyOpts
+pkg/git/gogithub/gogithub_test.go:350:19: client.EXPECT().AddDeployKeyToRepo undefined (type *mocks.MockClientMockRecorder has no field or method AddDeployKeyToRepo)
+pkg/git/gogithub/gogithub_test.go:356:12: g.AddDeployKeyToRepo undefined (type *gogithub.GoGithub has no field or method AddDeployKeyToRepo)
+# github.com/aws/eks-anywhere/internal/test/e2e [github.com/aws/eks-anywhere/internal/test/e2e.test]
+internal/test/e2e/fluxGit.go:148:8: undefined: git.AddDeployKeyOpts
+internal/test/e2e/fluxGit.go:156:9: g.AddDeployKeyToRepo undefined (type git.ProviderClient has no field or method AddDeployKeyToRepo)
+{"Time":"2026-07-01T14:37:40.653084133Z","Action":"run","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitClone"}
+{"Time":"2026-07-01T14:37:40.653265147Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitClone","Output":"=== RUN   TestGoGitClone\n"}
+{"Time":"2026-07-01T14:37:40.653342743Z","Action":"run","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitClone/clone_repo_success"}
+{"Time":"2026-07-01T14:37:40.653350041Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitClone/clone_repo_success","Output":"=== RUN   TestGoGitClone/clone_repo_success\n"}
+{"Time":"2026-07-01T14:37:40.653468927Z","Action":"run","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitClone/empty_repository_error"}
+{"Time":"2026-07-01T14:37:40.653476115Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitClone/empty_repository_error","Output":"=== RUN   TestGoGitClone/empty_repository_error\n"}
+{"Time":"2026-07-01T14:37:40.653554282Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitClone","Output":"--- PASS: TestGoGitClone (0.00s)\n"}
+{"Time":"2026-07-01T14:37:40.653563129Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitClone/clone_repo_success","Output":"    --- PASS: TestGoGitClone/clone_repo_success (0.00s)\n"}
+{"Time":"2026-07-01T14:37:40.653568343Z","Action":"pass","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitClone/clone_repo_success","Elapsed":0}
+{"Time":"2026-07-01T14:37:40.65357421Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitClone/empty_repository_error","Output":"    --- PASS: TestGoGitClone/empty_repository_error (0.00s)\n"}
+{"Time":"2026-07-01T14:37:40.653663888Z","Action":"pass","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitClone/empty_repository_error","Elapsed":0}
+{"Time":"2026-07-01T14:37:40.6536838Z","Action":"pass","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitClone","Elapsed":0}
+{"Time":"2026-07-01T14:37:40.653687711Z","Action":"run","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitAdd"}
+{"Time":"2026-07-01T14:37:40.653691515Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitAdd","Output":"=== RUN   TestGoGitAdd\n"}
+{"Time":"2026-07-01T14:37:40.653761218Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitAdd","Output":"--- PASS: TestGoGitAdd (0.00s)\n"}
+{"Time":"2026-07-01T14:37:40.653795097Z","Action":"pass","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitAdd","Elapsed":0}
+{"Time":"2026-07-01T14:37:40.653800263Z","Action":"run","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitRemove"}
+{"Time":"2026-07-01T14:37:40.653804311Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitRemove","Output":"=== RUN   TestGoGitRemove\n"}
+{"Time":"2026-07-01T14:37:40.65386685Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitRemove","Output":"--- PASS: TestGoGitRemove (0.00s)\n"}
+{"Time":"2026-07-01T14:37:40.653880628Z","Action":"pass","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitRemove","Elapsed":0}
+{"Time":"2026-07-01T14:37:40.653885102Z","Action":"run","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitCommit"}
+{"Time":"2026-07-01T14:37:40.653888412Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitCommit","Output":"=== RUN   TestGoGitCommit\n"}
+{"Time":"2026-07-01T14:37:40.653966377Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitCommit","Output":"--- PASS: TestGoGitCommit (0.00s)\n"}
+{"Time":"2026-07-01T14:37:40.653973062Z","Action":"pass","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitCommit","Elapsed":0}
+{"Time":"2026-07-01T14:37:40.653977567Z","Action":"run","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitPush"}
+{"Time":"2026-07-01T14:37:40.653984311Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitPush","Output":"=== RUN   TestGoGitPush\n"}
+{"Time":"2026-07-01T14:37:40.654029668Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitPush","Output":"--- PASS: TestGoGitPush (0.00s)\n"}
+{"Time":"2026-07-01T14:37:40.65403973Z","Action":"pass","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitPush","Elapsed":0}
+{"Time":"2026-07-01T14:37:40.654043545Z","Action":"run","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitPull"}
+{"Time":"2026-07-01T14:37:40.654050139Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitPull","Output":"=== RUN   TestGoGitPull\n"}
+{"Time":"2026-07-01T14:37:40.654072135Z","Action":"run","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitPull/pull_success"}
+{"Time":"2026-07-01T14:37:40.654076839Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitPull/pull_success","Output":"=== RUN   TestGoGitPull/pull_success\n"}
+{"Time":"2026-07-01T14:37:40.65417844Z","Action":"run","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitPull/repo_already_up-to-date"}
+{"Time":"2026-07-01T14:37:40.65418498Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitPull/repo_already_up-to-date","Output":"=== RUN   TestGoGitPull/repo_already_up-to-date\n"}
+{"Time":"2026-07-01T14:37:40.654253547Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitPull","Output":"--- PASS: TestGoGitPull (0.00s)\n"}
+{"Time":"2026-07-01T14:37:40.654259521Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitPull/pull_success","Output":"    --- PASS: TestGoGitPull/pull_success (0.00s)\n"}
+{"Time":"2026-07-01T14:37:40.654264822Z","Action":"pass","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitPull/pull_success","Elapsed":0}
+{"Time":"2026-07-01T14:37:40.654269287Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitPull/repo_already_up-to-date","Output":"    --- PASS: TestGoGitPull/repo_already_up-to-date (0.00s)\n"}
+{"Time":"2026-07-01T14:37:40.65427528Z","Action":"pass","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitPull/repo_already_up-to-date","Elapsed":0}
+{"Time":"2026-07-01T14:37:40.65427795Z","Action":"pass","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitPull","Elapsed":0}
+{"Time":"2026-07-01T14:37:40.654280762Z","Action":"run","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitInit"}
+{"Time":"2026-07-01T14:37:40.654283448Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitInit","Output":"=== RUN   TestGoGitInit\n"}
+{"Time":"2026-07-01T14:37:40.654335264Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitInit","Output":"--- PASS: TestGoGitInit (0.00s)\n"}
+{"Time":"2026-07-01T14:37:40.654354777Z","Action":"pass","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitInit","Elapsed":0}
+{"Time":"2026-07-01T14:37:40.654359436Z","Action":"run","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitBranch"}
+{"Time":"2026-07-01T14:37:40.654363775Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitBranch","Output":"=== RUN   TestGoGitBranch\n"}
+{"Time":"2026-07-01T14:37:40.654512578Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitBranch","Output":"    gitclient.go:223: Unexpected call to *mocks.MockGoGit.CreateBranch([0xc000139c20 0xc000098780]) at /workspace/repo/pkg/git/gitclient/gitclient.go:223 because: \n"}
+{"Time":"2026-07-01T14:37:40.65452184Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitBranch","Output":"        expected call at /workspace/repo/pkg/git/gitclient/gitclient_test.go:243 doesn't match the argument at index 1.\n"}
+{"Time":"2026-07-01T14:37:40.654527508Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitBranch","Output":"        Got: \u0026{testBranch origin refs/heads/testBranch  \u003cnil\u003e} (*config.Branch)\n"}
+{"Time":"2026-07-01T14:37:40.65453408Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitBranch","Output":"        Want: is equal to \u0026{testBranch origin refs/heads/testBranch true \u003cnil\u003e} (*config.Branch)\n"}
+{"Time":"2026-07-01T14:37:40.654542209Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitBranch","Output":"    controller.go:137: missing call(s) to *mocks.MockGoGit.SetRepositoryReference(is equal to \u0026{\u003cnil\u003e map[] \u003cnil\u003e} (*git.Repository), is anything) /workspace/repo/pkg/git/gitclient/gitclient_test.go:246\n"}
+{"Time":"2026-07-01T14:37:40.654572943Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitBranch","Output":"    controller.go:137: missing call(s) to *mocks.MockGoGit.Checkout(is equal to \u0026{\u003cnil\u003e [] \u003cnil\u003e} (*git.Worktree), is equal to \u0026{0000000000000000000000000000000000000000 refs/heads/testBranch false true false} (*git.CheckoutOptions)) /workspace/repo/pkg/git/gitclient/gitclient_test.go:247\n"}
+{"Time":"2026-07-01T14:37:40.654583385Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitBranch","Output":"    controller.go:137: missing call(s) to *mocks.MockGoGit.ListRemotes(is equal to \u0026{\u003cnil\u003e map[] \u003cnil\u003e} (*git.Repository), is anything) /workspace/repo/pkg/git/gitclient/gitclient_test.go:248\n"}
+{"Time":"2026-07-01T14:37:40.654591051Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitBranch","Output":"    controller.go:137: missing call(s) to *mocks.MockGoGit.CreateBranch(is equal to \u0026{\u003cnil\u003e map[] \u003cnil\u003e} (*git.Repository), is equal to \u0026{testBranch origin refs/heads/testBranch true \u003cnil\u003e} (*config.Branch)) /workspace/repo/pkg/git/gitclient/gitclient_test.go:243\n"}
+{"Time":"2026-07-01T14:37:40.654598886Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitBranch","Output":"    controller.go:137: missing call(s) to *mocks.MockGoGit.Head(is equal to \u0026{\u003cnil\u003e map[] \u003cnil\u003e} (*git.Repository)) /workspace/repo/pkg/git/gitclient/gitclient_test.go:244\n"}
+{"Time":"2026-07-01T14:37:40.654606969Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitBranch","Output":"    controller.go:137: missing call(s) to *mocks.MockGoGit.OpenWorktree(is anything) /workspace/repo/pkg/git/gitclient/gitclient_test.go:245\n"}
+{"Time":"2026-07-01T14:37:40.654621134Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitBranch","Output":"    controller.go:137: aborting test due to missing call(s)\n"}
+{"Time":"2026-07-01T14:37:40.654628607Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitBranch","Output":"--- FAIL: TestGoGitBranch (0.00s)\n"}
+{"Time":"2026-07-01T14:37:40.654633818Z","Action":"fail","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitBranch","Elapsed":0}
+{"Time":"2026-07-01T14:37:40.65463929Z","Action":"run","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitBranchRemoteExists"}
+{"Time":"2026-07-01T14:37:40.654643426Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitBranchRemoteExists","Output":"=== RUN   TestGoGitBranchRemoteExists\n"}
+{"Time":"2026-07-01T14:37:40.654730323Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitBranchRemoteExists","Output":"    gitclient.go:223: Unexpected call to *mocks.MockGoGit.CreateBranch([0xc0001680c0 0xc000098a00]) at /workspace/repo/pkg/git/gitclient/gitclient.go:223 because: \n"}
+{"Time":"2026-07-01T14:37:40.65473516Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitBranchRemoteExists","Output":"        expected call at /workspace/repo/pkg/git/gitclient/gitclient_test.go:285 doesn't match the argument at index 1.\n"}
+{"Time":"2026-07-01T14:37:40.654738416Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitBranchRemoteExists","Output":"        Got: \u0026{testBranch origin refs/heads/testBranch  \u003cnil\u003e} (*config.Branch)\n"}
+{"Time":"2026-07-01T14:37:40.654741767Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitBranchRemoteExists","Output":"        Want: is equal to \u0026{testBranch origin refs/heads/testBranch true \u003cnil\u003e} (*config.Branch)\n"}
+{"Time":"2026-07-01T14:37:40.654760014Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitBranchRemoteExists","Output":"    controller.go:137: missing call(s) to *mocks.MockGoGit.ListRemotes(is equal to \u0026{\u003cnil\u003e map[] \u003cnil\u003e} (*git.Repository), is anything) /workspace/repo/pkg/git/gitclient/gitclient_test.go:290\n"}
+{"Time":"2026-07-01T14:37:40.654766315Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitBranchRemoteExists","Output":"    controller.go:137: missing call(s) to *mocks.MockGoGit.PullWithContext(is anything, is equal to \u0026{\u003cnil\u003e [] \u003cnil\u003e} (*git.Worktree), is anything, is equal to refs/heads/testBranch (plumbing.ReferenceName)) /workspace/repo/pkg/git/gitclient/gitclient_test.go:291\n"}
+{"Time":"2026-07-01T14:37:40.654774707Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitBranchRemoteExists","Output":"    controller.go:137: missing call(s) to *mocks.MockGoGit.CreateBranch(is equal to \u0026{\u003cnil\u003e map[] \u003cnil\u003e} (*git.Repository), is equal to \u0026{testBranch origin refs/heads/testBranch true \u003cnil\u003e} (*config.Branch)) /workspace/repo/pkg/git/gitclient/gitclient_test.go:285\n"}
+{"Time":"2026-07-01T14:37:40.654789777Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitBranchRemoteExists","Output":"    controller.go:137: missing call(s) to *mocks.MockGoGit.Head(is equal to \u0026{\u003cnil\u003e map[] \u003cnil\u003e} (*git.Repository)) /workspace/repo/pkg/git/gitclient/gitclient_test.go:286\n"}
+{"Time":"2026-07-01T14:37:40.65479883Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitBranchRemoteExists","Output":"    controller.go:137: missing call(s) to *mocks.MockGoGit.OpenWorktree(is anything) /workspace/repo/pkg/git/gitclient/gitclient_test.go:287\n"}
+{"Time":"2026-07-01T14:37:40.654816621Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitBranchRemoteExists","Output":"    controller.go:137: missing call(s) to *mocks.MockGoGit.SetRepositoryReference(is equal to \u0026{\u003cnil\u003e map[] \u003cnil\u003e} (*git.Repository), is anything) /workspace/repo/pkg/git/gitclient/gitclient_test.go:288\n"}
+{"Time":"2026-07-01T14:37:40.654823962Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitBranchRemoteExists","Output":"    controller.go:137: missing call(s) to *mocks.MockGoGit.Checkout(is equal to \u0026{\u003cnil\u003e [] \u003cnil\u003e} (*git.Worktree), is equal to \u0026{0000000000000000000000000000000000000000 refs/heads/testBranch false true false} (*git.CheckoutOptions)) /workspace/repo/pkg/git/gitclient/gitclient_test.go:289\n"}
+{"Time":"2026-07-01T14:37:40.65482921Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitBranchRemoteExists","Output":"    controller.go:137: aborting test due to missing call(s)\n"}
+{"Time":"2026-07-01T14:37:40.654838365Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitBranchRemoteExists","Output":"--- FAIL: TestGoGitBranchRemoteExists (0.00s)\n"}
+{"Time":"2026-07-01T14:37:40.654845035Z","Action":"fail","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitBranchRemoteExists","Elapsed":0}
+{"Time":"2026-07-01T14:37:40.654848701Z","Action":"run","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitValidateRemoteExists"}
+{"Time":"2026-07-01T14:37:40.654851491Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitValidateRemoteExists","Output":"=== RUN   TestGoGitValidateRemoteExists\n"}
+{"Time":"2026-07-01T14:37:40.654857909Z","Action":"run","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitValidateRemoteExists/validate_success"}
+{"Time":"2026-07-01T14:37:40.654862782Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitValidateRemoteExists/validate_success","Output":"=== RUN   TestGoGitValidateRemoteExists/validate_success\n"}
+{"Time":"2026-07-01T14:37:40.654923009Z","Action":"run","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitValidateRemoteExists/invalid_repository_error"}
+{"Time":"2026-07-01T14:37:40.654928355Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitValidateRemoteExists/invalid_repository_error","Output":"=== RUN   TestGoGitValidateRemoteExists/invalid_repository_error\n"}
+{"Time":"2026-07-01T14:37:40.654966891Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitValidateRemoteExists","Output":"--- PASS: TestGoGitValidateRemoteExists (0.00s)\n"}
+{"Time":"2026-07-01T14:37:40.654973272Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitValidateRemoteExists/validate_success","Output":"    --- PASS: TestGoGitValidateRemoteExists/validate_success (0.00s)\n"}
+{"Time":"2026-07-01T14:37:40.654977479Z","Action":"pass","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitValidateRemoteExists/validate_success","Elapsed":0}
+{"Time":"2026-07-01T14:37:40.654980542Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitValidateRemoteExists/invalid_repository_error","Output":"    --- PASS: TestGoGitValidateRemoteExists/invalid_repository_error (0.00s)\n"}
+{"Time":"2026-07-01T14:37:40.654985903Z","Action":"pass","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitValidateRemoteExists/invalid_repository_error","Elapsed":0}
+{"Time":"2026-07-01T14:37:40.654989847Z","Action":"pass","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitValidateRemoteExists","Elapsed":0}
+{"Time":"2026-07-01T14:37:40.654993897Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Output":"FAIL\n"}
+{"Time":"2026-07-01T14:37:40.655338859Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Output":"FAIL\tgithub.com/aws/eks-anywhere/pkg/git/gitclient\t0.010s\n"}
+{"Time":"2026-07-01T14:37:40.655357307Z","Action":"fail","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Elapsed":0.01}
+FAIL	github.com/aws/eks-anywhere/internal/test/e2e [build failed]
+FAIL	github.com/aws/eks-anywhere/pkg/git/gogithub [build failed]
+{"Time":"2026-07-01T14:37:40.759704535Z","Action":"output","Package":"github.com/aws/eks-anywhere/test/framework","Output":"?   \tgithub.com/aws/eks-anywhere/test/framework\t[no test files]\n"}
+{"Time":"2026-07-01T14:37:40.759721861Z","Action":"skip","Package":"github.com/aws/eks-anywhere/test/framework","Elapsed":0}
+reward=0 graded=40 found=40 failed=26 parsed=19 framework=go exit_code=2

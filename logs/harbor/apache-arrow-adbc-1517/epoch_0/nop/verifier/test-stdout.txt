@@ -1,0 +1,1091 @@
+patching file java/driver/flight-sql/src/test/java/org/apache/arrow/adbc/driver/flightsql/GetObjectsTests.java
+patching file java/driver/flight-sql/src/test/java/org/apache/arrow/adbc/driver/flightsql/HeaderTest.java
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Build Order:
+[INFO] 
+[INFO] Apache Arrow ADBC Java Root POM                                    [pom]
+[INFO] Arrow ADBC Core                                                    [jar]
+[INFO] Arrow ADBC Driver Manager                                          [jar]
+[INFO] Arrow ADBC SQL                                                     [jar]
+[INFO] Arrow ADBC Driver Flight SQL                                       [jar]
+[INFO] Arrow ADBC Driver Validation Suite                                 [jar]
+[INFO] Arrow ADBC Driver Flight SQL Validation                            [jar]
+[INFO] Arrow ADBC Driver JDBC                                             [jar]
+[INFO] Arrow ADBC Driver JDBC Validation with Derby                       [jar]
+[INFO] Arrow ADBC Driver JDBC Validation with Microsoft SQL Server        [jar]
+[INFO] Arrow ADBC Driver JDBC Validation with PostgreSQL                  [jar]
+[INFO] 
+[INFO] -------------< org.apache.arrow.adbc:arrow-adbc-java-root >-------------
+[INFO] Building Apache Arrow ADBC Java Root POM 0.10.0-SNAPSHOT          [1/11]
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- apache-rat-plugin:0.11:check (rat-checks) @ arrow-adbc-java-root ---
+[INFO] 51 implicit excludes (use -debug for more details).
+[INFO] Exclude: **/*.iml
+[INFO] Exclude: **/*.log
+[INFO] Exclude: **/target/**
+[INFO] Exclude: .mvn/jvm.config
+[INFO] 108 resources included (use -debug for more details)
+[INFO] Rat check: Summary of files. Unapproved: 0 unknown: 0 generated: 0 approved: 108 licence.
+[INFO] 
+[INFO] --- maven-remote-resources-plugin:1.5:process (process-resource-bundles) @ arrow-adbc-java-root ---
+[INFO] 
+[INFO] --- maven-site-plugin:3.5.1:attach-descriptor (attach-descriptor) @ arrow-adbc-java-root ---
+[INFO] 
+[INFO] --- maven-install-plugin:2.5.2:install (default-install) @ arrow-adbc-java-root ---
+[INFO] Installing /workspace/repo/java/pom.xml to /root/.m2/repository/org/apache/arrow/adbc/arrow-adbc-java-root/0.10.0-SNAPSHOT/arrow-adbc-java-root-0.10.0-SNAPSHOT.pom
+[INFO] 
+[INFO] ------------------< org.apache.arrow.adbc:adbc-core >-------------------
+[INFO] Building Arrow ADBC Core 0.10.0-SNAPSHOT                          [2/11]
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- apache-rat-plugin:0.11:check (rat-checks) @ adbc-core ---
+[INFO] 51 implicit excludes (use -debug for more details).
+[INFO] Exclude: **/*.iml
+[INFO] Exclude: **/*.log
+[INFO] Exclude: **/target/**
+[INFO] Exclude: .mvn/jvm.config
+[INFO] 17 resources included (use -debug for more details)
+[INFO] Rat check: Summary of files. Unapproved: 0 unknown: 0 generated: 0 approved: 17 licence.
+[INFO] 
+[INFO] --- maven-remote-resources-plugin:1.5:process (process-resource-bundles) @ adbc-core ---
+[INFO] 
+[INFO] --- maven-resources-plugin:2.7:resources (default-resources) @ adbc-core ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /workspace/repo/java/core/src/main/resources
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.10.1:compile (default-compile) @ adbc-core ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- maven-resources-plugin:2.7:testResources (default-testResources) @ adbc-core ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /workspace/repo/java/core/src/test/resources
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.10.1:testCompile (default-testCompile) @ adbc-core ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.0.0-M7:test (default-test) @ adbc-core ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- maven-jar-plugin:3.0.0:jar (default-jar) @ adbc-core ---
+[INFO] Building jar: /workspace/repo/java/core/target/adbc-core-0.10.0-SNAPSHOT.jar
+[INFO] 
+[INFO] --- maven-site-plugin:3.5.1:attach-descriptor (attach-descriptor) @ adbc-core ---
+[INFO] 
+[INFO] --- maven-install-plugin:2.5.2:install (default-install) @ adbc-core ---
+[INFO] Installing /workspace/repo/java/core/target/adbc-core-0.10.0-SNAPSHOT.jar to /root/.m2/repository/org/apache/arrow/adbc/adbc-core/0.10.0-SNAPSHOT/adbc-core-0.10.0-SNAPSHOT.jar
+[INFO] Installing /workspace/repo/java/core/pom.xml to /root/.m2/repository/org/apache/arrow/adbc/adbc-core/0.10.0-SNAPSHOT/adbc-core-0.10.0-SNAPSHOT.pom
+[INFO] 
+[INFO] -------------< org.apache.arrow.adbc:adbc-driver-manager >--------------
+[INFO] Building Arrow ADBC Driver Manager 0.10.0-SNAPSHOT                [3/11]
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- apache-rat-plugin:0.11:check (rat-checks) @ adbc-driver-manager ---
+[INFO] 51 implicit excludes (use -debug for more details).
+[INFO] Exclude: **/*.iml
+[INFO] Exclude: **/*.log
+[INFO] Exclude: **/target/**
+[INFO] Exclude: .mvn/jvm.config
+[INFO] 7 resources included (use -debug for more details)
+[INFO] Rat check: Summary of files. Unapproved: 0 unknown: 0 generated: 0 approved: 7 licence.
+[INFO] 
+[INFO] --- maven-remote-resources-plugin:1.5:process (process-resource-bundles) @ adbc-driver-manager ---
+[INFO] 
+[INFO] --- maven-resources-plugin:2.7:resources (default-resources) @ adbc-driver-manager ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /workspace/repo/java/driver-manager/src/main/resources
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.10.1:compile (default-compile) @ adbc-driver-manager ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 2 source files to /workspace/repo/java/driver-manager/target/classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.7:testResources (default-testResources) @ adbc-driver-manager ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.10.1:testCompile (default-testCompile) @ adbc-driver-manager ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 3 source files to /workspace/repo/java/driver-manager/target/test-classes
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.0.0-M7:test (default-test) @ adbc-driver-manager ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- maven-jar-plugin:3.0.0:jar (default-jar) @ adbc-driver-manager ---
+[INFO] Building jar: /workspace/repo/java/driver-manager/target/adbc-driver-manager-0.10.0-SNAPSHOT.jar
+[INFO] 
+[INFO] --- maven-site-plugin:3.5.1:attach-descriptor (attach-descriptor) @ adbc-driver-manager ---
+[INFO] 
+[INFO] --- maven-install-plugin:2.5.2:install (default-install) @ adbc-driver-manager ---
+[INFO] Installing /workspace/repo/java/driver-manager/target/adbc-driver-manager-0.10.0-SNAPSHOT.jar to /root/.m2/repository/org/apache/arrow/adbc/adbc-driver-manager/0.10.0-SNAPSHOT/adbc-driver-manager-0.10.0-SNAPSHOT.jar
+[INFO] Installing /workspace/repo/java/driver-manager/pom.xml to /root/.m2/repository/org/apache/arrow/adbc/adbc-driver-manager/0.10.0-SNAPSHOT/adbc-driver-manager-0.10.0-SNAPSHOT.pom
+[INFO] 
+[INFO] -------------------< org.apache.arrow.adbc:adbc-sql >-------------------
+[INFO] Building Arrow ADBC SQL 0.10.0-SNAPSHOT                           [4/11]
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- apache-rat-plugin:0.11:check (rat-checks) @ adbc-sql ---
+[INFO] 51 implicit excludes (use -debug for more details).
+[INFO] Exclude: **/*.iml
+[INFO] Exclude: **/*.log
+[INFO] Exclude: **/target/**
+[INFO] Exclude: .mvn/jvm.config
+[INFO] 3 resources included (use -debug for more details)
+[INFO] Rat check: Summary of files. Unapproved: 0 unknown: 0 generated: 0 approved: 3 licence.
+[INFO] 
+[INFO] --- maven-remote-resources-plugin:1.5:process (process-resource-bundles) @ adbc-sql ---
+[INFO] 
+[INFO] --- maven-resources-plugin:2.7:resources (default-resources) @ adbc-sql ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /workspace/repo/java/sql/src/main/resources
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.10.1:compile (default-compile) @ adbc-sql ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- maven-resources-plugin:2.7:testResources (default-testResources) @ adbc-sql ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /workspace/repo/java/sql/src/test/resources
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.10.1:testCompile (default-testCompile) @ adbc-sql ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.0.0-M7:test (default-test) @ adbc-sql ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- maven-jar-plugin:3.0.0:jar (default-jar) @ adbc-sql ---
+[INFO] Building jar: /workspace/repo/java/sql/target/adbc-sql-0.10.0-SNAPSHOT.jar
+[INFO] 
+[INFO] --- maven-site-plugin:3.5.1:attach-descriptor (attach-descriptor) @ adbc-sql ---
+[INFO] 
+[INFO] --- maven-install-plugin:2.5.2:install (default-install) @ adbc-sql ---
+[INFO] Installing /workspace/repo/java/sql/target/adbc-sql-0.10.0-SNAPSHOT.jar to /root/.m2/repository/org/apache/arrow/adbc/adbc-sql/0.10.0-SNAPSHOT/adbc-sql-0.10.0-SNAPSHOT.jar
+[INFO] Installing /workspace/repo/java/sql/pom.xml to /root/.m2/repository/org/apache/arrow/adbc/adbc-sql/0.10.0-SNAPSHOT/adbc-sql-0.10.0-SNAPSHOT.pom
+[INFO] 
+[INFO] ------------< org.apache.arrow.adbc:adbc-driver-flight-sql >------------
+[INFO] Building Arrow ADBC Driver Flight SQL 0.10.0-SNAPSHOT             [5/11]
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- apache-rat-plugin:0.11:check (rat-checks) @ adbc-driver-flight-sql ---
+[INFO] 51 implicit excludes (use -debug for more details).
+[INFO] Exclude: **/*.iml
+[INFO] Exclude: **/*.log
+[INFO] Exclude: **/target/**
+[INFO] Exclude: .mvn/jvm.config
+[INFO] 19 resources included (use -debug for more details)
+[INFO] Rat check: Summary of files. Unapproved: 0 unknown: 0 generated: 0 approved: 19 licence.
+[INFO] 
+[INFO] --- maven-remote-resources-plugin:1.5:process (process-resource-bundles) @ adbc-driver-flight-sql ---
+[INFO] 
+[INFO] --- maven-resources-plugin:2.7:resources (default-resources) @ adbc-driver-flight-sql ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.10.1:compile (default-compile) @ adbc-driver-flight-sql ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 11 source files to /workspace/repo/java/driver/flight-sql/target/classes
+[INFO] /workspace/repo/java/driver/flight-sql/src/main/java/org/apache/arrow/adbc/driver/flightsql/FlightSqlClientWithCallOptions.java: Some input files use or override a deprecated API.
+[INFO] /workspace/repo/java/driver/flight-sql/src/main/java/org/apache/arrow/adbc/driver/flightsql/FlightSqlClientWithCallOptions.java: Recompile with -Xlint:deprecation for details.
+[INFO] 
+[INFO] --- maven-resources-plugin:2.7:testResources (default-testResources) @ adbc-driver-flight-sql ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /workspace/repo/java/driver/flight-sql/src/test/resources
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.10.1:testCompile (default-testCompile) @ adbc-driver-flight-sql ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 6 source files to /workspace/repo/java/driver/flight-sql/target/test-classes
+[INFO] /workspace/repo/java/driver/flight-sql/src/test/java/org/apache/arrow/adbc/driver/flightsql/GetObjectsTests.java: /workspace/repo/java/driver/flight-sql/src/test/java/org/apache/arrow/adbc/driver/flightsql/GetObjectsTests.java uses unchecked or unsafe operations.
+[INFO] /workspace/repo/java/driver/flight-sql/src/test/java/org/apache/arrow/adbc/driver/flightsql/GetObjectsTests.java: Recompile with -Xlint:unchecked for details.
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.0.0-M7:test (default-test) @ adbc-driver-flight-sql ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- maven-jar-plugin:3.0.0:jar (default-jar) @ adbc-driver-flight-sql ---
+[INFO] Building jar: /workspace/repo/java/driver/flight-sql/target/adbc-driver-flight-sql-0.10.0-SNAPSHOT.jar
+[INFO] 
+[INFO] --- maven-site-plugin:3.5.1:attach-descriptor (attach-descriptor) @ adbc-driver-flight-sql ---
+[INFO] 
+[INFO] --- maven-install-plugin:2.5.2:install (default-install) @ adbc-driver-flight-sql ---
+[INFO] Installing /workspace/repo/java/driver/flight-sql/target/adbc-driver-flight-sql-0.10.0-SNAPSHOT.jar to /root/.m2/repository/org/apache/arrow/adbc/adbc-driver-flight-sql/0.10.0-SNAPSHOT/adbc-driver-flight-sql-0.10.0-SNAPSHOT.jar
+[INFO] Installing /workspace/repo/java/driver/flight-sql/pom.xml to /root/.m2/repository/org/apache/arrow/adbc/adbc-driver-flight-sql/0.10.0-SNAPSHOT/adbc-driver-flight-sql-0.10.0-SNAPSHOT.pom
+[INFO] 
+[INFO] ------------< org.apache.arrow.adbc:adbc-driver-validation >------------
+[INFO] Building Arrow ADBC Driver Validation Suite 0.10.0-SNAPSHOT       [6/11]
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- apache-rat-plugin:0.11:check (rat-checks) @ adbc-driver-validation ---
+[INFO] 51 implicit excludes (use -debug for more details).
+[INFO] Exclude: **/*.iml
+[INFO] Exclude: **/*.log
+[INFO] Exclude: **/target/**
+[INFO] Exclude: .mvn/jvm.config
+[INFO] 10 resources included (use -debug for more details)
+[INFO] Rat check: Summary of files. Unapproved: 0 unknown: 0 generated: 0 approved: 10 licence.
+[INFO] 
+[INFO] --- maven-remote-resources-plugin:1.5:process (process-resource-bundles) @ adbc-driver-validation ---
+[INFO] 
+[INFO] --- maven-resources-plugin:2.7:resources (default-resources) @ adbc-driver-validation ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /workspace/repo/java/driver/validation/src/main/resources
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.10.1:compile (default-compile) @ adbc-driver-validation ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 9 source files to /workspace/repo/java/driver/validation/target/classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.7:testResources (default-testResources) @ adbc-driver-validation ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /workspace/repo/java/driver/validation/src/test/resources
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.10.1:testCompile (default-testCompile) @ adbc-driver-validation ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.0.0-M7:test (default-test) @ adbc-driver-validation ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- maven-jar-plugin:3.0.0:jar (default-jar) @ adbc-driver-validation ---
+[INFO] Building jar: /workspace/repo/java/driver/validation/target/adbc-driver-validation-0.10.0-SNAPSHOT.jar
+[INFO] 
+[INFO] --- maven-site-plugin:3.5.1:attach-descriptor (attach-descriptor) @ adbc-driver-validation ---
+[INFO] 
+[INFO] --- maven-install-plugin:2.5.2:install (default-install) @ adbc-driver-validation ---
+[INFO] Installing /workspace/repo/java/driver/validation/target/adbc-driver-validation-0.10.0-SNAPSHOT.jar to /root/.m2/repository/org/apache/arrow/adbc/adbc-driver-validation/0.10.0-SNAPSHOT/adbc-driver-validation-0.10.0-SNAPSHOT.jar
+[INFO] Installing /workspace/repo/java/driver/validation/pom.xml to /root/.m2/repository/org/apache/arrow/adbc/adbc-driver-validation/0.10.0-SNAPSHOT/adbc-driver-validation-0.10.0-SNAPSHOT.pom
+[INFO] 
+[INFO] ------< org.apache.arrow.adbc:adbc-driver-flight-sql-validation >-------
+[INFO] Building Arrow ADBC Driver Flight SQL Validation 0.10.0-SNAPSHOT  [7/11]
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- apache-rat-plugin:0.11:check (rat-checks) @ adbc-driver-flight-sql-validation ---
+[INFO] 51 implicit excludes (use -debug for more details).
+[INFO] Exclude: **/*.iml
+[INFO] Exclude: **/*.log
+[INFO] Exclude: **/target/**
+[INFO] Exclude: .mvn/jvm.config
+[INFO] 7 resources included (use -debug for more details)
+[INFO] Rat check: Summary of files. Unapproved: 0 unknown: 0 generated: 0 approved: 7 licence.
+[INFO] 
+[INFO] --- maven-remote-resources-plugin:1.5:process (process-resource-bundles) @ adbc-driver-flight-sql-validation ---
+[INFO] 
+[INFO] --- maven-resources-plugin:2.7:resources (default-resources) @ adbc-driver-flight-sql-validation ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /workspace/repo/java/driver/flight-sql-validation/src/main/resources
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.10.1:compile (default-compile) @ adbc-driver-flight-sql-validation ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-resources-plugin:2.7:testResources (default-testResources) @ adbc-driver-flight-sql-validation ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /workspace/repo/java/driver/flight-sql-validation/src/test/resources
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.10.1:testCompile (default-testCompile) @ adbc-driver-flight-sql-validation ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 6 source files to /workspace/repo/java/driver/flight-sql-validation/target/test-classes
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.0.0-M7:test (default-test) @ adbc-driver-flight-sql-validation ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- maven-jar-plugin:3.0.0:jar (default-jar) @ adbc-driver-flight-sql-validation ---
+[INFO] Building jar: /workspace/repo/java/driver/flight-sql-validation/target/adbc-driver-flight-sql-validation-0.10.0-SNAPSHOT.jar
+[INFO] 
+[INFO] --- maven-site-plugin:3.5.1:attach-descriptor (attach-descriptor) @ adbc-driver-flight-sql-validation ---
+[INFO] 
+[INFO] --- maven-install-plugin:2.5.2:install (default-install) @ adbc-driver-flight-sql-validation ---
+[INFO] Installing /workspace/repo/java/driver/flight-sql-validation/target/adbc-driver-flight-sql-validation-0.10.0-SNAPSHOT.jar to /root/.m2/repository/org/apache/arrow/adbc/adbc-driver-flight-sql-validation/0.10.0-SNAPSHOT/adbc-driver-flight-sql-validation-0.10.0-SNAPSHOT.jar
+[INFO] Installing /workspace/repo/java/driver/flight-sql-validation/pom.xml to /root/.m2/repository/org/apache/arrow/adbc/adbc-driver-flight-sql-validation/0.10.0-SNAPSHOT/adbc-driver-flight-sql-validation-0.10.0-SNAPSHOT.pom
+[INFO] 
+[INFO] ---------------< org.apache.arrow.adbc:adbc-driver-jdbc >---------------
+[INFO] Building Arrow ADBC Driver JDBC 0.10.0-SNAPSHOT                   [8/11]
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- apache-rat-plugin:0.11:check (rat-checks) @ adbc-driver-jdbc ---
+[INFO] 51 implicit excludes (use -debug for more details).
+[INFO] Exclude: **/*.iml
+[INFO] Exclude: **/*.log
+[INFO] Exclude: **/target/**
+[INFO] Exclude: .mvn/jvm.config
+[INFO] 21 resources included (use -debug for more details)
+[INFO] Rat check: Summary of files. Unapproved: 0 unknown: 0 generated: 0 approved: 21 licence.
+[INFO] 
+[INFO] --- maven-remote-resources-plugin:1.5:process (process-resource-bundles) @ adbc-driver-jdbc ---
+[INFO] 
+[INFO] --- maven-resources-plugin:2.7:resources (default-resources) @ adbc-driver-jdbc ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.10.1:compile (default-compile) @ adbc-driver-jdbc ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 17 source files to /workspace/repo/java/driver/jdbc/target/classes
+[INFO] /workspace/repo/java/driver/jdbc/src/main/java/org/apache/arrow/adbc/driver/jdbc/JdbcDriver.java: /workspace/repo/java/driver/jdbc/src/main/java/org/apache/arrow/adbc/driver/jdbc/JdbcDriver.java uses or overrides a deprecated API.
+[INFO] /workspace/repo/java/driver/jdbc/src/main/java/org/apache/arrow/adbc/driver/jdbc/JdbcDriver.java: Recompile with -Xlint:deprecation for details.
+[INFO] 
+[INFO] --- maven-resources-plugin:2.7:testResources (default-testResources) @ adbc-driver-jdbc ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /workspace/repo/java/driver/jdbc/src/test/resources
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.10.1:testCompile (default-testCompile) @ adbc-driver-jdbc ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 2 source files to /workspace/repo/java/driver/jdbc/target/test-classes
+[INFO] /workspace/repo/java/driver/jdbc/src/test/java/org/apache/arrow/adbc/driver/jdbc/JdbcDatabaseTest.java: /workspace/repo/java/driver/jdbc/src/test/java/org/apache/arrow/adbc/driver/jdbc/JdbcDatabaseTest.java uses or overrides a deprecated API.
+[INFO] /workspace/repo/java/driver/jdbc/src/test/java/org/apache/arrow/adbc/driver/jdbc/JdbcDatabaseTest.java: Recompile with -Xlint:deprecation for details.
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.0.0-M7:test (default-test) @ adbc-driver-jdbc ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- maven-jar-plugin:3.0.0:jar (default-jar) @ adbc-driver-jdbc ---
+[INFO] Building jar: /workspace/repo/java/driver/jdbc/target/adbc-driver-jdbc-0.10.0-SNAPSHOT.jar
+[INFO] 
+[INFO] --- maven-site-plugin:3.5.1:attach-descriptor (attach-descriptor) @ adbc-driver-jdbc ---
+[INFO] 
+[INFO] --- maven-install-plugin:2.5.2:install (default-install) @ adbc-driver-jdbc ---
+[INFO] Installing /workspace/repo/java/driver/jdbc/target/adbc-driver-jdbc-0.10.0-SNAPSHOT.jar to /root/.m2/repository/org/apache/arrow/adbc/adbc-driver-jdbc/0.10.0-SNAPSHOT/adbc-driver-jdbc-0.10.0-SNAPSHOT.jar
+[INFO] Installing /workspace/repo/java/driver/jdbc/pom.xml to /root/.m2/repository/org/apache/arrow/adbc/adbc-driver-jdbc/0.10.0-SNAPSHOT/adbc-driver-jdbc-0.10.0-SNAPSHOT.pom
+[INFO] 
+[INFO] ------< org.apache.arrow.adbc:adbc-driver-jdbc-validation-derby >-------
+[INFO] Building Arrow ADBC Driver JDBC Validation with Derby 0.10.0-SNAPSHOT [9/11]
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- apache-rat-plugin:0.11:check (rat-checks) @ adbc-driver-jdbc-validation-derby ---
+[INFO] 51 implicit excludes (use -debug for more details).
+[INFO] Exclude: **/*.iml
+[INFO] Exclude: **/*.log
+[INFO] Exclude: **/target/**
+[INFO] Exclude: .mvn/jvm.config
+[INFO] 6 resources included (use -debug for more details)
+[INFO] Rat check: Summary of files. Unapproved: 0 unknown: 0 generated: 0 approved: 6 licence.
+[INFO] 
+[INFO] --- maven-remote-resources-plugin:1.5:process (process-resource-bundles) @ adbc-driver-jdbc-validation-derby ---
+[INFO] 
+[INFO] --- maven-resources-plugin:2.7:resources (default-resources) @ adbc-driver-jdbc-validation-derby ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /workspace/repo/java/driver/jdbc-validation-derby/src/main/resources
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.10.1:compile (default-compile) @ adbc-driver-jdbc-validation-derby ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-resources-plugin:2.7:testResources (default-testResources) @ adbc-driver-jdbc-validation-derby ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /workspace/repo/java/driver/jdbc-validation-derby/src/test/resources
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.10.1:testCompile (default-testCompile) @ adbc-driver-jdbc-validation-derby ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 5 source files to /workspace/repo/java/driver/jdbc-validation-derby/target/test-classes
+[INFO] /workspace/repo/java/driver/jdbc-validation-derby/src/test/java/org/apache/arrow/adbc/driver/jdbc/derby/DerbyQuirks.java: /workspace/repo/java/driver/jdbc-validation-derby/src/test/java/org/apache/arrow/adbc/driver/jdbc/derby/DerbyQuirks.java uses or overrides a deprecated API.
+[INFO] /workspace/repo/java/driver/jdbc-validation-derby/src/test/java/org/apache/arrow/adbc/driver/jdbc/derby/DerbyQuirks.java: Recompile with -Xlint:deprecation for details.
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.0.0-M7:test (default-test) @ adbc-driver-jdbc-validation-derby ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- maven-jar-plugin:3.0.0:jar (default-jar) @ adbc-driver-jdbc-validation-derby ---
+[INFO] Building jar: /workspace/repo/java/driver/jdbc-validation-derby/target/adbc-driver-jdbc-validation-derby-0.10.0-SNAPSHOT.jar
+[INFO] 
+[INFO] --- maven-site-plugin:3.5.1:attach-descriptor (attach-descriptor) @ adbc-driver-jdbc-validation-derby ---
+[INFO] 
+[INFO] --- maven-install-plugin:2.5.2:install (default-install) @ adbc-driver-jdbc-validation-derby ---
+[INFO] Installing /workspace/repo/java/driver/jdbc-validation-derby/target/adbc-driver-jdbc-validation-derby-0.10.0-SNAPSHOT.jar to /root/.m2/repository/org/apache/arrow/adbc/adbc-driver-jdbc-validation-derby/0.10.0-SNAPSHOT/adbc-driver-jdbc-validation-derby-0.10.0-SNAPSHOT.jar
+[INFO] Installing /workspace/repo/java/driver/jdbc-validation-derby/pom.xml to /root/.m2/repository/org/apache/arrow/adbc/adbc-driver-jdbc-validation-derby/0.10.0-SNAPSHOT/adbc-driver-jdbc-validation-derby-0.10.0-SNAPSHOT.pom
+[INFO] 
+[INFO] ---< org.apache.arrow.adbc:adbc-driver-jdbc-validation-mssqlserver >----
+[INFO] Building Arrow ADBC Driver JDBC Validation with Microsoft SQL Server 0.10.0-SNAPSHOT [10/11]
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- apache-rat-plugin:0.11:check (rat-checks) @ adbc-driver-jdbc-validation-mssqlserver ---
+[INFO] 51 implicit excludes (use -debug for more details).
+[INFO] Exclude: **/*.iml
+[INFO] Exclude: **/*.log
+[INFO] Exclude: **/target/**
+[INFO] Exclude: .mvn/jvm.config
+[INFO] 4 resources included (use -debug for more details)
+[INFO] Rat check: Summary of files. Unapproved: 0 unknown: 0 generated: 0 approved: 4 licence.
+[INFO] 
+[INFO] --- maven-remote-resources-plugin:1.5:process (process-resource-bundles) @ adbc-driver-jdbc-validation-mssqlserver ---
+[INFO] 
+[INFO] --- maven-resources-plugin:2.7:resources (default-resources) @ adbc-driver-jdbc-validation-mssqlserver ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /workspace/repo/java/driver/jdbc-validation-mssqlserver/src/main/resources
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.10.1:compile (default-compile) @ adbc-driver-jdbc-validation-mssqlserver ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-resources-plugin:2.7:testResources (default-testResources) @ adbc-driver-jdbc-validation-mssqlserver ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.10.1:testCompile (default-testCompile) @ adbc-driver-jdbc-validation-mssqlserver ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 2 source files to /workspace/repo/java/driver/jdbc-validation-mssqlserver/target/test-classes
+[INFO] /workspace/repo/java/driver/jdbc-validation-mssqlserver/src/test/java/org/apache/arrow/adbc/driver/jdbc/mssqlserver/MsSqlServerQuirks.java: /workspace/repo/java/driver/jdbc-validation-mssqlserver/src/test/java/org/apache/arrow/adbc/driver/jdbc/mssqlserver/MsSqlServerQuirks.java uses or overrides a deprecated API.
+[INFO] /workspace/repo/java/driver/jdbc-validation-mssqlserver/src/test/java/org/apache/arrow/adbc/driver/jdbc/mssqlserver/MsSqlServerQuirks.java: Recompile with -Xlint:deprecation for details.
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.0.0-M7:test (default-test) @ adbc-driver-jdbc-validation-mssqlserver ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- maven-jar-plugin:3.0.0:jar (default-jar) @ adbc-driver-jdbc-validation-mssqlserver ---
+[INFO] Building jar: /workspace/repo/java/driver/jdbc-validation-mssqlserver/target/adbc-driver-jdbc-validation-mssqlserver-0.10.0-SNAPSHOT.jar
+[INFO] 
+[INFO] --- maven-site-plugin:3.5.1:attach-descriptor (attach-descriptor) @ adbc-driver-jdbc-validation-mssqlserver ---
+[INFO] 
+[INFO] --- maven-install-plugin:2.5.2:install (default-install) @ adbc-driver-jdbc-validation-mssqlserver ---
+[INFO] Installing /workspace/repo/java/driver/jdbc-validation-mssqlserver/target/adbc-driver-jdbc-validation-mssqlserver-0.10.0-SNAPSHOT.jar to /root/.m2/repository/org/apache/arrow/adbc/adbc-driver-jdbc-validation-mssqlserver/0.10.0-SNAPSHOT/adbc-driver-jdbc-validation-mssqlserver-0.10.0-SNAPSHOT.jar
+[INFO] Installing /workspace/repo/java/driver/jdbc-validation-mssqlserver/pom.xml to /root/.m2/repository/org/apache/arrow/adbc/adbc-driver-jdbc-validation-mssqlserver/0.10.0-SNAPSHOT/adbc-driver-jdbc-validation-mssqlserver-0.10.0-SNAPSHOT.pom
+[INFO] 
+[INFO] ----< org.apache.arrow.adbc:adbc-driver-jdbc-validation-postgresql >----
+[INFO] Building Arrow ADBC Driver JDBC Validation with PostgreSQL 0.10.0-SNAPSHOT [11/11]
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- apache-rat-plugin:0.11:check (rat-checks) @ adbc-driver-jdbc-validation-postgresql ---
+[INFO] 51 implicit excludes (use -debug for more details).
+[INFO] Exclude: **/*.iml
+[INFO] Exclude: **/*.log
+[INFO] Exclude: **/target/**
+[INFO] Exclude: .mvn/jvm.config
+[INFO] 9 resources included (use -debug for more details)
+[INFO] Rat check: Summary of files. Unapproved: 0 unknown: 0 generated: 0 approved: 9 licence.
+[INFO] 
+[INFO] --- maven-remote-resources-plugin:1.5:process (process-resource-bundles) @ adbc-driver-jdbc-validation-postgresql ---
+[INFO] 
+[INFO] --- maven-resources-plugin:2.7:resources (default-resources) @ adbc-driver-jdbc-validation-postgresql ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /workspace/repo/java/driver/jdbc-validation-postgresql/src/main/resources
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.10.1:compile (default-compile) @ adbc-driver-jdbc-validation-postgresql ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-resources-plugin:2.7:testResources (default-testResources) @ adbc-driver-jdbc-validation-postgresql ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.10.1:testCompile (default-testCompile) @ adbc-driver-jdbc-validation-postgresql ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 7 source files to /workspace/repo/java/driver/jdbc-validation-postgresql/target/test-classes
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.0.0-M7:test (default-test) @ adbc-driver-jdbc-validation-postgresql ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- maven-jar-plugin:3.0.0:jar (default-jar) @ adbc-driver-jdbc-validation-postgresql ---
+[INFO] Building jar: /workspace/repo/java/driver/jdbc-validation-postgresql/target/adbc-driver-jdbc-validation-postgresql-0.10.0-SNAPSHOT.jar
+[INFO] 
+[INFO] --- maven-site-plugin:3.5.1:attach-descriptor (attach-descriptor) @ adbc-driver-jdbc-validation-postgresql ---
+[INFO] 
+[INFO] --- maven-install-plugin:2.5.2:install (default-install) @ adbc-driver-jdbc-validation-postgresql ---
+[INFO] Installing /workspace/repo/java/driver/jdbc-validation-postgresql/target/adbc-driver-jdbc-validation-postgresql-0.10.0-SNAPSHOT.jar to /root/.m2/repository/org/apache/arrow/adbc/adbc-driver-jdbc-validation-postgresql/0.10.0-SNAPSHOT/adbc-driver-jdbc-validation-postgresql-0.10.0-SNAPSHOT.jar
+[INFO] Installing /workspace/repo/java/driver/jdbc-validation-postgresql/pom.xml to /root/.m2/repository/org/apache/arrow/adbc/adbc-driver-jdbc-validation-postgresql/0.10.0-SNAPSHOT/adbc-driver-jdbc-validation-postgresql-0.10.0-SNAPSHOT.pom
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary for Apache Arrow ADBC Java Root POM 0.10.0-SNAPSHOT:
+[INFO] 
+[INFO] Apache Arrow ADBC Java Root POM .................... SUCCESS [  3.312 s]
+[INFO] Arrow ADBC Core .................................... SUCCESS [  2.277 s]
+[INFO] Arrow ADBC Driver Manager .......................... SUCCESS [  2.525 s]
+[INFO] Arrow ADBC SQL ..................................... SUCCESS [  0.493 s]
+[INFO] Arrow ADBC Driver Flight SQL ....................... SUCCESS [  4.285 s]
+[INFO] Arrow ADBC Driver Validation Suite ................. SUCCESS [  1.923 s]
+[INFO] Arrow ADBC Driver Flight SQL Validation ............ SUCCESS [  0.997 s]
+[INFO] Arrow ADBC Driver JDBC ............................. SUCCESS [  1.580 s]
+[INFO] Arrow ADBC Driver JDBC Validation with Derby ....... SUCCESS [  0.595 s]
+[INFO] Arrow ADBC Driver JDBC Validation with Microsoft SQL Server SUCCESS [  0.429 s]
+[INFO] Arrow ADBC Driver JDBC Validation with PostgreSQL .. SUCCESS [  0.607 s]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  19.314 s
+[INFO] Finished at: 2026-07-01T14:34:24Z
+[INFO] ------------------------------------------------------------------------
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ------------< org.apache.arrow.adbc:adbc-driver-flight-sql >------------
+[INFO] Building Arrow ADBC Driver Flight SQL 0.10.0-SNAPSHOT
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- apache-rat-plugin:0.11:check (rat-checks) @ adbc-driver-flight-sql ---
+[INFO] 51 implicit excludes (use -debug for more details).
+[INFO] Exclude: **/*.iml
+[INFO] Exclude: **/*.log
+[INFO] Exclude: **/target/**
+[INFO] Exclude: .mvn/jvm.config
+[INFO] 19 resources included (use -debug for more details)
+[INFO] Rat check: Summary of files. Unapproved: 0 unknown: 0 generated: 0 approved: 19 licence.
+[INFO] 
+[INFO] --- maven-remote-resources-plugin:1.5:process (process-resource-bundles) @ adbc-driver-flight-sql ---
+[INFO] 
+[INFO] --- maven-resources-plugin:2.7:resources (default-resources) @ adbc-driver-flight-sql ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.10.1:compile (default-compile) @ adbc-driver-flight-sql ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- maven-resources-plugin:2.7:testResources (default-testResources) @ adbc-driver-flight-sql ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /workspace/repo/java/driver/flight-sql/src/test/resources
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.10.1:testCompile (default-testCompile) @ adbc-driver-flight-sql ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 6 source files to /workspace/repo/java/driver/flight-sql/target/test-classes
+[INFO] /workspace/repo/java/driver/flight-sql/src/test/java/org/apache/arrow/adbc/driver/flightsql/GetObjectsTests.java: /workspace/repo/java/driver/flight-sql/src/test/java/org/apache/arrow/adbc/driver/flightsql/GetObjectsTests.java uses unchecked or unsafe operations.
+[INFO] /workspace/repo/java/driver/flight-sql/src/test/java/org/apache/arrow/adbc/driver/flightsql/GetObjectsTests.java: Recompile with -Xlint:unchecked for details.
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.0.0-M7:test (default-test) @ adbc-driver-flight-sql ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running org.apache.arrow.adbc.driver.flightsql.HeaderTest
+SLF4J: No SLF4J providers were found.
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See https://www.slf4j.org/codes.html#noProviders for further details.
+Jul 01, 2026 2:34:37 PM io.netty.util.internal.MacAddressUtil defaultMachineId
+WARNING: Failed to find a usable hardware address from the network interfaces; using random bytes: f4:48:89:69:7d:25:fb:27
+Jul 01, 2026 2:34:39 PM io.grpc.internal.ManagedChannelOrphanWrapper$ManagedChannelReference cleanQueue
+SEVERE: *~*~*~ Previous channel ManagedChannelImpl{logId=4, target=directaddress:///localhost/127.0.0.1:41199} was not shutdown properly!!! ~*~*~*
+    Make sure to call shutdown()/shutdownNow() and wait until awaitTermination() returns true.
+java.lang.RuntimeException: ManagedChannel allocation site
+	at io.grpc.internal.ManagedChannelOrphanWrapper$ManagedChannelReference.<init>(ManagedChannelOrphanWrapper.java:102)
+	at io.grpc.internal.ManagedChannelOrphanWrapper.<init>(ManagedChannelOrphanWrapper.java:60)
+	at io.grpc.internal.ManagedChannelOrphanWrapper.<init>(ManagedChannelOrphanWrapper.java:51)
+	at io.grpc.internal.ManagedChannelImplBuilder.build(ManagedChannelImplBuilder.java:668)
+	at io.grpc.ForwardingChannelBuilder2.build(ForwardingChannelBuilder2.java:260)
+	at org.apache.arrow.flight.FlightClient$Builder.build(FlightClient.java:809)
+	at org.apache.arrow.adbc.driver.flightsql.FlightSqlConnection.buildClient(FlightSqlConnection.java:360)
+	at org.apache.arrow.adbc.driver.flightsql.FlightSqlConnection.createInitialConnection(FlightSqlConnection.java:247)
+	at org.apache.arrow.adbc.driver.flightsql.FlightSqlConnection.<init>(FlightSqlConnection.java:89)
+	at org.apache.arrow.adbc.driver.flightsql.FlightSqlDatabase.connect(FlightSqlDatabase.java:58)
+	at org.apache.arrow.adbc.driver.flightsql.HeaderTest.connect(HeaderTest.java:180)
+	at org.junit.Assert.assertThrows(Assert.java:1001)
+	at org.junit.Assert.assertThrows(Assert.java:981)
+	at org.apache.arrow.adbc.driver.flightsql.HeaderTest.testUnauthenticated(HeaderTest.java:144)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at org.junit.platform.commons.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:725)
+	at org.junit.jupiter.engine.execution.MethodInvocation.proceed(MethodInvocation.java:60)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$ValidatingInvocation.proceed(InvocationInterceptorChain.java:131)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.intercept(TimeoutExtension.java:149)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestableMethod(TimeoutExtension.java:140)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestMethod(TimeoutExtension.java:84)
+	at org.junit.jupiter.engine.execution.ExecutableInvoker$ReflectiveInterceptorCall.lambda$ofVoidMethod$0(ExecutableInvoker.java:115)
+	at org.junit.jupiter.engine.execution.ExecutableInvoker.lambda$invoke$0(ExecutableInvoker.java:105)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$InterceptedInvocation.proceed(InvocationInterceptorChain.java:106)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.proceed(InvocationInterceptorChain.java:64)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.chainAndInvoke(InvocationInterceptorChain.java:45)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.invoke(InvocationInterceptorChain.java:37)
+	at org.junit.jupiter.engine.execution.ExecutableInvoker.invoke(ExecutableInvoker.java:104)
+	at org.junit.jupiter.engine.execution.ExecutableInvoker.invoke(ExecutableInvoker.java:98)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeTestMethod$7(TestMethodTestDescriptor.java:214)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeTestMethod(TestMethodTestDescriptor.java:210)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:135)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:66)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:151)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:107)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:88)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:54)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:67)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:52)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:114)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:86)
+	at org.junit.platform.launcher.core.DefaultLauncherSession$DelegatingLauncher.execute(DefaultLauncherSession.java:86)
+	at org.apache.maven.surefire.junitplatform.LazyLauncher.execute(LazyLauncher.java:55)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.execute(JUnitPlatformProvider.java:223)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invokeAllTests(JUnitPlatformProvider.java:175)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invoke(JUnitPlatformProvider.java:139)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:456)
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:169)
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:595)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:581)
+
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.283 s - in org.apache.arrow.adbc.driver.flightsql.HeaderTest
+[INFO] Running org.apache.arrow.adbc.driver.flightsql.GetObjectsTests
+[ERROR] Tests run: 8, Failures: 0, Errors: 8, Skipped: 0, Time elapsed: 0.181 s <<< FAILURE! - in org.apache.arrow.adbc.driver.flightsql.GetObjectsTests
+[ERROR] org.apache.arrow.adbc.driver.flightsql.GetObjectsTests.testGetSchemas  Time elapsed: 0.003 s  <<< ERROR!
+AdbcException{message=Connection does not support getObjects(), status=NOT_IMPLEMENTED, sqlState='null', vendorCode=0, cause=null, details=0}
+	at org.apache.arrow.adbc.core.AdbcException.notImplemented(AdbcException.java:82)
+	at org.apache.arrow.adbc.core.AdbcConnection.getObjects(AdbcConnection.java:227)
+	at org.apache.arrow.adbc.driver.flightsql.GetObjectsTests.testGetSchemas(GetObjectsTests.java:346)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:59)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:56)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at org.junit.runners.BlockJUnit4ClassRunner$1.evaluate(BlockJUnit4ClassRunner.java:100)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:366)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:103)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:63)
+	at org.junit.runners.ParentRunner$4.run(ParentRunner.java:331)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:79)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:329)
+	at org.junit.runners.ParentRunner.access$100(ParentRunner.java:66)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:293)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:27)
+	at org.apache.arrow.driver.jdbc.FlightServerTestRule$1.evaluate(FlightServerTestRule.java:165)
+	at org.junit.rules.RunRules.evaluate(RunRules.java:20)
+	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:413)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:115)
+	at org.junit.vintage.engine.execution.RunnerExecutor.execute(RunnerExecutor.java:42)
+	at org.junit.vintage.engine.VintageTestEngine.executeAllChildren(VintageTestEngine.java:80)
+	at org.junit.vintage.engine.VintageTestEngine.execute(VintageTestEngine.java:72)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:107)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:88)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:54)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:67)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:52)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:114)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:86)
+	at org.junit.platform.launcher.core.DefaultLauncherSession$DelegatingLauncher.execute(DefaultLauncherSession.java:86)
+	at org.apache.maven.surefire.junitplatform.LazyLauncher.execute(LazyLauncher.java:55)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.execute(JUnitPlatformProvider.java:223)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invokeAllTests(JUnitPlatformProvider.java:175)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invoke(JUnitPlatformProvider.java:139)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:456)
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:169)
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:595)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:581)
+
+[ERROR] org.apache.arrow.adbc.driver.flightsql.GetObjectsTests.testGetCatalogsWithCatalogFilter  Time elapsed: 0 s  <<< ERROR!
+AdbcException{message=Connection does not support getObjects(), status=NOT_IMPLEMENTED, sqlState='null', vendorCode=0, cause=null, details=0}
+	at org.apache.arrow.adbc.core.AdbcException.notImplemented(AdbcException.java:82)
+	at org.apache.arrow.adbc.core.AdbcConnection.getObjects(AdbcConnection.java:227)
+	at org.apache.arrow.adbc.driver.flightsql.GetObjectsTests.testGetCatalogsWithCatalogFilter(GetObjectsTests.java:320)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:59)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:56)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at org.junit.runners.BlockJUnit4ClassRunner$1.evaluate(BlockJUnit4ClassRunner.java:100)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:366)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:103)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:63)
+	at org.junit.runners.ParentRunner$4.run(ParentRunner.java:331)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:79)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:329)
+	at org.junit.runners.ParentRunner.access$100(ParentRunner.java:66)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:293)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:27)
+	at org.apache.arrow.driver.jdbc.FlightServerTestRule$1.evaluate(FlightServerTestRule.java:165)
+	at org.junit.rules.RunRules.evaluate(RunRules.java:20)
+	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:413)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:115)
+	at org.junit.vintage.engine.execution.RunnerExecutor.execute(RunnerExecutor.java:42)
+	at org.junit.vintage.engine.VintageTestEngine.executeAllChildren(VintageTestEngine.java:80)
+	at org.junit.vintage.engine.VintageTestEngine.execute(VintageTestEngine.java:72)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:107)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:88)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:54)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:67)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:52)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:114)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:86)
+	at org.junit.platform.launcher.core.DefaultLauncherSession$DelegatingLauncher.execute(DefaultLauncherSession.java:86)
+	at org.apache.maven.surefire.junitplatform.LazyLauncher.execute(LazyLauncher.java:55)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.execute(JUnitPlatformProvider.java:223)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invokeAllTests(JUnitPlatformProvider.java:175)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invoke(JUnitPlatformProvider.java:139)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:456)
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:169)
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:595)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:581)
+
+[ERROR] org.apache.arrow.adbc.driver.flightsql.GetObjectsTests.testGetColumnsWithEmptyingColumnFilter  Time elapsed: 0.001 s  <<< ERROR!
+AdbcException{message=Connection does not support getObjects(), status=NOT_IMPLEMENTED, sqlState='null', vendorCode=0, cause=null, details=0}
+	at org.apache.arrow.adbc.core.AdbcException.notImplemented(AdbcException.java:82)
+	at org.apache.arrow.adbc.core.AdbcConnection.getObjects(AdbcConnection.java:227)
+	at org.apache.arrow.adbc.driver.flightsql.GetObjectsTests.testGetColumnsWithEmptyingColumnFilter(GetObjectsTests.java:412)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:59)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:56)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at org.junit.runners.BlockJUnit4ClassRunner$1.evaluate(BlockJUnit4ClassRunner.java:100)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:366)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:103)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:63)
+	at org.junit.runners.ParentRunner$4.run(ParentRunner.java:331)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:79)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:329)
+	at org.junit.runners.ParentRunner.access$100(ParentRunner.java:66)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:293)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:27)
+	at org.apache.arrow.driver.jdbc.FlightServerTestRule$1.evaluate(FlightServerTestRule.java:165)
+	at org.junit.rules.RunRules.evaluate(RunRules.java:20)
+	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:413)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:115)
+	at org.junit.vintage.engine.execution.RunnerExecutor.execute(RunnerExecutor.java:42)
+	at org.junit.vintage.engine.VintageTestEngine.executeAllChildren(VintageTestEngine.java:80)
+	at org.junit.vintage.engine.VintageTestEngine.execute(VintageTestEngine.java:72)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:107)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:88)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:54)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:67)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:52)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:114)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:86)
+	at org.junit.platform.launcher.core.DefaultLauncherSession$DelegatingLauncher.execute(DefaultLauncherSession.java:86)
+	at org.apache.maven.surefire.junitplatform.LazyLauncher.execute(LazyLauncher.java:55)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.execute(JUnitPlatformProvider.java:223)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invokeAllTests(JUnitPlatformProvider.java:175)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invoke(JUnitPlatformProvider.java:139)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:456)
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:169)
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:595)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:581)
+
+[ERROR] org.apache.arrow.adbc.driver.flightsql.GetObjectsTests.testGetColumns  Time elapsed: 0 s  <<< ERROR!
+AdbcException{message=Connection does not support getObjects(), status=NOT_IMPLEMENTED, sqlState='null', vendorCode=0, cause=null, details=0}
+	at org.apache.arrow.adbc.core.AdbcException.notImplemented(AdbcException.java:82)
+	at org.apache.arrow.adbc.core.AdbcConnection.getObjects(AdbcConnection.java:227)
+	at org.apache.arrow.adbc.driver.flightsql.GetObjectsTests.testGetColumns(GetObjectsTests.java:395)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:59)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:56)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at org.junit.runners.BlockJUnit4ClassRunner$1.evaluate(BlockJUnit4ClassRunner.java:100)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:366)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:103)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:63)
+	at org.junit.runners.ParentRunner$4.run(ParentRunner.java:331)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:79)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:329)
+	at org.junit.runners.ParentRunner.access$100(ParentRunner.java:66)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:293)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:27)
+	at org.apache.arrow.driver.jdbc.FlightServerTestRule$1.evaluate(FlightServerTestRule.java:165)
+	at org.junit.rules.RunRules.evaluate(RunRules.java:20)
+	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:413)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:115)
+	at org.junit.vintage.engine.execution.RunnerExecutor.execute(RunnerExecutor.java:42)
+	at org.junit.vintage.engine.VintageTestEngine.executeAllChildren(VintageTestEngine.java:80)
+	at org.junit.vintage.engine.VintageTestEngine.execute(VintageTestEngine.java:72)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:107)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:88)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:54)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:67)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:52)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:114)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:86)
+	at org.junit.platform.launcher.core.DefaultLauncherSession$DelegatingLauncher.execute(DefaultLauncherSession.java:86)
+	at org.apache.maven.surefire.junitplatform.LazyLauncher.execute(LazyLauncher.java:55)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.execute(JUnitPlatformProvider.java:223)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invokeAllTests(JUnitPlatformProvider.java:175)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invoke(JUnitPlatformProvider.java:139)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:456)
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:169)
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:595)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:581)
+
+[ERROR] org.apache.arrow.adbc.driver.flightsql.GetObjectsTests.testGetCatalogs  Time elapsed: 0.001 s  <<< ERROR!
+AdbcException{message=Connection does not support getObjects(), status=NOT_IMPLEMENTED, sqlState='null', vendorCode=0, cause=null, details=0}
+	at org.apache.arrow.adbc.core.AdbcException.notImplemented(AdbcException.java:82)
+	at org.apache.arrow.adbc.core.AdbcConnection.getObjects(AdbcConnection.java:227)
+	at org.apache.arrow.adbc.driver.flightsql.GetObjectsTests.testGetCatalogs(GetObjectsTests.java:302)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:59)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:56)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at org.junit.runners.BlockJUnit4ClassRunner$1.evaluate(BlockJUnit4ClassRunner.java:100)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:366)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:103)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:63)
+	at org.junit.runners.ParentRunner$4.run(ParentRunner.java:331)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:79)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:329)
+	at org.junit.runners.ParentRunner.access$100(ParentRunner.java:66)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:293)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:27)
+	at org.apache.arrow.driver.jdbc.FlightServerTestRule$1.evaluate(FlightServerTestRule.java:165)
+	at org.junit.rules.RunRules.evaluate(RunRules.java:20)
+	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:413)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:115)
+	at org.junit.vintage.engine.execution.RunnerExecutor.execute(RunnerExecutor.java:42)
+	at org.junit.vintage.engine.VintageTestEngine.executeAllChildren(VintageTestEngine.java:80)
+	at org.junit.vintage.engine.VintageTestEngine.execute(VintageTestEngine.java:72)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:107)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:88)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:54)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:67)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:52)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:114)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:86)
+	at org.junit.platform.launcher.core.DefaultLauncherSession$DelegatingLauncher.execute(DefaultLauncherSession.java:86)
+	at org.apache.maven.surefire.junitplatform.LazyLauncher.execute(LazyLauncher.java:55)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.execute(JUnitPlatformProvider.java:223)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invokeAllTests(JUnitPlatformProvider.java:175)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invoke(JUnitPlatformProvider.java:139)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:456)
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:169)
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:595)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:581)
+
+[ERROR] org.apache.arrow.adbc.driver.flightsql.GetObjectsTests.testGetTables  Time elapsed: 0 s  <<< ERROR!
+AdbcException{message=Connection does not support getObjects(), status=NOT_IMPLEMENTED, sqlState='null', vendorCode=0, cause=null, details=0}
+	at org.apache.arrow.adbc.core.AdbcException.notImplemented(AdbcException.java:82)
+	at org.apache.arrow.adbc.core.AdbcConnection.getObjects(AdbcConnection.java:227)
+	at org.apache.arrow.adbc.driver.flightsql.GetObjectsTests.testGetTables(GetObjectsTests.java:386)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:59)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:56)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at org.junit.runners.BlockJUnit4ClassRunner$1.evaluate(BlockJUnit4ClassRunner.java:100)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:366)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:103)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:63)
+	at org.junit.runners.ParentRunner$4.run(ParentRunner.java:331)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:79)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:329)
+	at org.junit.runners.ParentRunner.access$100(ParentRunner.java:66)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:293)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:27)
+	at org.apache.arrow.driver.jdbc.FlightServerTestRule$1.evaluate(FlightServerTestRule.java:165)
+	at org.junit.rules.RunRules.evaluate(RunRules.java:20)
+	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:413)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:115)
+	at org.junit.vintage.engine.execution.RunnerExecutor.execute(RunnerExecutor.java:42)
+	at org.junit.vintage.engine.VintageTestEngine.executeAllChildren(VintageTestEngine.java:80)
+	at org.junit.vintage.engine.VintageTestEngine.execute(VintageTestEngine.java:72)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:107)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:88)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:54)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:67)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:52)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:114)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:86)
+	at org.junit.platform.launcher.core.DefaultLauncherSession$DelegatingLauncher.execute(DefaultLauncherSession.java:86)
+	at org.apache.maven.surefire.junitplatform.LazyLauncher.execute(LazyLauncher.java:55)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.execute(JUnitPlatformProvider.java:223)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invokeAllTests(JUnitPlatformProvider.java:175)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invoke(JUnitPlatformProvider.java:139)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:456)
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:169)
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:595)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:581)
+
+[ERROR] org.apache.arrow.adbc.driver.flightsql.GetObjectsTests.testGetColumnsWithColumnFilter  Time elapsed: 0.001 s  <<< ERROR!
+AdbcException{message=Connection does not support getObjects(), status=NOT_IMPLEMENTED, sqlState='null', vendorCode=0, cause=null, details=0}
+	at org.apache.arrow.adbc.core.AdbcException.notImplemented(AdbcException.java:82)
+	at org.apache.arrow.adbc.core.AdbcConnection.getObjects(AdbcConnection.java:227)
+	at org.apache.arrow.adbc.driver.flightsql.GetObjectsTests.testGetColumnsWithColumnFilter(GetObjectsTests.java:403)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:59)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:56)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at org.junit.runners.BlockJUnit4ClassRunner$1.evaluate(BlockJUnit4ClassRunner.java:100)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:366)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:103)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:63)
+	at org.junit.runners.ParentRunner$4.run(ParentRunner.java:331)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:79)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:329)
+	at org.junit.runners.ParentRunner.access$100(ParentRunner.java:66)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:293)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:27)
+	at org.apache.arrow.driver.jdbc.FlightServerTestRule$1.evaluate(FlightServerTestRule.java:165)
+	at org.junit.rules.RunRules.evaluate(RunRules.java:20)
+	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:413)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:115)
+	at org.junit.vintage.engine.execution.RunnerExecutor.execute(RunnerExecutor.java:42)
+	at org.junit.vintage.engine.VintageTestEngine.executeAllChildren(VintageTestEngine.java:80)
+	at org.junit.vintage.engine.VintageTestEngine.execute(VintageTestEngine.java:72)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:107)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:88)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:54)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:67)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:52)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:114)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:86)
+	at org.junit.platform.launcher.core.DefaultLauncherSession$DelegatingLauncher.execute(DefaultLauncherSession.java:86)
+	at org.apache.maven.surefire.junitplatform.LazyLauncher.execute(LazyLauncher.java:55)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.execute(JUnitPlatformProvider.java:223)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invokeAllTests(JUnitPlatformProvider.java:175)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invoke(JUnitPlatformProvider.java:139)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:456)
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:169)
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:595)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:581)
+
+[ERROR] org.apache.arrow.adbc.driver.flightsql.GetObjectsTests.testGetCatalogsWithEmptyingCatalogFilter  Time elapsed: 0 s  <<< ERROR!
+AdbcException{message=Connection does not support getObjects(), status=NOT_IMPLEMENTED, sqlState='null', vendorCode=0, cause=null, details=0}
+	at org.apache.arrow.adbc.core.AdbcException.notImplemented(AdbcException.java:82)
+	at org.apache.arrow.adbc.core.AdbcConnection.getObjects(AdbcConnection.java:227)
+	at org.apache.arrow.adbc.driver.flightsql.GetObjectsTests.testGetCatalogsWithEmptyingCatalogFilter(GetObjectsTests.java:336)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:59)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:56)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at org.junit.runners.BlockJUnit4ClassRunner$1.evaluate(BlockJUnit4ClassRunner.java:100)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:366)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:103)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:63)
+	at org.junit.runners.ParentRunner$4.run(ParentRunner.java:331)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:79)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:329)
+	at org.junit.runners.ParentRunner.access$100(ParentRunner.java:66)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:293)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:27)
+	at org.apache.arrow.driver.jdbc.FlightServerTestRule$1.evaluate(FlightServerTestRule.java:165)
+	at org.junit.rules.RunRules.evaluate(RunRules.java:20)
+	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:413)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:115)
+	at org.junit.vintage.engine.execution.RunnerExecutor.execute(RunnerExecutor.java:42)
+	at org.junit.vintage.engine.VintageTestEngine.executeAllChildren(VintageTestEngine.java:80)
+	at org.junit.vintage.engine.VintageTestEngine.execute(VintageTestEngine.java:72)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:107)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:88)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:54)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:67)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:52)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:114)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:86)
+	at org.junit.platform.launcher.core.DefaultLauncherSession$DelegatingLauncher.execute(DefaultLauncherSession.java:86)
+	at org.apache.maven.surefire.junitplatform.LazyLauncher.execute(LazyLauncher.java:55)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.execute(JUnitPlatformProvider.java:223)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invokeAllTests(JUnitPlatformProvider.java:175)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invoke(JUnitPlatformProvider.java:139)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:456)
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:169)
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:595)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:581)
+
+[INFO] 
+[INFO] Results:
+[INFO] 
+[ERROR] Errors: 
+[ERROR]   GetObjectsTests.testGetCatalogs:302 ? Adbc Connection does not support getObjects()
+[ERROR]   GetObjectsTests.testGetCatalogsWithCatalogFilter:320 ? Adbc Connection does not support getObjects()
+[ERROR]   GetObjectsTests.testGetCatalogsWithEmptyingCatalogFilter:336 ? Adbc Connection does not support getObjects()
+[ERROR]   GetObjectsTests.testGetColumns:395 ? Adbc Connection does not support getObjects()
+[ERROR]   GetObjectsTests.testGetColumnsWithColumnFilter:403 ? Adbc Connection does not support getObjects()
+[ERROR]   GetObjectsTests.testGetColumnsWithEmptyingColumnFilter:412 ? Adbc Connection does not support getObjects()
+[ERROR]   GetObjectsTests.testGetSchemas:346 ? Adbc Connection does not support getObjects()
+[ERROR]   GetObjectsTests.testGetTables:386 ? Adbc Connection does not support getObjects()
+[INFO] 
+[ERROR] Tests run: 12, Failures: 0, Errors: 8, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  13.529 s
+[INFO] Finished at: 2026-07-01T14:34:40Z
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.0.0-M7:test (default-test) on project adbc-driver-flight-sql: 
+[ERROR] 
+[ERROR] Please refer to /workspace/repo/java/driver/flight-sql/target/surefire-reports for the individual test results.
+[ERROR] Please refer to dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
+reward=0 graded=12 found=0 failed=0 parsed=1 framework=maven exit_code=1

@@ -1,0 +1,6 @@
+patching file .changeset/serious-trains-shop.md
+patching file packages/core/src/generators/solid/index.ts
+patching file packages/core/src/generators/solid/state/signals.ts
+patching file packages/core/src/generators/solid/state/state.ts
+patching file packages/core/src/generators/svelte/svelte.ts
+patching file packages/core/src/helpers/patterns.ts

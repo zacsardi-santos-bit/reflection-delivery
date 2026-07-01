@@ -1,0 +1,23 @@
+patching file pkg/migrations/op_add_column_test.go
+patching file pkg/migrations/op_common_test.go
+patching file pkg/migrations/op_create_table_test.go
+patching file pkg/migrations/op_drop_constraint_test.go
+patching file pkg/migrations/op_set_check_test.go
+patching file pkg/migrations/op_set_fk_test.go
+patching file pkg/migrations/op_set_notnull_test.go
+patching file pkg/migrations/op_set_unique_test.go
+Starting PostgreSQL 15 database server: main.
+# github.com/xataio/pgroll/pkg/migrations_test [github.com/xataio/pgroll/pkg/migrations.test]
+pkg/migrations/op_add_column_test.go:191:18: undefined: testutils.FKViolationErrorCode
+pkg/migrations/op_add_column_test.go:215:18: undefined: testutils.FKViolationErrorCode
+pkg/migrations/op_add_column_test.go:294:18: undefined: testutils.FKViolationErrorCode
+pkg/migrations/op_add_column_test.go:318:18: undefined: testutils.FKViolationErrorCode
+pkg/migrations/op_add_column_test.go:546:17: undefined: testutils.CheckViolationErrorCode
+pkg/migrations/op_add_column_test.go:561:17: undefined: testutils.NotNullViolationErrorCode
+pkg/migrations/op_add_column_test.go:737:17: undefined: testutils.CheckViolationErrorCode
+pkg/migrations/op_add_column_test.go:752:17: undefined: testutils.CheckViolationErrorCode
+pkg/migrations/op_create_table_test.go:149:18: undefined: testutils.FKViolationErrorCode
+pkg/migrations/op_create_table_test.go:172:18: undefined: testutils.FKViolationErrorCode
+pkg/migrations/op_create_table_test.go:172:18: too many errors
+FAIL	github.com/xataio/pgroll/pkg/migrations [build failed]
+reward=0 graded=116 found=116 failed=116 parsed=1 framework=go exit_code=1

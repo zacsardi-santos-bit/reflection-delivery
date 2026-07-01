@@ -1,0 +1,14 @@
+patching file crates/nu-cmd-dataframe/src/dataframe/values/nu_dataframe/custom_value.rs
+patching file crates/nu-command/src/database/values/sqlite.rs
+patching file crates/nu-plugin/Cargo.toml
+patching file crates/nu-plugin/src/plugin/interface/engine.rs
+patching file crates/nu-plugin/src/plugin/interface/plugin.rs
+patching file crates/nu-plugin/src/plugin/mod.rs
+patching file crates/nu-plugin/src/protocol/mod.rs
+patching file crates/nu-plugin/src/protocol/plugin_custom_value.rs
+patching file crates/nu-plugin/src/protocol/test_util.rs
+patching file crates/nu-protocol/src/value/custom_value.rs
+patching file crates/nu-protocol/src/value/mod.rs
+patching file crates/nu_plugin_custom_values/src/cool_custom_value.rs
+patching file crates/nu_plugin_custom_values/src/drop_check.rs
+patching file crates/nu_plugin_custom_values/src/main.rs

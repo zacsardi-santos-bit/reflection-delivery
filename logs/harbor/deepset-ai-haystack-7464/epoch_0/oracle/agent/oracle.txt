@@ -1,0 +1,7 @@
+patching file docs/pydoc/config/generators_api.yml
+patching file haystack/components/generators/__init__.py
+patching file haystack/components/generators/hugging_face_api.py
+patching file haystack/components/generators/hugging_face_tgi.py
+patching file haystack/utils/hf.py
+patching file haystack/utils/url_validation.py
+patching file releasenotes/notes/hfapigenerator-3b1c353a4e8e4c55.yaml

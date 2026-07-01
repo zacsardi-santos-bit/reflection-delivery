@@ -1,26 +1,26 @@
 {
-    "id": "1993b7d8-6ee8-4bf4-bcd7-ad0c78bd4404",
+    "id": "b7552fd6-6751-4975-bb7c-e2731d7aa2a9",
     "task_name": "offline/chakra-ui-panda-2099",
-    "trial_name": "chakra-ui-panda-2099__tAHSatF",
-    "trial_uri": "file:///home/ubuntu/reflection_offline_harbor_delivery/oracle_jobs_all/2026-06-29__15-12-04/chakra-ui-panda-2099__tAHSatF",
+    "trial_name": "chakra-ui-panda-2099__Q4LNruF",
+    "trial_uri": "file:///tmp/oracle/2026-07-01__14-30-57/chakra-ui-panda-2099__Q4LNruF",
     "task_id": {
-        "path": "/home/ubuntu/reflection_offline_harbor_delivery/harbor/chakra-ui-panda-2099"
+        "path": "chakra-ui-panda-2099"
     },
-    "source": "harbor",
-    "task_checksum": "1bdcdfd07ffa1949eafc806c4e2a26933f7cf0cc999ed1cde5c23fcca7edf226",
+    "source": "src",
+    "task_checksum": "a95b700e4b683e4d37b8f9396100ce0909f371cff6080d67caa6f420bf3f7248",
     "config": {
         "task": {
-            "path": "/home/ubuntu/reflection_offline_harbor_delivery/harbor/chakra-ui-panda-2099",
+            "path": "chakra-ui-panda-2099",
             "git_url": null,
             "git_commit_id": null,
             "name": null,
             "ref": null,
             "overwrite": false,
             "download_dir": null,
-            "source": "harbor"
+            "source": "src"
         },
-        "trial_name": "chakra-ui-panda-2099__tAHSatF",
-        "trials_dir": "/home/ubuntu/reflection_offline_harbor_delivery/oracle_jobs_all/2026-06-29__15-12-04",
+        "trial_name": "chakra-ui-panda-2099__Q4LNruF",
+        "trials_dir": "/tmp/oracle/2026-07-01__14-30-57",
         "timeout_multiplier": 1.0,
         "agent_timeout_multiplier": null,
         "verifier_timeout_multiplier": null,
@@ -37,10 +37,10 @@
             "env": {}
         },
         "environment": {
-            "type": "modal",
+            "type": "docker",
             "import_path": null,
             "force_build": false,
-            "delete": false,
+            "delete": true,
             "override_cpus": null,
             "override_memory_mb": null,
             "override_storage_mb": null,
@@ -56,7 +56,7 @@
             "disable": false
         },
         "artifacts": [],
-        "job_id": "8d8c11e2-61bb-4d33-b502-02a799419317"
+        "job_id": "ed7c7400-e6b8-46be-b3f2-3ab2116e9fab"
     },
     "agent_info": {
         "name": "oracle",
@@ -73,26 +73,26 @@
     },
     "verifier_result": {
         "rewards": {
-            "reward": 0.0
+            "reward": 1.0
         }
     },
     "exception_info": null,
-    "started_at": "2026-06-29T15:29:36.680464Z",
-    "finished_at": "2026-06-29T15:35:01.582692Z",
+    "started_at": "2026-07-01T14:31:06.656502Z",
+    "finished_at": "2026-07-01T14:34:55.913943Z",
     "environment_setup": {
-        "started_at": "2026-06-29T15:29:36.687182Z",
-        "finished_at": "2026-06-29T15:29:53.045720Z"
+        "started_at": "2026-07-01T14:31:06.657745Z",
+        "finished_at": "2026-07-01T14:33:52.319171Z"
     },
     "agent_setup": {
-        "started_at": "2026-06-29T15:29:53.045726Z",
-        "finished_at": "2026-06-29T15:29:53.045742Z"
+        "started_at": "2026-07-01T14:33:52.319207Z",
+        "finished_at": "2026-07-01T14:33:52.319252Z"
     },
     "agent_execution": {
-        "started_at": "2026-06-29T15:29:53.045760Z",
-        "finished_at": "2026-06-29T15:32:11.677486Z"
+        "started_at": "2026-07-01T14:33:52.319307Z",
+        "finished_at": "2026-07-01T14:33:52.565199Z"
     },
     "verifier": {
-        "started_at": "2026-06-29T15:32:34.956059Z",
-        "finished_at": "2026-06-29T15:34:21.590832Z"
+        "started_at": "2026-07-01T14:33:52.565331Z",
+        "finished_at": "2026-07-01T14:34:45.588888Z"
     }
 }

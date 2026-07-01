@@ -1,16 +1,16 @@
 {
     "task": {
-        "path": "/home/ubuntu/reflection_offline_harbor_delivery/harbor/elastic-go-elasticsearch-868",
+        "path": "elastic-go-elasticsearch-868",
         "git_url": null,
         "git_commit_id": null,
         "name": null,
         "ref": null,
         "overwrite": false,
         "download_dir": null,
-        "source": "harbor"
+        "source": "src"
     },
-    "trial_name": "elastic-go-elasticsearch-868__Gvh9g8F",
-    "trials_dir": "/home/ubuntu/reflection_offline_harbor_delivery/nop_jobs_all/2026-06-29__15-12-04",
+    "trial_name": "elastic-go-elasticsearch-868__GKWCoQQ",
+    "trials_dir": "/tmp/nop/2026-07-01__14-43-16",
     "timeout_multiplier": 1.0,
     "agent_timeout_multiplier": null,
     "verifier_timeout_multiplier": null,
@@ -27,10 +27,10 @@
         "env": {}
     },
     "environment": {
-        "type": "modal",
+        "type": "docker",
         "import_path": null,
         "force_build": false,
-        "delete": false,
+        "delete": true,
         "override_cpus": null,
         "override_memory_mb": null,
         "override_storage_mb": null,
@@ -46,5 +46,5 @@
         "disable": false
     },
     "artifacts": [],
-    "job_id": "b069d7ef-a502-4a46-91d5-798d81044649"
+    "job_id": "81c7bb74-e58a-4592-9d8b-955166cc6c5e"
 }

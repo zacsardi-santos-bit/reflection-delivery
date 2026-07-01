@@ -1,16 +1,16 @@
 {
     "task": {
-        "path": "/home/ubuntu/reflection_offline_harbor_delivery/harbor/tari-project-tari-3334",
+        "path": "/home/ubuntu/staging_reflection/tasks/tari-project-tari-3334",
         "git_url": null,
         "git_commit_id": null,
         "name": null,
         "ref": null,
         "overwrite": false,
         "download_dir": null,
-        "source": "harbor"
+        "source": null
     },
-    "trial_name": "tari-project-tari-3334__f4nJJVu",
-    "trials_dir": "/home/ubuntu/reflection_offline_harbor_delivery/nop_jobs_all/2026-06-29__15-12-04",
+    "trial_name": "tari-project-tari-3334__yJwpC4C",
+    "trials_dir": "/home/ubuntu/staging_reflection/logs/val_residual20/nop/tari-project-tari-3334/2026-07-01__15-35-32",
     "timeout_multiplier": 1.0,
     "agent_timeout_multiplier": null,
     "verifier_timeout_multiplier": null,
@@ -46,5 +46,5 @@
         "disable": false
     },
     "artifacts": [],
-    "job_id": "b069d7ef-a502-4a46-91d5-798d81044649"
+    "job_id": "732dcefa-13a4-4415-841e-a33666f7ea09"
 }

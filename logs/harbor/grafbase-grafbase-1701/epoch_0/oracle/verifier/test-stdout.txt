@@ -1,0 +1,11 @@
+patching file engine/crates/parser-openapi/src/tests/mod.rs
+patching file engine/crates/parser-openapi/src/tests/snapshots/parser_openapi__tests__amadeus_schema.snap
+   Compiling parser-openapi v0.1.0 (/workspace/repo/engine/crates/parser-openapi)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 23.44s
+────────────
+ Nextest run ID 1bcbe122-a67c-4047-81f1-d944038f79ba with nextest profile: ci
+    Starting 1 test across 1 binary (38 tests skipped)
+        PASS [   0.147s] (1/1) parser-openapi tests::test_amadeus_schema
+────────────
+     Summary [   0.148s] 1 test run: 1 passed, 38 skipped
+reward=1 graded=1 found=1 failed=0 parsed=1 framework=cargo exit_code=0

@@ -1,0 +1,5 @@
+patching file CHANGELOG.md
+patching file naga/src/back/glsl/mod.rs
+patching file naga/src/back/hlsl/help.rs
+patching file naga/src/back/hlsl/writer.rs
+patching file naga/src/valid/expression.rs

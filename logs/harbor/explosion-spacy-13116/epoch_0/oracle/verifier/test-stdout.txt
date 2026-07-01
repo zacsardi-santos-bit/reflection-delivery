@@ -1,0 +1,37 @@
+patching file spacy/tests/conftest.py
+patching file spacy/tests/lang/fo/__init__.py
+patching file spacy/tests/lang/fo/test_tokenizer.py
+patching file spacy/tests/lang/nn/__init__.py
+patching file spacy/tests/lang/nn/test_tokenizer.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+hypothesis profile 'no_deadlines' -> deadline=timedelta(milliseconds=120000)
+rootdir: /workspace/repo
+configfile: setup.cfg
+plugins: hypothesis-6.155.7, timeout-1.4.2
+collecting ... collected 6 items
+
+spacy/tests/lang/fo/test_tokenizer.py::test_fo_tokenizer_handles_exception_cases[Eftir l\xf8gtingsl\xf3g um sams\xfdning og eftirl\xf8n landsst\xfdrismanna v.m., skulu l\xf8gma\xf0ur og landsst\xfdrismenn vanliga siga fr\xe1 s\xe6r st\xf8rv \xed almennari t\xe6nastu ella privatum virkjum, samt\xf8kum ella stovnum. -expected_tokens0] PASSED [ 16%]
+spacy/tests/lang/fo/test_tokenizer.py::test_fo_tokenizer_handles_exception_cases[Sambandsflokkurin gongur aftur vi\xf0 2,7 prosentum \xed mun til vali\xf0 \xed 1994, t\xe1 flokkurin fekk undirt\xf8ku fr\xe1 23,4 prosent av veljarunum.-expected_tokens1] PASSED [ 33%]
+spacy/tests/lang/nn/test_tokenizer.py::test_nn_tokenizer_handles_exception_cases[M\xe5let til direktoratet er at alle skal bli tilbydd jobb i politiet s\xe5 raskt som mogleg i 2014.-expected_tokens0] PASSED [ 50%]
+spacy/tests/lang/nn/test_tokenizer.py::test_nn_tokenizer_handles_exception_cases[Han \xf8nskjer ikkje at staten skal vere med p\xe5 \xe5 finansiere slik undervisning, men dette er rektor p\xe5 skulen ueinig i.-expected_tokens1] PASSED [ 66%]
+spacy/tests/lang/nn/test_tokenizer.py::test_nn_tokenizer_handles_exception_cases[If\xf8lgje China Daily vart det 8.848 meter h\xf8ge fjellet flytta 3 centimeter s\xf8rvestover under jordskjelvet, som vart m\xe5lt til 7,8.-expected_tokens2] PASSED [ 83%]
+spacy/tests/lang/nn/test_tokenizer.py::test_nn_tokenizer_handles_exception_cases[Brukssesongen er fr\xe5 nov. til mai, med ein topp i mars.-expected_tokens3] PASSED [100%]
+
+=============================== warnings summary ===============================
+../../usr/local/lib/python3.11/site-packages/typer/completion.py:122
+  /usr/local/lib/python3.11/site-packages/typer/completion.py:122: DeprecationWarning: 'BaseCommand' is deprecated and will be removed in Click 9.0. Use 'Command' instead.
+    cli: click.BaseCommand,
+
+spacy/cli/_util.py:23
+  /workspace/repo/spacy/cli/_util.py:23: DeprecationWarning: Importing 'parser.split_arg_string' is deprecated, it will only be available in 'shell_completion' in Click 9.0.
+    from click.parser import split_arg_string
+
+../../usr/local/lib/python3.11/site-packages/weasel/util/config.py:8
+  /usr/local/lib/python3.11/site-packages/weasel/util/config.py:8: DeprecationWarning: Importing 'parser.split_arg_string' is deprecated, it will only be available in 'shell_completion' in Click 9.0.
+    from click.parser import split_arg_string
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 6 passed, 3 warnings in 0.22s =========================
+reward=1 graded=6 found=0 failed=0 parsed=6 framework=pytest exit_code=0

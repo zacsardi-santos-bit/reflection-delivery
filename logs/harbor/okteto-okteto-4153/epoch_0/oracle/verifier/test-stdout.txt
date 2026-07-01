@@ -1,0 +1,74 @@
+patching file pkg/deps/deps_test.go
+{"Time":"2026-07-01T15:09:00.638846007Z","Action":"start","Package":"github.com/okteto/okteto/pkg/deps"}
+{"Time":"2026-07-01T15:09:00.64101845Z","Action":"run","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_GetTimeout"}
+{"Time":"2026-07-01T15:09:00.641040587Z","Action":"output","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_GetTimeout","Output":"=== RUN   Test_GetTimeout\n"}
+{"Time":"2026-07-01T15:09:00.641073608Z","Action":"run","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_GetTimeout/default_timeout_set_and_specific_not"}
+{"Time":"2026-07-01T15:09:00.641076652Z","Action":"output","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_GetTimeout/default_timeout_set_and_specific_not","Output":"=== RUN   Test_GetTimeout/default_timeout_set_and_specific_not\n"}
+{"Time":"2026-07-01T15:09:00.641082408Z","Action":"output","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_GetTimeout/default_timeout_set_and_specific_not","Output":"--- PASS: Test_GetTimeout/default_timeout_set_and_specific_not (0.00s)\n"}
+{"Time":"2026-07-01T15:09:00.64108641Z","Action":"pass","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_GetTimeout/default_timeout_set_and_specific_not","Elapsed":0}
+{"Time":"2026-07-01T15:09:00.641099508Z","Action":"run","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_GetTimeout/default_timeout_unset_and_specific_set"}
+{"Time":"2026-07-01T15:09:00.641102492Z","Action":"output","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_GetTimeout/default_timeout_unset_and_specific_set","Output":"=== RUN   Test_GetTimeout/default_timeout_unset_and_specific_set\n"}
+{"Time":"2026-07-01T15:09:00.641106733Z","Action":"output","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_GetTimeout/default_timeout_unset_and_specific_set","Output":"--- PASS: Test_GetTimeout/default_timeout_unset_and_specific_set (0.00s)\n"}
+{"Time":"2026-07-01T15:09:00.641109629Z","Action":"pass","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_GetTimeout/default_timeout_unset_and_specific_set","Elapsed":0}
+{"Time":"2026-07-01T15:09:00.641115593Z","Action":"run","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_GetTimeout/both_unset"}
+{"Time":"2026-07-01T15:09:00.641118815Z","Action":"output","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_GetTimeout/both_unset","Output":"=== RUN   Test_GetTimeout/both_unset\n"}
+{"Time":"2026-07-01T15:09:00.64112211Z","Action":"output","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_GetTimeout/both_unset","Output":"--- PASS: Test_GetTimeout/both_unset (0.00s)\n"}
+{"Time":"2026-07-01T15:09:00.641126501Z","Action":"pass","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_GetTimeout/both_unset","Elapsed":0}
+{"Time":"2026-07-01T15:09:00.641130537Z","Action":"output","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_GetTimeout","Output":"--- PASS: Test_GetTimeout (0.00s)\n"}
+{"Time":"2026-07-01T15:09:00.641133687Z","Action":"pass","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_GetTimeout","Elapsed":0}
+{"Time":"2026-07-01T15:09:00.641138644Z","Action":"run","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_ExpandVars"}
+{"Time":"2026-07-01T15:09:00.641141069Z","Action":"output","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_ExpandVars","Output":"=== RUN   Test_ExpandVars\n"}
+{"Time":"2026-07-01T15:09:00.64120636Z","Action":"output","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_ExpandVars","Output":"--- PASS: Test_ExpandVars (0.00s)\n"}
+{"Time":"2026-07-01T15:09:00.641210259Z","Action":"pass","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_ExpandVars","Elapsed":0}
+{"Time":"2026-07-01T15:09:00.641214255Z","Action":"run","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_ManifestDependencies_UnmarshalYAML"}
+{"Time":"2026-07-01T15:09:00.641217646Z","Action":"output","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_ManifestDependencies_UnmarshalYAML","Output":"=== RUN   Test_ManifestDependencies_UnmarshalYAML\n"}
+{"Time":"2026-07-01T15:09:00.641237861Z","Action":"run","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_ManifestDependencies_UnmarshalYAML/deserialized_successfully_from_array"}
+{"Time":"2026-07-01T15:09:00.641247412Z","Action":"output","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_ManifestDependencies_UnmarshalYAML/deserialized_successfully_from_array","Output":"=== RUN   Test_ManifestDependencies_UnmarshalYAML/deserialized_successfully_from_array\n"}
+{"Time":"2026-07-01T15:09:00.641293462Z","Action":"output","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_ManifestDependencies_UnmarshalYAML/deserialized_successfully_from_array","Output":"--- PASS: Test_ManifestDependencies_UnmarshalYAML/deserialized_successfully_from_array (0.00s)\n"}
+{"Time":"2026-07-01T15:09:00.641302785Z","Action":"pass","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_ManifestDependencies_UnmarshalYAML/deserialized_successfully_from_array","Elapsed":0}
+{"Time":"2026-07-01T15:09:00.641307069Z","Action":"run","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_ManifestDependencies_UnmarshalYAML/deserialized_successfully_as_map"}
+{"Time":"2026-07-01T15:09:00.641310772Z","Action":"output","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_ManifestDependencies_UnmarshalYAML/deserialized_successfully_as_map","Output":"=== RUN   Test_ManifestDependencies_UnmarshalYAML/deserialized_successfully_as_map\n"}
+{"Time":"2026-07-01T15:09:00.641382639Z","Action":"output","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_ManifestDependencies_UnmarshalYAML/deserialized_successfully_as_map","Output":"--- PASS: Test_ManifestDependencies_UnmarshalYAML/deserialized_successfully_as_map (0.00s)\n"}
+{"Time":"2026-07-01T15:09:00.641387054Z","Action":"pass","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_ManifestDependencies_UnmarshalYAML/deserialized_successfully_as_map","Elapsed":0}
+{"Time":"2026-07-01T15:09:00.641390423Z","Action":"output","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_ManifestDependencies_UnmarshalYAML","Output":"--- PASS: Test_ManifestDependencies_UnmarshalYAML (0.00s)\n"}
+{"Time":"2026-07-01T15:09:00.64139714Z","Action":"pass","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_ManifestDependencies_UnmarshalYAML","Elapsed":0}
+{"Time":"2026-07-01T15:09:00.641399949Z","Action":"run","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_getRepoNameFromGitURL"}
+{"Time":"2026-07-01T15:09:00.641402311Z","Action":"output","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_getRepoNameFromGitURL","Output":"=== RUN   Test_getRepoNameFromGitURL\n"}
+{"Time":"2026-07-01T15:09:00.641426639Z","Action":"run","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_getRepoNameFromGitURL/https_url_with_trailing_slash"}
+{"Time":"2026-07-01T15:09:00.641431005Z","Action":"output","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_getRepoNameFromGitURL/https_url_with_trailing_slash","Output":"=== RUN   Test_getRepoNameFromGitURL/https_url_with_trailing_slash\n"}
+{"Time":"2026-07-01T15:09:00.641437259Z","Action":"output","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_getRepoNameFromGitURL/https_url_with_trailing_slash","Output":"--- PASS: Test_getRepoNameFromGitURL/https_url_with_trailing_slash (0.00s)\n"}
+{"Time":"2026-07-01T15:09:00.641440314Z","Action":"pass","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_getRepoNameFromGitURL/https_url_with_trailing_slash","Elapsed":0}
+{"Time":"2026-07-01T15:09:00.641444439Z","Action":"run","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_getRepoNameFromGitURL/https_url"}
+{"Time":"2026-07-01T15:09:00.641447059Z","Action":"output","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_getRepoNameFromGitURL/https_url","Output":"=== RUN   Test_getRepoNameFromGitURL/https_url\n"}
+{"Time":"2026-07-01T15:09:00.641467766Z","Action":"output","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_getRepoNameFromGitURL/https_url","Output":"--- PASS: Test_getRepoNameFromGitURL/https_url (0.00s)\n"}
+{"Time":"2026-07-01T15:09:00.641472621Z","Action":"pass","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_getRepoNameFromGitURL/https_url","Elapsed":0}
+{"Time":"2026-07-01T15:09:00.641478161Z","Action":"run","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_getRepoNameFromGitURL/https_url_with_git_extension"}
+{"Time":"2026-07-01T15:09:00.641480677Z","Action":"output","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_getRepoNameFromGitURL/https_url_with_git_extension","Output":"=== RUN   Test_getRepoNameFromGitURL/https_url_with_git_extension\n"}
+{"Time":"2026-07-01T15:09:00.641502104Z","Action":"output","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_getRepoNameFromGitURL/https_url_with_git_extension","Output":"--- PASS: Test_getRepoNameFromGitURL/https_url_with_git_extension (0.00s)\n"}
+{"Time":"2026-07-01T15:09:00.641507093Z","Action":"pass","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_getRepoNameFromGitURL/https_url_with_git_extension","Elapsed":0}
+{"Time":"2026-07-01T15:09:00.641523955Z","Action":"run","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_getRepoNameFromGitURL/ssh_url"}
+{"Time":"2026-07-01T15:09:00.641527874Z","Action":"output","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_getRepoNameFromGitURL/ssh_url","Output":"=== RUN   Test_getRepoNameFromGitURL/ssh_url\n"}
+{"Time":"2026-07-01T15:09:00.641553276Z","Action":"output","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_getRepoNameFromGitURL/ssh_url","Output":"--- PASS: Test_getRepoNameFromGitURL/ssh_url (0.00s)\n"}
+{"Time":"2026-07-01T15:09:00.641558122Z","Action":"pass","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_getRepoNameFromGitURL/ssh_url","Elapsed":0}
+{"Time":"2026-07-01T15:09:00.64156188Z","Action":"run","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_getRepoNameFromGitURL/ssh_url_without_.git"}
+{"Time":"2026-07-01T15:09:00.641564214Z","Action":"output","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_getRepoNameFromGitURL/ssh_url_without_.git","Output":"=== RUN   Test_getRepoNameFromGitURL/ssh_url_without_.git\n"}
+{"Time":"2026-07-01T15:09:00.641590377Z","Action":"output","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_getRepoNameFromGitURL/ssh_url_without_.git","Output":"--- PASS: Test_getRepoNameFromGitURL/ssh_url_without_.git (0.00s)\n"}
+{"Time":"2026-07-01T15:09:00.641596956Z","Action":"pass","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_getRepoNameFromGitURL/ssh_url_without_.git","Elapsed":0}
+{"Time":"2026-07-01T15:09:00.641601014Z","Action":"run","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_getRepoNameFromGitURL/missing_repo_name"}
+{"Time":"2026-07-01T15:09:00.641604494Z","Action":"output","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_getRepoNameFromGitURL/missing_repo_name","Output":"=== RUN   Test_getRepoNameFromGitURL/missing_repo_name\n"}
+{"Time":"2026-07-01T15:09:00.641611084Z","Action":"output","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_getRepoNameFromGitURL/missing_repo_name","Output":"--- PASS: Test_getRepoNameFromGitURL/missing_repo_name (0.00s)\n"}
+{"Time":"2026-07-01T15:09:00.641616908Z","Action":"pass","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_getRepoNameFromGitURL/missing_repo_name","Elapsed":0}
+{"Time":"2026-07-01T15:09:00.641622305Z","Action":"run","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_getRepoNameFromGitURL/invalid_url"}
+{"Time":"2026-07-01T15:09:00.641624808Z","Action":"output","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_getRepoNameFromGitURL/invalid_url","Output":"=== RUN   Test_getRepoNameFromGitURL/invalid_url\n"}
+{"Time":"2026-07-01T15:09:00.641658882Z","Action":"output","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_getRepoNameFromGitURL/invalid_url","Output":"--- PASS: Test_getRepoNameFromGitURL/invalid_url (0.00s)\n"}
+{"Time":"2026-07-01T15:09:00.641665566Z","Action":"pass","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_getRepoNameFromGitURL/invalid_url","Elapsed":0}
+{"Time":"2026-07-01T15:09:00.641672236Z","Action":"run","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_getRepoNameFromGitURL/empty"}
+{"Time":"2026-07-01T15:09:00.641676082Z","Action":"output","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_getRepoNameFromGitURL/empty","Output":"=== RUN   Test_getRepoNameFromGitURL/empty\n"}
+{"Time":"2026-07-01T15:09:00.641681878Z","Action":"output","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_getRepoNameFromGitURL/empty","Output":"--- PASS: Test_getRepoNameFromGitURL/empty (0.00s)\n"}
+{"Time":"2026-07-01T15:09:00.641687385Z","Action":"pass","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_getRepoNameFromGitURL/empty","Elapsed":0}
+{"Time":"2026-07-01T15:09:00.641691216Z","Action":"output","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_getRepoNameFromGitURL","Output":"--- PASS: Test_getRepoNameFromGitURL (0.00s)\n"}
+{"Time":"2026-07-01T15:09:00.641694089Z","Action":"pass","Package":"github.com/okteto/okteto/pkg/deps","Test":"Test_getRepoNameFromGitURL","Elapsed":0}
+{"Time":"2026-07-01T15:09:00.641699136Z","Action":"output","Package":"github.com/okteto/okteto/pkg/deps","Output":"PASS\n"}
+{"Time":"2026-07-01T15:09:00.641986826Z","Action":"output","Package":"github.com/okteto/okteto/pkg/deps","Output":"ok  \tgithub.com/okteto/okteto/pkg/deps\t0.003s\n"}
+{"Time":"2026-07-01T15:09:00.64199664Z","Action":"pass","Package":"github.com/okteto/okteto/pkg/deps","Elapsed":0.003}
+reward=1 graded=17 found=17 failed=0 parsed=17 framework=go exit_code=0

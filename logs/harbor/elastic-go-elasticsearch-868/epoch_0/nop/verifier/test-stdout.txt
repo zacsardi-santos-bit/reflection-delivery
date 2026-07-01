@@ -1,0 +1,12 @@
+patching file elasticsearch_integration_test.go
+patching file internal/testing/containertest/testcontainers.go
+patching file internal/testing/e2e/bulk_indexer_integration_test.go (renamed from esutil/bulk_indexer_integration_test.go)
+patching file internal/testing/e2e/elasticsearch_integration_test.go
+patching file internal/testing/e2e/esapi_integration_test.go (renamed from esapi/esapi_integration_test.go)
+patching file internal/testing/e2e/json_reader_integration_test.go (renamed from esutil/json_reader_integration_test.go)
+go: finding module for package github.com/testcontainers/testcontainers-go/modules/elasticsearch
+go: finding module for package github.com/testcontainers/testcontainers-go
+# github.com/elastic/go-elasticsearch/v8/internal/testing/e2e
+e2e/elasticsearch_integration_test.go:52:2: cannot find module providing package github.com/testcontainers/testcontainers-go: module lookup disabled by GOPROXY=off
+FAIL	github.com/elastic/go-elasticsearch/v8/internal/testing/e2e [setup failed]
+reward=0 graded=4 found=0 failed=0 parsed=0 framework=go exit_code=1

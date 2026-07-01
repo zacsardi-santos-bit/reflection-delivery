@@ -1,0 +1,14 @@
+patching file cicd/internal/flags/common-flags_test.go
+{"Time":"2026-07-01T14:43:59.241620079Z","Action":"start","Package":"github.com/GoogleCloudPlatform/DataflowTemplates/cicd/internal/flags"}
+{"Time":"2026-07-01T14:43:59.243435951Z","Action":"run","Package":"github.com/GoogleCloudPlatform/DataflowTemplates/cicd/internal/flags","Test":"TestModulesToBuild"}
+{"Time":"2026-07-01T14:43:59.243455047Z","Action":"output","Package":"github.com/GoogleCloudPlatform/DataflowTemplates/cicd/internal/flags","Test":"TestModulesToBuild","Output":"=== RUN   TestModulesToBuild\n"}
+{"Time":"2026-07-01T14:43:59.243472898Z","Action":"output","Package":"github.com/GoogleCloudPlatform/DataflowTemplates/cicd/internal/flags","Test":"TestModulesToBuild","Output":"--- PASS: TestModulesToBuild (0.00s)\n"}
+{"Time":"2026-07-01T14:43:59.243479102Z","Action":"pass","Package":"github.com/GoogleCloudPlatform/DataflowTemplates/cicd/internal/flags","Test":"TestModulesToBuild","Elapsed":0}
+{"Time":"2026-07-01T14:43:59.243486624Z","Action":"run","Package":"github.com/GoogleCloudPlatform/DataflowTemplates/cicd/internal/flags","Test":"TestDefaultExcludedSubModules"}
+{"Time":"2026-07-01T14:43:59.243491938Z","Action":"output","Package":"github.com/GoogleCloudPlatform/DataflowTemplates/cicd/internal/flags","Test":"TestDefaultExcludedSubModules","Output":"=== RUN   TestDefaultExcludedSubModules\n"}
+{"Time":"2026-07-01T14:43:59.2438069Z","Action":"output","Package":"github.com/GoogleCloudPlatform/DataflowTemplates/cicd/internal/flags","Test":"TestDefaultExcludedSubModules","Output":"--- PASS: TestDefaultExcludedSubModules (0.00s)\n"}
+{"Time":"2026-07-01T14:43:59.243814627Z","Action":"pass","Package":"github.com/GoogleCloudPlatform/DataflowTemplates/cicd/internal/flags","Test":"TestDefaultExcludedSubModules","Elapsed":0}
+{"Time":"2026-07-01T14:43:59.243822907Z","Action":"output","Package":"github.com/GoogleCloudPlatform/DataflowTemplates/cicd/internal/flags","Output":"PASS\n"}
+{"Time":"2026-07-01T14:43:59.244071894Z","Action":"output","Package":"github.com/GoogleCloudPlatform/DataflowTemplates/cicd/internal/flags","Output":"ok  \tgithub.com/GoogleCloudPlatform/DataflowTemplates/cicd/internal/flags\t0.002s\n"}
+{"Time":"2026-07-01T14:43:59.244087489Z","Action":"pass","Package":"github.com/GoogleCloudPlatform/DataflowTemplates/cicd/internal/flags","Elapsed":0.002}
+reward=1 graded=2 found=2 failed=0 parsed=2 framework=go exit_code=0

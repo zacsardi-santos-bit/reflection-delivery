@@ -1,0 +1,44 @@
+patching file test/helper/helper.go
+patching file test/integration/restapi_test.go
+{"Time":"2026-07-01T15:21:43.345763612Z","Action":"start","Package":"github.com/yorkie-team/yorkie/test/integration"}
+{"Time":"2026-07-01T15:21:43.57781744Z","Action":"output","Package":"github.com/yorkie-team/yorkie/test/integration","Output":"\u001b[34mINFO\u001b[0m\tdefault\tMongoDB connected, URI: mongodb://localhost:27017, DB: test-yorkie-meta-1782919303\n"}
+{"Time":"2026-07-01T15:21:43.643186181Z","Action":"output","Package":"github.com/yorkie-team/yorkie/test/integration","Output":"\u001b[34mINFO\u001b[0m\tdefault\tbackend created: db: mongodb://localhost:27017\n"}
+{"Time":"2026-07-01T15:21:43.644017889Z","Action":"output","Package":"github.com/yorkie-team/yorkie/test/integration","Output":"\u001b[34mINFO\u001b[0m\tdefault\tleadership manager started: 895e0eed2042\n"}
+{"Time":"2026-07-01T15:21:43.644052185Z","Action":"output","Package":"github.com/yorkie-team/yorkie/test/integration","Output":"\u001b[34mINFO\u001b[0m\tdefault\tbackend started\n"}
+{"Time":"2026-07-01T15:21:43.644104633Z","Action":"output","Package":"github.com/yorkie-team/yorkie/test/integration","Output":"\u001b[34mINFO\u001b[0m\tdefault\tserving profiling on 11202\n"}
+{"Time":"2026-07-01T15:21:43.644130272Z","Action":"output","Package":"github.com/yorkie-team/yorkie/test/integration","Output":"\u001b[34mINFO\u001b[0m\tdefault\tserving RPC on 11201\n"}
+{"Time":"2026-07-01T15:21:43.644151338Z","Action":"run","Package":"github.com/yorkie-team/yorkie/test/integration","Test":"TestRESTAPI"}
+{"Time":"2026-07-01T15:21:43.644157128Z","Action":"output","Package":"github.com/yorkie-team/yorkie/test/integration","Test":"TestRESTAPI","Output":"=== RUN   TestRESTAPI\n"}
+{"Time":"2026-07-01T15:21:43.644203239Z","Action":"run","Package":"github.com/yorkie-team/yorkie/test/integration","Test":"TestRESTAPI/document_retrieval_test"}
+{"Time":"2026-07-01T15:21:43.644212019Z","Action":"output","Package":"github.com/yorkie-team/yorkie/test/integration","Test":"TestRESTAPI/document_retrieval_test","Output":"=== RUN   TestRESTAPI/document_retrieval_test\n"}
+{"Time":"2026-07-01T15:21:43.664874225Z","Action":"output","Package":"github.com/yorkie-team/yorkie/test/integration","Test":"TestRESTAPI/document_retrieval_test","Output":"--- PASS: TestRESTAPI/document_retrieval_test (0.02s)\n"}
+{"Time":"2026-07-01T15:21:43.664905386Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/test/integration","Test":"TestRESTAPI/document_retrieval_test","Elapsed":0.02}
+{"Time":"2026-07-01T15:21:43.664918136Z","Action":"run","Package":"github.com/yorkie-team/yorkie/test/integration","Test":"TestRESTAPI/bulk_document_retrieval_test"}
+{"Time":"2026-07-01T15:21:43.664921958Z","Action":"output","Package":"github.com/yorkie-team/yorkie/test/integration","Test":"TestRESTAPI/bulk_document_retrieval_test","Output":"=== RUN   TestRESTAPI/bulk_document_retrieval_test\n"}
+{"Time":"2026-07-01T15:21:43.680139296Z","Action":"output","Package":"github.com/yorkie-team/yorkie/test/integration","Test":"TestRESTAPI/bulk_document_retrieval_test","Output":"--- PASS: TestRESTAPI/bulk_document_retrieval_test (0.02s)\n"}
+{"Time":"2026-07-01T15:21:43.680180996Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/test/integration","Test":"TestRESTAPI/bulk_document_retrieval_test","Elapsed":0.02}
+{"Time":"2026-07-01T15:21:43.680192523Z","Action":"run","Package":"github.com/yorkie-team/yorkie/test/integration","Test":"TestRESTAPI/list_documents_test"}
+{"Time":"2026-07-01T15:21:43.68019572Z","Action":"output","Package":"github.com/yorkie-team/yorkie/test/integration","Test":"TestRESTAPI/list_documents_test","Output":"=== RUN   TestRESTAPI/list_documents_test\n"}
+{"Time":"2026-07-01T15:21:43.696045843Z","Action":"output","Package":"github.com/yorkie-team/yorkie/test/integration","Test":"TestRESTAPI/list_documents_test","Output":"--- PASS: TestRESTAPI/list_documents_test (0.02s)\n"}
+{"Time":"2026-07-01T15:21:43.696079914Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/test/integration","Test":"TestRESTAPI/list_documents_test","Elapsed":0.02}
+{"Time":"2026-07-01T15:21:43.696091248Z","Action":"run","Package":"github.com/yorkie-team/yorkie/test/integration","Test":"TestRESTAPI/search_documents_test"}
+{"Time":"2026-07-01T15:21:43.696106448Z","Action":"output","Package":"github.com/yorkie-team/yorkie/test/integration","Test":"TestRESTAPI/search_documents_test","Output":"=== RUN   TestRESTAPI/search_documents_test\n"}
+{"Time":"2026-07-01T15:21:43.711198484Z","Action":"output","Package":"github.com/yorkie-team/yorkie/test/integration","Test":"TestRESTAPI/search_documents_test","Output":"\u001b[34mINFO\u001b[0m\tdefault\tdocument remove success(projectID: 6a453087c83b3359b827b330, docKey: 0-testrestapi-search-documents-test)\n"}
+{"Time":"2026-07-01T15:21:43.713195795Z","Action":"output","Package":"github.com/yorkie-team/yorkie/test/integration","Test":"TestRESTAPI/search_documents_test","Output":"--- PASS: TestRESTAPI/search_documents_test (0.02s)\n"}
+{"Time":"2026-07-01T15:21:43.713217148Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/test/integration","Test":"TestRESTAPI/search_documents_test","Elapsed":0.02}
+{"Time":"2026-07-01T15:21:43.713227271Z","Action":"run","Package":"github.com/yorkie-team/yorkie/test/integration","Test":"TestRESTAPI/concurrent_document_retrieval_test"}
+{"Time":"2026-07-01T15:21:43.713231102Z","Action":"output","Package":"github.com/yorkie-team/yorkie/test/integration","Test":"TestRESTAPI/concurrent_document_retrieval_test","Output":"=== RUN   TestRESTAPI/concurrent_document_retrieval_test\n"}
+{"Time":"2026-07-01T15:21:43.74991461Z","Action":"output","Package":"github.com/yorkie-team/yorkie/test/integration","Test":"TestRESTAPI/concurrent_document_retrieval_test","Output":"--- PASS: TestRESTAPI/concurrent_document_retrieval_test (0.04s)\n"}
+{"Time":"2026-07-01T15:21:43.749950209Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/test/integration","Test":"TestRESTAPI/concurrent_document_retrieval_test","Elapsed":0.04}
+{"Time":"2026-07-01T15:21:43.749961441Z","Action":"run","Package":"github.com/yorkie-team/yorkie/test/integration","Test":"TestRESTAPI/document_api_access_control_test"}
+{"Time":"2026-07-01T15:21:43.749966436Z","Action":"output","Package":"github.com/yorkie-team/yorkie/test/integration","Test":"TestRESTAPI/document_api_access_control_test","Output":"=== RUN   TestRESTAPI/document_api_access_control_test\n"}
+{"Time":"2026-07-01T15:21:43.751785634Z","Action":"output","Package":"github.com/yorkie-team/yorkie/test/integration","Test":"TestRESTAPI/document_api_access_control_test","Output":"\u001b[33mWARN\u001b[0m\ta19\tRPC : \"/yorkie.v1.AdminService/GetDocument\" 3.695µs =\u003e \"project mismatch: key is for TestRESTAPI/document_api_access_control_test1, got TestRESTAPI/document_api_access_control_test2: unauthenticated\"\n"}
+{"Time":"2026-07-01T15:21:43.752013807Z","Action":"output","Package":"github.com/yorkie-team/yorkie/test/integration","Test":"TestRESTAPI/document_api_access_control_test","Output":"--- PASS: TestRESTAPI/document_api_access_control_test (0.00s)\n"}
+{"Time":"2026-07-01T15:21:43.752030568Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/test/integration","Test":"TestRESTAPI/document_api_access_control_test","Elapsed":0}
+{"Time":"2026-07-01T15:21:43.752037123Z","Action":"output","Package":"github.com/yorkie-team/yorkie/test/integration","Test":"TestRESTAPI","Output":"--- PASS: TestRESTAPI (0.11s)\n"}
+{"Time":"2026-07-01T15:21:43.752040775Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/test/integration","Test":"TestRESTAPI","Elapsed":0.11}
+{"Time":"2026-07-01T15:21:43.752046566Z","Action":"output","Package":"github.com/yorkie-team/yorkie/test/integration","Output":"PASS\n"}
+{"Time":"2026-07-01T15:21:43.752749082Z","Action":"output","Package":"github.com/yorkie-team/yorkie/test/integration","Output":"\u001b[34mINFO\u001b[0m\tdefault\tbackend stopped\n"}
+{"Time":"2026-07-01T15:21:43.755319509Z","Action":"output","Package":"github.com/yorkie-team/yorkie/test/integration","Output":"ok  \tgithub.com/yorkie-team/yorkie/test/integration\t0.409s\n"}
+{"Time":"2026-07-01T15:21:43.755344803Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/test/integration","Elapsed":0.41}
+reward=1 graded=7 found=7 failed=0 parsed=7 framework=go exit_code=0

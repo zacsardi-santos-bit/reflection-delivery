@@ -1,0 +1,36 @@
+patching file test/ner/duckling/duckling.test.js
+jest-haste-map: Haste module naming collision: microsoft-bot
+  The following files share their name; please adjust your hasteImpl:
+    * <rootDir>/examples/microsoft-bot-v4/package.json
+    * <rootDir>/examples/microsoft-bot/package.json
+
+PASS test/ner/duckling/duckling.test.js (6.715s)
+  Duckling Integration
+    Constructor
+      ✓ Should put the port if is https (3ms)
+      ✓ Should put the port if is http
+      ✓ Should put the port if provided (1ms)
+      ✓ Can create without providing settings
+    Get locale
+      ✓ It should return the culture locale from a 2 char locale
+    English
+      ✓ When there is an exception, return empty array (625ms)
+      ✓ Duckling English Email (188ms)
+      ✓ Duckling English Phone Number (127ms)
+      ✓ Duckling English URL (124ms)
+      ✓ Duckling English Number (131ms)
+      ✓ Duckling English Number Float (123ms)
+      ✓ Duckling English Distance (123ms)
+      ✓ Duckling English Quantity (116ms)
+      ✓ Duckling English Temperature (119ms)
+      ✓ Duckling English Volume (118ms)
+      ✓ Duckling English Currency (117ms)
+      ✓ Duckling English Duration (118ms)
+      ✓ Duckling English Time (116ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       18 passed, 18 total
+Snapshots:   0 total
+Time:        6.738s
+Ran all test suites matching /test\/ner\/duckling\/duckling.test.js/i.
+{"numFailedTestSuites":0,"numFailedTests":0,"numPassedTestSuites":1,"numPassedTests":18,"numPendingTestSuites":0,"numPendingTests":0,"numRuntimeErrorTestSuites":0,"numTodoTests":0,"numTotalTestSuites":1,"numTotalTests":18,"openHandles":[],"snapshot":{"added":0,"didUpdate":false,"failure":false,"filesAdded":0,"filesRemoved":0,"filesRemovedList":[],"filesUnmatched":0,"filesUpdated":0,"matched":0,"total":0,"unchecked":0,"uncheckedKeysByFile":[],"unmatched":0,"updated":0},"startTime":1782916340222,"success":true,"testResults":[{"assertionResults":[{"ancestorTitles":["Duckling Integration","Constructor"],"failureMessages":[],"fullName":"Duckling Integration Constructor Should put the port if is https","location":null,"status":"passed","title":"Should put the port if is https"},{"ancestorTitles":["Duckling Integration","Constructor"],"failureMessages":[],"fullName":"Duckling Integration Constructor Should put the port if is http","location":null,"status":"passed","title":"Should put the port if is http"},{"ancestorTitles":["Duckling Integration","Constructor"],"failureMessages":[],"fullName":"Duckling Integration Constructor Should put the port if provided","location":null,"status":"passed","title":"Should put the port if provided"},{"ancestorTitles":["Duckling Integration","Constructor"],"failureMessages":[],"fullName":"Duckling Integration Constructor Can create without providing settings","location":null,"status":"passed","title":"Can create without providing settings"},{"ancestorTitles":["Duckling Integration","Get locale"],"failureMessages":[],"fullName":"Duckling Integration Get locale It should return the culture locale from a 2 char locale","location":null,"status":"passed","title":"It should return the culture locale from a 2 char locale"},{"ancestorTitles":["Duckling Integration","English"],"failureMessages":[],"fullName":"Duckling Integration English When there is an exception, return empty array","location":null,"status":"passed","title":"When there is an exception, return empty array"},{"ancestorTitles":["Duckling Integration","English"],"failureMessages":[],"fullName":"Duckling Integration English Duckling English Email","location":null,"status":"passed","title":"Duckling English Email"},{"ancestorTitles":["Duckling Integration","English"],"failureMessages":[],"fullName":"Duckling Integration English Duckling English Phone Number","location":null,"status":"passed","title":"Duckling English Phone Number"},{"ancestorTitles":["Duckling Integration","English"],"failureMessages":[],"fullName":"Duckling Integration English Duckling English URL","location":null,"status":"passed","title":"Duckling English URL"},{"ancestorTitles":["Duckling Integration","English"],"failureMessages":[],"fullName":"Duckling Integration English Duckling English Number","location":null,"status":"passed","title":"Duckling English Number"},{"ancestorTitles":["Duckling Integration","English"],"failureMessages":[],"fullName":"Duckling Integration English Duckling English Number Float","location":null,"status":"passed","title":"Duckling English Number Float"},{"ancestorTitles":["Duckling Integration","English"],"failureMessages":[],"fullName":"Duckling Integration English Duckling English Distance","location":null,"status":"passed","title":"Duckling English Distance"},{"ancestorTitles":["Duckling Integration","English"],"failureMessages":[],"fullName":"Duckling Integration English Duckling English Quantity","location":null,"status":"passed","title":"Duckling English Quantity"},{"ancestorTitles":["Duckling Integration","English"],"failureMessages":[],"fullName":"Duckling Integration English Duckling English Temperature","location":null,"status":"passed","title":"Duckling English Temperature"},{"ancestorTitles":["Duckling Integration","English"],"failureMessages":[],"fullName":"Duckling Integration English Duckling English Volume","location":null,"status":"passed","title":"Duckling English Volume"},{"ancestorTitles":["Duckling Integration","English"],"failureMessages":[],"fullName":"Duckling Integration English Duckling English Currency","location":null,"status":"passed","title":"Duckling English Currency"},{"ancestorTitles":["Duckling Integration","English"],"failureMessages":[],"fullName":"Duckling Integration English Duckling English Duration","location":null,"status":"passed","title":"Duckling English Duration"},{"ancestorTitles":["Duckling Integration","English"],"failureMessages":[],"fullName":"Duckling Integration English Duckling English Time","location":null,"status":"passed","title":"Duckling English Time"}],"endTime":1782916346956,"message":"","name":"/workspace/repo/test/ner/duckling/duckling.test.js","startTime":1782916340241,"status":"passed","summary":""}],"wasInterrupted":false}reward=1 graded=18 found=18 failed=0 parsed=18 framework=jest exit_code=0

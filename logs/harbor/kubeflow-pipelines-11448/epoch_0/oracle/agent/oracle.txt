@@ -1,0 +1,557 @@
+patching file backend/src/agent/persistence/worker/persistence_worker.go
+patching file backend/src/common/util/execution_client.go
+patching file backend/src/common/util/pipelinerun.go
+patching file backend/src/common/util/workflow.go
+patching file backend/src/crd/controller/scheduledworkflow/util/scheduled_workflow.go
+patching file backend/src/crd/controller/viewer/main.go
+patching file backend/src/crd/pkg/apis/scheduledworkflow/v1beta1/types.go
+patching file backend/src/v2/driver/driver.go
+patching file backend/src/v2/expression/expression.go
+patching file backend/third_party_licenses/apiserver.csv
+patching file backend/third_party_licenses/cache_server.csv
+patching file backend/third_party_licenses/driver.csv
+patching file backend/third_party_licenses/launcher.csv
+patching file backend/third_party_licenses/persistence_agent.csv
+patching file backend/third_party_licenses/swf.csv
+patching file backend/third_party_licenses/viewer.csv
+patching file go.mod
+patching file go.sum
+Hunk #1 succeeded at 2 with fuzz 3 (offset 1 line).
+Hunk #2 succeeded at 18 (offset 1 line).
+Hunk #3 succeeded at 467 with fuzz 2 (offset 96 lines).
+Hunk #4 succeeded at 745 (offset 163 lines).
+Hunk #5 succeeded at 911 (offset 201 lines).
+Hunk #6 FAILED at 813.
+Hunk #7 FAILED at 842.
+Hunk #8 succeeded at 1166 with fuzz 3 (offset 272 lines).
+Hunk #9 FAILED at 906.
+Hunk #10 FAILED at 960.
+Hunk #11 succeeded at 1325 with fuzz 3 (offset 327 lines).
+Hunk #12 FAILED at 1069.
+Hunk #13 FAILED at 1118.
+Hunk #14 FAILED at 1153.
+Hunk #15 FAILED at 1321.
+Hunk #16 succeeded at 1787 with fuzz 3 (offset 445 lines).
+Hunk #17 succeeded at 1819 with fuzz 3 (offset 456 lines).
+Hunk #18 FAILED at 1377.
+Hunk #19 succeeded at 1867 with fuzz 2 (offset 470 lines).
+Hunk #20 succeeded at 1879 with fuzz 3 (offset 472 lines).
+Hunk #21 succeeded at 1910 with fuzz 3 (offset 474 lines).
+Hunk #22 succeeded at 1950 with fuzz 3 (offset 489 lines).
+Hunk #23 FAILED at 1475.
+Hunk #24 FAILED at 1487.
+Hunk #25 succeeded at 2020 with fuzz 3 (offset 516 lines).
+Hunk #26 succeeded at 2058 (offset 526 lines).
+Hunk #27 succeeded at 2091 (offset 526 lines).
+Hunk #28 succeeded at 2100 (offset 526 lines).
+Hunk #29 succeeded at 2132 (offset 526 lines).
+Hunk #30 succeeded at 2158 (offset 526 lines).
+Hunk #31 FAILED at 1657.
+Hunk #32 FAILED at 1724.
+Hunk #33 FAILED at 1736.
+Hunk #34 succeeded at 2345 with fuzz 2 (offset 570 lines).
+Hunk #35 succeeded at 2363 (offset 570 lines).
+Hunk #36 FAILED at 1816.
+Hunk #37 succeeded at 2473 (offset 594 lines).
+Hunk #38 succeeded at 2502 (offset 598 lines).
+Hunk #39 FAILED at 1932.
+Hunk #40 succeeded at 2556 (offset 605 lines).
+Hunk #41 FAILED at 1958.
+Hunk #42 succeeded at 2601 with fuzz 2 (offset 617 lines).
+Hunk #43 FAILED at 2032.
+Hunk #44 FAILED at 2063.
+Hunk #45 FAILED at 2083.
+Hunk #46 succeeded at 2779 (offset 662 lines).
+Hunk #47 FAILED at 2130.
+Hunk #48 succeeded at 2826 with fuzz 3 (offset 674 lines).
+Hunk #49 succeeded at 2838 (offset 678 lines).
+Hunk #50 succeeded at 2856 (offset 679 lines).
+Hunk #51 FAILED at 2220.
+Hunk #52 succeeded at 2936 (offset 698 lines).
+Hunk #53 succeeded at 2962 (offset 707 lines).
+Hunk #54 succeeded at 2977 with fuzz 3 (offset 710 lines).
+Hunk #55 succeeded at 2991 (offset 712 lines).
+Hunk #56 FAILED at 2287.
+Hunk #57 succeeded at 3017 with fuzz 3 (offset 715 lines).
+Hunk #58 succeeded at 3031 with fuzz 3 (offset 718 lines).
+Hunk #59 succeeded at 3050 with fuzz 3 (offset 724 lines).
+Hunk #60 FAILED at 2354.
+Hunk #61 FAILED at 2381.
+Hunk #62 succeeded at 3181 (offset 753 lines).
+Hunk #63 succeeded at 3191 (offset 753 lines).
+Hunk #64 FAILED at 2456.
+Hunk #65 FAILED at 2514.
+Hunk #66 succeeded at 3319 with fuzz 1 (offset 780 lines).
+Hunk #67 FAILED at 2549.
+Hunk #68 succeeded at 3350 (offset 786 lines).
+Hunk #69 succeeded at 3367 with fuzz 1 (offset 786 lines).
+Hunk #70 FAILED at 2632.
+Hunk #71 succeeded at 3435 with fuzz 3 (offset 786 lines).
+Hunk #72 succeeded at 3485 with fuzz 2 (offset 823 lines).
+Hunk #73 succeeded at 3499 with fuzz 3 (offset 823 lines).
+Hunk #74 succeeded at 3548 (offset 833 lines).
+Hunk #75 FAILED at 2726.
+Hunk #76 FAILED at 2751.
+Hunk #77 FAILED at 2800.
+Hunk #78 FAILED at 2816.
+Hunk #79 succeeded at 3711 with fuzz 3 (offset 882 lines).
+Hunk #80 FAILED at 2862.
+Hunk #81 FAILED at 2876.
+Hunk #82 FAILED at 2914.
+Hunk #83 succeeded at 3907 (offset 943 lines).
+Hunk #84 FAILED at 2973.
+Hunk #85 FAILED at 3003.
+Hunk #86 succeeded at 3994 (offset 952 lines).
+Hunk #87 succeeded at 4009 (offset 952 lines).
+Hunk #88 succeeded at 4043 (offset 952 lines).
+Hunk #89 succeeded at 4115 (offset 955 lines).
+Hunk #90 succeeded at 4137 (offset 955 lines).
+Hunk #91 succeeded at 4163 (offset 955 lines).
+Hunk #92 succeeded at 4173 (offset 955 lines).
+Hunk #93 succeeded at 4220 (offset 955 lines).
+Hunk #94 succeeded at 4231 (offset 955 lines).
+Hunk #95 succeeded at 4286 (offset 955 lines).
+Hunk #96 succeeded at 4295 (offset 955 lines).
+Hunk #97 succeeded at 4306 (offset 955 lines).
+Hunk #98 succeeded at 4314 (offset 955 lines).
+Hunk #99 succeeded at 4346 (offset 955 lines).
+Hunk #100 succeeded at 4387 (offset 955 lines).
+Hunk #101 succeeded at 4399 (offset 955 lines).
+Hunk #102 succeeded at 4418 (offset 955 lines).
+Hunk #103 succeeded at 4440 (offset 955 lines).
+Hunk #104 succeeded at 4463 (offset 955 lines).
+Hunk #105 succeeded at 4491 (offset 955 lines).
+Hunk #106 succeeded at 4508 (offset 955 lines).
+Hunk #107 succeeded at 4534 (offset 955 lines).
+Hunk #108 succeeded at 4569 (offset 955 lines).
+Hunk #109 succeeded at 4606 (offset 955 lines).
+Hunk #110 succeeded at 4634 with fuzz 2 (offset 958 lines).
+Hunk #111 succeeded at 4653 (offset 958 lines).
+Hunk #112 succeeded at 4727 (offset 959 lines).
+Hunk #113 succeeded at 4736 (offset 959 lines).
+Hunk #114 succeeded at 4755 (offset 959 lines).
+Hunk #115 succeeded at 4769 (offset 959 lines).
+Hunk #116 succeeded at 4918 (offset 961 lines).
+Hunk #117 succeeded at 4925 (offset 961 lines).
+Hunk #118 succeeded at 4934 (offset 961 lines).
+Hunk #119 FAILED at 4033.
+Hunk #120 FAILED at 4062.
+Hunk #121 succeeded at 5084 with fuzz 3 (offset 987 lines).
+Hunk #122 FAILED at 4105.
+Hunk #123 FAILED at 4245.
+42 out of 123 hunks FAILED -- saving rejects to file go.sum.rej
+patching file backend/src/agent/persistence/worker/persistence_worker.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file backend/src/agent/persistence/worker/persistence_worker.go.rej
+patching file backend/src/common/util/execution_client.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file backend/src/common/util/execution_client.go.rej
+patching file backend/src/common/util/pipelinerun.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file backend/src/common/util/pipelinerun.go.rej
+patching file backend/src/common/util/workflow.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file backend/src/common/util/workflow.go.rej
+patching file backend/src/crd/controller/scheduledworkflow/util/scheduled_workflow.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file backend/src/crd/controller/scheduledworkflow/util/scheduled_workflow.go.rej
+patching file backend/src/crd/controller/viewer/main.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file backend/src/crd/controller/viewer/main.go.rej
+patching file backend/src/crd/pkg/apis/scheduledworkflow/v1beta1/types.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file backend/src/crd/pkg/apis/scheduledworkflow/v1beta1/types.go.rej
+patching file backend/src/v2/driver/driver.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file backend/src/v2/driver/driver.go.rej
+patching file backend/src/v2/expression/expression.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file backend/src/v2/expression/expression.go.rej
+patching file backend/third_party_licenses/apiserver.csv
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+8 out of 8 hunks ignored -- saving rejects to file backend/third_party_licenses/apiserver.csv.rej
+patching file backend/third_party_licenses/cache_server.csv
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+7 out of 7 hunks ignored -- saving rejects to file backend/third_party_licenses/cache_server.csv.rej
+patching file backend/third_party_licenses/driver.csv
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+8 out of 8 hunks ignored -- saving rejects to file backend/third_party_licenses/driver.csv.rej
+patching file backend/third_party_licenses/launcher.csv
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+8 out of 8 hunks ignored -- saving rejects to file backend/third_party_licenses/launcher.csv.rej
+patching file backend/third_party_licenses/persistence_agent.csv
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+7 out of 7 hunks ignored -- saving rejects to file backend/third_party_licenses/persistence_agent.csv.rej
+patching file backend/third_party_licenses/swf.csv
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+7 out of 7 hunks ignored -- saving rejects to file backend/third_party_licenses/swf.csv.rej
+patching file backend/third_party_licenses/viewer.csv
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file backend/third_party_licenses/viewer.csv.rej
+patching file go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+11 out of 11 hunks ignored -- saving rejects to file go.mod.rej
+patching file go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+123 out of 123 hunks ignored -- saving rejects to file go.sum.rej
+can't find file to patch at input line 5
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/backend/src/agent/persistence/worker/persistence_worker.go b/backend/src/agent/persistence/worker/persistence_worker.go
+|index 1f6b34371..6126fa920 100644
+|--- a/backend/src/agent/persistence/worker/persistence_worker.go
+|+++ b/backend/src/agent/persistence/worker/persistence_worker.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 18
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/backend/src/common/util/execution_client.go b/backend/src/common/util/execution_client.go
+|index 5662eb116..73c222881 100644
+|--- a/backend/src/common/util/execution_client.go
+|+++ b/backend/src/common/util/execution_client.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 31
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/backend/src/common/util/pipelinerun.go b/backend/src/common/util/pipelinerun.go
+|index fedce4cfe..1cf78e067 100644
+|--- a/backend/src/common/util/pipelinerun.go
+|+++ b/backend/src/common/util/pipelinerun.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 46
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/backend/src/common/util/workflow.go b/backend/src/common/util/workflow.go
+|index 7f3015350..61c5e6e9f 100644
+|--- a/backend/src/common/util/workflow.go
+|+++ b/backend/src/common/util/workflow.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 61
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/backend/src/crd/controller/scheduledworkflow/util/scheduled_workflow.go b/backend/src/crd/controller/scheduledworkflow/util/scheduled_workflow.go
+|index 0a06432db..3e1aac512 100644
+|--- a/backend/src/crd/controller/scheduledworkflow/util/scheduled_workflow.go
+|+++ b/backend/src/crd/controller/scheduledworkflow/util/scheduled_workflow.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+4 out of 4 hunks ignored
+can't find file to patch at input line 110
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/backend/src/crd/controller/viewer/main.go b/backend/src/crd/controller/viewer/main.go
+|index 1c263cd98..325265b40 100644
+|--- a/backend/src/crd/controller/viewer/main.go
+|+++ b/backend/src/crd/controller/viewer/main.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 135
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/backend/src/crd/pkg/apis/scheduledworkflow/v1beta1/types.go b/backend/src/crd/pkg/apis/scheduledworkflow/v1beta1/types.go
+|index bbdb403e4..66cc76927 100644
+|--- a/backend/src/crd/pkg/apis/scheduledworkflow/v1beta1/types.go
+|+++ b/backend/src/crd/pkg/apis/scheduledworkflow/v1beta1/types.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 159
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/backend/src/v2/driver/driver.go b/backend/src/v2/driver/driver.go
+|index f9e782b8c..7afc1a6b8 100644
+|--- a/backend/src/v2/driver/driver.go
+|+++ b/backend/src/v2/driver/driver.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 181
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/backend/src/v2/expression/expression.go b/backend/src/v2/expression/expression.go
+|index 74cc751c5..9ef73fd3b 100644
+|--- a/backend/src/v2/expression/expression.go
+|+++ b/backend/src/v2/expression/expression.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 266
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/backend/third_party_licenses/apiserver.csv b/backend/third_party_licenses/apiserver.csv
+|index ed1529759..9931a97ae 100644
+|--- a/backend/third_party_licenses/apiserver.csv
+|+++ b/backend/third_party_licenses/apiserver.csv
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+8 out of 8 hunks ignored
+can't find file to patch at input line 425
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/backend/third_party_licenses/cache_server.csv b/backend/third_party_licenses/cache_server.csv
+|index ae3168d92..78b5988a2 100644
+|--- a/backend/third_party_licenses/cache_server.csv
+|+++ b/backend/third_party_licenses/cache_server.csv
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+7 out of 7 hunks ignored
+can't find file to patch at input line 568
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/backend/third_party_licenses/driver.csv b/backend/third_party_licenses/driver.csv
+|index 477b702aa..4f90e31ca 100644
+|--- a/backend/third_party_licenses/driver.csv
+|+++ b/backend/third_party_licenses/driver.csv
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+8 out of 8 hunks ignored
+can't find file to patch at input line 721
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/backend/third_party_licenses/launcher.csv b/backend/third_party_licenses/launcher.csv
+|index b830ddc7a..cd0ed6445 100644
+|--- a/backend/third_party_licenses/launcher.csv
+|+++ b/backend/third_party_licenses/launcher.csv
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+8 out of 8 hunks ignored
+can't find file to patch at input line 874
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/backend/third_party_licenses/persistence_agent.csv b/backend/third_party_licenses/persistence_agent.csv
+|index 700f00f65..21e786597 100644
+|--- a/backend/third_party_licenses/persistence_agent.csv
+|+++ b/backend/third_party_licenses/persistence_agent.csv
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+7 out of 7 hunks ignored
+can't find file to patch at input line 1020
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/backend/third_party_licenses/swf.csv b/backend/third_party_licenses/swf.csv
+|index a2b7f46ed..fce7ce8b9 100644
+|--- a/backend/third_party_licenses/swf.csv
+|+++ b/backend/third_party_licenses/swf.csv
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+7 out of 7 hunks ignored
+can't find file to patch at input line 1171
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/backend/third_party_licenses/viewer.csv b/backend/third_party_licenses/viewer.csv
+|index 0c13c0f6a..d7ca6f7e8 100644
+|--- a/backend/third_party_licenses/viewer.csv
+|+++ b/backend/third_party_licenses/viewer.csv
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 1269
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/go.mod b/go.mod
+|index 1337ebb71..1cce370f6 100644
+|--- a/go.mod
+|+++ b/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+11 out of 11 hunks ignored
+can't find file to patch at input line 1492
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/go.sum b/go.sum
+|index 01d5672e4..7733eb984 100644
+|--- a/go.sum
+|+++ b/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+123 out of 123 hunks ignored
+patching file backend/src/agent/persistence/worker/persistence_worker.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file backend/src/agent/persistence/worker/persistence_worker.go.rej
+patching file backend/src/common/util/execution_client.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file backend/src/common/util/execution_client.go.rej
+patching file backend/src/common/util/pipelinerun.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file backend/src/common/util/pipelinerun.go.rej
+patching file backend/src/common/util/workflow.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file backend/src/common/util/workflow.go.rej
+patching file backend/src/crd/controller/scheduledworkflow/util/scheduled_workflow.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file backend/src/crd/controller/scheduledworkflow/util/scheduled_workflow.go.rej
+patching file backend/src/crd/controller/viewer/main.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file backend/src/crd/controller/viewer/main.go.rej
+patching file backend/src/crd/pkg/apis/scheduledworkflow/v1beta1/types.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file backend/src/crd/pkg/apis/scheduledworkflow/v1beta1/types.go.rej
+patching file backend/src/v2/driver/driver.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file backend/src/v2/driver/driver.go.rej
+patching file backend/src/v2/expression/expression.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file backend/src/v2/expression/expression.go.rej
+patching file backend/third_party_licenses/apiserver.csv
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+8 out of 8 hunks ignored -- saving rejects to file backend/third_party_licenses/apiserver.csv.rej
+patching file backend/third_party_licenses/cache_server.csv
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+7 out of 7 hunks ignored -- saving rejects to file backend/third_party_licenses/cache_server.csv.rej
+patching file backend/third_party_licenses/driver.csv
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+8 out of 8 hunks ignored -- saving rejects to file backend/third_party_licenses/driver.csv.rej
+patching file backend/third_party_licenses/launcher.csv
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+8 out of 8 hunks ignored -- saving rejects to file backend/third_party_licenses/launcher.csv.rej
+patching file backend/third_party_licenses/persistence_agent.csv
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+7 out of 7 hunks ignored -- saving rejects to file backend/third_party_licenses/persistence_agent.csv.rej
+patching file backend/third_party_licenses/swf.csv
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+7 out of 7 hunks ignored -- saving rejects to file backend/third_party_licenses/swf.csv.rej
+patching file backend/third_party_licenses/viewer.csv
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file backend/third_party_licenses/viewer.csv.rej
+patching file go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+11 out of 11 hunks ignored -- saving rejects to file go.mod.rej
+patching file go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+123 out of 123 hunks ignored -- saving rejects to file go.sum.rej
+ERROR: golden patch failed to apply by all strategies

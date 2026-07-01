@@ -1,0 +1,25 @@
+patching file plugins/processors/ifname/ifname_test.go
+patching file plugins/processors/snmp_lookup/lookup_test.go
+patching file plugins/processors/snmp_lookup/store_test.go
+# github.com/influxdata/telegraf/plugins/processors/snmp_lookup [github.com/influxdata/telegraf/plugins/processors/snmp_lookup.test]
+plugins/processors/snmp_lookup/lookup_test.go:57:21: undefined: Lookup
+plugins/processors/snmp_lookup/lookup_test.go:63:49: undefined: testutil.DefaultSampleConfig
+plugins/processors/snmp_lookup/lookup_test.go:63:71: undefined: Lookup
+plugins/processors/snmp_lookup/lookup_test.go:69:13: undefined: Lookup
+plugins/processors/snmp_lookup/lookup_test.go:74:13: undefined: Lookup
+plugins/processors/snmp_lookup/lookup_test.go:78:13: undefined: Lookup
+plugins/processors/snmp_lookup/lookup_test.go:81:28: undefined: snmp.DefaultClientConfig
+plugins/processors/snmp_lookup/lookup_test.go:82:22: undefined: defaultCacheSize
+plugins/processors/snmp_lookup/lookup_test.go:83:22: undefined: defaultCacheTTL
+plugins/processors/snmp_lookup/lookup_test.go:84:22: undefined: defaultParallelLookups
+plugins/processors/snmp_lookup/lookup_test.go:84:22: too many errors
+# github.com/influxdata/telegraf/plugins/processors/ifname [github.com/influxdata/telegraf/plugins/processors/ifname.test]
+plugins/processors/ifname/ifname_test.go:31:35: undefined: snmp.DefaultClientConfig
+plugins/processors/ifname/ifname_test.go:57:23: undefined: snmp.DefaultClientConfig
+{"Time":"2026-07-01T14:59:08.815925092Z","Action":"start","Package":"github.com/influxdata/telegraf/plugins/processors/ifname"}
+{"Time":"2026-07-01T14:59:08.815981681Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/ifname","Output":"FAIL\tgithub.com/influxdata/telegraf/plugins/processors/ifname [build failed]\n"}
+{"Time":"2026-07-01T14:59:08.815993471Z","Action":"fail","Package":"github.com/influxdata/telegraf/plugins/processors/ifname","Elapsed":0}
+{"Time":"2026-07-01T14:59:08.816059206Z","Action":"start","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup"}
+{"Time":"2026-07-01T14:59:08.81607515Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Output":"FAIL\tgithub.com/influxdata/telegraf/plugins/processors/snmp_lookup [build failed]\n"}
+{"Time":"2026-07-01T14:59:08.816081842Z","Action":"fail","Package":"github.com/influxdata/telegraf/plugins/processors/snmp_lookup","Elapsed":0}
+reward=0 graded=29 found=0 failed=0 parsed=2 framework=go exit_code=1

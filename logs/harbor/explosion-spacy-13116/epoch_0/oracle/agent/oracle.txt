@@ -1,0 +1,7 @@
+patching file spacy/lang/fo/__init__.py
+patching file spacy/lang/fo/tokenizer_exceptions.py
+patching file spacy/lang/nn/__init__.py
+patching file spacy/lang/nn/examples.py
+patching file spacy/lang/nn/punctuation.py
+patching file spacy/lang/nn/tokenizer_exceptions.py
+patching file website/meta/languages.json

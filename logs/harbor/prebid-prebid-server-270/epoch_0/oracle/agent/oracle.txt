@@ -1,0 +1,3 @@
+patching file adapters/rubicon/rubicon.go
+patching file endpoints/openrtb2/auction.go
+patching file openrtb_ext/user.go

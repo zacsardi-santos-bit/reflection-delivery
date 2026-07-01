@@ -1,0 +1,26 @@
+patching file test/components/evaluators/test_llm_evaluator.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: pyproject.toml
+plugins: cov-7.1.0, asyncio-1.4.0, anyio-4.14.1
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 13 items
+
+test/components/evaluators/test_llm_evaluator.py::TestLLMEvaluator::test_init_default PASSED [  7%]
+test/components/evaluators/test_llm_evaluator.py::TestLLMEvaluator::test_init_fail_wo_openai_api_key PASSED [ 15%]
+test/components/evaluators/test_llm_evaluator.py::TestLLMEvaluator::test_init_with_parameters PASSED [ 23%]
+test/components/evaluators/test_llm_evaluator.py::TestLLMEvaluator::test_init_with_invalid_parameters PASSED [ 30%]
+test/components/evaluators/test_llm_evaluator.py::TestLLMEvaluator::test_to_dict_default PASSED [ 38%]
+test/components/evaluators/test_llm_evaluator.py::TestLLMEvaluator::test_from_dict PASSED [ 46%]
+test/components/evaluators/test_llm_evaluator.py::TestLLMEvaluator::test_to_dict_with_parameters PASSED [ 53%]
+test/components/evaluators/test_llm_evaluator.py::TestLLMEvaluator::test_run_with_different_lengths PASSED [ 61%]
+test/components/evaluators/test_llm_evaluator.py::TestLLMEvaluator::test_run_returns_parsed_result PASSED [ 69%]
+test/components/evaluators/test_llm_evaluator.py::TestLLMEvaluator::test_prepare_template PASSED [ 76%]
+test/components/evaluators/test_llm_evaluator.py::TestLLMEvaluator::test_invalid_input_parameters PASSED [ 84%]
+test/components/evaluators/test_llm_evaluator.py::TestLLMEvaluator::test_invalid_outputs PASSED [ 92%]
+test/components/evaluators/test_llm_evaluator.py::TestLLMEvaluator::test_unsupported_api PASSED [100%]
+
+============================== 13 passed in 0.15s ==============================
+reward=1 graded=13 found=0 failed=0 parsed=13 framework=pytest exit_code=0

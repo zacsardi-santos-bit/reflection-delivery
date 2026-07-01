@@ -1,0 +1,11 @@
+patching file e2e/playwright/regression/@embedded-airgapped-install/test.spec.ts
+patching file e2e/playwright/regression/@embedded-online-install/test.spec.ts
+patching file e2e/playwright/regression/@existing-airgapped-install-admin/test.spec.ts
+patching file e2e/playwright/regression/@existing-airgapped-install-minimal/test.spec.ts
+patching file e2e/playwright/regression/@existing-airgapped-upgrade-admin/test.spec.ts
+patching file e2e/playwright/regression/@existing-airgapped-upgrade-minimal/test.spec.ts
+patching file e2e/playwright/regression/@existing-online-install-admin/test.spec.ts
+patching file e2e/playwright/regression/@existing-online-install-minimal/test.spec.ts
+patching file e2e/playwright/regression/@existing-online-upgrade-admin/test.spec.ts
+patching file e2e/playwright/regression/@existing-online-upgrade-minimal/test.spec.ts
+reward=1 graded=1 found=1 failed=0 parsed=1 framework=jest exit_code=0

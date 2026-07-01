@@ -1,0 +1,9 @@
+patching file Cargo.lock
+Hunk #1 succeeded at 6441 (offset 8 lines).
+patching file src/meta/src/hummock/test_utils.rs
+patching file src/storage/src/hummock/mod.rs
+patching file src/stream/Cargo.toml
+patching file src/stream/src/common/table/mod.rs
+patching file src/stream/src/common/table/test_state_table.rs (renamed from src/stream/src/common/table/test_streaming_table.rs)
+patching file src/stream/src/common/table/test_storage_table.rs (renamed from src/stream/src/common/table/test_batch_table.rs)
+patching file src/stream/src/common/table/test_utils.rs

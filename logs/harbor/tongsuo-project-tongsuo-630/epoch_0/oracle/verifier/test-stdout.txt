@@ -1,0 +1,731 @@
+patching file test/helpers/ssltestlib.c
+patching file test/helpers/ssltestlib.h
+patching file test/sslapitest.c
+patching file test/sslbuffertest.c
+make depend && make _build_sw
+make[1]: Entering directory '/workspace/repo'
+make[1]: Leaving directory '/workspace/repo'
+make[1]: Entering directory '/workspace/repo'
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/libssl-lib-bio_ssl.d.tmp -MT ssl/libssl-lib-bio_ssl.o -c -o ssl/libssl-lib-bio_ssl.o ssl/bio_ssl.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/libssl-lib-d1_lib.d.tmp -MT ssl/libssl-lib-d1_lib.o -c -o ssl/libssl-lib-d1_lib.o ssl/d1_lib.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/libssl-lib-d1_msg.d.tmp -MT ssl/libssl-lib-d1_msg.o -c -o ssl/libssl-lib-d1_msg.o ssl/d1_msg.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/libssl-lib-d1_srtp.d.tmp -MT ssl/libssl-lib-d1_srtp.o -c -o ssl/libssl-lib-d1_srtp.o ssl/d1_srtp.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/libssl-lib-methods.d.tmp -MT ssl/libssl-lib-methods.o -c -o ssl/libssl-lib-methods.o ssl/methods.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/libssl-lib-pqueue.d.tmp -MT ssl/libssl-lib-pqueue.o -c -o ssl/libssl-lib-pqueue.o ssl/pqueue.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/libssl-lib-s3_enc.d.tmp -MT ssl/libssl-lib-s3_enc.o -c -o ssl/libssl-lib-s3_enc.o ssl/s3_enc.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/libssl-lib-s3_lib.d.tmp -MT ssl/libssl-lib-s3_lib.o -c -o ssl/libssl-lib-s3_lib.o ssl/s3_lib.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/libssl-lib-s3_msg.d.tmp -MT ssl/libssl-lib-s3_msg.o -c -o ssl/libssl-lib-s3_msg.o ssl/s3_msg.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/libssl-lib-ssl_asn1.d.tmp -MT ssl/libssl-lib-ssl_asn1.o -c -o ssl/libssl-lib-ssl_asn1.o ssl/ssl_asn1.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/libssl-lib-ssl_cert.d.tmp -MT ssl/libssl-lib-ssl_cert.o -c -o ssl/libssl-lib-ssl_cert.o ssl/ssl_cert.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/libssl-lib-ssl_ciph.d.tmp -MT ssl/libssl-lib-ssl_ciph.o -c -o ssl/libssl-lib-ssl_ciph.o ssl/ssl_ciph.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/libssl-lib-ssl_conf.d.tmp -MT ssl/libssl-lib-ssl_conf.o -c -o ssl/libssl-lib-ssl_conf.o ssl/ssl_conf.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/libssl-lib-ssl_init.d.tmp -MT ssl/libssl-lib-ssl_init.o -c -o ssl/libssl-lib-ssl_init.o ssl/ssl_init.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/libssl-lib-ssl_lib.d.tmp -MT ssl/libssl-lib-ssl_lib.o -c -o ssl/libssl-lib-ssl_lib.o ssl/ssl_lib.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/libssl-lib-ssl_mcnf.d.tmp -MT ssl/libssl-lib-ssl_mcnf.o -c -o ssl/libssl-lib-ssl_mcnf.o ssl/ssl_mcnf.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/libssl-lib-ssl_quic.d.tmp -MT ssl/libssl-lib-ssl_quic.o -c -o ssl/libssl-lib-ssl_quic.o ssl/ssl_quic.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/libssl-lib-ssl_rsa.d.tmp -MT ssl/libssl-lib-ssl_rsa.o -c -o ssl/libssl-lib-ssl_rsa.o ssl/ssl_rsa.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/libssl-lib-ssl_sess.d.tmp -MT ssl/libssl-lib-ssl_sess.o -c -o ssl/libssl-lib-ssl_sess.o ssl/ssl_sess.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/libssl-lib-ssl_stat.d.tmp -MT ssl/libssl-lib-ssl_stat.o -c -o ssl/libssl-lib-ssl_stat.o ssl/ssl_stat.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/libssl-lib-ssl_txt.d.tmp -MT ssl/libssl-lib-ssl_txt.o -c -o ssl/libssl-lib-ssl_txt.o ssl/ssl_txt.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/libssl-lib-ssl_utst.d.tmp -MT ssl/libssl-lib-ssl_utst.o -c -o ssl/libssl-lib-ssl_utst.o ssl/ssl_utst.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/libssl-lib-t1_enc.d.tmp -MT ssl/libssl-lib-t1_enc.o -c -o ssl/libssl-lib-t1_enc.o ssl/t1_enc.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/libssl-lib-t1_lib.d.tmp -MT ssl/libssl-lib-t1_lib.o -c -o ssl/libssl-lib-t1_lib.o ssl/t1_lib.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/libssl-lib-t1_trce.d.tmp -MT ssl/libssl-lib-t1_trce.o -c -o ssl/libssl-lib-t1_trce.o ssl/t1_trce.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/libssl-lib-tls13_enc.d.tmp -MT ssl/libssl-lib-tls13_enc.o -c -o ssl/libssl-lib-tls13_enc.o ssl/tls13_enc.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/libssl-lib-tls_depr.d.tmp -MT ssl/libssl-lib-tls_depr.o -c -o ssl/libssl-lib-tls_depr.o ssl/tls_depr.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/libssl-lib-tls_srp.d.tmp -MT ssl/libssl-lib-tls_srp.o -c -o ssl/libssl-lib-tls_srp.o ssl/tls_srp.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/record/libssl-lib-dtls1_bitmap.d.tmp -MT ssl/record/libssl-lib-dtls1_bitmap.o -c -o ssl/record/libssl-lib-dtls1_bitmap.o ssl/record/dtls1_bitmap.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/record/libssl-lib-rec_layer_d1.d.tmp -MT ssl/record/libssl-lib-rec_layer_d1.o -c -o ssl/record/libssl-lib-rec_layer_d1.o ssl/record/rec_layer_d1.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/record/libssl-lib-rec_layer_s3.d.tmp -MT ssl/record/libssl-lib-rec_layer_s3.o -c -o ssl/record/libssl-lib-rec_layer_s3.o ssl/record/rec_layer_s3.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/record/libssl-lib-ssl3_buffer.d.tmp -MT ssl/record/libssl-lib-ssl3_buffer.o -c -o ssl/record/libssl-lib-ssl3_buffer.o ssl/record/ssl3_buffer.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/record/libssl-lib-ssl3_record.d.tmp -MT ssl/record/libssl-lib-ssl3_record.o -c -o ssl/record/libssl-lib-ssl3_record.o ssl/record/ssl3_record.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/record/libssl-lib-ssl3_record_tls13.d.tmp -MT ssl/record/libssl-lib-ssl3_record_tls13.o -c -o ssl/record/libssl-lib-ssl3_record_tls13.o ssl/record/ssl3_record_tls13.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/statem/libssl-lib-extensions.d.tmp -MT ssl/statem/libssl-lib-extensions.o -c -o ssl/statem/libssl-lib-extensions.o ssl/statem/extensions.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/statem/libssl-lib-extensions_clnt.d.tmp -MT ssl/statem/libssl-lib-extensions_clnt.o -c -o ssl/statem/libssl-lib-extensions_clnt.o ssl/statem/extensions_clnt.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/statem/libssl-lib-extensions_cust.d.tmp -MT ssl/statem/libssl-lib-extensions_cust.o -c -o ssl/statem/libssl-lib-extensions_cust.o ssl/statem/extensions_cust.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/statem/libssl-lib-extensions_srvr.d.tmp -MT ssl/statem/libssl-lib-extensions_srvr.o -c -o ssl/statem/libssl-lib-extensions_srvr.o ssl/statem/extensions_srvr.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/statem/libssl-lib-statem.d.tmp -MT ssl/statem/libssl-lib-statem.o -c -o ssl/statem/libssl-lib-statem.o ssl/statem/statem.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/statem/libssl-lib-statem_clnt.d.tmp -MT ssl/statem/libssl-lib-statem_clnt.o -c -o ssl/statem/libssl-lib-statem_clnt.o ssl/statem/statem_clnt.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/statem/libssl-lib-statem_dtls.d.tmp -MT ssl/statem/libssl-lib-statem_dtls.o -c -o ssl/statem/libssl-lib-statem_dtls.o ssl/statem/statem_dtls.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/statem/libssl-lib-statem_lib.d.tmp -MT ssl/statem/libssl-lib-statem_lib.o -c -o ssl/statem/libssl-lib-statem_lib.o ssl/statem/statem_lib.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/statem/libssl-lib-statem_quic.d.tmp -MT ssl/statem/libssl-lib-statem_quic.o -c -o ssl/statem/libssl-lib-statem_quic.o ssl/statem/statem_quic.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/statem/libssl-lib-statem_srvr.d.tmp -MT ssl/statem/libssl-lib-statem_srvr.o -c -o ssl/statem/libssl-lib-statem_srvr.o ssl/statem/statem_srvr.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/libssl-shlib-bio_ssl.d.tmp -MT ssl/libssl-shlib-bio_ssl.o -c -o ssl/libssl-shlib-bio_ssl.o ssl/bio_ssl.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/libssl-shlib-d1_lib.d.tmp -MT ssl/libssl-shlib-d1_lib.o -c -o ssl/libssl-shlib-d1_lib.o ssl/d1_lib.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/libssl-shlib-d1_msg.d.tmp -MT ssl/libssl-shlib-d1_msg.o -c -o ssl/libssl-shlib-d1_msg.o ssl/d1_msg.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/libssl-shlib-d1_srtp.d.tmp -MT ssl/libssl-shlib-d1_srtp.o -c -o ssl/libssl-shlib-d1_srtp.o ssl/d1_srtp.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/libssl-shlib-methods.d.tmp -MT ssl/libssl-shlib-methods.o -c -o ssl/libssl-shlib-methods.o ssl/methods.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/libssl-shlib-pqueue.d.tmp -MT ssl/libssl-shlib-pqueue.o -c -o ssl/libssl-shlib-pqueue.o ssl/pqueue.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/libssl-shlib-s3_enc.d.tmp -MT ssl/libssl-shlib-s3_enc.o -c -o ssl/libssl-shlib-s3_enc.o ssl/s3_enc.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/libssl-shlib-s3_lib.d.tmp -MT ssl/libssl-shlib-s3_lib.o -c -o ssl/libssl-shlib-s3_lib.o ssl/s3_lib.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/libssl-shlib-s3_msg.d.tmp -MT ssl/libssl-shlib-s3_msg.o -c -o ssl/libssl-shlib-s3_msg.o ssl/s3_msg.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/libssl-shlib-ssl_asn1.d.tmp -MT ssl/libssl-shlib-ssl_asn1.o -c -o ssl/libssl-shlib-ssl_asn1.o ssl/ssl_asn1.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/libssl-shlib-ssl_cert.d.tmp -MT ssl/libssl-shlib-ssl_cert.o -c -o ssl/libssl-shlib-ssl_cert.o ssl/ssl_cert.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/libssl-shlib-ssl_ciph.d.tmp -MT ssl/libssl-shlib-ssl_ciph.o -c -o ssl/libssl-shlib-ssl_ciph.o ssl/ssl_ciph.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/libssl-shlib-ssl_conf.d.tmp -MT ssl/libssl-shlib-ssl_conf.o -c -o ssl/libssl-shlib-ssl_conf.o ssl/ssl_conf.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/libssl-shlib-ssl_init.d.tmp -MT ssl/libssl-shlib-ssl_init.o -c -o ssl/libssl-shlib-ssl_init.o ssl/ssl_init.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/libssl-shlib-ssl_lib.d.tmp -MT ssl/libssl-shlib-ssl_lib.o -c -o ssl/libssl-shlib-ssl_lib.o ssl/ssl_lib.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/libssl-shlib-ssl_mcnf.d.tmp -MT ssl/libssl-shlib-ssl_mcnf.o -c -o ssl/libssl-shlib-ssl_mcnf.o ssl/ssl_mcnf.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/libssl-shlib-ssl_quic.d.tmp -MT ssl/libssl-shlib-ssl_quic.o -c -o ssl/libssl-shlib-ssl_quic.o ssl/ssl_quic.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/libssl-shlib-ssl_rsa.d.tmp -MT ssl/libssl-shlib-ssl_rsa.o -c -o ssl/libssl-shlib-ssl_rsa.o ssl/ssl_rsa.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/libssl-shlib-ssl_sess.d.tmp -MT ssl/libssl-shlib-ssl_sess.o -c -o ssl/libssl-shlib-ssl_sess.o ssl/ssl_sess.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/libssl-shlib-ssl_stat.d.tmp -MT ssl/libssl-shlib-ssl_stat.o -c -o ssl/libssl-shlib-ssl_stat.o ssl/ssl_stat.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/libssl-shlib-ssl_txt.d.tmp -MT ssl/libssl-shlib-ssl_txt.o -c -o ssl/libssl-shlib-ssl_txt.o ssl/ssl_txt.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/libssl-shlib-ssl_utst.d.tmp -MT ssl/libssl-shlib-ssl_utst.o -c -o ssl/libssl-shlib-ssl_utst.o ssl/ssl_utst.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/libssl-shlib-t1_enc.d.tmp -MT ssl/libssl-shlib-t1_enc.o -c -o ssl/libssl-shlib-t1_enc.o ssl/t1_enc.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/libssl-shlib-t1_lib.d.tmp -MT ssl/libssl-shlib-t1_lib.o -c -o ssl/libssl-shlib-t1_lib.o ssl/t1_lib.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/libssl-shlib-t1_trce.d.tmp -MT ssl/libssl-shlib-t1_trce.o -c -o ssl/libssl-shlib-t1_trce.o ssl/t1_trce.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/libssl-shlib-tls13_enc.d.tmp -MT ssl/libssl-shlib-tls13_enc.o -c -o ssl/libssl-shlib-tls13_enc.o ssl/tls13_enc.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/libssl-shlib-tls_depr.d.tmp -MT ssl/libssl-shlib-tls_depr.o -c -o ssl/libssl-shlib-tls_depr.o ssl/tls_depr.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/libssl-shlib-tls_srp.d.tmp -MT ssl/libssl-shlib-tls_srp.o -c -o ssl/libssl-shlib-tls_srp.o ssl/tls_srp.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/record/libssl-shlib-dtls1_bitmap.d.tmp -MT ssl/record/libssl-shlib-dtls1_bitmap.o -c -o ssl/record/libssl-shlib-dtls1_bitmap.o ssl/record/dtls1_bitmap.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/record/libssl-shlib-rec_layer_d1.d.tmp -MT ssl/record/libssl-shlib-rec_layer_d1.o -c -o ssl/record/libssl-shlib-rec_layer_d1.o ssl/record/rec_layer_d1.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/record/libssl-shlib-rec_layer_s3.d.tmp -MT ssl/record/libssl-shlib-rec_layer_s3.o -c -o ssl/record/libssl-shlib-rec_layer_s3.o ssl/record/rec_layer_s3.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/record/libssl-shlib-ssl3_buffer.d.tmp -MT ssl/record/libssl-shlib-ssl3_buffer.o -c -o ssl/record/libssl-shlib-ssl3_buffer.o ssl/record/ssl3_buffer.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/record/libssl-shlib-ssl3_record.d.tmp -MT ssl/record/libssl-shlib-ssl3_record.o -c -o ssl/record/libssl-shlib-ssl3_record.o ssl/record/ssl3_record.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/record/libssl-shlib-ssl3_record_tls13.d.tmp -MT ssl/record/libssl-shlib-ssl3_record_tls13.o -c -o ssl/record/libssl-shlib-ssl3_record_tls13.o ssl/record/ssl3_record_tls13.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/statem/libssl-shlib-extensions.d.tmp -MT ssl/statem/libssl-shlib-extensions.o -c -o ssl/statem/libssl-shlib-extensions.o ssl/statem/extensions.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/statem/libssl-shlib-extensions_clnt.d.tmp -MT ssl/statem/libssl-shlib-extensions_clnt.o -c -o ssl/statem/libssl-shlib-extensions_clnt.o ssl/statem/extensions_clnt.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/statem/libssl-shlib-extensions_cust.d.tmp -MT ssl/statem/libssl-shlib-extensions_cust.o -c -o ssl/statem/libssl-shlib-extensions_cust.o ssl/statem/extensions_cust.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/statem/libssl-shlib-extensions_srvr.d.tmp -MT ssl/statem/libssl-shlib-extensions_srvr.o -c -o ssl/statem/libssl-shlib-extensions_srvr.o ssl/statem/extensions_srvr.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/statem/libssl-shlib-statem.d.tmp -MT ssl/statem/libssl-shlib-statem.o -c -o ssl/statem/libssl-shlib-statem.o ssl/statem/statem.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/statem/libssl-shlib-statem_clnt.d.tmp -MT ssl/statem/libssl-shlib-statem_clnt.o -c -o ssl/statem/libssl-shlib-statem_clnt.o ssl/statem/statem_clnt.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/statem/libssl-shlib-statem_dtls.d.tmp -MT ssl/statem/libssl-shlib-statem_dtls.o -c -o ssl/statem/libssl-shlib-statem_dtls.o ssl/statem/statem_dtls.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/statem/libssl-shlib-statem_lib.d.tmp -MT ssl/statem/libssl-shlib-statem_lib.o -c -o ssl/statem/libssl-shlib-statem_lib.o ssl/statem/statem_lib.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/statem/libssl-shlib-statem_quic.d.tmp -MT ssl/statem/libssl-shlib-statem_quic.o -c -o ssl/statem/libssl-shlib-statem_quic.o ssl/statem/statem_quic.c
+gcc  -I. -Iinclude  -DAES_ASM -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSLDIR="\"/usr/local/ssl\"" -DENGINESDIR="\"/usr/local/lib64/engines-3\"" -DMODULESDIR="\"/usr/local/lib64/ossl-modules\"" -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/statem/libssl-shlib-statem_srvr.d.tmp -MT ssl/statem/libssl-shlib-statem_srvr.o -c -o ssl/statem/libssl-shlib-statem_srvr.o ssl/statem/statem_srvr.c
+gcc  -Iinclude -Iapps/include  -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF test/asynciotest-bin-asynciotest.d.tmp -MT test/asynciotest-bin-asynciotest.o -c -o test/asynciotest-bin-asynciotest.o test/asynciotest.c
+gcc  -I. -Iinclude -Iinclude -Iapps/include  -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF test/helpers/asynciotest-bin-ssltestlib.d.tmp -MT test/helpers/asynciotest-bin-ssltestlib.o -c -o test/helpers/asynciotest-bin-ssltestlib.o test/helpers/ssltestlib.c
+gcc  -I. -Iinclude -Iapps/include  -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF test/babasslapitest-bin-babasslapitest.d.tmp -MT test/babasslapitest-bin-babasslapitest.o -c -o test/babasslapitest-bin-babasslapitest.o test/babasslapitest.c
+gcc  -I. -Iinclude -I. -Iinclude -Iapps/include  -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF test/helpers/babasslapitest-bin-ssltestlib.d.tmp -MT test/helpers/babasslapitest-bin-ssltestlib.o -c -o test/helpers/babasslapitest-bin-ssltestlib.o test/helpers/ssltestlib.c
+gcc  -I. -Iinclude -Iapps/include  -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF test/cipher_overhead_test-bin-cipher_overhead_test.d.tmp -MT test/cipher_overhead_test-bin-cipher_overhead_test.o -c -o test/cipher_overhead_test-bin-cipher_overhead_test.o test/cipher_overhead_test.c
+gcc  -I. -Iinclude -Iapps/include  -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF test/dtls_mtu_test-bin-dtls_mtu_test.d.tmp -MT test/dtls_mtu_test-bin-dtls_mtu_test.o -c -o test/dtls_mtu_test-bin-dtls_mtu_test.o test/dtls_mtu_test.c
+gcc  -I. -Iinclude -I. -Iinclude -Iapps/include  -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF test/helpers/dtls_mtu_test-bin-ssltestlib.d.tmp -MT test/helpers/dtls_mtu_test-bin-ssltestlib.o -c -o test/helpers/dtls_mtu_test-bin-ssltestlib.o test/helpers/ssltestlib.c
+gcc  -Iinclude -Iapps/include  -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF test/dtlstest-bin-dtlstest.d.tmp -MT test/dtlstest-bin-dtlstest.o -c -o test/dtlstest-bin-dtlstest.o test/dtlstest.c
+gcc  -I. -Iinclude -Iinclude -Iapps/include  -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF test/helpers/dtlstest-bin-ssltestlib.d.tmp -MT test/helpers/dtlstest-bin-ssltestlib.o -c -o test/helpers/dtlstest-bin-ssltestlib.o test/helpers/ssltestlib.c
+gcc  -I. -Iinclude -I. -Iinclude -Iapps/include  -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF test/helpers/ecpmeth_test-bin-ssltestlib.d.tmp -MT test/helpers/ecpmeth_test-bin-ssltestlib.o -c -o test/helpers/ecpmeth_test-bin-ssltestlib.o test/helpers/ssltestlib.c
+gcc  -Iinclude -Iapps/include  -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF test/fatalerrtest-bin-fatalerrtest.d.tmp -MT test/fatalerrtest-bin-fatalerrtest.o -c -o test/fatalerrtest-bin-fatalerrtest.o test/fatalerrtest.c
+gcc  -I. -Iinclude -Iinclude -Iapps/include  -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF test/helpers/fatalerrtest-bin-ssltestlib.d.tmp -MT test/helpers/fatalerrtest-bin-ssltestlib.o -c -o test/helpers/fatalerrtest-bin-ssltestlib.o test/helpers/ssltestlib.c
+gcc  -I. -Iinclude -I. -Iinclude -Iapps/include  -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF test/helpers/quicapitest-bin-ssltestlib.d.tmp -MT test/helpers/quicapitest-bin-ssltestlib.o -c -o test/helpers/quicapitest-bin-ssltestlib.o test/helpers/ssltestlib.c
+gcc  -I. -Iinclude -Iapps/include  -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF test/quicapitest-bin-quicapitest.d.tmp -MT test/quicapitest-bin-quicapitest.o -c -o test/quicapitest-bin-quicapitest.o test/quicapitest.c
+gcc  -I. -Iinclude -Iinclude -Iapps/include  -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF test/helpers/recordlentest-bin-ssltestlib.d.tmp -MT test/helpers/recordlentest-bin-ssltestlib.o -c -o test/helpers/recordlentest-bin-ssltestlib.o test/helpers/ssltestlib.c
+gcc  -Iinclude -Iapps/include  -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF test/recordlentest-bin-recordlentest.d.tmp -MT test/recordlentest-bin-recordlentest.o -c -o test/recordlentest-bin-recordlentest.o test/recordlentest.c
+gcc  -I. -Iinclude -Iinclude -Iapps/include  -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF test/helpers/servername_test-bin-ssltestlib.d.tmp -MT test/helpers/servername_test-bin-ssltestlib.o -c -o test/helpers/servername_test-bin-ssltestlib.o test/helpers/ssltestlib.c
+gcc  -Iinclude -Iapps/include  -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF test/servername_test-bin-servername_test.d.tmp -MT test/servername_test-bin-servername_test.o -c -o test/servername_test-bin-servername_test.o test/servername_test.c
+gcc  -I. -Iinclude -Iapps/include  -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF test/ssl_cert_table_internal_test-bin-ssl_cert_table_internal_test.d.tmp -MT test/ssl_cert_table_internal_test-bin-ssl_cert_table_internal_test.o -c -o test/ssl_cert_table_internal_test-bin-ssl_cert_table_internal_test.o test/ssl_cert_table_internal_test.c
+gcc  -I. -Iinclude -Iinclude -Iapps/include  -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF test/helpers/ssl_test-bin-handshake.d.tmp -MT test/helpers/ssl_test-bin-handshake.o -c -o test/helpers/ssl_test-bin-handshake.o test/helpers/handshake.c
+gcc  -Iinclude -Iinclude -Iapps/include  -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF test/helpers/ssl_test-bin-ssl_test_ctx.d.tmp -MT test/helpers/ssl_test-bin-ssl_test_ctx.o -c -o test/helpers/ssl_test-bin-ssl_test_ctx.o test/helpers/ssl_test_ctx.c
+gcc  -Iinclude -Iinclude -Iapps/include  -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF test/helpers/ssl_test_ctx_test-bin-ssl_test_ctx.d.tmp -MT test/helpers/ssl_test_ctx_test-bin-ssl_test_ctx.o -c -o test/helpers/ssl_test_ctx_test-bin-ssl_test_ctx.o test/helpers/ssl_test_ctx.c
+gcc  -I. -Iinclude -Iinclude -Iapps/include -I.  -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF test/helpers/sslapitest-bin-ssltestlib.d.tmp -MT test/helpers/sslapitest-bin-ssltestlib.o -c -o test/helpers/sslapitest-bin-ssltestlib.o test/helpers/ssltestlib.c
+gcc  -Iinclude -Iapps/include -I.  -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF test/sslapitest-bin-sslapitest.d.tmp -MT test/sslapitest-bin-sslapitest.o -c -o test/sslapitest-bin-sslapitest.o test/sslapitest.c
+gcc  -I. -Iinclude -Iinclude -Iapps/include  -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF test/helpers/sslbuffertest-bin-ssltestlib.d.tmp -MT test/helpers/sslbuffertest-bin-ssltestlib.o -c -o test/helpers/sslbuffertest-bin-ssltestlib.o test/helpers/ssltestlib.c
+gcc  -Iinclude -Iapps/include  -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF test/sslbuffertest-bin-sslbuffertest.d.tmp -MT test/sslbuffertest-bin-sslbuffertest.o -c -o test/sslbuffertest-bin-sslbuffertest.o test/sslbuffertest.c
+gcc  -I. -Iinclude -Iinclude -Iapps/include  -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF test/helpers/sslcorrupttest-bin-ssltestlib.d.tmp -MT test/helpers/sslcorrupttest-bin-ssltestlib.o -c -o test/helpers/sslcorrupttest-bin-ssltestlib.o test/helpers/ssltestlib.c
+gcc  -Iinclude -Iapps/include  -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF test/sslcorrupttest-bin-sslcorrupttest.d.tmp -MT test/sslcorrupttest-bin-sslcorrupttest.o -c -o test/sslcorrupttest-bin-sslcorrupttest.o test/sslcorrupttest.c
+gcc  -I. -Iinclude -Iinclude -Iapps/include  -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF test/helpers/tls13ccstest-bin-ssltestlib.d.tmp -MT test/helpers/tls13ccstest-bin-ssltestlib.o -c -o test/helpers/tls13ccstest-bin-ssltestlib.o test/helpers/ssltestlib.c
+gcc  -Iinclude -Iapps/include  -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF test/tls13ccstest-bin-tls13ccstest.d.tmp -MT test/tls13ccstest-bin-tls13ccstest.o -c -o test/tls13ccstest-bin-tls13ccstest.o test/tls13ccstest.c
+gcc  -I. -Iinclude -Iapps/include  -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF test/tls13encryptiontest-bin-tls13encryptiontest.d.tmp -MT test/tls13encryptiontest-bin-tls13encryptiontest.o -c -o test/tls13encryptiontest-bin-tls13encryptiontest.o test/tls13encryptiontest.c
+gcc  -I. -Iinclude -Iapps/include  -DOPENSSL_NO_KTLS -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF ssl/tls13secretstest-bin-tls13_enc.d.tmp -MT ssl/tls13secretstest-bin-tls13_enc.o -c -o ssl/tls13secretstest-bin-tls13_enc.o ssl/tls13_enc.c
+gcc  -I. -Iinclude -Iapps/include  -DOPENSSL_NO_KTLS -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_BUILDING_OPENSSL -DNDEBUG  -MMD -MF test/tls13secretstest-bin-tls13secretstest.d.tmp -MT test/tls13secretstest-bin-tls13secretstest.o -c -o test/tls13secretstest-bin-tls13secretstest.o test/tls13secretstest.c
+rm -f libssl.a
+ar qc libssl.a ssl/libssl-lib-bio_ssl.o ssl/libssl-lib-d1_lib.o ssl/libssl-lib-d1_msg.o ssl/libssl-lib-d1_srtp.o ssl/libssl-lib-methods.o ssl/libssl-lib-pqueue.o ssl/libssl-lib-s3_enc.o ssl/libssl-lib-s3_lib.o ssl/libssl-lib-s3_msg.o ssl/libssl-lib-ssl_asn1.o ssl/libssl-lib-ssl_cert.o ssl/libssl-lib-ssl_ciph.o ssl/libssl-lib-ssl_conf.o ssl/libssl-lib-ssl_err.o ssl/libssl-lib-ssl_err_legacy.o ssl/libssl-lib-ssl_init.o ssl/libssl-lib-ssl_lib.o ssl/libssl-lib-ssl_mcnf.o ssl/libssl-lib-ssl_quic.o ssl/libssl-lib-ssl_rsa.o ssl/libssl-lib-ssl_rsa_legacy.o ssl/libssl-lib-ssl_sess.o ssl/libssl-lib-ssl_stat.o ssl/libssl-lib-ssl_txt.o ssl/libssl-lib-ssl_utst.o ssl/libssl-lib-t1_enc.o ssl/libssl-lib-t1_lib.o ssl/libssl-lib-t1_trce.o ssl/libssl-lib-tls13_enc.o ssl/libssl-lib-tls_depr.o ssl/libssl-lib-tls_srp.o ssl/record/libssl-lib-dtls1_bitmap.o ssl/record/libssl-lib-rec_layer_d1.o ssl/record/libssl-lib-rec_layer_s3.o ssl/record/libssl-lib-ssl3_buffer.o ssl/record/libssl-lib-ssl3_record.o ssl/record/libssl-lib-ssl3_record_tls13.o ssl/statem/libssl-lib-extensions.o ssl/statem/libssl-lib-extensions_clnt.o ssl/statem/libssl-lib-extensions_cust.o ssl/statem/libssl-lib-extensions_srvr.o ssl/statem/libssl-lib-statem.o ssl/statem/libssl-lib-statem_clnt.o ssl/statem/libssl-lib-statem_dtls.o ssl/statem/libssl-lib-statem_lib.o ssl/statem/libssl-lib-statem_quic.o ssl/statem/libssl-lib-statem_srvr.o
+ranlib libssl.a || echo Never mind.
+gcc -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -L. -Wl,-znodelete -shared -Wl,-Bsymbolic   -Wl,-soname=libssl.so.3 \
+	-o libssl.so.3 -Wl,--version-script=libssl.ld \
+	crypto/libssl-shlib-packet.o ssl/libssl-shlib-bio_ssl.o \
+	ssl/libssl-shlib-d1_lib.o ssl/libssl-shlib-d1_msg.o \
+	ssl/libssl-shlib-d1_srtp.o ssl/libssl-shlib-methods.o \
+	ssl/libssl-shlib-pqueue.o ssl/libssl-shlib-s3_cbc.o \
+	ssl/libssl-shlib-s3_enc.o ssl/libssl-shlib-s3_lib.o \
+	ssl/libssl-shlib-s3_msg.o ssl/libssl-shlib-ssl_asn1.o \
+	ssl/libssl-shlib-ssl_cert.o ssl/libssl-shlib-ssl_ciph.o \
+	ssl/libssl-shlib-ssl_conf.o ssl/libssl-shlib-ssl_err.o \
+	ssl/libssl-shlib-ssl_err_legacy.o \
+	ssl/libssl-shlib-ssl_init.o ssl/libssl-shlib-ssl_lib.o \
+	ssl/libssl-shlib-ssl_mcnf.o ssl/libssl-shlib-ssl_quic.o \
+	ssl/libssl-shlib-ssl_rsa.o ssl/libssl-shlib-ssl_rsa_legacy.o \
+	ssl/libssl-shlib-ssl_sess.o ssl/libssl-shlib-ssl_stat.o \
+	ssl/libssl-shlib-ssl_txt.o ssl/libssl-shlib-ssl_utst.o \
+	ssl/libssl-shlib-t1_enc.o ssl/libssl-shlib-t1_lib.o \
+	ssl/libssl-shlib-t1_trce.o ssl/libssl-shlib-tls13_enc.o \
+	ssl/libssl-shlib-tls_depr.o ssl/libssl-shlib-tls_srp.o \
+	ssl/record/libssl-shlib-dtls1_bitmap.o \
+	ssl/record/libssl-shlib-rec_layer_d1.o \
+	ssl/record/libssl-shlib-rec_layer_s3.o \
+	ssl/record/libssl-shlib-ssl3_buffer.o \
+	ssl/record/libssl-shlib-ssl3_record.o \
+	ssl/record/libssl-shlib-ssl3_record_tls13.o \
+	ssl/record/libssl-shlib-tls_pad.o \
+	ssl/statem/libssl-shlib-extensions.o \
+	ssl/statem/libssl-shlib-extensions_clnt.o \
+	ssl/statem/libssl-shlib-extensions_cust.o \
+	ssl/statem/libssl-shlib-extensions_srvr.o \
+	ssl/statem/libssl-shlib-statem.o \
+	ssl/statem/libssl-shlib-statem_clnt.o \
+	ssl/statem/libssl-shlib-statem_dtls.o \
+	ssl/statem/libssl-shlib-statem_lib.o \
+	ssl/statem/libssl-shlib-statem_quic.o \
+	ssl/statem/libssl-shlib-statem_srvr.o \
+	-lcrypto  -ldl -pthread 
+rm -f test/cipher_overhead_test
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3   \
+	-o test/cipher_overhead_test \
+	test/cipher_overhead_test-bin-cipher_overhead_test.o \
+	libssl.a test/libtestutil.a libcrypto.a -ldl -pthread 
+rm -f test/ssl_cert_table_internal_test
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/ssl_cert_table_internal_test \
+	test/ssl_cert_table_internal_test-bin-ssl_cert_table_internal_test.o \
+	test/libtestutil.a -lcrypto -ldl -pthread 
+rm -f test/ssl_old_test
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3   \
+	-o test/ssl_old_test \
+	test/helpers/ssl_old_test-bin-predefined_dhparams.o \
+	test/ssl_old_test-bin-ssl_old_test.o \
+	libssl.a test/libtestutil.a libcrypto.a -ldl -pthread 
+rm -f test/tls13encryptiontest
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3   \
+	-o test/tls13encryptiontest \
+	test/tls13encryptiontest-bin-tls13encryptiontest.o \
+	libssl.a test/libtestutil.a libcrypto.a -ldl -pthread 
+rm -f test/wpackettest
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3   \
+	-o test/wpackettest \
+	test/wpackettest-bin-wpackettest.o \
+	libssl.a test/libtestutil.a libcrypto.a -ldl -pthread 
+rm -f libssl.so && \
+ln -s libssl.so.3 libssl.so
+rm -f apps/openssl
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o apps/openssl \
+	apps/lib/openssl-bin-cmp_mock_srv.o \
+	apps/openssl-bin-asn1parse.o apps/openssl-bin-ca.o \
+	apps/openssl-bin-ciphers.o apps/openssl-bin-cmp.o \
+	apps/openssl-bin-cms.o apps/openssl-bin-crl.o \
+	apps/openssl-bin-crl2pkcs7.o apps/openssl-bin-dgst.o \
+	apps/openssl-bin-dhparam.o apps/openssl-bin-dsa.o \
+	apps/openssl-bin-dsaparam.o apps/openssl-bin-ec.o \
+	apps/openssl-bin-ecparam.o apps/openssl-bin-enc.o \
+	apps/openssl-bin-engine.o apps/openssl-bin-errstr.o \
+	apps/openssl-bin-fipsinstall.o apps/openssl-bin-gendsa.o \
+	apps/openssl-bin-genpkey.o apps/openssl-bin-genrsa.o \
+	apps/openssl-bin-info.o apps/openssl-bin-kdf.o \
+	apps/openssl-bin-list.o apps/openssl-bin-mac.o \
+	apps/openssl-bin-nseq.o apps/openssl-bin-ocsp.o \
+	apps/openssl-bin-openssl.o apps/openssl-bin-passwd.o \
+	apps/openssl-bin-pkcs12.o apps/openssl-bin-pkcs7.o \
+	apps/openssl-bin-pkcs8.o apps/openssl-bin-pkey.o \
+	apps/openssl-bin-pkeyparam.o apps/openssl-bin-pkeyutl.o \
+	apps/openssl-bin-prime.o apps/openssl-bin-progs.o \
+	apps/openssl-bin-rand.o apps/openssl-bin-rehash.o \
+	apps/openssl-bin-req.o apps/openssl-bin-rsa.o \
+	apps/openssl-bin-rsautl.o apps/openssl-bin-s_client.o \
+	apps/openssl-bin-s_server.o apps/openssl-bin-s_time.o \
+	apps/openssl-bin-sess_id.o apps/openssl-bin-smime.o \
+	apps/openssl-bin-speed.o apps/openssl-bin-spkac.o \
+	apps/openssl-bin-srp.o apps/openssl-bin-storeutl.o \
+	apps/openssl-bin-ts.o apps/openssl-bin-verify.o \
+	apps/openssl-bin-version.o apps/openssl-bin-x509.o \
+	apps/libapps.a -lssl -lcrypto -ldl -pthread 
+rm -f fuzz/asn1-test
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o fuzz/asn1-test \
+	fuzz/asn1-test-bin-asn1.o fuzz/asn1-test-bin-fuzz_rand.o \
+	fuzz/asn1-test-bin-test-corpus.o \
+	-lssl -lcrypto -ldl -pthread 
+rm -f fuzz/client-test
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o fuzz/client-test \
+	fuzz/client-test-bin-client.o \
+	fuzz/client-test-bin-fuzz_rand.o \
+	fuzz/client-test-bin-test-corpus.o \
+	-lssl -lcrypto -ldl -pthread 
+rm -f fuzz/server-test
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o fuzz/server-test \
+	fuzz/server-test-bin-fuzz_rand.o \
+	fuzz/server-test-bin-server.o \
+	fuzz/server-test-bin-test-corpus.o \
+	-lssl -lcrypto -ldl -pthread 
+rm -f test/asynciotest
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/asynciotest \
+	test/asynciotest-bin-asynciotest.o \
+	test/helpers/asynciotest-bin-ssltestlib.o \
+	-lssl test/libtestutil.a -lcrypto -ldl -pthread 
+rm -f test/babasslapitest
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/babasslapitest \
+	test/babasslapitest-bin-babasslapitest.o \
+	test/helpers/babasslapitest-bin-ssltestlib.o \
+	-lssl test/libtestutil.a -lcrypto -ldl -pthread 
+rm -f test/bad_dtls_test
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/bad_dtls_test \
+	test/bad_dtls_test-bin-bad_dtls_test.o \
+	-lssl test/libtestutil.a -lcrypto -ldl -pthread 
+rm -f test/buildtest_c_aes
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/buildtest_c_aes \
+	test/buildtest_c_aes-bin-buildtest_aes.o \
+	-lssl -lcrypto -ldl -pthread 
+rm -f test/buildtest_c_async
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/buildtest_c_async \
+	test/buildtest_c_async-bin-buildtest_async.o \
+	-lssl -lcrypto -ldl -pthread 
+rm -f test/buildtest_c_bn
+rm -f test/buildtest_c_buffer
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/buildtest_c_bn \
+	test/buildtest_c_bn-bin-buildtest_bn.o \
+	-lssl -lcrypto -ldl -pthread 
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/buildtest_c_buffer \
+	test/buildtest_c_buffer-bin-buildtest_buffer.o \
+	-lssl -lcrypto -ldl -pthread 
+rm -f test/buildtest_c_cmac
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/buildtest_c_cmac \
+	test/buildtest_c_cmac-bin-buildtest_cmac.o \
+	-lssl -lcrypto -ldl -pthread 
+rm -f test/buildtest_c_cmp_util
+rm -f test/buildtest_c_comp
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/buildtest_c_cmp_util \
+	test/buildtest_c_cmp_util-bin-buildtest_cmp_util.o \
+	-lssl -lcrypto -ldl -pthread 
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/buildtest_c_comp \
+	test/buildtest_c_comp-bin-buildtest_comp.o \
+	-lssl -lcrypto -ldl -pthread 
+rm -f test/buildtest_c_conf_api
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/buildtest_c_conf_api \
+	test/buildtest_c_conf_api-bin-buildtest_conf_api.o \
+	-lssl -lcrypto -ldl -pthread 
+rm -f test/buildtest_c_conftypes
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/buildtest_c_conftypes \
+	test/buildtest_c_conftypes-bin-buildtest_conftypes.o \
+	-lssl -lcrypto -ldl -pthread 
+rm -f test/buildtest_c_core
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/buildtest_c_core \
+	test/buildtest_c_core-bin-buildtest_core.o \
+	-lssl -lcrypto -ldl -pthread 
+rm -f test/buildtest_c_core_dispatch
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/buildtest_c_core_dispatch \
+	test/buildtest_c_core_dispatch-bin-buildtest_core_dispatch.o \
+	-lssl -lcrypto -ldl -pthread 
+rm -f test/buildtest_c_core_names
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/buildtest_c_core_names \
+	test/buildtest_c_core_names-bin-buildtest_core_names.o \
+	-lssl -lcrypto -ldl -pthread 
+rm -f test/buildtest_c_core_object
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/buildtest_c_core_object \
+	test/buildtest_c_core_object-bin-buildtest_core_object.o \
+	-lssl -lcrypto -ldl -pthread 
+rm -f test/buildtest_c_cryptoerr_legacy
+rm -f test/buildtest_c_decoder
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/buildtest_c_cryptoerr_legacy \
+	test/buildtest_c_cryptoerr_legacy-bin-buildtest_cryptoerr_legacy.o \
+	-lssl -lcrypto -ldl -pthread 
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/buildtest_c_decoder \
+	test/buildtest_c_decoder-bin-buildtest_decoder.o \
+	-lssl -lcrypto -ldl -pthread 
+rm -f test/buildtest_c_des
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/buildtest_c_des \
+	test/buildtest_c_des-bin-buildtest_des.o \
+	-lssl -lcrypto -ldl -pthread 
+rm -f test/buildtest_c_dh
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/buildtest_c_dh \
+	test/buildtest_c_dh-bin-buildtest_dh.o \
+	-lssl -lcrypto -ldl -pthread 
+rm -f test/buildtest_c_dsa
+rm -f test/buildtest_c_dtls1
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/buildtest_c_dsa \
+	test/buildtest_c_dsa-bin-buildtest_dsa.o \
+	-lssl -lcrypto -ldl -pthread 
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/buildtest_c_dtls1 \
+	test/buildtest_c_dtls1-bin-buildtest_dtls1.o \
+	-lssl -lcrypto -ldl -pthread 
+rm -f test/buildtest_c_e_os2
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/buildtest_c_e_os2 \
+	test/buildtest_c_e_os2-bin-buildtest_e_os2.o \
+	-lssl -lcrypto -ldl -pthread 
+rm -f test/buildtest_c_ebcdic
+rm -f test/buildtest_c_ec
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/buildtest_c_ebcdic \
+	test/buildtest_c_ebcdic-bin-buildtest_ebcdic.o \
+	-lssl -lcrypto -ldl -pthread 
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/buildtest_c_ec \
+	test/buildtest_c_ec-bin-buildtest_ec.o \
+	-lssl -lcrypto -ldl -pthread 
+rm -f test/buildtest_c_ecdh
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/buildtest_c_ecdh \
+	test/buildtest_c_ecdh-bin-buildtest_ecdh.o \
+	-lssl -lcrypto -ldl -pthread 
+rm -f test/buildtest_c_ecdsa
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/buildtest_c_ecdsa \
+	test/buildtest_c_ecdsa-bin-buildtest_ecdsa.o \
+	-lssl -lcrypto -ldl -pthread 
+rm -f test/buildtest_c_encoder
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/buildtest_c_encoder \
+	test/buildtest_c_encoder-bin-buildtest_encoder.o \
+	-lssl -lcrypto -ldl -pthread 
+rm -f test/buildtest_c_engine
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/buildtest_c_engine \
+	test/buildtest_c_engine-bin-buildtest_engine.o \
+	-lssl -lcrypto -ldl -pthread 
+rm -f test/buildtest_c_evp
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/buildtest_c_evp \
+	test/buildtest_c_evp-bin-buildtest_evp.o \
+	-lssl -lcrypto -ldl -pthread 
+rm -f test/buildtest_c_fips_names
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/buildtest_c_fips_names \
+	test/buildtest_c_fips_names-bin-buildtest_fips_names.o \
+	-lssl -lcrypto -ldl -pthread 
+rm -f test/buildtest_c_hmac
+rm -f test/buildtest_c_http
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/buildtest_c_hmac \
+	test/buildtest_c_hmac-bin-buildtest_hmac.o \
+	-lssl -lcrypto -ldl -pthread 
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/buildtest_c_http \
+	test/buildtest_c_http-bin-buildtest_http.o \
+	-lssl -lcrypto -ldl -pthread 
+rm -f test/buildtest_c_kdf
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/buildtest_c_kdf \
+	test/buildtest_c_kdf-bin-buildtest_kdf.o \
+	-lssl -lcrypto -ldl -pthread 
+rm -f test/buildtest_c_macros
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/buildtest_c_macros \
+	test/buildtest_c_macros-bin-buildtest_macros.o \
+	-lssl -lcrypto -ldl -pthread 
+rm -f test/buildtest_c_md5
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/buildtest_c_md5 \
+	test/buildtest_c_md5-bin-buildtest_md5.o \
+	-lssl -lcrypto -ldl -pthread 
+rm -f test/buildtest_c_modes
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/buildtest_c_modes \
+	test/buildtest_c_modes-bin-buildtest_modes.o \
+	-lssl -lcrypto -ldl -pthread 
+rm -f test/buildtest_c_obj_mac
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/buildtest_c_obj_mac \
+	test/buildtest_c_obj_mac-bin-buildtest_obj_mac.o \
+	-lssl -lcrypto -ldl -pthread 
+rm -f test/buildtest_c_objects
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/buildtest_c_objects \
+	test/buildtest_c_objects-bin-buildtest_objects.o \
+	-lssl -lcrypto -ldl -pthread 
+rm -f test/buildtest_c_ossl_typ
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/buildtest_c_ossl_typ \
+	test/buildtest_c_ossl_typ-bin-buildtest_ossl_typ.o \
+	-lssl -lcrypto -ldl -pthread 
+rm -f test/buildtest_c_param_build
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/buildtest_c_param_build \
+	test/buildtest_c_param_build-bin-buildtest_param_build.o \
+	-lssl -lcrypto -ldl -pthread 
+rm -f test/buildtest_c_params
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/buildtest_c_params \
+	test/buildtest_c_params-bin-buildtest_params.o \
+	-lssl -lcrypto -ldl -pthread 
+rm -f test/buildtest_c_pem
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/buildtest_c_pem \
+	test/buildtest_c_pem-bin-buildtest_pem.o \
+	-lssl -lcrypto -ldl -pthread 
+rm -f test/buildtest_c_pem2
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/buildtest_c_pem2 \
+	test/buildtest_c_pem2-bin-buildtest_pem2.o \
+	-lssl -lcrypto -ldl -pthread 
+rm -f test/buildtest_c_prov_ssl
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/buildtest_c_prov_ssl \
+	test/buildtest_c_prov_ssl-bin-buildtest_prov_ssl.o \
+	-lssl -lcrypto -ldl -pthread 
+rm -f test/buildtest_c_provider
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/buildtest_c_provider \
+	test/buildtest_c_provider-bin-buildtest_provider.o \
+	-lssl -lcrypto -ldl -pthread 
+rm -f test/buildtest_c_rand
+rm -f test/buildtest_c_rc4
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/buildtest_c_rand \
+	test/buildtest_c_rand-bin-buildtest_rand.o \
+	-lssl -lcrypto -ldl -pthread 
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/buildtest_c_rc4 \
+	test/buildtest_c_rc4-bin-buildtest_rc4.o \
+	-lssl -lcrypto -ldl -pthread 
+rm -f test/buildtest_c_rsa
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/buildtest_c_rsa \
+	test/buildtest_c_rsa-bin-buildtest_rsa.o \
+	-lssl -lcrypto -ldl -pthread 
+rm -f test/buildtest_c_self_test
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/buildtest_c_self_test \
+	test/buildtest_c_self_test-bin-buildtest_self_test.o \
+	-lssl -lcrypto -ldl -pthread 
+rm -f test/buildtest_c_sha
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/buildtest_c_sha \
+	test/buildtest_c_sha-bin-buildtest_sha.o \
+	-lssl -lcrypto -ldl -pthread 
+rm -f test/buildtest_c_sm3
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/buildtest_c_sm3 \
+	test/buildtest_c_sm3-bin-buildtest_sm3.o \
+	-lssl -lcrypto -ldl -pthread 
+rm -f test/buildtest_c_srtp
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/buildtest_c_srtp \
+	test/buildtest_c_srtp-bin-buildtest_srtp.o \
+	-lssl -lcrypto -ldl -pthread 
+rm -f test/buildtest_c_ssl2
+rm -f test/buildtest_c_sslerr_legacy
+rm -f test/buildtest_c_stack
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/buildtest_c_ssl2 \
+	test/buildtest_c_ssl2-bin-buildtest_ssl2.o \
+	-lssl -lcrypto -ldl -pthread 
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/buildtest_c_sslerr_legacy \
+	test/buildtest_c_sslerr_legacy-bin-buildtest_sslerr_legacy.o \
+	-lssl -lcrypto -ldl -pthread 
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/buildtest_c_stack \
+	test/buildtest_c_stack-bin-buildtest_stack.o \
+	-lssl -lcrypto -ldl -pthread 
+rm -f test/buildtest_c_store
+rm -f test/buildtest_c_symhacks
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/buildtest_c_store \
+	test/buildtest_c_store-bin-buildtest_store.o \
+	-lssl -lcrypto -ldl -pthread 
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/buildtest_c_symhacks \
+	test/buildtest_c_symhacks-bin-buildtest_symhacks.o \
+	-lssl -lcrypto -ldl -pthread 
+rm -f test/buildtest_c_tls1
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/buildtest_c_tls1 \
+	test/buildtest_c_tls1-bin-buildtest_tls1.o \
+	-lssl -lcrypto -ldl -pthread 
+rm -f test/buildtest_c_ts
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/buildtest_c_ts \
+	test/buildtest_c_ts-bin-buildtest_ts.o \
+	-lssl -lcrypto -ldl -pthread 
+rm -f test/buildtest_c_txt_db
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/buildtest_c_txt_db \
+	test/buildtest_c_txt_db-bin-buildtest_txt_db.o \
+	-lssl -lcrypto -ldl -pthread 
+rm -f test/buildtest_c_types
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/buildtest_c_types \
+	test/buildtest_c_types-bin-buildtest_types.o \
+	-lssl -lcrypto -ldl -pthread 
+rm -f test/buildtest_c_zkp_gadget
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/buildtest_c_zkp_gadget \
+	test/buildtest_c_zkp_gadget-bin-buildtest_zkp_gadget.o \
+	-lssl -lcrypto -ldl -pthread 
+rm -f test/buildtest_c_zkp_transcript
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/buildtest_c_zkp_transcript \
+	test/buildtest_c_zkp_transcript-bin-buildtest_zkp_transcript.o \
+	-lssl -lcrypto -ldl -pthread 
+rm -f test/cipherbytes_test
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/cipherbytes_test \
+	test/cipherbytes_test-bin-cipherbytes_test.o \
+	-lssl test/libtestutil.a -lcrypto -ldl -pthread 
+rm -f test/cipherlist_test
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/cipherlist_test \
+	test/cipherlist_test-bin-cipherlist_test.o \
+	-lssl test/libtestutil.a -lcrypto -ldl -pthread 
+rm -f test/ciphername_test
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/ciphername_test \
+	test/ciphername_test-bin-ciphername_test.o \
+	-lssl test/libtestutil.a -lcrypto -ldl -pthread 
+rm -f test/clienthellotest
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/clienthellotest \
+	test/clienthellotest-bin-clienthellotest.o \
+	-lssl test/libtestutil.a -lcrypto -ldl -pthread 
+rm -f test/danetest
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/danetest \
+	test/danetest-bin-danetest.o \
+	-lssl test/libtestutil.a -lcrypto -ldl -pthread 
+rm -f test/dtls_mtu_test
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/dtls_mtu_test \
+	test/dtls_mtu_test-bin-dtls_mtu_test.o \
+	test/helpers/dtls_mtu_test-bin-ssltestlib.o \
+	-lssl test/libtestutil.a -lcrypto -ldl -pthread 
+rm -f test/dtlstest
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/dtlstest \
+	test/dtlstest-bin-dtlstest.o \
+	test/helpers/dtlstest-bin-ssltestlib.o \
+	-lssl test/libtestutil.a -lcrypto -ldl -pthread 
+rm -f test/dtlsv1listentest
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/dtlsv1listentest \
+	test/dtlsv1listentest-bin-dtlsv1listentest.o \
+	-lssl test/libtestutil.a -lcrypto -ldl -pthread 
+rm -f test/ecpmeth_test
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/ecpmeth_test \
+	test/ecpmeth_test-bin-ecpmeth_test.o \
+	test/helpers/ecpmeth_test-bin-ssltestlib.o \
+	-lssl test/libtestutil.a -lcrypto -ldl -pthread 
+rm -f test/fatalerrtest
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/fatalerrtest \
+	test/fatalerrtest-bin-fatalerrtest.o \
+	test/helpers/fatalerrtest-bin-ssltestlib.o \
+	-lssl test/libtestutil.a -lcrypto -ldl -pthread 
+rm -f test/quicapitest
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/quicapitest \
+	test/helpers/quicapitest-bin-ssltestlib.o \
+	test/quicapitest-bin-quicapitest.o \
+	-lssl test/libtestutil.a -lcrypto -ldl -pthread 
+rm -f test/recordlentest
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/recordlentest \
+	test/helpers/recordlentest-bin-ssltestlib.o \
+	test/recordlentest-bin-recordlentest.o \
+	-lssl test/libtestutil.a -lcrypto -ldl -pthread 
+rm -f test/servername_test
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/servername_test \
+	test/helpers/servername_test-bin-ssltestlib.o \
+	test/servername_test-bin-servername_test.o \
+	-lssl test/libtestutil.a -lcrypto -ldl -pthread 
+rm -f test/ssl_ctx_test
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/ssl_ctx_test \
+	test/ssl_ctx_test-bin-ssl_ctx_test.o \
+	-lssl test/libtestutil.a -lcrypto -ldl -pthread 
+rm -f test/ssl_test
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/ssl_test \
+	test/helpers/ssl_test-bin-handshake.o \
+	test/helpers/ssl_test-bin-handshake_srp.o \
+	test/helpers/ssl_test-bin-ssl_test_ctx.o \
+	test/ssl_test-bin-ssl_test.o \
+	-lssl test/libtestutil.a -lcrypto -ldl -pthread 
+rm -f test/ssl_test_ctx_test
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/ssl_test_ctx_test \
+	test/helpers/ssl_test_ctx_test-bin-ssl_test_ctx.o \
+	test/ssl_test_ctx_test-bin-ssl_test_ctx_test.o \
+	-lssl test/libtestutil.a -lcrypto -ldl -pthread 
+rm -f test/sslbuffertest
+rm -f test/sslcorrupttest
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/sslbuffertest \
+	test/helpers/sslbuffertest-bin-ssltestlib.o \
+	test/sslbuffertest-bin-sslbuffertest.o \
+	-lssl test/libtestutil.a -lcrypto -ldl -pthread 
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/sslcorrupttest \
+	test/helpers/sslcorrupttest-bin-ssltestlib.o \
+	test/sslcorrupttest-bin-sslcorrupttest.o \
+	-lssl test/libtestutil.a -lcrypto -ldl -pthread 
+rm -f test/sysdefaulttest
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/sysdefaulttest \
+	test/sysdefaulttest-bin-sysdefaulttest.o \
+	-lssl test/libtestutil.a -lcrypto -ldl -pthread 
+rm -f test/tls13ccstest
+rm -f test/tls13secretstest
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/tls13ccstest \
+	test/helpers/tls13ccstest-bin-ssltestlib.o \
+	test/tls13ccstest-bin-tls13ccstest.o \
+	-lssl test/libtestutil.a -lcrypto -ldl -pthread 
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/tls13secretstest \
+	crypto/tls13secretstest-bin-packet.o \
+	ssl/tls13secretstest-bin-tls13_enc.o \
+	test/tls13secretstest-bin-tls13secretstest.o \
+	-lssl test/libtestutil.a -lcrypto -ldl -pthread 
+rm -f test/uitest
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/uitest \
+	apps/lib/uitest-bin-apps_ui.o test/uitest-bin-uitest.o \
+	-lssl test/libtestutil.a -lcrypto -ldl -pthread 
+rm -f test/sslapitest
+${LDCMD:-gcc} -pthread -m64 -Wa,--noexecstack -Wall -O3 -L.   \
+	-o test/sslapitest \
+	test/helpers/sslapitest-bin-ssltestlib.o \
+	test/sslapitest-bin-filterprov.o \
+	test/sslapitest-bin-sslapitest.o \
+	test/sslapitest-bin-tls-provider.o \
+	-lssl test/libtestutil.a -lcrypto -ldl -pthread 
+make[1]: Leaving directory '/workspace/repo'
+1..2
+    # Subtest: test_func
+    1..9
+    ok 1 - iteration 1
+    ok 2 - iteration 2
+    ok 3 - iteration 3
+    ok 4 - iteration 4
+    ok 5 - iteration 5
+    ok 6 - iteration 6
+    ok 7 - iteration 7
+    ok 8 - iteration 8
+    ok 9 - iteration 9
+PASS [   0.000s] test_func
+    # Subtest: test_free_buffers
+    1..8
+    ok 10 - iteration 1
+    ok 11 - iteration 2
+    ok 12 - iteration 3
+    ok 13 - iteration 4
+    ok 14 - iteration 5
+    ok 15 - iteration 6
+    ok 16 - iteration 7
+    ok 17 - iteration 8
+PASS [   0.000s] test_free_buffers
+reward=1 graded=2 found=2 failed=0 parsed=2 framework=cargo exit_code=0

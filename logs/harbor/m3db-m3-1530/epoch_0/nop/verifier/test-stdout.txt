@@ -1,0 +1,11 @@
+patching file src/dbnode/storage/index/postings_list_cache_test.go
+patching file src/dbnode/storage/index/read_through_segment_test.go
+# github.com/m3db/m3/src/dbnode/storage/index [github.com/m3db/m3/src/dbnode/storage/index.test]
+/go/src/github.com/m3db/m3/src/dbnode/storage/index/postings_list_cache_test.go:68:18: undefined: PatternTypeField
+/go/src/github.com/m3db/m3/src/dbnode/storage/index/postings_list_cache_test.go:306:7: undefined: PatternTypeField
+/go/src/github.com/m3db/m3/src/dbnode/storage/index/postings_list_cache_test.go:307:9: cache.PutField undefined (type *PostingsListCache has no field or method PutField)
+/go/src/github.com/m3db/m3/src/dbnode/storage/index/postings_list_cache_test.go:312:9: cache.PutField undefined (type *PostingsListCache has no field or method PutField)
+/go/src/github.com/m3db/m3/src/dbnode/storage/index/postings_list_cache_test.go:336:7: undefined: PatternTypeField
+/go/src/github.com/m3db/m3/src/dbnode/storage/index/postings_list_cache_test.go:337:16: cache.GetField undefined (type *PostingsListCache has no field or method GetField)
+FAIL	github.com/m3db/m3/src/dbnode/storage/index [build failed]
+reward=0 graded=91 found=91 failed=91 parsed=1 framework=go exit_code=1

@@ -1,0 +1,109 @@
+patching file crates/cubecl-runtime/tests/dummy/compute.rs
+patching file crates/cubecl-runtime/tests/dummy/tune/autotune_operations.rs
+patching file crates/cubecl-runtime/tests/dummy/tune/operation_sets.rs
+patching file crates/cubecl-runtime/tests/integration_test.rs
+   Compiling libc v0.2.186
+   Compiling proc-macro2 v1.0.106
+   Compiling quote v1.0.46
+   Compiling unicode-ident v1.0.24
+   Compiling cfg-if v1.0.4
+   Compiling pin-project-lite v0.2.17
+   Compiling zerocopy v0.8.52
+   Compiling syn v2.0.118
+   Compiling crossbeam-utils v0.8.21
+   Compiling parking v2.2.1
+   Compiling futures-core v0.3.32
+   Compiling scopeguard v1.2.0
+   Compiling serde_core v1.0.228
+   Compiling lock_api v0.4.14
+   Compiling concurrent-queue v2.5.0
+   Compiling getrandom v0.2.17
+   Compiling version_check v0.9.5
+   Compiling rand_core v0.6.4
+   Compiling event-listener v5.4.1
+   Compiling ahash v0.8.12
+   Compiling ppv-lite86 v0.2.21
+   Compiling regex-syntax v0.8.11
+   Compiling serde v1.0.228
+   Compiling once_cell v1.21.4
+   Compiling zmij v1.0.21
+   Compiling parking_lot_core v0.9.12
+   Compiling regex-automata v0.4.14
+   Compiling rand_chacha v0.3.1
+   Compiling event-listener-strategy v0.5.4
+   Compiling serde_derive v1.0.228
+   Compiling log v0.4.33
+   Compiling fastrand v2.4.1
+   Compiling serde_json v1.0.150
+   Compiling futures-task v0.3.32
+   Compiling smallvec v1.15.2
+   Compiling option-ext v0.2.0
+   Compiling futures-io v0.3.32
+   Compiling cfg_aliases v0.2.1
+   Compiling cubecl-common v0.5.0 (/workspace/repo/crates/cubecl-common)
+   Compiling slab v0.4.12
+   Compiling futures-util v0.3.32
+   Compiling cubecl-runtime v0.5.0 (/workspace/repo/crates/cubecl-runtime)
+   Compiling futures-lite v2.6.1
+   Compiling dirs-sys v0.4.1
+   Compiling regex v1.12.4
+   Compiling rand v0.8.6
+   Compiling spin v0.9.8
+   Compiling derive-new v0.6.0
+   Compiling itoa v1.0.18
+   Compiling embassy-futures v0.1.2
+   Compiling memchr v2.8.2
+   Compiling allocator-api2 v0.2.21
+   Compiling lazy_static v1.5.0
+   Compiling sanitize-filename v0.5.0
+   Compiling hashbrown v0.14.5
+   Compiling parking_lot v0.12.5
+   Compiling dirs v5.0.1
+   Compiling futures-executor v0.3.32
+   Compiling async-channel v2.5.0
+   Compiling async-lock v3.4.2
+   Compiling serial_test_derive v3.5.0
+   Compiling variadics_please v1.1.0
+   Compiling md5 v0.7.0
+   Compiling serial_test v3.5.0
+    Finished `test` profile [unoptimized] target(s) in 18.93s
+────────────
+ Nextest run ID 2f5c3c51-5a89-4503-b43d-4f53bf3fe7ee with nextest profile: default
+    Starting 34 tests across 2 binaries
+        PASS [   0.005s] ( 1/34) cubecl-runtime memory_management::memory_manage::tests::alloc_allocs_new_storage
+        PASS [   0.005s] ( 2/34) cubecl-runtime memory_management::memory_manage::tests::alloc_respects_alignment_size
+        PASS [   0.005s] ( 3/34) cubecl-runtime memory_management::memory_manage::tests::alloc_reuses_storage
+        PASS [   0.005s] ( 4/34) cubecl-runtime memory_management::memory_manage::tests::alloc_two_chunks_on_one_page
+        PASS [   0.006s] ( 5/34) cubecl-runtime memory_management::memory_manage::tests::allocate_deallocate_reallocate
+        PASS [   0.006s] ( 6/34) cubecl-runtime memory_management::memory_manage::tests::allocs_on_correct_page
+        PASS [   0.006s] ( 7/34) cubecl-runtime memory_management::memory_manage::tests::noslice_alloc_respects_alignment_size
+        PASS [   0.006s] ( 8/34) cubecl-runtime memory_management::memory_manage::tests::noslice_alloc_allocs_new_storage
+        PASS [   0.006s] ( 9/34) cubecl-runtime memory_management::memory_manage::tests::noslice_alloc_two_chunk
+        PASS [   0.006s] (10/34) cubecl-runtime memory_management::memory_manage::tests::noslice_alloc_reuses_storage
+        PASS [   0.006s] (11/34) cubecl-runtime memory_management::memory_manage::tests::noslice_allocate_deallocate_reallocate
+        PASS [   0.006s] (12/34) cubecl-runtime memory_management::memory_manage::tests::noslice_allocs_on_correct_page
+        PASS [   0.005s] (13/34) cubecl-runtime memory_management::memory_manage::tests::noslice_test_handle_mutability
+        PASS [   0.005s] (14/34) cubecl-runtime memory_management::memory_manage::tests::test_fragmentation_resistance
+        PASS [   0.005s] (15/34) cubecl-runtime memory_management::memory_manage::tests::test_handle_mutability
+        PASS [   0.005s] (16/34) cubecl-runtime memory_management::memory_manage::tests::test_memory_usage
+        PASS [   0.006s] (17/34) cubecl-runtime memory_management::memory_pool::ring::tests::find_free_slice_with_exact_fit
+        PASS [   0.006s] (18/34) cubecl-runtime memory_management::memory_pool::ring::tests::find_free_slice_with_merging
+        PASS [   0.004s] (19/34) cubecl-runtime memory_management::memory_pool::ring::tests::find_free_slice_with_multiple_chunks_and_merging
+        PASS [   0.005s] (20/34) cubecl-runtime memory_management::memory_pool::ring::tests::multiple_chunks
+        PASS [   0.005s] (21/34) cubecl-runtime memory_management::memory_pool::ring::tests::simple_1
+        PASS [   0.005s] (22/34) cubecl-runtime memory_management::memory_pool::ring::tests::simple_2
+        PASS [   0.005s] (23/34) cubecl-runtime storage::bytes_cpu::tests::test_can_alloc_and_dealloc
+        PASS [   0.005s] (24/34) cubecl-runtime storage::bytes_cpu::tests::test_slices
+        PASS [   0.043s] (25/34) cubecl-runtime::integration_test autotune_basic_addition_execution
+        PASS [   0.044s] (26/34) cubecl-runtime::integration_test autotune_basic_multiplication_execution
+        PASS [   0.090s] (27/34) cubecl-runtime::integration_test autotune_cache_different_checksums_return_a_cache_miss
+        PASS [   0.101s] (28/34) cubecl-runtime::integration_test autotune_cache_different_keys_return_a_cache_miss
+        PASS [   0.042s] (29/34) cubecl-runtime::integration_test autotune_cache_file_path_creation_works_when_path_does_not_exist_yet
+        PASS [   0.011s] (30/34) cubecl-runtime::integration_test autotune_cache_same_key_return_a_cache_hit
+        PASS [   0.005s] (31/34) cubecl-runtime::integration_test created_resource_is_the_same_when_read
+        PASS [   0.005s] (32/34) cubecl-runtime::integration_test empty_allocates_memory
+        PASS [   0.005s] (33/34) cubecl-runtime::integration_test execute_elementwise_addition
+        PASS [   0.102s] (34/34) cubecl-runtime::integration_test autotune_cache_no_cache_on_disk_return_a_cache_miss
+────────────
+     Summary [   0.311s] 34 tests run: 34 passed, 0 skipped
+reward=1 graded=34 found=1 failed=0 parsed=34 framework=cargo exit_code=0

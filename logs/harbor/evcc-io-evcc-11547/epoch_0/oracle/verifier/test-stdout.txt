@@ -1,0 +1,892 @@
+patching file charger/eebus_test.go
+patching file core/coordinator/coordinator_test.go
+patching file core/loadpoint_effective_test.go
+patching file core/loadpoint_phases_test.go
+patching file core/loadpoint_session_test.go
+patching file core/loadpoint_sync_test.go
+patching file core/loadpoint_test.go
+patching file core/loadpoint_vehicle_test.go
+patching file core/planner/planner_test.go
+patching file core/prioritizer/prioritizer_test.go
+patching file core/site_battery_test.go
+patching file core/soc/estimator_test.go
+patching file core/wrapper/chargemeter_test.go
+patching file core/wrapper/chargerater_test.go
+{"Time":"2026-07-01T14:43:09.589780835Z","Action":"start","Package":"github.com/evcc-io/evcc/charger"}
+{"Time":"2026-07-01T14:43:09.589928526Z","Action":"start","Package":"github.com/evcc-io/evcc/core"}
+{"Time":"2026-07-01T14:43:09.589971001Z","Action":"start","Package":"github.com/evcc-io/evcc/core/coordinator"}
+{"Time":"2026-07-01T14:43:09.590114149Z","Action":"start","Package":"github.com/evcc-io/evcc/core/planner"}
+{"Time":"2026-07-01T14:43:09.598487333Z","Action":"run","Package":"github.com/evcc-io/evcc/core/planner","Test":"TestSlotHasSuccessor"}
+{"Time":"2026-07-01T14:43:09.598516935Z","Action":"output","Package":"github.com/evcc-io/evcc/core/planner","Test":"TestSlotHasSuccessor","Output":"=== RUN   TestSlotHasSuccessor\n"}
+{"Time":"2026-07-01T14:43:09.598544359Z","Action":"output","Package":"github.com/evcc-io/evcc/core/planner","Test":"TestSlotHasSuccessor","Output":"--- PASS: TestSlotHasSuccessor (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.598550213Z","Action":"pass","Package":"github.com/evcc-io/evcc/core/planner","Test":"TestSlotHasSuccessor","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.598558773Z","Action":"run","Package":"github.com/evcc-io/evcc/core/planner","Test":"TestIsFirst"}
+{"Time":"2026-07-01T14:43:09.598564277Z","Action":"output","Package":"github.com/evcc-io/evcc/core/planner","Test":"TestIsFirst","Output":"=== RUN   TestIsFirst\n"}
+{"Time":"2026-07-01T14:43:09.598572297Z","Action":"output","Package":"github.com/evcc-io/evcc/core/planner","Test":"TestIsFirst","Output":"--- PASS: TestIsFirst (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.598576564Z","Action":"pass","Package":"github.com/evcc-io/evcc/core/planner","Test":"TestIsFirst","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.598580875Z","Action":"run","Package":"github.com/evcc-io/evcc/core/planner","Test":"TestPlan"}
+{"Time":"2026-07-01T14:43:09.598584805Z","Action":"output","Package":"github.com/evcc-io/evcc/core/planner","Test":"TestPlan","Output":"=== RUN   TestPlan\n"}
+{"Time":"2026-07-01T14:43:09.598644447Z","Action":"output","Package":"github.com/evcc-io/evcc/core/planner","Test":"TestPlan","Output":"    planner_test.go:118: plan 0-0-60-0-0-0\n"}
+{"Time":"2026-07-01T14:43:09.600021889Z","Action":"run","Package":"github.com/evcc-io/evcc/core/coordinator","Test":"TestVehicleDetectByStatus"}
+{"Time":"2026-07-01T14:43:09.600042342Z","Action":"output","Package":"github.com/evcc-io/evcc/core/coordinator","Test":"TestVehicleDetectByStatus","Output":"=== RUN   TestVehicleDetectByStatus\n"}
+{"Time":"2026-07-01T14:43:09.600233705Z","Action":"output","Package":"github.com/evcc-io/evcc/core/coordinator","Test":"TestVehicleDetectByStatus","Output":"    coordinator_test.go:49: {string:A/A-\u003e0 v1:A v2:A res:\u003cnil\u003e}\n"}
+{"Time":"2026-07-01T14:43:09.600337214Z","Action":"output","Package":"github.com/evcc-io/evcc/core/coordinator","Test":"TestVehicleDetectByStatus","Output":"    coordinator_test.go:49: {string:B/A-\u003e1 v1:B v2:A res:0xc000437c10}\n"}
+{"Time":"2026-07-01T14:43:09.60041791Z","Action":"output","Package":"github.com/evcc-io/evcc/core/coordinator","Test":"TestVehicleDetectByStatus","Output":"    coordinator_test.go:49: {string:B/A-\u003e1 v1:B v2:A res:0xc000437c10}\n"}
+{"Time":"2026-07-01T14:43:09.600486119Z","Action":"output","Package":"github.com/evcc-io/evcc/core/coordinator","Test":"TestVehicleDetectByStatus","Output":"    coordinator_test.go:49: {string:A/B-\u003e2 v1:A v2:B res:0xc000437c40}\n"}
+{"Time":"2026-07-01T14:43:09.600551899Z","Action":"output","Package":"github.com/evcc-io/evcc/core/coordinator","Test":"TestVehicleDetectByStatus","Output":"    coordinator_test.go:49: {string:A/B-\u003e2 v1:A v2:B res:0xc000437c40}\n"}
+{"Time":"2026-07-01T14:43:09.600635204Z","Action":"output","Package":"github.com/evcc-io/evcc/core/coordinator","Test":"TestVehicleDetectByStatus","Output":"    coordinator_test.go:49: {string:B/B-\u003e1 v1:B v2:B res:\u003cnil\u003e}\n"}
+{"Time":"2026-07-01T14:43:09.600713328Z","Action":"output","Package":"github.com/evcc-io/evcc/core/coordinator","Test":"TestVehicleDetectByStatus","Output":"--- PASS: TestVehicleDetectByStatus (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.600765498Z","Action":"pass","Package":"github.com/evcc-io/evcc/core/coordinator","Test":"TestVehicleDetectByStatus","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.60079422Z","Action":"output","Package":"github.com/evcc-io/evcc/core/coordinator","Output":"PASS\n"}
+{"Time":"2026-07-01T14:43:09.601620795Z","Action":"output","Package":"github.com/evcc-io/evcc/core/coordinator","Output":"ok  \tgithub.com/evcc-io/evcc/core/coordinator\t0.012s\n"}
+{"Time":"2026-07-01T14:43:09.601654565Z","Action":"pass","Package":"github.com/evcc-io/evcc/core/coordinator","Elapsed":0.012}
+{"Time":"2026-07-01T14:43:09.60194748Z","Action":"output","Package":"github.com/evcc-io/evcc/core/planner","Test":"TestPlan","Output":"    planner_test.go:118: plan 60-0-60-0-0-0\n"}
+{"Time":"2026-07-01T14:43:09.613134093Z","Action":"output","Package":"github.com/evcc-io/evcc/core/planner","Test":"TestPlan","Output":"    planner_test.go:118: plan (30)30-0-60-0-0-0\n"}
+{"Time":"2026-07-01T14:43:09.613160574Z","Action":"output","Package":"github.com/evcc-io/evcc/core/planner","Test":"TestPlan","Output":"    planner_test.go:118: plan 0-0-60-0-0-0\n"}
+{"Time":"2026-07-01T14:43:09.613166292Z","Action":"output","Package":"github.com/evcc-io/evcc/core/planner","Test":"TestPlan","Output":"    planner_test.go:118: plan (30)30-0-60-0-30(30)-0\n"}
+{"Time":"2026-07-01T14:43:09.613172075Z","Action":"output","Package":"github.com/evcc-io/evcc/core/planner","Test":"TestPlan","Output":"    planner_test.go:118: plan (30)30-0-60-0-0-0\n"}
+{"Time":"2026-07-01T14:43:09.61318078Z","Action":"output","Package":"github.com/evcc-io/evcc/core/planner","Test":"TestPlan","Output":"--- PASS: TestPlan (0.01s)\n"}
+{"Time":"2026-07-01T14:43:09.613186305Z","Action":"pass","Package":"github.com/evcc-io/evcc/core/planner","Test":"TestPlan","Elapsed":0.01}
+{"Time":"2026-07-01T14:43:09.61319488Z","Action":"run","Package":"github.com/evcc-io/evcc/core/planner","Test":"TestNilTariff"}
+{"Time":"2026-07-01T14:43:09.613199897Z","Action":"output","Package":"github.com/evcc-io/evcc/core/planner","Test":"TestNilTariff","Output":"=== RUN   TestNilTariff\n"}
+{"Time":"2026-07-01T14:43:09.613205395Z","Action":"output","Package":"github.com/evcc-io/evcc/core/planner","Test":"TestNilTariff","Output":"--- PASS: TestNilTariff (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.613210115Z","Action":"pass","Package":"github.com/evcc-io/evcc/core/planner","Test":"TestNilTariff","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.613214425Z","Action":"run","Package":"github.com/evcc-io/evcc/core/planner","Test":"TestFlatTariffTargetInThePast"}
+{"Time":"2026-07-01T14:43:09.613219503Z","Action":"output","Package":"github.com/evcc-io/evcc/core/planner","Test":"TestFlatTariffTargetInThePast","Output":"=== RUN   TestFlatTariffTargetInThePast\n"}
+{"Time":"2026-07-01T14:43:09.613225137Z","Action":"output","Package":"github.com/evcc-io/evcc/core/planner","Test":"TestFlatTariffTargetInThePast","Output":"--- PASS: TestFlatTariffTargetInThePast (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.613229507Z","Action":"pass","Package":"github.com/evcc-io/evcc/core/planner","Test":"TestFlatTariffTargetInThePast","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.613235154Z","Action":"run","Package":"github.com/evcc-io/evcc/core/planner","Test":"TestFlatTariffLongSlots"}
+{"Time":"2026-07-01T14:43:09.613238844Z","Action":"output","Package":"github.com/evcc-io/evcc/core/planner","Test":"TestFlatTariffLongSlots","Output":"=== RUN   TestFlatTariffLongSlots\n"}
+{"Time":"2026-07-01T14:43:09.613243983Z","Action":"output","Package":"github.com/evcc-io/evcc/core/planner","Test":"TestFlatTariffLongSlots","Output":"--- PASS: TestFlatTariffLongSlots (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.613248068Z","Action":"pass","Package":"github.com/evcc-io/evcc/core/planner","Test":"TestFlatTariffLongSlots","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.613252255Z","Action":"run","Package":"github.com/evcc-io/evcc/core/planner","Test":"TestTargetAfterKnownPrices"}
+{"Time":"2026-07-01T14:43:09.613255778Z","Action":"output","Package":"github.com/evcc-io/evcc/core/planner","Test":"TestTargetAfterKnownPrices","Output":"=== RUN   TestTargetAfterKnownPrices\n"}
+{"Time":"2026-07-01T14:43:09.613266272Z","Action":"output","Package":"github.com/evcc-io/evcc/core/planner","Test":"TestTargetAfterKnownPrices","Output":"--- PASS: TestTargetAfterKnownPrices (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.613270158Z","Action":"pass","Package":"github.com/evcc-io/evcc/core/planner","Test":"TestTargetAfterKnownPrices","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.613274362Z","Action":"run","Package":"github.com/evcc-io/evcc/core/planner","Test":"TestChargeAfterTargetTime"}
+{"Time":"2026-07-01T14:43:09.61327866Z","Action":"output","Package":"github.com/evcc-io/evcc/core/planner","Test":"TestChargeAfterTargetTime","Output":"=== RUN   TestChargeAfterTargetTime\n"}
+{"Time":"2026-07-01T14:43:09.613284162Z","Action":"output","Package":"github.com/evcc-io/evcc/core/planner","Test":"TestChargeAfterTargetTime","Output":"--- PASS: TestChargeAfterTargetTime (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.613287983Z","Action":"pass","Package":"github.com/evcc-io/evcc/core/planner","Test":"TestChargeAfterTargetTime","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.613291606Z","Action":"run","Package":"github.com/evcc-io/evcc/core/planner","Test":"TestContinuousPlanNoTariff"}
+{"Time":"2026-07-01T14:43:09.613295493Z","Action":"output","Package":"github.com/evcc-io/evcc/core/planner","Test":"TestContinuousPlanNoTariff","Output":"=== RUN   TestContinuousPlanNoTariff\n"}
+{"Time":"2026-07-01T14:43:09.613300485Z","Action":"output","Package":"github.com/evcc-io/evcc/core/planner","Test":"TestContinuousPlanNoTariff","Output":"--- PASS: TestContinuousPlanNoTariff (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.613304346Z","Action":"pass","Package":"github.com/evcc-io/evcc/core/planner","Test":"TestContinuousPlanNoTariff","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.613308347Z","Action":"run","Package":"github.com/evcc-io/evcc/core/planner","Test":"TestContinuousPlan"}
+{"Time":"2026-07-01T14:43:09.613311711Z","Action":"output","Package":"github.com/evcc-io/evcc/core/planner","Test":"TestContinuousPlan","Output":"=== RUN   TestContinuousPlan\n"}
+{"Time":"2026-07-01T14:43:09.613316029Z","Action":"output","Package":"github.com/evcc-io/evcc/core/planner","Test":"TestContinuousPlan","Output":"--- PASS: TestContinuousPlan (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.613319792Z","Action":"pass","Package":"github.com/evcc-io/evcc/core/planner","Test":"TestContinuousPlan","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.613323597Z","Action":"run","Package":"github.com/evcc-io/evcc/core/planner","Test":"TestContinuousPlanOutsideRates"}
+{"Time":"2026-07-01T14:43:09.613326715Z","Action":"output","Package":"github.com/evcc-io/evcc/core/planner","Test":"TestContinuousPlanOutsideRates","Output":"=== RUN   TestContinuousPlanOutsideRates\n"}
+{"Time":"2026-07-01T14:43:09.613330955Z","Action":"output","Package":"github.com/evcc-io/evcc/core/planner","Test":"TestContinuousPlanOutsideRates","Output":"--- PASS: TestContinuousPlanOutsideRates (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.613336084Z","Action":"pass","Package":"github.com/evcc-io/evcc/core/planner","Test":"TestContinuousPlanOutsideRates","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.61333975Z","Action":"run","Package":"github.com/evcc-io/evcc/core/planner","Test":"TestRatesSortByTime"}
+{"Time":"2026-07-01T14:43:09.613343239Z","Action":"output","Package":"github.com/evcc-io/evcc/core/planner","Test":"TestRatesSortByTime","Output":"=== RUN   TestRatesSortByTime\n"}
+{"Time":"2026-07-01T14:43:09.613347429Z","Action":"output","Package":"github.com/evcc-io/evcc/core/planner","Test":"TestRatesSortByTime","Output":"--- PASS: TestRatesSortByTime (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.613351128Z","Action":"pass","Package":"github.com/evcc-io/evcc/core/planner","Test":"TestRatesSortByTime","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.613354804Z","Action":"run","Package":"github.com/evcc-io/evcc/core/planner","Test":"TestRatesSortByCost"}
+{"Time":"2026-07-01T14:43:09.613357977Z","Action":"output","Package":"github.com/evcc-io/evcc/core/planner","Test":"TestRatesSortByCost","Output":"=== RUN   TestRatesSortByCost\n"}
+{"Time":"2026-07-01T14:43:09.613364731Z","Action":"output","Package":"github.com/evcc-io/evcc/core/planner","Test":"TestRatesSortByCost","Output":"--- PASS: TestRatesSortByCost (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.613368316Z","Action":"pass","Package":"github.com/evcc-io/evcc/core/planner","Test":"TestRatesSortByCost","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.613371748Z","Action":"output","Package":"github.com/evcc-io/evcc/core/planner","Output":"PASS\n"}
+{"Time":"2026-07-01T14:43:09.614407915Z","Action":"output","Package":"github.com/evcc-io/evcc/core/planner","Output":"ok  \tgithub.com/evcc-io/evcc/core/planner\t0.024s\n"}
+{"Time":"2026-07-01T14:43:09.614430864Z","Action":"pass","Package":"github.com/evcc-io/evcc/core/planner","Elapsed":0.024}
+{"Time":"2026-07-01T14:43:09.748852905Z","Action":"run","Package":"github.com/evcc-io/evcc/core","Test":"TestEnergyMetrics"}
+{"Time":"2026-07-01T14:43:09.748884541Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestEnergyMetrics","Output":"=== RUN   TestEnergyMetrics\n"}
+{"Time":"2026-07-01T14:43:09.748900455Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestEnergyMetrics","Output":"--- PASS: TestEnergyMetrics (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.748911517Z","Action":"pass","Package":"github.com/evcc-io/evcc/core","Test":"TestEnergyMetrics","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.748918497Z","Action":"run","Package":"github.com/evcc-io/evcc/core","Test":"TestEffectiveLimitSoc"}
+{"Time":"2026-07-01T14:43:09.748922834Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestEffectiveLimitSoc","Output":"=== RUN   TestEffectiveLimitSoc\n"}
+{"Time":"2026-07-01T14:43:09.749008357Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestEffectiveLimitSoc","Output":"--- PASS: TestEffectiveLimitSoc (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.749040392Z","Action":"pass","Package":"github.com/evcc-io/evcc/core","Test":"TestEffectiveLimitSoc","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.749049037Z","Action":"run","Package":"github.com/evcc-io/evcc/core","Test":"TestEffectiveMinMaxCurrent"}
+{"Time":"2026-07-01T14:43:09.749053157Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestEffectiveMinMaxCurrent","Output":"=== RUN   TestEffectiveMinMaxCurrent\n"}
+{"Time":"2026-07-01T14:43:09.749061615Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestEffectiveMinMaxCurrent","Output":"    loadpoint_effective_test.go:33: {chargerMin:0 chargerMax:0 vehicleMin:0 vehicleMax:0 effectiveMin:6 effectiveMax:16}\n"}
+{"Time":"2026-07-01T14:43:09.749068086Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestEffectiveMinMaxCurrent","Output":"    loadpoint_effective_test.go:33: {chargerMin:1 chargerMax:10 vehicleMin:0 vehicleMax:0 effectiveMin:1 effectiveMax:10}\n"}
+{"Time":"2026-07-01T14:43:09.749127739Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestEffectiveMinMaxCurrent","Output":"    loadpoint_effective_test.go:33: {chargerMin:10 chargerMax:20 vehicleMin:0 vehicleMax:0 effectiveMin:10 effectiveMax:16}\n"}
+{"Time":"2026-07-01T14:43:09.749173133Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestEffectiveMinMaxCurrent","Output":"    loadpoint_effective_test.go:33: {chargerMin:0 chargerMax:0 vehicleMin:1 vehicleMax:10 effectiveMin:6 effectiveMax:10}\n"}
+{"Time":"2026-07-01T14:43:09.749248684Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestEffectiveMinMaxCurrent","Output":"    loadpoint_effective_test.go:33: {chargerMin:0 chargerMax:0 vehicleMin:10 vehicleMax:20 effectiveMin:10 effectiveMax:16}\n"}
+{"Time":"2026-07-01T14:43:09.749322223Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestEffectiveMinMaxCurrent","Output":"    loadpoint_effective_test.go:33: {chargerMin:1 chargerMax:10 vehicleMin:2 vehicleMax:12 effectiveMin:1 effectiveMax:10}\n"}
+{"Time":"2026-07-01T14:43:09.749369094Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestEffectiveMinMaxCurrent","Output":"    loadpoint_effective_test.go:33: {chargerMin:10 chargerMax:20 vehicleMin:12 vehicleMax:22 effectiveMin:10 effectiveMax:16}\n"}
+{"Time":"2026-07-01T14:43:09.749450103Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestEffectiveMinMaxCurrent","Output":"--- PASS: TestEffectiveMinMaxCurrent (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.749457546Z","Action":"pass","Package":"github.com/evcc-io/evcc/core","Test":"TestEffectiveMinMaxCurrent","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.749464618Z","Action":"run","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases"}
+{"Time":"2026-07-01T14:43:09.749468602Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"=== RUN   TestMaxActivePhases\n"}
+{"Time":"2026-07-01T14:43:09.749503049Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 0 {0 0 0 0 3 3 du}\n"}
+{"Time":"2026-07-01T14:43:09.749580242Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 0 {0 0 0 1 1 3 u}\n"}
+{"Time":"2026-07-01T14:43:09.749591214Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 0 {0 0 0 2 2 3 du}\n"}
+{"Time":"2026-07-01T14:43:09.749616956Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 0 {0 0 0 3 3 3 du}\n"}
+{"Time":"2026-07-01T14:43:09.749681262Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 0 {0 0 1 0 1 1 }\n"}
+{"Time":"2026-07-01T14:43:09.749690768Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 0 {0 0 2 0 2 2 du}\n"}
+{"Time":"2026-07-01T14:43:09.749716228Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 0 {0 0 3 0 3 3 du}\n"}
+{"Time":"2026-07-01T14:43:09.749743265Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 0 {0 1 0 0 1 3 u}\n"}
+{"Time":"2026-07-01T14:43:09.749767067Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 0 {0 1 0 1 1 3 u}\n"}
+{"Time":"2026-07-01T14:43:09.749783031Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 0 {0 1 1 0 1 1 }\n"}
+{"Time":"2026-07-01T14:43:09.749812336Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 0 {0 1 2 0 1 2 u}\n"}
+{"Time":"2026-07-01T14:43:09.749834204Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 0 {0 1 3 0 1 3 u}\n"}
+{"Time":"2026-07-01T14:43:09.749889915Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 0 {0 3 0 0 3 3 d}\n"}
+{"Time":"2026-07-01T14:43:09.749895683Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 0 {0 3 0 1 1 1 }\n"}
+{"Time":"2026-07-01T14:43:09.74990165Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 0 {0 3 0 2 2 2 d}\n"}
+{"Time":"2026-07-01T14:43:09.749924004Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 0 {0 3 0 3 3 3 d}\n"}
+{"Time":"2026-07-01T14:43:09.749957301Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 0 {0 3 1 0 1 1 }\n"}
+{"Time":"2026-07-01T14:43:09.749968655Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 0 {0 3 2 0 2 2 d}\n"}
+{"Time":"2026-07-01T14:43:09.749992677Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 0 {0 3 3 0 3 3 d}\n"}
+{"Time":"2026-07-01T14:43:09.750047029Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 1 {1 1 0 0 1 1 }\n"}
+{"Time":"2026-07-01T14:43:09.750064877Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 1 {1 1 0 1 1 1 }\n"}
+{"Time":"2026-07-01T14:43:09.750089893Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 1 {1 1 1 0 1 1 }\n"}
+{"Time":"2026-07-01T14:43:09.750113021Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 1 {1 1 2 0 1 1 }\n"}
+{"Time":"2026-07-01T14:43:09.750136281Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 1 {1 1 3 0 1 1 }\n"}
+{"Time":"2026-07-01T14:43:09.750188442Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 1 {3 3 0 0 3 3 }\n"}
+{"Time":"2026-07-01T14:43:09.75019475Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 1 {3 3 0 1 1 1 }\n"}
+{"Time":"2026-07-01T14:43:09.75020007Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 1 {3 3 0 2 2 2 }\n"}
+{"Time":"2026-07-01T14:43:09.750225564Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 1 {3 3 0 3 3 3 }\n"}
+{"Time":"2026-07-01T14:43:09.750256819Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 1 {3 3 1 0 1 1 }\n"}
+{"Time":"2026-07-01T14:43:09.750265965Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 1 {3 3 2 0 2 2 }\n"}
+{"Time":"2026-07-01T14:43:09.750293573Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 1 {3 3 3 0 3 3 }\n"}
+{"Time":"2026-07-01T14:43:09.75031749Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 1 {0 0 0 0 3 3 du}\n"}
+{"Time":"2026-07-01T14:43:09.750351051Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 1 {0 0 0 1 1 3 u}\n"}
+{"Time":"2026-07-01T14:43:09.750362043Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 1 {0 0 0 2 2 3 du}\n"}
+{"Time":"2026-07-01T14:43:09.750389505Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 1 {0 0 0 3 3 3 du}\n"}
+{"Time":"2026-07-01T14:43:09.750413062Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 1 {0 0 1 0 1 1 }\n"}
+{"Time":"2026-07-01T14:43:09.75043794Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 1 {0 0 2 0 2 2 du}\n"}
+{"Time":"2026-07-01T14:43:09.750455094Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 1 {0 0 3 0 3 3 du}\n"}
+{"Time":"2026-07-01T14:43:09.750499763Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 1 {0 1 0 0 1 3 u}\n"}
+{"Time":"2026-07-01T14:43:09.750504666Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 1 {0 1 0 1 1 3 u}\n"}
+{"Time":"2026-07-01T14:43:09.750514753Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 1 {0 1 1 0 1 1 }\n"}
+{"Time":"2026-07-01T14:43:09.750542593Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 1 {0 1 2 0 1 2 u}\n"}
+{"Time":"2026-07-01T14:43:09.750572527Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 1 {0 1 3 0 1 3 u}\n"}
+{"Time":"2026-07-01T14:43:09.75059335Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 1 {0 3 0 0 3 3 d}\n"}
+{"Time":"2026-07-01T14:43:09.750618583Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 1 {0 3 0 1 1 1 }\n"}
+{"Time":"2026-07-01T14:43:09.750651823Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 1 {0 3 0 2 2 2 d}\n"}
+{"Time":"2026-07-01T14:43:09.750661967Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 1 {0 3 0 3 3 3 d}\n"}
+{"Time":"2026-07-01T14:43:09.750687181Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 1 {0 3 1 0 1 1 }\n"}
+{"Time":"2026-07-01T14:43:09.750720434Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 1 {0 3 2 0 2 2 d}\n"}
+{"Time":"2026-07-01T14:43:09.750746837Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 1 {0 3 3 0 3 3 d}\n"}
+{"Time":"2026-07-01T14:43:09.750776971Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 3 {1 1 0 0 1 1 }\n"}
+{"Time":"2026-07-01T14:43:09.750795879Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 3 {1 1 0 1 1 1 }\n"}
+{"Time":"2026-07-01T14:43:09.750837446Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 3 {1 1 1 0 1 1 }\n"}
+{"Time":"2026-07-01T14:43:09.750863474Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 3 {1 1 2 0 1 1 }\n"}
+{"Time":"2026-07-01T14:43:09.750901291Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 3 {1 1 3 0 1 1 }\n"}
+{"Time":"2026-07-01T14:43:09.750910571Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 3 {3 3 0 0 3 3 }\n"}
+{"Time":"2026-07-01T14:43:09.750938474Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 3 {3 3 0 1 1 1 }\n"}
+{"Time":"2026-07-01T14:43:09.750970949Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 3 {3 3 0 2 2 2 }\n"}
+{"Time":"2026-07-01T14:43:09.75098088Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 3 {3 3 0 3 3 3 }\n"}
+{"Time":"2026-07-01T14:43:09.751017639Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 3 {3 3 1 0 1 1 }\n"}
+{"Time":"2026-07-01T14:43:09.751082345Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 3 {3 3 2 0 2 2 }\n"}
+{"Time":"2026-07-01T14:43:09.751091939Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 3 {3 3 3 0 3 3 }\n"}
+{"Time":"2026-07-01T14:43:09.751129349Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 3 {0 0 0 0 3 3 du}\n"}
+{"Time":"2026-07-01T14:43:09.751141894Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 3 {0 0 0 1 1 3 u}\n"}
+{"Time":"2026-07-01T14:43:09.751169525Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 3 {0 0 0 2 2 3 du}\n"}
+{"Time":"2026-07-01T14:43:09.751200794Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 3 {0 0 0 3 3 3 du}\n"}
+{"Time":"2026-07-01T14:43:09.751255027Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 3 {0 0 1 0 1 1 }\n"}
+{"Time":"2026-07-01T14:43:09.75127183Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 3 {0 0 2 0 2 2 du}\n"}
+{"Time":"2026-07-01T14:43:09.751300547Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 3 {0 0 3 0 3 3 du}\n"}
+{"Time":"2026-07-01T14:43:09.751325997Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 3 {0 1 0 0 1 3 u}\n"}
+{"Time":"2026-07-01T14:43:09.751384522Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 3 {0 1 0 1 1 3 u}\n"}
+{"Time":"2026-07-01T14:43:09.751390056Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 3 {0 1 1 0 1 1 }\n"}
+{"Time":"2026-07-01T14:43:09.751395797Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 3 {0 1 2 0 1 2 u}\n"}
+{"Time":"2026-07-01T14:43:09.751425017Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 3 {0 1 3 0 1 3 u}\n"}
+{"Time":"2026-07-01T14:43:09.751452886Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 3 {0 3 0 0 3 3 d}\n"}
+{"Time":"2026-07-01T14:43:09.751473362Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 3 {0 3 0 1 1 1 }\n"}
+{"Time":"2026-07-01T14:43:09.751523499Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 3 {0 3 0 2 2 2 d}\n"}
+{"Time":"2026-07-01T14:43:09.751542731Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 3 {0 3 0 3 3 3 d}\n"}
+{"Time":"2026-07-01T14:43:09.751565021Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 3 {0 3 1 0 1 1 }\n"}
+{"Time":"2026-07-01T14:43:09.751615455Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 3 {0 3 2 0 2 2 d}\n"}
+{"Time":"2026-07-01T14:43:09.751650439Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"    loadpoint_phases_test.go:76: 3 {0 3 3 0 3 3 d}\n"}
+{"Time":"2026-07-01T14:43:09.751745193Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Output":"--- PASS: TestMaxActivePhases (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.751753735Z","Action":"pass","Package":"github.com/evcc-io/evcc/core","Test":"TestMaxActivePhases","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.7517594Z","Action":"run","Package":"github.com/evcc-io/evcc/core","Test":"TestPvScalePhases"}
+{"Time":"2026-07-01T14:43:09.751763411Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPvScalePhases","Output":"=== RUN   TestPvScalePhases\n"}
+{"Time":"2026-07-01T14:43:09.751770329Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPvScalePhases","Output":"    loadpoint_phases_test.go:164: {1 1 0 0 1 1 }\n"}
+{"Time":"2026-07-01T14:43:09.751885147Z","Action":"run","Package":"github.com/evcc-io/evcc/charger","Test":"TestEEBusIsCharging"}
+{"Time":"2026-07-01T14:43:09.751892471Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestEEBusIsCharging","Output":"=== RUN   TestEEBusIsCharging\n"}
+{"Time":"2026-07-01T14:43:09.75192699Z","Action":"run","Package":"github.com/evcc-io/evcc/charger","Test":"TestEEBusIsCharging/3_phase_IEC"}
+{"Time":"2026-07-01T14:43:09.751942419Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestEEBusIsCharging/3_phase_IEC","Output":"=== RUN   TestEEBusIsCharging/3_phase_IEC\n"}
+{"Time":"2026-07-01T14:43:09.752080623Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPvScalePhases","Output":"    loadpoint_phases_test.go:164: {1 1 0 1 1 1 }\n"}
+{"Time":"2026-07-01T14:43:09.752102518Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestEEBusIsCharging/3_phase_IEC","Output":"--- PASS: TestEEBusIsCharging/3_phase_IEC (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.752110594Z","Action":"pass","Package":"github.com/evcc-io/evcc/charger","Test":"TestEEBusIsCharging/3_phase_IEC","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.752116528Z","Action":"run","Package":"github.com/evcc-io/evcc/charger","Test":"TestEEBusIsCharging/1_phase_IEC"}
+{"Time":"2026-07-01T14:43:09.752120883Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestEEBusIsCharging/1_phase_IEC","Output":"=== RUN   TestEEBusIsCharging/1_phase_IEC\n"}
+{"Time":"2026-07-01T14:43:09.75219184Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestEEBusIsCharging/1_phase_IEC","Output":"--- PASS: TestEEBusIsCharging/1_phase_IEC (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.752201453Z","Action":"pass","Package":"github.com/evcc-io/evcc/charger","Test":"TestEEBusIsCharging/1_phase_IEC","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.75221906Z","Action":"run","Package":"github.com/evcc-io/evcc/charger","Test":"TestEEBusIsCharging/3_phase_ISO"}
+{"Time":"2026-07-01T14:43:09.752223784Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestEEBusIsCharging/3_phase_ISO","Output":"=== RUN   TestEEBusIsCharging/3_phase_ISO\n"}
+{"Time":"2026-07-01T14:43:09.752283381Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestEEBusIsCharging/3_phase_ISO","Output":"--- PASS: TestEEBusIsCharging/3_phase_ISO (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.752298372Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPvScalePhases","Output":"    loadpoint_phases_test.go:164: {1 1 1 0 1 1 }\n"}
+{"Time":"2026-07-01T14:43:09.752325208Z","Action":"pass","Package":"github.com/evcc-io/evcc/charger","Test":"TestEEBusIsCharging/3_phase_ISO","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.752347933Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestEEBusIsCharging","Output":"--- PASS: TestEEBusIsCharging (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.752370241Z","Action":"pass","Package":"github.com/evcc-io/evcc/charger","Test":"TestEEBusIsCharging","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.752401204Z","Action":"run","Package":"github.com/evcc-io/evcc/charger","Test":"TestEvseWifi"}
+{"Time":"2026-07-01T14:43:09.752406336Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestEvseWifi","Output":"=== RUN   TestEvseWifi\n"}
+{"Time":"2026-07-01T14:43:09.752440924Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPvScalePhases","Output":"    loadpoint_phases_test.go:164: {1 1 2 0 1 1 }\n"}
+{"Time":"2026-07-01T14:43:09.752608979Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPvScalePhases","Output":"    loadpoint_phases_test.go:164: {1 1 3 0 1 1 }\n"}
+{"Time":"2026-07-01T14:43:09.752721369Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPvScalePhases","Output":"    loadpoint_phases_test.go:164: {3 3 0 0 3 3 }\n"}
+{"Time":"2026-07-01T14:43:09.752825148Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPvScalePhases","Output":"    loadpoint_phases_test.go:164: {3 3 0 1 1 1 }\n"}
+{"Time":"2026-07-01T14:43:09.752939931Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPvScalePhases","Output":"    loadpoint_phases_test.go:164: {3 3 0 2 2 2 }\n"}
+{"Time":"2026-07-01T14:43:09.753107256Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPvScalePhases","Output":"    loadpoint_phases_test.go:164: {3 3 0 3 3 3 }\n"}
+{"Time":"2026-07-01T14:43:09.753236455Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPvScalePhases","Output":"    loadpoint_phases_test.go:164: {3 3 1 0 1 1 }\n"}
+{"Time":"2026-07-01T14:43:09.753360666Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPvScalePhases","Output":"    loadpoint_phases_test.go:164: {3 3 2 0 2 2 }\n"}
+{"Time":"2026-07-01T14:43:09.753453609Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPvScalePhases","Output":"    loadpoint_phases_test.go:164: {3 3 3 0 3 3 }\n"}
+{"Time":"2026-07-01T14:43:09.753500118Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestEvseWifi","Output":"--- PASS: TestEvseWifi (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.753508469Z","Action":"pass","Package":"github.com/evcc-io/evcc/charger","Test":"TestEvseWifi","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.753514949Z","Action":"run","Package":"github.com/evcc-io/evcc/charger","Test":"TestEvseWifiEx"}
+{"Time":"2026-07-01T14:43:09.753518704Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestEvseWifiEx","Output":"=== RUN   TestEvseWifiEx\n"}
+{"Time":"2026-07-01T14:43:09.753667729Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPvScalePhases","Output":"    loadpoint_phases_test.go:164: {0 0 0 0 3 3 du}\n"}
+{"Time":"2026-07-01T14:43:09.753988855Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPvScalePhases","Output":"    loadpoint_phases_test.go:164: {0 0 0 1 1 3 u}\n"}
+{"Time":"2026-07-01T14:43:09.754198488Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPvScalePhases","Output":"    loadpoint_phases_test.go:164: {0 0 0 2 2 3 du}\n"}
+{"Time":"2026-07-01T14:43:09.754220262Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestEvseWifiEx","Output":"--- PASS: TestEvseWifiEx (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.75422662Z","Action":"pass","Package":"github.com/evcc-io/evcc/charger","Test":"TestEvseWifiEx","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.754232094Z","Action":"run","Package":"github.com/evcc-io/evcc/charger","Test":"TestGoEV1"}
+{"Time":"2026-07-01T14:43:09.754235974Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestGoEV1","Output":"=== RUN   TestGoEV1\n"}
+{"Time":"2026-07-01T14:43:09.754520548Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPvScalePhases","Output":"    loadpoint_phases_test.go:164: {0 0 0 3 3 3 du}\n"}
+{"Time":"2026-07-01T14:43:09.75465703Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestGoEV1","Output":"--- PASS: TestGoEV1 (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.754675934Z","Action":"pass","Package":"github.com/evcc-io/evcc/charger","Test":"TestGoEV1","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.754694963Z","Action":"run","Package":"github.com/evcc-io/evcc/charger","Test":"TestGoEV2"}
+{"Time":"2026-07-01T14:43:09.754699608Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestGoEV2","Output":"=== RUN   TestGoEV2\n"}
+{"Time":"2026-07-01T14:43:09.754940705Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPvScalePhases","Output":"    loadpoint_phases_test.go:164: {0 0 1 0 1 1 }\n"}
+{"Time":"2026-07-01T14:43:09.759109157Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestGoEV2","Output":"--- PASS: TestGoEV2 (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.75912488Z","Action":"pass","Package":"github.com/evcc-io/evcc/charger","Test":"TestGoEV2","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.759132108Z","Action":"run","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectLogin"}
+{"Time":"2026-07-01T14:43:09.759136777Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectLogin","Output":"=== RUN   TestMobileConnectLogin\n"}
+{"Time":"2026-07-01T14:43:09.759142529Z","Action":"run","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectLogin/login_-_success"}
+{"Time":"2026-07-01T14:43:09.759150491Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectLogin/login_-_success","Output":"=== RUN   TestMobileConnectLogin/login_-_success\n"}
+{"Time":"2026-07-01T14:43:09.759159249Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectLogin/login_-_success","Output":"--- PASS: TestMobileConnectLogin/login_-_success (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.75916466Z","Action":"pass","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectLogin/login_-_success","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.759170227Z","Action":"run","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectLogin/login_-_wrong_password"}
+{"Time":"2026-07-01T14:43:09.759174984Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectLogin/login_-_wrong_password","Output":"=== RUN   TestMobileConnectLogin/login_-_wrong_password\n"}
+{"Time":"2026-07-01T14:43:09.759184529Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectLogin/login_-_wrong_password","Output":"--- PASS: TestMobileConnectLogin/login_-_wrong_password (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.759189627Z","Action":"pass","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectLogin/login_-_wrong_password","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.759194072Z","Action":"run","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectLogin/login_-_bad_return"}
+{"Time":"2026-07-01T14:43:09.759197637Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectLogin/login_-_bad_return","Output":"=== RUN   TestMobileConnectLogin/login_-_bad_return\n"}
+{"Time":"2026-07-01T14:43:09.75920298Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectLogin/login_-_bad_return","Output":"--- PASS: TestMobileConnectLogin/login_-_bad_return (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.75920838Z","Action":"pass","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectLogin/login_-_bad_return","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.759214697Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectLogin","Output":"--- PASS: TestMobileConnectLogin (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.75921907Z","Action":"pass","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectLogin","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.759224553Z","Action":"run","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectRefresh"}
+{"Time":"2026-07-01T14:43:09.759228466Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectRefresh","Output":"=== RUN   TestMobileConnectRefresh\n"}
+{"Time":"2026-07-01T14:43:09.7592363Z","Action":"run","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectRefresh/refresh_-_success"}
+{"Time":"2026-07-01T14:43:09.759240316Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectRefresh/refresh_-_success","Output":"=== RUN   TestMobileConnectRefresh/refresh_-_success\n"}
+{"Time":"2026-07-01T14:43:09.759245238Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectRefresh/refresh_-_success","Output":"--- PASS: TestMobileConnectRefresh/refresh_-_success (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.759249994Z","Action":"pass","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectRefresh/refresh_-_success","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.759254088Z","Action":"run","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectRefresh/refresh_-_wrong_password"}
+{"Time":"2026-07-01T14:43:09.75925866Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectRefresh/refresh_-_wrong_password","Output":"=== RUN   TestMobileConnectRefresh/refresh_-_wrong_password\n"}
+{"Time":"2026-07-01T14:43:09.759264663Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectRefresh/refresh_-_wrong_password","Output":"--- PASS: TestMobileConnectRefresh/refresh_-_wrong_password (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.759270189Z","Action":"pass","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectRefresh/refresh_-_wrong_password","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.759275024Z","Action":"run","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectRefresh/refresh_-_bad_return"}
+{"Time":"2026-07-01T14:43:09.759279794Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectRefresh/refresh_-_bad_return","Output":"=== RUN   TestMobileConnectRefresh/refresh_-_bad_return\n"}
+{"Time":"2026-07-01T14:43:09.759285119Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectRefresh/refresh_-_bad_return","Output":"--- PASS: TestMobileConnectRefresh/refresh_-_bad_return (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.759290256Z","Action":"pass","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectRefresh/refresh_-_bad_return","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.759295925Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectRefresh","Output":"--- PASS: TestMobileConnectRefresh (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.759301529Z","Action":"pass","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectRefresh","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.759306691Z","Action":"run","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectStatus"}
+{"Time":"2026-07-01T14:43:09.759310706Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectStatus","Output":"=== RUN   TestMobileConnectStatus\n"}
+{"Time":"2026-07-01T14:43:09.759315791Z","Action":"run","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectStatus/home_plug_-_Unexpected_API_response"}
+{"Time":"2026-07-01T14:43:09.759320176Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectStatus/home_plug_-_Unexpected_API_response","Output":"=== RUN   TestMobileConnectStatus/home_plug_-_Unexpected_API_response\n"}
+{"Time":"2026-07-01T14:43:09.759326724Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectStatus/home_plug_-_Unexpected_API_response","Output":"--- PASS: TestMobileConnectStatus/home_plug_-_Unexpected_API_response (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.759331617Z","Action":"pass","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectStatus/home_plug_-_Unexpected_API_response","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.759335846Z","Action":"run","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectStatus/home_plug_-_Unplugged"}
+{"Time":"2026-07-01T14:43:09.759343828Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectStatus/home_plug_-_Unplugged","Output":"=== RUN   TestMobileConnectStatus/home_plug_-_Unplugged\n"}
+{"Time":"2026-07-01T14:43:09.759349506Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectStatus/home_plug_-_Unplugged","Output":"--- PASS: TestMobileConnectStatus/home_plug_-_Unplugged (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.759354527Z","Action":"pass","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectStatus/home_plug_-_Unplugged","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.75935869Z","Action":"run","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectStatus/home_plug_-_Connecting"}
+{"Time":"2026-07-01T14:43:09.759363098Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectStatus/home_plug_-_Connecting","Output":"=== RUN   TestMobileConnectStatus/home_plug_-_Connecting\n"}
+{"Time":"2026-07-01T14:43:09.759371659Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectStatus/home_plug_-_Connecting","Output":"--- PASS: TestMobileConnectStatus/home_plug_-_Connecting (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.759376996Z","Action":"pass","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectStatus/home_plug_-_Connecting","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.759382033Z","Action":"run","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectStatus/home_plug_-_Error"}
+{"Time":"2026-07-01T14:43:09.75938638Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectStatus/home_plug_-_Error","Output":"=== RUN   TestMobileConnectStatus/home_plug_-_Error\n"}
+{"Time":"2026-07-01T14:43:09.759392094Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectStatus/home_plug_-_Error","Output":"--- PASS: TestMobileConnectStatus/home_plug_-_Error (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.75939617Z","Action":"pass","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectStatus/home_plug_-_Error","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.759400363Z","Action":"run","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectStatus/home_plug_-_Established"}
+{"Time":"2026-07-01T14:43:09.759404515Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectStatus/home_plug_-_Established","Output":"=== RUN   TestMobileConnectStatus/home_plug_-_Established\n"}
+{"Time":"2026-07-01T14:43:09.759409705Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectStatus/home_plug_-_Established","Output":"--- PASS: TestMobileConnectStatus/home_plug_-_Established (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.759414664Z","Action":"pass","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectStatus/home_plug_-_Established","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.759418993Z","Action":"run","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectStatus/home_plug_-_Paused"}
+{"Time":"2026-07-01T14:43:09.759423867Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectStatus/home_plug_-_Paused","Output":"=== RUN   TestMobileConnectStatus/home_plug_-_Paused\n"}
+{"Time":"2026-07-01T14:43:09.759429623Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectStatus/home_plug_-_Paused","Output":"--- PASS: TestMobileConnectStatus/home_plug_-_Paused (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.759434745Z","Action":"pass","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectStatus/home_plug_-_Paused","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.759441699Z","Action":"run","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectStatus/home_plug_-_Active"}
+{"Time":"2026-07-01T14:43:09.759446186Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectStatus/home_plug_-_Active","Output":"=== RUN   TestMobileConnectStatus/home_plug_-_Active\n"}
+{"Time":"2026-07-01T14:43:09.759455005Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectStatus/home_plug_-_Active","Output":"--- PASS: TestMobileConnectStatus/home_plug_-_Active (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.759459097Z","Action":"pass","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectStatus/home_plug_-_Active","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.75946388Z","Action":"run","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectStatus/home_plug_-_Finished"}
+{"Time":"2026-07-01T14:43:09.759467544Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectStatus/home_plug_-_Finished","Output":"=== RUN   TestMobileConnectStatus/home_plug_-_Finished\n"}
+{"Time":"2026-07-01T14:43:09.75947316Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectStatus/home_plug_-_Finished","Output":"--- PASS: TestMobileConnectStatus/home_plug_-_Finished (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.759477598Z","Action":"pass","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectStatus/home_plug_-_Finished","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.759482079Z","Action":"run","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectStatus/home_plug_-_Unexpected_status_value"}
+{"Time":"2026-07-01T14:43:09.759486244Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectStatus/home_plug_-_Unexpected_status_value","Output":"=== RUN   TestMobileConnectStatus/home_plug_-_Unexpected_status_value\n"}
+{"Time":"2026-07-01T14:43:09.759491882Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectStatus/home_plug_-_Unexpected_status_value","Output":"--- PASS: TestMobileConnectStatus/home_plug_-_Unexpected_status_value (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.759498479Z","Action":"pass","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectStatus/home_plug_-_Unexpected_status_value","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.759504041Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectStatus","Output":"--- PASS: TestMobileConnectStatus (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.759508994Z","Action":"pass","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectStatus","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.759513551Z","Action":"run","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectEnabled"}
+{"Time":"2026-07-01T14:43:09.759518202Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectEnabled","Output":"=== RUN   TestMobileConnectEnabled\n"}
+{"Time":"2026-07-01T14:43:09.75952364Z","Action":"run","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectEnabled/home_plug_-_Unexpected_API_response"}
+{"Time":"2026-07-01T14:43:09.759527411Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectEnabled/home_plug_-_Unexpected_API_response","Output":"=== RUN   TestMobileConnectEnabled/home_plug_-_Unexpected_API_response\n"}
+{"Time":"2026-07-01T14:43:09.759532947Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectEnabled/home_plug_-_Unexpected_API_response","Output":"--- PASS: TestMobileConnectEnabled/home_plug_-_Unexpected_API_response (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.759538036Z","Action":"pass","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectEnabled/home_plug_-_Unexpected_API_response","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.75954243Z","Action":"run","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectEnabled/home_plug_-_Unplugged"}
+{"Time":"2026-07-01T14:43:09.759546429Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectEnabled/home_plug_-_Unplugged","Output":"=== RUN   TestMobileConnectEnabled/home_plug_-_Unplugged\n"}
+{"Time":"2026-07-01T14:43:09.759552379Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectEnabled/home_plug_-_Unplugged","Output":"--- PASS: TestMobileConnectEnabled/home_plug_-_Unplugged (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.759559225Z","Action":"pass","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectEnabled/home_plug_-_Unplugged","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.759563858Z","Action":"run","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectEnabled/home_plug_-_Connecting"}
+{"Time":"2026-07-01T14:43:09.759567522Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectEnabled/home_plug_-_Connecting","Output":"=== RUN   TestMobileConnectEnabled/home_plug_-_Connecting\n"}
+{"Time":"2026-07-01T14:43:09.759572756Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectEnabled/home_plug_-_Connecting","Output":"--- PASS: TestMobileConnectEnabled/home_plug_-_Connecting (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.759577507Z","Action":"pass","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectEnabled/home_plug_-_Connecting","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.759582217Z","Action":"run","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectEnabled/home_plug_-_Error"}
+{"Time":"2026-07-01T14:43:09.759586016Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectEnabled/home_plug_-_Error","Output":"=== RUN   TestMobileConnectEnabled/home_plug_-_Error\n"}
+{"Time":"2026-07-01T14:43:09.759591948Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectEnabled/home_plug_-_Error","Output":"--- PASS: TestMobileConnectEnabled/home_plug_-_Error (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.759597362Z","Action":"pass","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectEnabled/home_plug_-_Error","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.759602221Z","Action":"run","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectEnabled/home_plug_-_Established"}
+{"Time":"2026-07-01T14:43:09.759606994Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectEnabled/home_plug_-_Established","Output":"=== RUN   TestMobileConnectEnabled/home_plug_-_Established\n"}
+{"Time":"2026-07-01T14:43:09.759612571Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectEnabled/home_plug_-_Established","Output":"--- PASS: TestMobileConnectEnabled/home_plug_-_Established (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.759617713Z","Action":"pass","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectEnabled/home_plug_-_Established","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.759622657Z","Action":"run","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectEnabled/home_plug_-_Paused"}
+{"Time":"2026-07-01T14:43:09.759626827Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectEnabled/home_plug_-_Paused","Output":"=== RUN   TestMobileConnectEnabled/home_plug_-_Paused\n"}
+{"Time":"2026-07-01T14:43:09.759632083Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectEnabled/home_plug_-_Paused","Output":"--- PASS: TestMobileConnectEnabled/home_plug_-_Paused (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.759637059Z","Action":"pass","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectEnabled/home_plug_-_Paused","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.759641775Z","Action":"run","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectEnabled/home_plug_-_Active"}
+{"Time":"2026-07-01T14:43:09.759646099Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectEnabled/home_plug_-_Active","Output":"=== RUN   TestMobileConnectEnabled/home_plug_-_Active\n"}
+{"Time":"2026-07-01T14:43:09.759651939Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectEnabled/home_plug_-_Active","Output":"--- PASS: TestMobileConnectEnabled/home_plug_-_Active (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.759660309Z","Action":"pass","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectEnabled/home_plug_-_Active","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.759665085Z","Action":"run","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectEnabled/home_plug_-_Finished"}
+{"Time":"2026-07-01T14:43:09.7596691Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectEnabled/home_plug_-_Finished","Output":"=== RUN   TestMobileConnectEnabled/home_plug_-_Finished\n"}
+{"Time":"2026-07-01T14:43:09.759674517Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectEnabled/home_plug_-_Finished","Output":"--- PASS: TestMobileConnectEnabled/home_plug_-_Finished (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.759678753Z","Action":"pass","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectEnabled/home_plug_-_Finished","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.759683678Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectEnabled","Output":"--- PASS: TestMobileConnectEnabled (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.75968829Z","Action":"pass","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectEnabled","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.759693257Z","Action":"run","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectMaxCurrent"}
+{"Time":"2026-07-01T14:43:09.759697256Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectMaxCurrent","Output":"=== RUN   TestMobileConnectMaxCurrent\n"}
+{"Time":"2026-07-01T14:43:09.759702703Z","Action":"run","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectMaxCurrent/home_plug_-_success_min_value"}
+{"Time":"2026-07-01T14:43:09.759706858Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectMaxCurrent/home_plug_-_success_min_value","Output":"=== RUN   TestMobileConnectMaxCurrent/home_plug_-_success_min_value\n"}
+{"Time":"2026-07-01T14:43:09.759712956Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectMaxCurrent/home_plug_-_success_min_value","Output":"--- PASS: TestMobileConnectMaxCurrent/home_plug_-_success_min_value (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.759717714Z","Action":"pass","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectMaxCurrent/home_plug_-_success_min_value","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.759722968Z","Action":"run","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectMaxCurrent/home_plug_-_success_max_value"}
+{"Time":"2026-07-01T14:43:09.759727784Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectMaxCurrent/home_plug_-_success_max_value","Output":"=== RUN   TestMobileConnectMaxCurrent/home_plug_-_success_max_value\n"}
+{"Time":"2026-07-01T14:43:09.759733683Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectMaxCurrent/home_plug_-_success_max_value","Output":"--- PASS: TestMobileConnectMaxCurrent/home_plug_-_success_max_value (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.759738268Z","Action":"pass","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectMaxCurrent/home_plug_-_success_max_value","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.759742417Z","Action":"run","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectMaxCurrent/home_plug_-_error_value_too_small"}
+{"Time":"2026-07-01T14:43:09.759746221Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectMaxCurrent/home_plug_-_error_value_too_small","Output":"=== RUN   TestMobileConnectMaxCurrent/home_plug_-_error_value_too_small\n"}
+{"Time":"2026-07-01T14:43:09.759751527Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectMaxCurrent/home_plug_-_error_value_too_small","Output":"--- PASS: TestMobileConnectMaxCurrent/home_plug_-_error_value_too_small (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.759756471Z","Action":"pass","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectMaxCurrent/home_plug_-_error_value_too_small","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.759765901Z","Action":"run","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectMaxCurrent/home_plug_-_error_value_too_big"}
+{"Time":"2026-07-01T14:43:09.759770851Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectMaxCurrent/home_plug_-_error_value_too_big","Output":"=== RUN   TestMobileConnectMaxCurrent/home_plug_-_error_value_too_big\n"}
+{"Time":"2026-07-01T14:43:09.759776489Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectMaxCurrent/home_plug_-_error_value_too_big","Output":"--- PASS: TestMobileConnectMaxCurrent/home_plug_-_error_value_too_big (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.760121924Z","Action":"pass","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectMaxCurrent/home_plug_-_error_value_too_big","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.760140177Z","Action":"run","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectMaxCurrent/home_plug_-_1st_API_success_but_2nd_API_error"}
+{"Time":"2026-07-01T14:43:09.760145064Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectMaxCurrent/home_plug_-_1st_API_success_but_2nd_API_error","Output":"=== RUN   TestMobileConnectMaxCurrent/home_plug_-_1st_API_success_but_2nd_API_error\n"}
+{"Time":"2026-07-01T14:43:09.760153772Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectMaxCurrent/home_plug_-_1st_API_success_but_2nd_API_error","Output":"--- PASS: TestMobileConnectMaxCurrent/home_plug_-_1st_API_success_but_2nd_API_error (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.760160211Z","Action":"pass","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectMaxCurrent/home_plug_-_1st_API_success_but_2nd_API_error","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.76016762Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectMaxCurrent","Output":"--- PASS: TestMobileConnectMaxCurrent (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.760173355Z","Action":"pass","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectMaxCurrent","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.760179381Z","Action":"run","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectCurrentPower"}
+{"Time":"2026-07-01T14:43:09.760185124Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectCurrentPower","Output":"=== RUN   TestMobileConnectCurrentPower\n"}
+{"Time":"2026-07-01T14:43:09.760191683Z","Action":"run","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectCurrentPower/home_plug_-_charging"}
+{"Time":"2026-07-01T14:43:09.760196352Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectCurrentPower/home_plug_-_charging","Output":"=== RUN   TestMobileConnectCurrentPower/home_plug_-_charging\n"}
+{"Time":"2026-07-01T14:43:09.760203038Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectCurrentPower/home_plug_-_charging","Output":"--- PASS: TestMobileConnectCurrentPower/home_plug_-_charging (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.760208687Z","Action":"pass","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectCurrentPower/home_plug_-_charging","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.760214198Z","Action":"run","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectCurrentPower/3_phase_low_power_-_charging"}
+{"Time":"2026-07-01T14:43:09.760218489Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectCurrentPower/3_phase_low_power_-_charging","Output":"=== RUN   TestMobileConnectCurrentPower/3_phase_low_power_-_charging\n"}
+{"Time":"2026-07-01T14:43:09.760225293Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectCurrentPower/3_phase_low_power_-_charging","Output":"--- PASS: TestMobileConnectCurrentPower/3_phase_low_power_-_charging (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.76023507Z","Action":"pass","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectCurrentPower/3_phase_low_power_-_charging","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.760240472Z","Action":"run","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectCurrentPower/no_data_response"}
+{"Time":"2026-07-01T14:43:09.760245672Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectCurrentPower/no_data_response","Output":"=== RUN   TestMobileConnectCurrentPower/no_data_response\n"}
+{"Time":"2026-07-01T14:43:09.760258804Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectCurrentPower/no_data_response","Output":"--- PASS: TestMobileConnectCurrentPower/no_data_response (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.760264355Z","Action":"pass","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectCurrentPower/no_data_response","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.760269933Z","Action":"run","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectCurrentPower/home_plug_-_error_response"}
+{"Time":"2026-07-01T14:43:09.760274656Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectCurrentPower/home_plug_-_error_response","Output":"=== RUN   TestMobileConnectCurrentPower/home_plug_-_error_response\n"}
+{"Time":"2026-07-01T14:43:09.760280698Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectCurrentPower/home_plug_-_error_response","Output":"--- PASS: TestMobileConnectCurrentPower/home_plug_-_error_response (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.760286004Z","Action":"pass","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectCurrentPower/home_plug_-_error_response","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.760291527Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectCurrentPower","Output":"--- PASS: TestMobileConnectCurrentPower (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.760296138Z","Action":"pass","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectCurrentPower","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.760301182Z","Action":"run","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectChargedEnergy"}
+{"Time":"2026-07-01T14:43:09.760305628Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectChargedEnergy","Output":"=== RUN   TestMobileConnectChargedEnergy\n"}
+{"Time":"2026-07-01T14:43:09.76031091Z","Action":"run","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectChargedEnergy/valid_response"}
+{"Time":"2026-07-01T14:43:09.760332104Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectChargedEnergy/valid_response","Output":"=== RUN   TestMobileConnectChargedEnergy/valid_response\n"}
+{"Time":"2026-07-01T14:43:09.76033922Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectChargedEnergy/valid_response","Output":"--- PASS: TestMobileConnectChargedEnergy/valid_response (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.760344897Z","Action":"pass","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectChargedEnergy/valid_response","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.760350069Z","Action":"run","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectChargedEnergy/no_data_response"}
+{"Time":"2026-07-01T14:43:09.760354561Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectChargedEnergy/no_data_response","Output":"=== RUN   TestMobileConnectChargedEnergy/no_data_response\n"}
+{"Time":"2026-07-01T14:43:09.760368356Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectChargedEnergy/no_data_response","Output":"--- PASS: TestMobileConnectChargedEnergy/no_data_response (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.760374213Z","Action":"pass","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectChargedEnergy/no_data_response","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.760382718Z","Action":"run","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectChargedEnergy/error_response"}
+{"Time":"2026-07-01T14:43:09.760391797Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectChargedEnergy/error_response","Output":"=== RUN   TestMobileConnectChargedEnergy/error_response\n"}
+{"Time":"2026-07-01T14:43:09.760396768Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectChargedEnergy/error_response","Output":"--- PASS: TestMobileConnectChargedEnergy/error_response (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.760402284Z","Action":"pass","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectChargedEnergy/error_response","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.760408492Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectChargedEnergy","Output":"--- PASS: TestMobileConnectChargedEnergy (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.760413919Z","Action":"pass","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectChargedEnergy","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.760418489Z","Action":"run","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectChargingTime"}
+{"Time":"2026-07-01T14:43:09.760423226Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectChargingTime","Output":"=== RUN   TestMobileConnectChargingTime\n"}
+{"Time":"2026-07-01T14:43:09.760428726Z","Action":"run","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectChargingTime/valid_response"}
+{"Time":"2026-07-01T14:43:09.760433566Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectChargingTime/valid_response","Output":"=== RUN   TestMobileConnectChargingTime/valid_response\n"}
+{"Time":"2026-07-01T14:43:09.760438996Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectChargingTime/valid_response","Output":"--- PASS: TestMobileConnectChargingTime/valid_response (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.76044397Z","Action":"pass","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectChargingTime/valid_response","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.760448942Z","Action":"run","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectChargingTime/no_data_response"}
+{"Time":"2026-07-01T14:43:09.760453048Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectChargingTime/no_data_response","Output":"=== RUN   TestMobileConnectChargingTime/no_data_response\n"}
+{"Time":"2026-07-01T14:43:09.760459498Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectChargingTime/no_data_response","Output":"--- PASS: TestMobileConnectChargingTime/no_data_response (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.760464747Z","Action":"pass","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectChargingTime/no_data_response","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.760469764Z","Action":"run","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectChargingTime/error_response"}
+{"Time":"2026-07-01T14:43:09.760474573Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectChargingTime/error_response","Output":"=== RUN   TestMobileConnectChargingTime/error_response\n"}
+{"Time":"2026-07-01T14:43:09.760480797Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectChargingTime/error_response","Output":"--- PASS: TestMobileConnectChargingTime/error_response (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.760486283Z","Action":"pass","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectChargingTime/error_response","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.760496021Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectChargingTime","Output":"--- PASS: TestMobileConnectChargingTime (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.760503649Z","Action":"pass","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectChargingTime","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.760508099Z","Action":"run","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectCurrents"}
+{"Time":"2026-07-01T14:43:09.760512343Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectCurrents","Output":"=== RUN   TestMobileConnectCurrents\n"}
+{"Time":"2026-07-01T14:43:09.760517589Z","Action":"run","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectCurrents/home_plug_-_charging"}
+{"Time":"2026-07-01T14:43:09.760521529Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectCurrents/home_plug_-_charging","Output":"=== RUN   TestMobileConnectCurrents/home_plug_-_charging\n"}
+{"Time":"2026-07-01T14:43:09.760528Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectCurrents/home_plug_-_charging","Output":"--- PASS: TestMobileConnectCurrents/home_plug_-_charging (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.760533283Z","Action":"pass","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectCurrents/home_plug_-_charging","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.760538474Z","Action":"run","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectCurrents/3_phase_low_power_-_charging"}
+{"Time":"2026-07-01T14:43:09.760542724Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectCurrents/3_phase_low_power_-_charging","Output":"=== RUN   TestMobileConnectCurrents/3_phase_low_power_-_charging\n"}
+{"Time":"2026-07-01T14:43:09.760549422Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectCurrents/3_phase_low_power_-_charging","Output":"--- PASS: TestMobileConnectCurrents/3_phase_low_power_-_charging (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.760555032Z","Action":"pass","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectCurrents/3_phase_low_power_-_charging","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.760559821Z","Action":"run","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectCurrents/no_data_response"}
+{"Time":"2026-07-01T14:43:09.760564195Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectCurrents/no_data_response","Output":"=== RUN   TestMobileConnectCurrents/no_data_response\n"}
+{"Time":"2026-07-01T14:43:09.760569749Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectCurrents/no_data_response","Output":"--- PASS: TestMobileConnectCurrents/no_data_response (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.760582447Z","Action":"pass","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectCurrents/no_data_response","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.760589244Z","Action":"run","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectCurrents/home_plug_-_error_response"}
+{"Time":"2026-07-01T14:43:09.760593475Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectCurrents/home_plug_-_error_response","Output":"=== RUN   TestMobileConnectCurrents/home_plug_-_error_response\n"}
+{"Time":"2026-07-01T14:43:09.760599613Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectCurrents/home_plug_-_error_response","Output":"--- PASS: TestMobileConnectCurrents/home_plug_-_error_response (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.760609765Z","Action":"pass","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectCurrents/home_plug_-_error_response","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.76061556Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectCurrents","Output":"--- PASS: TestMobileConnectCurrents (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.760621322Z","Action":"pass","Package":"github.com/evcc-io/evcc/charger","Test":"TestMobileConnectCurrents","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.760629415Z","Action":"run","Package":"github.com/evcc-io/evcc/charger","Test":"TestOcpp"}
+{"Time":"2026-07-01T14:43:09.760633654Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestOcpp","Output":"=== RUN   TestOcpp\n"}
+{"Time":"2026-07-01T14:43:09.813878431Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPvScalePhases","Output":"    loadpoint_phases_test.go:164: {0 0 2 0 2 2 du}\n"}
+{"Time":"2026-07-01T14:43:09.813906852Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPvScalePhases","Output":"    loadpoint_phases_test.go:164: {0 0 3 0 3 3 du}\n"}
+{"Time":"2026-07-01T14:43:09.814918929Z","Action":"run","Package":"github.com/evcc-io/evcc/charger","Test":"TestOcpp/TestConnect"}
+{"Time":"2026-07-01T14:43:09.814933497Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestOcpp/TestConnect","Output":"=== RUN   TestOcpp/TestConnect\n"}
+{"Time":"2026-07-01T14:43:09.814939358Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestOcpp/TestConnect","Output":"*core.GetConfigurationRequest \u0026{Key:[]}\n"}
+{"Time":"2026-07-01T14:43:09.814951565Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPvScalePhases","Output":"    loadpoint_phases_test.go:164: {0 1 0 0 1 3 u}\n"}
+{"Time":"2026-07-01T14:43:09.814956625Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPvScalePhases","Output":"    loadpoint_phases_test.go:164: {0 1 0 1 1 3 u}\n"}
+{"Time":"2026-07-01T14:43:09.814961431Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPvScalePhases","Output":"    loadpoint_phases_test.go:164: {0 1 1 0 1 1 }\n"}
+{"Time":"2026-07-01T14:43:09.815138151Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPvScalePhases","Output":"    loadpoint_phases_test.go:164: {0 1 2 0 1 2 u}\n"}
+{"Time":"2026-07-01T14:43:09.815298188Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestOcpp/TestConnect","Output":"*remotetrigger.TriggerMessageRequest \u0026{RequestedMessage:MeterValues ConnectorId:0xc000692120}\n"}
+{"Time":"2026-07-01T14:43:09.815547173Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPvScalePhases","Output":"    loadpoint_phases_test.go:164: {0 1 3 0 1 3 u}\n"}
+{"Time":"2026-07-01T14:43:09.815857459Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestOcpp/TestConnect","Output":"    ocpp_test.go:87: MeterValues: \u0026{}\n"}
+{"Time":"2026-07-01T14:43:09.815945497Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPvScalePhases","Output":"    loadpoint_phases_test.go:164: {0 3 0 0 3 3 d}\n"}
+{"Time":"2026-07-01T14:43:09.816125628Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPvScalePhases","Output":"    loadpoint_phases_test.go:164: {0 3 0 1 1 1 }\n"}
+{"Time":"2026-07-01T14:43:09.81625493Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPvScalePhases","Output":"    loadpoint_phases_test.go:164: {0 3 0 2 2 2 d}\n"}
+{"Time":"2026-07-01T14:43:09.81641654Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPvScalePhases","Output":"    loadpoint_phases_test.go:164: {0 3 0 3 3 3 d}\n"}
+{"Time":"2026-07-01T14:43:09.816694442Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPvScalePhases","Output":"    loadpoint_phases_test.go:164: {0 3 1 0 1 1 }\n"}
+{"Time":"2026-07-01T14:43:09.816727104Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPvScalePhases","Output":"    loadpoint_phases_test.go:164: {0 3 2 0 2 2 d}\n"}
+{"Time":"2026-07-01T14:43:09.816911521Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPvScalePhases","Output":"    loadpoint_phases_test.go:164: {0 3 3 0 3 3 d}\n"}
+{"Time":"2026-07-01T14:43:09.817135452Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPvScalePhases","Output":"--- PASS: TestPvScalePhases (0.07s)\n"}
+{"Time":"2026-07-01T14:43:09.817159292Z","Action":"pass","Package":"github.com/evcc-io/evcc/core","Test":"TestPvScalePhases","Elapsed":0.07}
+{"Time":"2026-07-01T14:43:09.817169391Z","Action":"run","Package":"github.com/evcc-io/evcc/core","Test":"TestPvScalePhasesTimer"}
+{"Time":"2026-07-01T14:43:09.817173518Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPvScalePhasesTimer","Output":"=== RUN   TestPvScalePhasesTimer\n"}
+{"Time":"2026-07-01T14:43:09.81717977Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPvScalePhasesTimer","Output":"    loadpoint_phases_test.go:361: {desc:1/1-\u003e3, not enough power phases:1 measuredPhases:1 sitePower:0 toPhases:1 res:false prepare:\u003cnil\u003e}\n"}
+{"Time":"2026-07-01T14:43:09.818290629Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPvScalePhasesTimer","Output":"    loadpoint_phases_test.go:361: {desc:1/1-\u003e3, kickoff phases:1 measuredPhases:1 sitePower:-4140 toPhases:1 res:false prepare:0x14a0d00}\n"}
+{"Time":"2026-07-01T14:43:09.819386822Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPvScalePhasesTimer","Output":"    loadpoint_phases_test.go:361: {desc:1/1-\u003e3, timer running phases:1 measuredPhases:1 sitePower:-4140 toPhases:1 res:false prepare:0x14a0d60}\n"}
+{"Time":"2026-07-01T14:43:09.820508086Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPvScalePhasesTimer","Output":"    loadpoint_phases_test.go:361: {desc:1/1-\u003e3, timer elapsed phases:1 measuredPhases:1 sitePower:-4140 toPhases:3 res:true prepare:0x14a0de0}\n"}
+{"Time":"2026-07-01T14:43:09.821633543Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPvScalePhasesTimer","Output":"    loadpoint_phases_test.go:361: {desc:3/1-\u003e3, not enough power phases:3 measuredPhases:1 sitePower:0 toPhases:3 res:false prepare:\u003cnil\u003e}\n"}
+{"Time":"2026-07-01T14:43:09.822730221Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPvScalePhasesTimer","Output":"    loadpoint_phases_test.go:361: {desc:3/1-\u003e3, kickoff phases:3 measuredPhases:1 sitePower:-4140 toPhases:3 res:false prepare:0x14a0e60}\n"}
+{"Time":"2026-07-01T14:43:09.82380812Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPvScalePhasesTimer","Output":"    loadpoint_phases_test.go:361: {desc:3/1-\u003e3, timer running phases:3 measuredPhases:1 sitePower:-4140 toPhases:3 res:false prepare:0x14a0ec0}\n"}
+{"Time":"2026-07-01T14:43:09.824898825Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPvScalePhasesTimer","Output":"    loadpoint_phases_test.go:361: {desc:3/1-\u003e3, timer elapsed phases:3 measuredPhases:1 sitePower:-4140 toPhases:3 res:false prepare:0x14a0f40}\n"}
+{"Time":"2026-07-01T14:43:09.826035289Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPvScalePhasesTimer","Output":"    loadpoint_phases_test.go:361: {desc:3/1-\u003e1, not enough power phases:3 measuredPhases:1 sitePower:0 toPhases:3 res:false prepare:\u003cnil\u003e}\n"}
+{"Time":"2026-07-01T14:43:09.827167823Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPvScalePhasesTimer","Output":"    loadpoint_phases_test.go:361: {desc:3/1-\u003e1, kickoff phases:3 measuredPhases:1 sitePower:-1380 toPhases:3 res:false prepare:0x14a0fc0}\n"}
+{"Time":"2026-07-01T14:43:09.828214328Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPvScalePhasesTimer","Output":"    loadpoint_phases_test.go:361: {desc:3/1-\u003e1, timer running phases:3 measuredPhases:1 sitePower:-1380 toPhases:3 res:false prepare:0x14a1020}\n"}
+{"Time":"2026-07-01T14:43:09.829327169Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPvScalePhasesTimer","Output":"    loadpoint_phases_test.go:361: {desc:3/1-\u003e1, timer elapsed phases:3 measuredPhases:1 sitePower:-1380 toPhases:3 res:false prepare:0x14a10a0}\n"}
+{"Time":"2026-07-01T14:43:09.830404104Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPvScalePhasesTimer","Output":"    loadpoint_phases_test.go:361: {desc:3/3-\u003e1, enough power phases:3 measuredPhases:3 sitePower:0 toPhases:3 res:false prepare:\u003cnil\u003e}\n"}
+{"Time":"2026-07-01T14:43:09.831524418Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPvScalePhasesTimer","Output":"    loadpoint_phases_test.go:361: {desc:3/3-\u003e1, enough power, timer elapsed, load point enabled phases:3 measuredPhases:3 sitePower:0 toPhases:3 res:false prepare:0x14a1120}\n"}
+{"Time":"2026-07-01T14:43:09.832613053Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPvScalePhasesTimer","Output":"    loadpoint_phases_test.go:361: {desc:3/3-\u003e1, enough power, timer elapsed, load point disabled phases:3 measuredPhases:3 sitePower:0 toPhases:1 res:true prepare:0x14a11a0}\n"}
+{"Time":"2026-07-01T14:43:09.833729745Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPvScalePhasesTimer","Output":"    loadpoint_phases_test.go:361: {desc:3/3-\u003e1, kickoff phases:3 measuredPhases:3 sitePower:0.1 toPhases:3 res:false prepare:0x14a1220}\n"}
+{"Time":"2026-07-01T14:43:09.834828201Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPvScalePhasesTimer","Output":"    loadpoint_phases_test.go:361: {desc:3/3-\u003e1, timer running phases:3 measuredPhases:3 sitePower:0.1 toPhases:3 res:false prepare:0x14a1280}\n"}
+{"Time":"2026-07-01T14:43:09.835959114Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPvScalePhasesTimer","Output":"    loadpoint_phases_test.go:361: {desc:3/3-\u003e1, timer elapsed phases:3 measuredPhases:3 sitePower:0.1 toPhases:1 res:true prepare:0x14a1300}\n"}
+{"Time":"2026-07-01T14:43:09.837082098Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPvScalePhasesTimer","Output":"    loadpoint_phases_test.go:361: {desc:3/0-\u003e1, not enough power, not charging phases:3 measuredPhases:0 sitePower:0 toPhases:1 res:true prepare:0x14a1380}\n"}
+{"Time":"2026-07-01T14:43:09.838206525Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPvScalePhasesTimer","Output":"    loadpoint_phases_test.go:361: {desc:1/0-\u003e3, enough power, not charging phases:1 measuredPhases:0 sitePower:-4140 toPhases:3 res:true prepare:0x14a13e0}\n"}
+{"Time":"2026-07-01T14:43:09.839338742Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPvScalePhasesTimer","Output":"    loadpoint_phases_test.go:361: {desc:1/3-\u003e1, enough power phases:1 measuredPhases:3 sitePower:-3680 toPhases:1 res:false prepare:\u003cnil\u003e}\n"}
+{"Time":"2026-07-01T14:43:09.840467923Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPvScalePhasesTimer","Output":"    loadpoint_phases_test.go:361: {desc:1/3-\u003e1, kickoff, correct phase setting phases:1 measuredPhases:3 sitePower:0.1 toPhases:1 res:false prepare:0x14a1440}\n"}
+{"Time":"2026-07-01T14:43:09.84162478Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPvScalePhasesTimer","Output":"    loadpoint_phases_test.go:361: {desc:1/3-\u003e1, timer running, correct phase setting phases:1 measuredPhases:3 sitePower:0.1 toPhases:1 res:false prepare:0x14a14a0}\n"}
+{"Time":"2026-07-01T14:43:09.842732316Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPvScalePhasesTimer","Output":"    loadpoint_phases_test.go:361: {desc:1/3-\u003e1, switch not executed phases:1 measuredPhases:3 sitePower:0.1 toPhases:1 res:false prepare:0x14a1520}\n"}
+{"Time":"2026-07-01T14:43:09.84383265Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPvScalePhasesTimer","Output":"--- PASS: TestPvScalePhasesTimer (0.03s)\n"}
+{"Time":"2026-07-01T14:43:09.843843306Z","Action":"pass","Package":"github.com/evcc-io/evcc/core","Test":"TestPvScalePhasesTimer","Elapsed":0.03}
+{"Time":"2026-07-01T14:43:09.843855956Z","Action":"run","Package":"github.com/evcc-io/evcc/core","Test":"TestScalePhasesIfAvailable"}
+{"Time":"2026-07-01T14:43:09.843860814Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestScalePhasesIfAvailable","Output":"=== RUN   TestScalePhasesIfAvailable\n"}
+{"Time":"2026-07-01T14:43:09.843897075Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestScalePhasesIfAvailable","Output":"    loadpoint_phases_test.go:419: {0 0 3}\n"}
+{"Time":"2026-07-01T14:43:09.843957338Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestScalePhasesIfAvailable","Output":"    loadpoint_phases_test.go:419: {0 1 3}\n"}
+{"Time":"2026-07-01T14:43:09.843972837Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestScalePhasesIfAvailable","Output":"    loadpoint_phases_test.go:419: {0 3 3}\n"}
+{"Time":"2026-07-01T14:43:09.843996392Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestScalePhasesIfAvailable","Output":"    loadpoint_phases_test.go:419: {1 0 1}\n"}
+{"Time":"2026-07-01T14:43:09.844021165Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestScalePhasesIfAvailable","Output":"    loadpoint_phases_test.go:419: {1 1 1}\n"}
+{"Time":"2026-07-01T14:43:09.844027957Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestScalePhasesIfAvailable","Output":"    loadpoint_phases_test.go:419: {1 3 1}\n"}
+{"Time":"2026-07-01T14:43:09.844053491Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestScalePhasesIfAvailable","Output":"    loadpoint_phases_test.go:419: {3 0 3}\n"}
+{"Time":"2026-07-01T14:43:09.844077696Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestScalePhasesIfAvailable","Output":"    loadpoint_phases_test.go:419: {3 1 3}\n"}
+{"Time":"2026-07-01T14:43:09.844102203Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestScalePhasesIfAvailable","Output":"    loadpoint_phases_test.go:419: {3 3 3}\n"}
+{"Time":"2026-07-01T14:43:09.844117061Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestScalePhasesIfAvailable","Output":"--- PASS: TestScalePhasesIfAvailable (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.84412639Z","Action":"pass","Package":"github.com/evcc-io/evcc/core","Test":"TestScalePhasesIfAvailable","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.844134193Z","Action":"run","Package":"github.com/evcc-io/evcc/core","Test":"TestSession"}
+{"Time":"2026-07-01T14:43:09.844139301Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestSession","Output":"=== RUN   TestSession\n"}
+{"Time":"2026-07-01T14:43:09.847168163Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestSession","Output":"    loadpoint_session_test.go:74: session: [{ID:1 Created:1970-01-01 00:00:00 +0000 UTC Finished:1970-01-01 01:00:00 +0000 UTC Loadpoint:foo Identifier: Vehicle: Odometer:\u003cnil\u003e MeterStart:0xc00015e500 MeterStop:0xc00015e508 ChargedEnergy:1.23 ChargeDuration:0s SolarPercentage:0xc00015e548 Price:\u003cnil\u003e PricePerKWh:\u003cnil\u003e Co2PerKWh:\u003cnil\u003e}]\n"}
+{"Time":"2026-07-01T14:43:09.848581321Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestSession","Output":"    loadpoint_session_test.go:88: session: [{ID:1 Created:1970-01-01 00:00:00 +0000 UTC Finished:1970-01-01 02:00:00 +0000 UTC Loadpoint:foo Identifier: Vehicle: Odometer:\u003cnil\u003e MeterStart:0xc0004f7878 MeterStop:0xc0004f78c0 ChargedEnergy:2460 ChargeDuration:0s SolarPercentage:0xc0004f7940 Price:\u003cnil\u003e PricePerKWh:\u003cnil\u003e Co2PerKWh:\u003cnil\u003e}]\n"}
+{"Time":"2026-07-01T14:43:09.848605057Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestSession","Output":"--- PASS: TestSession (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.848611555Z","Action":"pass","Package":"github.com/evcc-io/evcc/core","Test":"TestSession","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.848617569Z","Action":"run","Package":"github.com/evcc-io/evcc/core","Test":"TestCloseSessionsOnStartup_emptyDb"}
+{"Time":"2026-07-01T14:43:09.848622011Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestCloseSessionsOnStartup_emptyDb","Output":"=== RUN   TestCloseSessionsOnStartup_emptyDb\n"}
+{"Time":"2026-07-01T14:43:09.849678965Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestCloseSessionsOnStartup_emptyDb","Output":"--- PASS: TestCloseSessionsOnStartup_emptyDb (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.849700655Z","Action":"pass","Package":"github.com/evcc-io/evcc/core","Test":"TestCloseSessionsOnStartup_emptyDb","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.849707254Z","Action":"run","Package":"github.com/evcc-io/evcc/core","Test":"TestCloseSessionsOnStartup"}
+{"Time":"2026-07-01T14:43:09.849712428Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestCloseSessionsOnStartup","Output":"=== RUN   TestCloseSessionsOnStartup\n"}
+{"Time":"2026-07-01T14:43:09.853534706Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestCloseSessionsOnStartup","Output":"    loadpoint_session_test.go:140: session: {ID:1 Created:1970-01-01 00:01:00 +0000 UTC Finished:1970-01-01 00:02:00 +0000 UTC Loadpoint:foo Identifier: Vehicle: Odometer:\u003cnil\u003e MeterStart:0xc00060df80 MeterStop:0xc00060df88 ChargedEnergy:10 ChargeDuration:\u003cnil\u003e SolarPercentage:\u003cnil\u003e Price:\u003cnil\u003e PricePerKWh:\u003cnil\u003e Co2PerKWh:\u003cnil\u003e}\n"}
+{"Time":"2026-07-01T14:43:09.8535627Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestCloseSessionsOnStartup","Output":"    loadpoint_session_test.go:140: session: {ID:3 Created:1970-01-01 00:01:00 +0000 UTC Finished:1970-01-01 00:02:00 +0000 UTC Loadpoint:foo Identifier: Vehicle: Odometer:\u003cnil\u003e MeterStart:0xc000650110 MeterStop:0xc000650118 ChargedEnergy:10 ChargeDuration:\u003cnil\u003e SolarPercentage:\u003cnil\u003e Price:\u003cnil\u003e PricePerKWh:\u003cnil\u003e Co2PerKWh:\u003cnil\u003e}\n"}
+{"Time":"2026-07-01T14:43:09.853569861Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestCloseSessionsOnStartup","Output":"    loadpoint_session_test.go:140: session: {ID:5 Created:1970-01-01 00:01:00 +0000 UTC Finished:0001-01-01 00:00:00 +0000 UTC Loadpoint:foo Identifier: Vehicle: Odometer:\u003cnil\u003e MeterStart:0xc000650250 MeterStop:0xc000650258 ChargedEnergy:10 ChargeDuration:\u003cnil\u003e SolarPercentage:\u003cnil\u003e Price:\u003cnil\u003e PricePerKWh:\u003cnil\u003e Co2PerKWh:\u003cnil\u003e}\n"}
+{"Time":"2026-07-01T14:43:09.85357856Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestCloseSessionsOnStartup","Output":"    loadpoint_session_test.go:140: session: {ID:7 Created:1970-01-01 00:01:00 +0000 UTC Finished:1970-01-01 00:02:00 +0000 UTC Loadpoint:foo Identifier: Vehicle: Odometer:\u003cnil\u003e MeterStart:0xc0006503a0 MeterStop:0xc0006503a8 ChargedEnergy:10 ChargeDuration:\u003cnil\u003e SolarPercentage:\u003cnil\u003e Price:\u003cnil\u003e PricePerKWh:\u003cnil\u003e Co2PerKWh:\u003cnil\u003e}\n"}
+{"Time":"2026-07-01T14:43:09.853587029Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestCloseSessionsOnStartup","Output":"    loadpoint_session_test.go:140: session: {ID:9 Created:1970-01-01 00:01:00 +0000 UTC Finished:1970-01-01 00:02:00 +0000 UTC Loadpoint:foo Identifier: Vehicle: Odometer:\u003cnil\u003e MeterStart:0xc0006504a0 MeterStop:0xc0006504a8 ChargedEnergy:10 ChargeDuration:\u003cnil\u003e SolarPercentage:\u003cnil\u003e Price:\u003cnil\u003e PricePerKWh:\u003cnil\u003e Co2PerKWh:\u003cnil\u003e}\n"}
+{"Time":"2026-07-01T14:43:09.853784969Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestCloseSessionsOnStartup","Output":"--- PASS: TestCloseSessionsOnStartup (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.853794373Z","Action":"pass","Package":"github.com/evcc-io/evcc/core","Test":"TestCloseSessionsOnStartup","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.853803303Z","Action":"run","Package":"github.com/evcc-io/evcc/core","Test":"TestStatusEvents"}
+{"Time":"2026-07-01T14:43:09.853809451Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestStatusEvents","Output":"=== RUN   TestStatusEvents\n"}
+{"Time":"2026-07-01T14:43:09.853859107Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestStatusEvents","Output":"--- PASS: TestStatusEvents (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.853874343Z","Action":"pass","Package":"github.com/evcc-io/evcc/core","Test":"TestStatusEvents","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.853880287Z","Action":"run","Package":"github.com/evcc-io/evcc/core","Test":"TestSyncCharger"}
+{"Time":"2026-07-01T14:43:09.853884657Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestSyncCharger","Output":"=== RUN   TestSyncCharger\n"}
+{"Time":"2026-07-01T14:43:09.853896575Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestSyncCharger","Output":"    loadpoint_sync_test.go:29: {status:A expected:false actual:false corrected:false}\n"}
+{"Time":"2026-07-01T14:43:09.853949021Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestSyncCharger","Output":"    loadpoint_sync_test.go:29: {status:C expected:false actual:false corrected:true}\n"}
+{"Time":"2026-07-01T14:43:09.853998195Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestSyncCharger","Output":"    loadpoint_sync_test.go:29: {status:A expected:false actual:true corrected:true}\n"}
+{"Time":"2026-07-01T14:43:09.854024502Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestSyncCharger","Output":"    loadpoint_sync_test.go:29: {status:A expected:true actual:false corrected:false}\n"}
+{"Time":"2026-07-01T14:43:09.854050629Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestSyncCharger","Output":"    loadpoint_sync_test.go:29: {status:A expected:true actual:true corrected:true}\n"}
+{"Time":"2026-07-01T14:43:09.854079028Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestSyncCharger","Output":"--- PASS: TestSyncCharger (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.854086569Z","Action":"pass","Package":"github.com/evcc-io/evcc/core","Test":"TestSyncCharger","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.8540916Z","Action":"run","Package":"github.com/evcc-io/evcc/core","Test":"TestNew"}
+{"Time":"2026-07-01T14:43:09.854097197Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestNew","Output":"=== RUN   TestNew\n"}
+{"Time":"2026-07-01T14:43:09.854104683Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestNew","Output":"--- PASS: TestNew (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.854111191Z","Action":"pass","Package":"github.com/evcc-io/evcc/core","Test":"TestNew","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.854117803Z","Action":"run","Package":"github.com/evcc-io/evcc/core","Test":"TestUpdatePowerZero"}
+{"Time":"2026-07-01T14:43:09.85413906Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestUpdatePowerZero","Output":"=== RUN   TestUpdatePowerZero\n"}
+{"Time":"2026-07-01T14:43:09.85414605Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestUpdatePowerZero","Output":"    loadpoint_test.go:151: {A off 0x14a0a60}\n"}
+{"Time":"2026-07-01T14:43:09.854341217Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestUpdatePowerZero","Output":"    loadpoint_test.go:151: {A now 0x14a0aa0}\n"}
+{"Time":"2026-07-01T14:43:09.854503634Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestUpdatePowerZero","Output":"    loadpoint_test.go:151: {A minpv 0x14a0ae0}\n"}
+{"Time":"2026-07-01T14:43:09.854578206Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestUpdatePowerZero","Output":"    loadpoint_test.go:151: {A pv 0x14a0b20}\n"}
+{"Time":"2026-07-01T14:43:09.854752078Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestUpdatePowerZero","Output":"    loadpoint_test.go:151: {B off 0x14a0b60}\n"}
+{"Time":"2026-07-01T14:43:09.854881616Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestUpdatePowerZero","Output":"    loadpoint_test.go:151: {B now 0x14a0ba0}\n"}
+{"Time":"2026-07-01T14:43:09.854958414Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestUpdatePowerZero","Output":"    loadpoint_test.go:151: {B minpv 0x14a0be0}\n"}
+{"Time":"2026-07-01T14:43:09.85511202Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestUpdatePowerZero","Output":"    loadpoint_test.go:151: {B pv 0x14a0c00}\n"}
+{"Time":"2026-07-01T14:43:09.855255967Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestUpdatePowerZero","Output":"    loadpoint_test.go:151: {C off 0x14a0c40}\n"}
+{"Time":"2026-07-01T14:43:09.855404008Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestUpdatePowerZero","Output":"    loadpoint_test.go:151: {C now 0x14a0c80}\n"}
+{"Time":"2026-07-01T14:43:09.855539922Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestUpdatePowerZero","Output":"    loadpoint_test.go:151: {C minpv 0x14a0cc0}\n"}
+{"Time":"2026-07-01T14:43:09.855672545Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestUpdatePowerZero","Output":"    loadpoint_test.go:151: {C pv 0x14a0ce0}\n"}
+{"Time":"2026-07-01T14:43:09.855834196Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestUpdatePowerZero","Output":"--- PASS: TestUpdatePowerZero (0.00s)\n"}
+{"Time":"2026-07-01T14:43:09.855858859Z","Action":"pass","Package":"github.com/evcc-io/evcc/core","Test":"TestUpdatePowerZero","Elapsed":0}
+{"Time":"2026-07-01T14:43:09.855884747Z","Action":"run","Package":"github.com/evcc-io/evcc/core","Test":"TestPVHysteresis"}
+{"Time":"2026-07-01T14:43:09.855889153Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPVHysteresis","Output":"=== RUN   TestPVHysteresis\n"}
+{"Time":"2026-07-01T14:43:09.855953967Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPVHysteresis","Output":"    loadpoint_test.go:303: {false 0 0 [{0 0 0} {0 1 0} {0 59999999999 0} {0 60000000001 0}]}\n"}
+{"Time":"2026-07-01T14:43:09.860293283Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPVHysteresis","Output":"    loadpoint_test.go:303: {false 0 0 [{-1800 0 0} {-1800 1 0} {-1800 59999999999 0} {-1800 60000000001 6}]}\n"}
+{"Time":"2026-07-01T14:43:09.864682154Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPVHysteresis","Output":"    loadpoint_test.go:303: {false 0 0 [{-400 0 0} {-400 1 0} {-400 59999999999 0} {-400 60000000001 0}]}\n"}
+{"Time":"2026-07-01T14:43:09.869062682Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPVHysteresis","Output":"    loadpoint_test.go:303: {false -500 0 [{-400 0 0} {-400 1 0} {-400 59999999999 0} {-400 60000000001 0}]}\n"}
+{"Time":"2026-07-01T14:43:09.873428321Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPVHysteresis","Output":"    loadpoint_test.go:303: {false -2100 0 [{-1800 0 0} {-1800 1 0} {-1800 59999999999 0} {-1800 60000000001 0}]}\n"}
+{"Time":"2026-07-01T14:43:09.877794126Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPVHysteresis","Output":"    loadpoint_test.go:303: {false -500 0 [{-500 0 0} {-500 1 0} {-500 59999999999 0} {-500 60000000001 6}]}\n"}
+{"Time":"2026-07-01T14:43:09.882232831Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPVHysteresis","Output":"    loadpoint_test.go:303: {true 500 0 [{-4800 0 16} {-4800 1 16} {-4800 59999999999 16} {-4800 60000000001 16}]}\n"}
+{"Time":"2026-07-01T14:43:09.886595031Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPVHysteresis","Output":"    loadpoint_test.go:303: {true 500 0 [{-1800 0 6} {-1800 1 6} {-1800 59999999999 6} {-1800 60000000001 6}]}\n"}
+{"Time":"2026-07-01T14:43:09.890963508Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPVHysteresis","Output":"    loadpoint_test.go:303: {true 0 500 [{-500 0 6} {-500 1 6} {-500 59999999999 6} {-500 60000000001 6}]}\n"}
+{"Time":"2026-07-01T14:43:09.91556549Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPVHysteresis","Output":"    loadpoint_test.go:303: {true 0 500 [{500 0 6} {500 1 6} {500 59999999999 6} {500 60000000001 0}]}\n"}
+{"Time":"2026-07-01T14:43:09.920019338Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPVHysteresis","Output":"    loadpoint_test.go:303: {false -500 0 [{-500 0 0} {-500 1 0} {-499 59999999999 0} {-500 60000000001 0} {-500 120000000000 0} {-500 120000000001 6}]}\n"}
+{"Time":"2026-07-01T14:43:09.926625908Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPVHysteresis","Output":"    loadpoint_test.go:303: {false 0 0 [{-6001 60000000001 0} {-1800 60000000001 0} {-1800 60000000002 0} {-1800 120000000000 0} {-1800 120000000001 6}]}\n"}
+{"Time":"2026-07-01T14:43:09.932085611Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPVHysteresis","Output":"    loadpoint_test.go:303: {true 0 500 [{500 0 6} {500 1 6} {499 59999999999 6} {500 60000000001 6} {500 120000000000 6} {500 120000000001 0}]}\n"}
+{"Time":"2026-07-01T14:43:09.938673463Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPVHysteresis","Output":"    loadpoint_test.go:303: {false 0 0 [{0 0 0} {0 1 0} {0 59999999999 0} {0 60000000001 0}]}\n"}
+{"Time":"2026-07-01T14:43:09.943073975Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPVHysteresis","Output":"    loadpoint_test.go:303: {false 0 0 [{-1800 0 0} {-1800 1 0} {-1800 59999999999 0} {-1800 60000000001 6}]}\n"}
+{"Time":"2026-07-01T14:43:09.947410154Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPVHysteresis","Output":"    loadpoint_test.go:303: {false 0 0 [{-400 0 0} {-400 1 0} {-400 59999999999 0} {-400 60000000001 0}]}\n"}
+{"Time":"2026-07-01T14:43:09.951815351Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPVHysteresis","Output":"    loadpoint_test.go:303: {false -500 0 [{-400 0 0} {-400 1 0} {-400 59999999999 0} {-400 60000000001 0}]}\n"}
+{"Time":"2026-07-01T14:43:09.956204105Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPVHysteresis","Output":"    loadpoint_test.go:303: {false -2100 0 [{-1800 0 0} {-1800 1 0} {-1800 59999999999 0} {-1800 60000000001 0}]}\n"}
+{"Time":"2026-07-01T14:43:09.960554708Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPVHysteresis","Output":"    loadpoint_test.go:303: {false -500 0 [{-500 0 0} {-500 1 0} {-500 59999999999 0} {-500 60000000001 6}]}\n"}
+{"Time":"2026-07-01T14:43:09.964921322Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPVHysteresis","Output":"    loadpoint_test.go:303: {true 500 0 [{-4800 0 16} {-4800 1 16} {-4800 59999999999 16} {-4800 60000000001 16}]}\n"}
+{"Time":"2026-07-01T14:43:09.969296004Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPVHysteresis","Output":"    loadpoint_test.go:303: {true 500 0 [{-1800 0 6} {-1800 1 6} {-1800 59999999999 6} {-1800 60000000001 6}]}\n"}
+{"Time":"2026-07-01T14:43:09.973667242Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPVHysteresis","Output":"    loadpoint_test.go:303: {true 0 500 [{-500 0 6} {-500 1 6} {-500 59999999999 6} {-500 60000000001 6}]}\n"}
+{"Time":"2026-07-01T14:43:09.978022397Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPVHysteresis","Output":"    loadpoint_test.go:303: {true 0 500 [{500 0 6} {500 1 6} {500 59999999999 6} {500 60000000001 0}]}\n"}
+{"Time":"2026-07-01T14:43:09.982398478Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPVHysteresis","Output":"    loadpoint_test.go:303: {false -500 0 [{-500 0 0} {-500 1 0} {-499 59999999999 0} {-500 60000000001 0} {-500 120000000000 0} {-500 120000000001 6}]}\n"}
+{"Time":"2026-07-01T14:43:09.988999353Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPVHysteresis","Output":"    loadpoint_test.go:303: {false 0 0 [{-6001 60000000001 0} {-1800 60000000001 0} {-1800 60000000002 0} {-1800 120000000000 0} {-1800 120000000001 6}]}\n"}
+{"Time":"2026-07-01T14:43:09.994477714Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPVHysteresis","Output":"    loadpoint_test.go:303: {true 0 500 [{500 0 6} {500 1 6} {499 59999999999 6} {500 60000000001 6} {500 120000000000 6} {500 120000000001 0}]}\n"}
+{"Time":"2026-07-01T14:43:10.001148384Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPVHysteresis","Output":"--- PASS: TestPVHysteresis (0.15s)\n"}
+{"Time":"2026-07-01T14:43:10.001166682Z","Action":"pass","Package":"github.com/evcc-io/evcc/core","Test":"TestPVHysteresis","Elapsed":0.15}
+{"Time":"2026-07-01T14:43:10.001174389Z","Action":"run","Package":"github.com/evcc-io/evcc/core","Test":"TestPVHysteresisForStatusOtherThanC"}
+{"Time":"2026-07-01T14:43:10.001177878Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPVHysteresisForStatusOtherThanC","Output":"=== RUN   TestPVHysteresisForStatusOtherThanC\n"}
+{"Time":"2026-07-01T14:43:10.001190336Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPVHysteresisForStatusOtherThanC","Output":"--- PASS: TestPVHysteresisForStatusOtherThanC (0.00s)\n"}
+{"Time":"2026-07-01T14:43:10.001201054Z","Action":"pass","Package":"github.com/evcc-io/evcc/core","Test":"TestPVHysteresisForStatusOtherThanC","Elapsed":0}
+{"Time":"2026-07-01T14:43:10.001206426Z","Action":"run","Package":"github.com/evcc-io/evcc/core","Test":"TestDisableAndEnableAtTargetSoc"}
+{"Time":"2026-07-01T14:43:10.00121007Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestDisableAndEnableAtTargetSoc","Output":"=== RUN   TestDisableAndEnableAtTargetSoc\n"}
+{"Time":"2026-07-01T14:43:10.001437503Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestDisableAndEnableAtTargetSoc","Output":"    loadpoint_test.go:428: charging below soc target\n"}
+{"Time":"2026-07-01T14:43:10.001633773Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestDisableAndEnableAtTargetSoc","Output":"    loadpoint_test.go:435: charging above target - soc deactivates charger\n"}
+{"Time":"2026-07-01T14:43:10.002974989Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestDisableAndEnableAtTargetSoc","Output":"    loadpoint_test.go:443: deactivated charger changes status to B\n"}
+{"Time":"2026-07-01T14:43:10.004479465Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestDisableAndEnableAtTargetSoc","Output":"    loadpoint_test.go:450: soc has fallen below target - soc update prevented by timer\n"}
+{"Time":"2026-07-01T14:43:10.013102744Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestDisableAndEnableAtTargetSoc","Output":"    loadpoint_test.go:456: soc has fallen below target - soc update timer expired\n"}
+{"Time":"2026-07-01T14:43:10.014410107Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestDisableAndEnableAtTargetSoc","Output":"--- PASS: TestDisableAndEnableAtTargetSoc (0.01s)\n"}
+{"Time":"2026-07-01T14:43:10.014423374Z","Action":"pass","Package":"github.com/evcc-io/evcc/core","Test":"TestDisableAndEnableAtTargetSoc","Elapsed":0.01}
+{"Time":"2026-07-01T14:43:10.014431749Z","Action":"run","Package":"github.com/evcc-io/evcc/core","Test":"TestSetModeAndSocAtDisconnect"}
+{"Time":"2026-07-01T14:43:10.01443644Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestSetModeAndSocAtDisconnect","Output":"=== RUN   TestSetModeAndSocAtDisconnect\n"}
+{"Time":"2026-07-01T14:43:10.014669893Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestSetModeAndSocAtDisconnect","Output":"    loadpoint_test.go:494: charging at min\n"}
+{"Time":"2026-07-01T14:43:10.014683085Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestSetModeAndSocAtDisconnect","Output":"    loadpoint_test.go:500: switch off when disconnected\n"}
+{"Time":"2026-07-01T14:43:10.01597381Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestSetModeAndSocAtDisconnect","Output":"--- PASS: TestSetModeAndSocAtDisconnect (0.00s)\n"}
+{"Time":"2026-07-01T14:43:10.015986463Z","Action":"pass","Package":"github.com/evcc-io/evcc/core","Test":"TestSetModeAndSocAtDisconnect","Elapsed":0}
+{"Time":"2026-07-01T14:43:10.015993767Z","Action":"run","Package":"github.com/evcc-io/evcc/core","Test":"TestChargedEnergyAtDisconnect"}
+{"Time":"2026-07-01T14:43:10.016006382Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestChargedEnergyAtDisconnect","Output":"=== RUN   TestChargedEnergyAtDisconnect\n"}
+{"Time":"2026-07-01T14:43:10.016197325Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestChargedEnergyAtDisconnect","Output":"    loadpoint_test.go:567: start charging at 0 kWh\n"}
+{"Time":"2026-07-01T14:43:10.016210134Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestChargedEnergyAtDisconnect","Output":"    loadpoint_test.go:573: at 1:00h charging at 5 kWh\n"}
+{"Time":"2026-07-01T14:43:10.117524617Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestChargedEnergyAtDisconnect","Output":"    loadpoint_test.go:528: chargedEnergy: 5000\n"}
+{"Time":"2026-07-01T14:43:10.11756856Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestChargedEnergyAtDisconnect","Output":"    loadpoint_test.go:581: at 1:00h stop charging at 5 kWh\n"}
+{"Time":"2026-07-01T14:43:10.147091671Z","Action":"start","Package":"github.com/evcc-io/evcc/core/prioritizer"}
+{"Time":"2026-07-01T14:43:10.159405306Z","Action":"run","Package":"github.com/evcc-io/evcc/core/prioritizer","Test":"TestPrioritzer"}
+{"Time":"2026-07-01T14:43:10.159437916Z","Action":"output","Package":"github.com/evcc-io/evcc/core/prioritizer","Test":"TestPrioritzer","Output":"=== RUN   TestPrioritzer\n"}
+{"Time":"2026-07-01T14:43:10.159553766Z","Action":"output","Package":"github.com/evcc-io/evcc/core/prioritizer","Test":"TestPrioritzer","Output":"--- PASS: TestPrioritzer (0.00s)\n"}
+{"Time":"2026-07-01T14:43:10.159560955Z","Action":"pass","Package":"github.com/evcc-io/evcc/core/prioritizer","Test":"TestPrioritzer","Elapsed":0}
+{"Time":"2026-07-01T14:43:10.159568221Z","Action":"output","Package":"github.com/evcc-io/evcc/core/prioritizer","Output":"PASS\n"}
+{"Time":"2026-07-01T14:43:10.160397409Z","Action":"output","Package":"github.com/evcc-io/evcc/core/prioritizer","Output":"ok  \tgithub.com/evcc-io/evcc/core/prioritizer\t0.013s\n"}
+{"Time":"2026-07-01T14:43:10.160420605Z","Action":"pass","Package":"github.com/evcc-io/evcc/core/prioritizer","Elapsed":0.013}
+{"Time":"2026-07-01T14:43:10.187473646Z","Action":"start","Package":"github.com/evcc-io/evcc/core/soc"}
+{"Time":"2026-07-01T14:43:10.216340205Z","Action":"run","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestRemainingChargeDuration"}
+{"Time":"2026-07-01T14:43:10.216366143Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestRemainingChargeDuration","Output":"=== RUN   TestRemainingChargeDuration\n"}
+{"Time":"2026-07-01T14:43:10.216403043Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestRemainingChargeDuration","Output":"--- PASS: TestRemainingChargeDuration (0.00s)\n"}
+{"Time":"2026-07-01T14:43:10.216412164Z","Action":"pass","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestRemainingChargeDuration","Elapsed":0}
+{"Time":"2026-07-01T14:43:10.216421286Z","Action":"run","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocEstimation"}
+{"Time":"2026-07-01T14:43:10.216425741Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocEstimation","Output":"=== RUN   TestSocEstimation\n"}
+{"Time":"2026-07-01T14:43:10.21650879Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocEstimation","Output":"    estimator_test.go:80: {chargedEnergy:0 vehicleSoc:0 estimatedSoc:0 virtualCapacity:10000}\n"}
+{"Time":"2026-07-01T14:43:10.21656259Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocEstimation","Output":"    estimator_test.go:80: {chargedEnergy:0 vehicleSoc:20 estimatedSoc:20 virtualCapacity:10000}\n"}
+{"Time":"2026-07-01T14:43:10.216596359Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocEstimation","Output":"    estimator_test.go:80: {chargedEnergy:123 vehicleSoc:20 estimatedSoc:21.23 virtualCapacity:10000}\n"}
+{"Time":"2026-07-01T14:43:10.21662231Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocEstimation","Output":"    estimator_test.go:80: {chargedEnergy:1000 vehicleSoc:20 estimatedSoc:30 virtualCapacity:10000}\n"}
+{"Time":"2026-07-01T14:43:10.216666196Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocEstimation","Output":"    estimator_test.go:80: {chargedEnergy:1100 vehicleSoc:31 estimatedSoc:31 virtualCapacity:10000}\n"}
+{"Time":"2026-07-01T14:43:10.216676984Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocEstimation","Output":"    estimator_test.go:80: {chargedEnergy:1200 vehicleSoc:32 estimatedSoc:32 virtualCapacity:10000}\n"}
+{"Time":"2026-07-01T14:43:10.216703965Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocEstimation","Output":"    estimator_test.go:80: {chargedEnergy:1900 vehicleSoc:39 estimatedSoc:39 virtualCapacity:10000}\n"}
+{"Time":"2026-07-01T14:43:10.216727059Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocEstimation","Output":"    estimator_test.go:80: {chargedEnergy:2000 vehicleSoc:40 estimatedSoc:40 virtualCapacity:10000}\n"}
+{"Time":"2026-07-01T14:43:10.216756973Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocEstimation","Output":"    estimator_test.go:80: {chargedEnergy:6000 vehicleSoc:80 estimatedSoc:80 virtualCapacity:10000}\n"}
+{"Time":"2026-07-01T14:43:10.216778763Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocEstimation","Output":"    estimator_test.go:80: {chargedEnergy:0 vehicleSoc:25 estimatedSoc:25 virtualCapacity:10000}\n"}
+{"Time":"2026-07-01T14:43:10.216799117Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocEstimation","Output":"    estimator_test.go:80: {chargedEnergy:2500 vehicleSoc:25 estimatedSoc:50 virtualCapacity:10000}\n"}
+{"Time":"2026-07-01T14:43:10.216824457Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocEstimation","Output":"    estimator_test.go:80: {chargedEnergy:0 vehicleSoc:50 estimatedSoc:50 virtualCapacity:10000}\n"}
+{"Time":"2026-07-01T14:43:10.216854086Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocEstimation","Output":"    estimator_test.go:80: {chargedEnergy:4990 vehicleSoc:50 estimatedSoc:99.9 virtualCapacity:10000}\n"}
+{"Time":"2026-07-01T14:43:10.216874756Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocEstimation","Output":"    estimator_test.go:80: {chargedEnergy:5000 vehicleSoc:50 estimatedSoc:100 virtualCapacity:10000}\n"}
+{"Time":"2026-07-01T14:43:10.21691061Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocEstimation","Output":"    estimator_test.go:80: {chargedEnergy:5001 vehicleSoc:50 estimatedSoc:100 virtualCapacity:10000}\n"}
+{"Time":"2026-07-01T14:43:10.216986158Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocEstimation","Output":"    estimator_test.go:80: {chargedEnergy:0 vehicleSoc:20 estimatedSoc:20 virtualCapacity:10000}\n"}
+{"Time":"2026-07-01T14:43:10.217079818Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocEstimation","Output":"    estimator_test.go:80: {chargedEnergy:1000 vehicleSoc:30 estimatedSoc:30 virtualCapacity:10000}\n"}
+{"Time":"2026-07-01T14:43:10.217088668Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocEstimation","Output":"    estimator_test.go:80: {chargedEnergy:0 vehicleSoc:0 estimatedSoc:0 virtualCapacity:10000}\n"}
+{"Time":"2026-07-01T14:43:10.21714793Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocEstimation","Output":"    estimator_test.go:80: {chargedEnergy:0 vehicleSoc:20 estimatedSoc:20 virtualCapacity:10000}\n"}
+{"Time":"2026-07-01T14:43:10.217183793Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocEstimation","Output":"    estimator_test.go:80: {chargedEnergy:123 vehicleSoc:20 estimatedSoc:21.23 virtualCapacity:10000}\n"}
+{"Time":"2026-07-01T14:43:10.217242058Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocEstimation","Output":"    estimator_test.go:80: {chargedEnergy:1000 vehicleSoc:20 estimatedSoc:30 virtualCapacity:10000}\n"}
+{"Time":"2026-07-01T14:43:10.217273451Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocEstimation","Output":"    estimator_test.go:80: {chargedEnergy:1100 vehicleSoc:31 estimatedSoc:31 virtualCapacity:10000}\n"}
+{"Time":"2026-07-01T14:43:10.217320217Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocEstimation","Output":"    estimator_test.go:80: {chargedEnergy:1200 vehicleSoc:32 estimatedSoc:32 virtualCapacity:10000}\n"}
+{"Time":"2026-07-01T14:43:10.217360053Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocEstimation","Output":"    estimator_test.go:80: {chargedEnergy:1900 vehicleSoc:39 estimatedSoc:39 virtualCapacity:10000}\n"}
+{"Time":"2026-07-01T14:43:10.217410501Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocEstimation","Output":"    estimator_test.go:80: {chargedEnergy:2000 vehicleSoc:40 estimatedSoc:40 virtualCapacity:10000}\n"}
+{"Time":"2026-07-01T14:43:10.217445521Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocEstimation","Output":"    estimator_test.go:80: {chargedEnergy:6000 vehicleSoc:80 estimatedSoc:80 virtualCapacity:10000}\n"}
+{"Time":"2026-07-01T14:43:10.217516226Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocEstimation","Output":"    estimator_test.go:80: {chargedEnergy:0 vehicleSoc:25 estimatedSoc:25 virtualCapacity:10000}\n"}
+{"Time":"2026-07-01T14:43:10.217541607Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocEstimation","Output":"    estimator_test.go:80: {chargedEnergy:2500 vehicleSoc:25 estimatedSoc:50 virtualCapacity:10000}\n"}
+{"Time":"2026-07-01T14:43:10.21758043Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocEstimation","Output":"    estimator_test.go:80: {chargedEnergy:0 vehicleSoc:50 estimatedSoc:50 virtualCapacity:10000}\n"}
+{"Time":"2026-07-01T14:43:10.217633491Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocEstimation","Output":"    estimator_test.go:80: {chargedEnergy:4990 vehicleSoc:50 estimatedSoc:99.9 virtualCapacity:10000}\n"}
+{"Time":"2026-07-01T14:43:10.217669124Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocEstimation","Output":"    estimator_test.go:80: {chargedEnergy:5000 vehicleSoc:50 estimatedSoc:100 virtualCapacity:10000}\n"}
+{"Time":"2026-07-01T14:43:10.217710593Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocEstimation","Output":"    estimator_test.go:80: {chargedEnergy:5001 vehicleSoc:50 estimatedSoc:100 virtualCapacity:10000}\n"}
+{"Time":"2026-07-01T14:43:10.217745292Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocEstimation","Output":"    estimator_test.go:80: {chargedEnergy:0 vehicleSoc:20 estimatedSoc:20 virtualCapacity:10000}\n"}
+{"Time":"2026-07-01T14:43:10.217784955Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocEstimation","Output":"    estimator_test.go:80: {chargedEnergy:1000 vehicleSoc:30 estimatedSoc:30 virtualCapacity:10000}\n"}
+{"Time":"2026-07-01T14:43:10.217830778Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocEstimation","Output":"--- PASS: TestSocEstimation (0.00s)\n"}
+{"Time":"2026-07-01T14:43:10.217840123Z","Action":"pass","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocEstimation","Elapsed":0}
+{"Time":"2026-07-01T14:43:10.217846727Z","Action":"run","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocFromChargerAndVehicleWithErrors"}
+{"Time":"2026-07-01T14:43:10.217850014Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocFromChargerAndVehicleWithErrors","Output":"=== RUN   TestSocFromChargerAndVehicleWithErrors\n"}
+{"Time":"2026-07-01T14:43:10.217945195Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocFromChargerAndVehicleWithErrors","Output":"    estimator_test.go:174: {chargedEnergy:0 vehicleSoc:0 estimatedSoc:0 virtualCapacity:10000 expectVehicle:false chargerError:0xc000478e80 vehicleError:\u003cnil\u003e}\n"}
+{"Time":"2026-07-01T14:43:10.217992177Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocFromChargerAndVehicleWithErrors","Output":"    estimator_test.go:174: {chargedEnergy:0 vehicleSoc:0 estimatedSoc:20 virtualCapacity:10000 expectVehicle:false chargerError:0x9cd3c0 vehicleError:\u003cnil\u003e}\n"}
+{"Time":"2026-07-01T14:43:10.218020842Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocFromChargerAndVehicleWithErrors","Output":"    estimator_test.go:174: {chargedEnergy:0 vehicleSoc:20 estimatedSoc:20 virtualCapacity:10000 expectVehicle:false chargerError:\u003cnil\u003e vehicleError:\u003cnil\u003e}\n"}
+{"Time":"2026-07-01T14:43:10.218054636Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocFromChargerAndVehicleWithErrors","Output":"    estimator_test.go:174: {chargedEnergy:123 vehicleSoc:20 estimatedSoc:21.23 virtualCapacity:10000 expectVehicle:false chargerError:\u003cnil\u003e vehicleError:\u003cnil\u003e}\n"}
+{"Time":"2026-07-01T14:43:10.218105128Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocFromChargerAndVehicleWithErrors","Output":"    estimator_test.go:174: {chargedEnergy:123 vehicleSoc:0 estimatedSoc:21.23 virtualCapacity:10000 expectVehicle:false chargerError:0xc000478e90 vehicleError:\u003cnil\u003e}\n"}
+{"Time":"2026-07-01T14:43:10.21816284Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocFromChargerAndVehicleWithErrors","Output":"    estimator_test.go:174: {chargedEnergy:1000 vehicleSoc:20 estimatedSoc:30 virtualCapacity:10000 expectVehicle:false chargerError:\u003cnil\u003e vehicleError:\u003cnil\u003e}\n"}
+{"Time":"2026-07-01T14:43:10.218201705Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocFromChargerAndVehicleWithErrors","Output":"    estimator_test.go:174: {chargedEnergy:1100 vehicleSoc:31 estimatedSoc:31 virtualCapacity:10000 expectVehicle:false chargerError:\u003cnil\u003e vehicleError:\u003cnil\u003e}\n"}
+{"Time":"2026-07-01T14:43:10.218224606Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocFromChargerAndVehicleWithErrors","Output":"    estimator_test.go:174: {chargedEnergy:1200 vehicleSoc:32 estimatedSoc:32 virtualCapacity:10000 expectVehicle:false chargerError:\u003cnil\u003e vehicleError:\u003cnil\u003e}\n"}
+{"Time":"2026-07-01T14:43:10.218252047Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocFromChargerAndVehicleWithErrors","Output":"    estimator_test.go:174: {chargedEnergy:1900 vehicleSoc:39 estimatedSoc:39 virtualCapacity:10000 expectVehicle:false chargerError:\u003cnil\u003e vehicleError:\u003cnil\u003e}\n"}
+{"Time":"2026-07-01T14:43:10.218287471Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocFromChargerAndVehicleWithErrors","Output":"    estimator_test.go:174: {chargedEnergy:2000 vehicleSoc:40 estimatedSoc:40 virtualCapacity:10000 expectVehicle:false chargerError:\u003cnil\u003e vehicleError:\u003cnil\u003e}\n"}
+{"Time":"2026-07-01T14:43:10.218310859Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocFromChargerAndVehicleWithErrors","Output":"    estimator_test.go:174: {chargedEnergy:3000 vehicleSoc:0 estimatedSoc:50 virtualCapacity:10000 expectVehicle:true chargerError:0x9cd3b0 vehicleError:0xc000478ea0}\n"}
+{"Time":"2026-07-01T14:43:10.218374228Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocFromChargerAndVehicleWithErrors","Output":"    estimator_test.go:174: {chargedEnergy:3100 vehicleSoc:0 estimatedSoc:51 virtualCapacity:10000 expectVehicle:true chargerError:0x9cd3b0 vehicleError:0x9cd3c0}\n"}
+{"Time":"2026-07-01T14:43:10.218418264Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocFromChargerAndVehicleWithErrors","Output":"    estimator_test.go:174: {chargedEnergy:5100 vehicleSoc:71 estimatedSoc:71 virtualCapacity:10000 expectVehicle:true chargerError:0x9cd3b0 vehicleError:\u003cnil\u003e}\n"}
+{"Time":"2026-07-01T14:43:10.218470154Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocFromChargerAndVehicleWithErrors","Output":"    estimator_test.go:174: {chargedEnergy:5200 vehicleSoc:72 estimatedSoc:72 virtualCapacity:10000 expectVehicle:true chargerError:0x9cd3b0 vehicleError:\u003cnil\u003e}\n"}
+{"Time":"2026-07-01T14:43:10.218507522Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocFromChargerAndVehicleWithErrors","Output":"    estimator_test.go:174: {chargedEnergy:5300 vehicleSoc:0 estimatedSoc:73 virtualCapacity:10000 expectVehicle:true chargerError:0x9cd3b0 vehicleError:0xc000478eb0}\n"}
+{"Time":"2026-07-01T14:43:10.218556283Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocFromChargerAndVehicleWithErrors","Output":"    estimator_test.go:174: {chargedEnergy:5300 vehicleSoc:73 estimatedSoc:73 virtualCapacity:10000 expectVehicle:true chargerError:0x9cd3b0 vehicleError:\u003cnil\u003e}\n"}
+{"Time":"2026-07-01T14:43:10.218592213Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocFromChargerAndVehicleWithErrors","Output":"    estimator_test.go:174: {chargedEnergy:5500 vehicleSoc:75 estimatedSoc:75 virtualCapacity:10000 expectVehicle:true chargerError:0x9cd3b0 vehicleError:\u003cnil\u003e}\n"}
+{"Time":"2026-07-01T14:43:10.218632826Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocFromChargerAndVehicleWithErrors","Output":"    estimator_test.go:174: {chargedEnergy:6000 vehicleSoc:80 estimatedSoc:80 virtualCapacity:10000 expectVehicle:true chargerError:0x9cd3b0 vehicleError:\u003cnil\u003e}\n"}
+{"Time":"2026-07-01T14:43:10.218669951Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocFromChargerAndVehicleWithErrors","Output":"    estimator_test.go:174: {chargedEnergy:0 vehicleSoc:25 estimatedSoc:25 virtualCapacity:10000 expectVehicle:true chargerError:0x9cd3b0 vehicleError:\u003cnil\u003e}\n"}
+{"Time":"2026-07-01T14:43:10.218721655Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocFromChargerAndVehicleWithErrors","Output":"    estimator_test.go:174: {chargedEnergy:2500 vehicleSoc:25 estimatedSoc:50 virtualCapacity:10000 expectVehicle:true chargerError:0x9cd3b0 vehicleError:\u003cnil\u003e}\n"}
+{"Time":"2026-07-01T14:43:10.21875717Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocFromChargerAndVehicleWithErrors","Output":"    estimator_test.go:174: {chargedEnergy:0 vehicleSoc:50 estimatedSoc:50 virtualCapacity:10000 expectVehicle:true chargerError:0x9cd3b0 vehicleError:\u003cnil\u003e}\n"}
+{"Time":"2026-07-01T14:43:10.218808033Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocFromChargerAndVehicleWithErrors","Output":"    estimator_test.go:174: {chargedEnergy:4990 vehicleSoc:50 estimatedSoc:99.9 virtualCapacity:10000 expectVehicle:true chargerError:0x9cd3b0 vehicleError:\u003cnil\u003e}\n"}
+{"Time":"2026-07-01T14:43:10.218847061Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocFromChargerAndVehicleWithErrors","Output":"    estimator_test.go:174: {chargedEnergy:5000 vehicleSoc:50 estimatedSoc:100 virtualCapacity:10000 expectVehicle:true chargerError:0x9cd3b0 vehicleError:\u003cnil\u003e}\n"}
+{"Time":"2026-07-01T14:43:10.218893555Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocFromChargerAndVehicleWithErrors","Output":"    estimator_test.go:174: {chargedEnergy:5001 vehicleSoc:50 estimatedSoc:100 virtualCapacity:10000 expectVehicle:false chargerError:\u003cnil\u003e vehicleError:\u003cnil\u003e}\n"}
+{"Time":"2026-07-01T14:43:10.218916177Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocFromChargerAndVehicleWithErrors","Output":"    estimator_test.go:174: {chargedEnergy:0 vehicleSoc:20 estimatedSoc:20 virtualCapacity:10000 expectVehicle:false chargerError:\u003cnil\u003e vehicleError:\u003cnil\u003e}\n"}
+{"Time":"2026-07-01T14:43:10.218944062Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocFromChargerAndVehicleWithErrors","Output":"    estimator_test.go:174: {chargedEnergy:1000 vehicleSoc:30 estimatedSoc:30 virtualCapacity:10000 expectVehicle:false chargerError:\u003cnil\u003e vehicleError:\u003cnil\u003e}\n"}
+{"Time":"2026-07-01T14:43:10.218993885Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocFromChargerAndVehicleWithErrors","Output":"--- PASS: TestSocFromChargerAndVehicleWithErrors (0.00s)\n"}
+{"Time":"2026-07-01T14:43:10.218999683Z","Action":"pass","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestSocFromChargerAndVehicleWithErrors","Elapsed":0}
+{"Time":"2026-07-01T14:43:10.219005482Z","Action":"run","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestImprovedEstimatorRemainingChargeDuration"}
+{"Time":"2026-07-01T14:43:10.219009204Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestImprovedEstimatorRemainingChargeDuration","Output":"=== RUN   TestImprovedEstimatorRemainingChargeDuration\n"}
+{"Time":"2026-07-01T14:43:10.219038173Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestImprovedEstimatorRemainingChargeDuration","Output":"    estimator_test.go:235: {0.75 10 60 300 5000000000000}\n"}
+{"Time":"2026-07-01T14:43:10.219077578Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestImprovedEstimatorRemainingChargeDuration","Output":"    estimator_test.go:235: {0.75 50 100 300 5000000000000}\n"}
+{"Time":"2026-07-01T14:43:10.219126645Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestChargedEnergyAtDisconnect","Output":"    loadpoint_test.go:528: chargedEnergy: 5000\n"}
+{"Time":"2026-07-01T14:43:10.219133617Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestChargedEnergyAtDisconnect","Output":"    loadpoint_test.go:589: at 1:00h restart charging at 5 kWh\n"}
+{"Time":"2026-07-01T14:43:10.21914104Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestImprovedEstimatorRemainingChargeDuration","Output":"    estimator_test.go:235: {17 10 60 7000 4857000000000}\n"}
+{"Time":"2026-07-01T14:43:10.219144084Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestImprovedEstimatorRemainingChargeDuration","Output":"    estimator_test.go:235: {17 50 100 7000 5303000000000}\n"}
+{"Time":"2026-07-01T14:43:10.219173157Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestImprovedEstimatorRemainingChargeDuration","Output":"    estimator_test.go:235: {50 10 60 11000 9091000000000}\n"}
+{"Time":"2026-07-01T14:43:10.219189054Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestImprovedEstimatorRemainingChargeDuration","Output":"    estimator_test.go:235: {50 50 100 11000 10637000000000}\n"}
+{"Time":"2026-07-01T14:43:10.219216828Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestImprovedEstimatorRemainingChargeDuration","Output":"    estimator_test.go:235: {80 10 60 22000 7273000000000}\n"}
+{"Time":"2026-07-01T14:43:10.21925098Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestImprovedEstimatorRemainingChargeDuration","Output":"    estimator_test.go:235: {80 50 100 22000 10119000000000}\n"}
+{"Time":"2026-07-01T14:43:10.219273469Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestImprovedEstimatorRemainingChargeDuration","Output":"--- PASS: TestImprovedEstimatorRemainingChargeDuration (0.00s)\n"}
+{"Time":"2026-07-01T14:43:10.219283793Z","Action":"pass","Package":"github.com/evcc-io/evcc/core/soc","Test":"TestImprovedEstimatorRemainingChargeDuration","Elapsed":0}
+{"Time":"2026-07-01T14:43:10.219290345Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Output":"PASS\n"}
+{"Time":"2026-07-01T14:43:10.220166393Z","Action":"output","Package":"github.com/evcc-io/evcc/core/soc","Output":"ok  \tgithub.com/evcc-io/evcc/core/soc\t0.033s\n"}
+{"Time":"2026-07-01T14:43:10.220176756Z","Action":"pass","Package":"github.com/evcc-io/evcc/core/soc","Elapsed":0.033}
+{"Time":"2026-07-01T14:43:10.320686137Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestChargedEnergyAtDisconnect","Output":"    loadpoint_test.go:528: chargedEnergy: 5000\n"}
+{"Time":"2026-07-01T14:43:10.320721228Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestChargedEnergyAtDisconnect","Output":"    loadpoint_test.go:597: at 1:30h continue charging at 7.5 kWh\n"}
+{"Time":"2026-07-01T14:43:10.422270621Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestChargedEnergyAtDisconnect","Output":"    loadpoint_test.go:528: chargedEnergy: 7500\n"}
+{"Time":"2026-07-01T14:43:10.422307042Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestChargedEnergyAtDisconnect","Output":"    loadpoint_test.go:605: at 2:00h stop charging at 10 kWh\n"}
+{"Time":"2026-07-01T14:43:10.514532218Z","Action":"start","Package":"github.com/evcc-io/evcc/core/wrapper"}
+{"Time":"2026-07-01T14:43:10.521566464Z","Action":"run","Package":"github.com/evcc-io/evcc/core/wrapper","Test":"TestProxyChargeMeter"}
+{"Time":"2026-07-01T14:43:10.52158904Z","Action":"output","Package":"github.com/evcc-io/evcc/core/wrapper","Test":"TestProxyChargeMeter","Output":"=== RUN   TestProxyChargeMeter\n"}
+{"Time":"2026-07-01T14:43:10.52160297Z","Action":"output","Package":"github.com/evcc-io/evcc/core/wrapper","Test":"TestProxyChargeMeter","Output":"--- PASS: TestProxyChargeMeter (0.00s)\n"}
+{"Time":"2026-07-01T14:43:10.521608225Z","Action":"pass","Package":"github.com/evcc-io/evcc/core/wrapper","Test":"TestProxyChargeMeter","Elapsed":0}
+{"Time":"2026-07-01T14:43:10.521617333Z","Action":"run","Package":"github.com/evcc-io/evcc/core/wrapper","Test":"TestNoMeter"}
+{"Time":"2026-07-01T14:43:10.521620462Z","Action":"output","Package":"github.com/evcc-io/evcc/core/wrapper","Test":"TestNoMeter","Output":"=== RUN   TestNoMeter\n"}
+{"Time":"2026-07-01T14:43:10.523723501Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestChargedEnergyAtDisconnect","Output":"    loadpoint_test.go:528: chargedEnergy: 10000\n"}
+{"Time":"2026-07-01T14:43:10.523740086Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestChargedEnergyAtDisconnect","Output":"--- PASS: TestChargedEnergyAtDisconnect (0.51s)\n"}
+{"Time":"2026-07-01T14:43:10.523746977Z","Action":"pass","Package":"github.com/evcc-io/evcc/core","Test":"TestChargedEnergyAtDisconnect","Elapsed":0.51}
+{"Time":"2026-07-01T14:43:10.523774814Z","Action":"run","Package":"github.com/evcc-io/evcc/core","Test":"TestSocPoll"}
+{"Time":"2026-07-01T14:43:10.523779434Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestSocPoll","Output":"=== RUN   TestSocPoll\n"}
+{"Time":"2026-07-01T14:43:10.52382561Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestSocPoll","Output":"    loadpoint_test.go:772: {mode:charging status:A dt:-1 res:false}\n"}
+{"Time":"2026-07-01T14:43:10.523831371Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestSocPoll","Output":"    loadpoint_test.go:772: {mode:charging status:A dt:0 res:false}\n"}
+{"Time":"2026-07-01T14:43:10.524934067Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestSocPoll","Output":"    loadpoint_test.go:772: {mode:charging status:A dt:3600000000000 res:false}\n"}
+{"Time":"2026-07-01T14:43:10.52602271Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestSocPoll","Output":"    loadpoint_test.go:772: {mode:charging status:B dt:-1 res:true}\n"}
+{"Time":"2026-07-01T14:43:10.526029702Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestSocPoll","Output":"    loadpoint_test.go:772: {mode:charging status:B dt:0 res:false}\n"}
+{"Time":"2026-07-01T14:43:10.527049613Z","Action":"output","Package":"github.com/evcc-io/evcc/core/wrapper","Test":"TestNoMeter","Output":"--- PASS: TestNoMeter (0.01s)\n"}
+{"Time":"2026-07-01T14:43:10.527057022Z","Action":"pass","Package":"github.com/evcc-io/evcc/core/wrapper","Test":"TestNoMeter","Elapsed":0.01}
+{"Time":"2026-07-01T14:43:10.527063723Z","Action":"run","Package":"github.com/evcc-io/evcc/core/wrapper","Test":"TestWrappedMeter"}
+{"Time":"2026-07-01T14:43:10.527066454Z","Action":"output","Package":"github.com/evcc-io/evcc/core/wrapper","Test":"TestWrappedMeter","Output":"=== RUN   TestWrappedMeter\n"}
+{"Time":"2026-07-01T14:43:10.527140705Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestSocPoll","Output":"    loadpoint_test.go:772: {mode:charging status:B dt:3600000000000 res:false}\n"}
+{"Time":"2026-07-01T14:43:10.528260392Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestSocPoll","Output":"    loadpoint_test.go:772: {mode:charging status:C dt:-1 res:true}\n"}
+{"Time":"2026-07-01T14:43:10.528268799Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestSocPoll","Output":"    loadpoint_test.go:772: {mode:charging status:C dt:0 res:true}\n"}
+{"Time":"2026-07-01T14:43:10.529367252Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestSocPoll","Output":"    loadpoint_test.go:772: {mode:charging status:C dt:1800000000000 res:true}\n"}
+{"Time":"2026-07-01T14:43:10.530789704Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestSocPoll","Output":"    loadpoint_test.go:772: {mode:charging status:B dt:-1 res:true}\n"}
+{"Time":"2026-07-01T14:43:10.530808661Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestSocPoll","Output":"    loadpoint_test.go:772: {mode:charging status:B dt:0 res:false}\n"}
+{"Time":"2026-07-01T14:43:10.53158165Z","Action":"output","Package":"github.com/evcc-io/evcc/core/wrapper","Test":"TestWrappedMeter","Output":"--- PASS: TestWrappedMeter (0.00s)\n"}
+{"Time":"2026-07-01T14:43:10.531594639Z","Action":"pass","Package":"github.com/evcc-io/evcc/core/wrapper","Test":"TestWrappedMeter","Elapsed":0}
+{"Time":"2026-07-01T14:43:10.53160212Z","Action":"run","Package":"github.com/evcc-io/evcc/core/wrapper","Test":"TestTimer"}
+{"Time":"2026-07-01T14:43:10.531605151Z","Action":"output","Package":"github.com/evcc-io/evcc/core/wrapper","Test":"TestTimer","Output":"=== RUN   TestTimer\n"}
+{"Time":"2026-07-01T14:43:10.531806109Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestSocPoll","Output":"    loadpoint_test.go:772: {mode:charging status:B dt:3600000000000 res:false}\n"}
+{"Time":"2026-07-01T14:43:10.532901946Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestSocPoll","Output":"    loadpoint_test.go:772: {mode:connected status:A dt:-1 res:false}\n"}
+{"Time":"2026-07-01T14:43:10.532912475Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestSocPoll","Output":"    loadpoint_test.go:772: {mode:connected status:A dt:0 res:false}\n"}
+{"Time":"2026-07-01T14:43:10.534014762Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestSocPoll","Output":"    loadpoint_test.go:772: {mode:connected status:A dt:3600000000000 res:false}\n"}
+{"Time":"2026-07-01T14:43:10.534840844Z","Action":"output","Package":"github.com/evcc-io/evcc/core/wrapper","Test":"TestTimer","Output":"--- PASS: TestTimer (0.00s)\n"}
+{"Time":"2026-07-01T14:43:10.534846733Z","Action":"pass","Package":"github.com/evcc-io/evcc/core/wrapper","Test":"TestTimer","Elapsed":0}
+{"Time":"2026-07-01T14:43:10.534851142Z","Action":"output","Package":"github.com/evcc-io/evcc/core/wrapper","Output":"PASS\n"}
+{"Time":"2026-07-01T14:43:10.535113625Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestSocPoll","Output":"    loadpoint_test.go:772: {mode:connected status:B dt:-1 res:true}\n"}
+{"Time":"2026-07-01T14:43:10.535120989Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestSocPoll","Output":"    loadpoint_test.go:772: {mode:connected status:B dt:0 res:false}\n"}
+{"Time":"2026-07-01T14:43:10.535424102Z","Action":"output","Package":"github.com/evcc-io/evcc/core/wrapper","Output":"ok  \tgithub.com/evcc-io/evcc/core/wrapper\t0.021s\n"}
+{"Time":"2026-07-01T14:43:10.53543391Z","Action":"pass","Package":"github.com/evcc-io/evcc/core/wrapper","Elapsed":0.021}
+{"Time":"2026-07-01T14:43:10.536254568Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestSocPoll","Output":"    loadpoint_test.go:772: {mode:connected status:B dt:1800000000000 res:false}\n"}
+{"Time":"2026-07-01T14:43:10.537357895Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestSocPoll","Output":"    loadpoint_test.go:772: {mode:connected status:B dt:3600000000000 res:true}\n"}
+{"Time":"2026-07-01T14:43:10.538450341Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestSocPoll","Output":"    loadpoint_test.go:772: {mode:connected status:C dt:-1 res:true}\n"}
+{"Time":"2026-07-01T14:43:10.5384567Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestSocPoll","Output":"    loadpoint_test.go:772: {mode:connected status:C dt:0 res:true}\n"}
+{"Time":"2026-07-01T14:43:10.539546705Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestSocPoll","Output":"    loadpoint_test.go:772: {mode:connected status:C dt:1800000000000 res:true}\n"}
+{"Time":"2026-07-01T14:43:10.540642185Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestSocPoll","Output":"    loadpoint_test.go:772: {mode:connected status:C dt:3600000000000 res:true}\n"}
+{"Time":"2026-07-01T14:43:10.541732529Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestSocPoll","Output":"    loadpoint_test.go:772: {mode:always status:A dt:-1 res:true}\n"}
+{"Time":"2026-07-01T14:43:10.541741777Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestSocPoll","Output":"    loadpoint_test.go:772: {mode:always status:A dt:0 res:false}\n"}
+{"Time":"2026-07-01T14:43:10.542835811Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestSocPoll","Output":"    loadpoint_test.go:772: {mode:always status:A dt:1800000000000 res:false}\n"}
+{"Time":"2026-07-01T14:43:10.543933554Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestSocPoll","Output":"    loadpoint_test.go:772: {mode:always status:A dt:3600000000000 res:true}\n"}
+{"Time":"2026-07-01T14:43:10.545018729Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestSocPoll","Output":"    loadpoint_test.go:772: {mode:always status:B dt:-1 res:true}\n"}
+{"Time":"2026-07-01T14:43:10.545031661Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestSocPoll","Output":"    loadpoint_test.go:772: {mode:always status:B dt:0 res:false}\n"}
+{"Time":"2026-07-01T14:43:10.546120002Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestSocPoll","Output":"    loadpoint_test.go:772: {mode:always status:B dt:1800000000000 res:false}\n"}
+{"Time":"2026-07-01T14:43:10.547202194Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestSocPoll","Output":"    loadpoint_test.go:772: {mode:always status:B dt:3600000000000 res:true}\n"}
+{"Time":"2026-07-01T14:43:10.548287402Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestSocPoll","Output":"    loadpoint_test.go:772: {mode:always status:C dt:-1 res:true}\n"}
+{"Time":"2026-07-01T14:43:10.548294601Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestSocPoll","Output":"    loadpoint_test.go:772: {mode:always status:C dt:0 res:true}\n"}
+{"Time":"2026-07-01T14:43:10.549380027Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestSocPoll","Output":"    loadpoint_test.go:772: {mode:always status:C dt:1800000000000 res:true}\n"}
+{"Time":"2026-07-01T14:43:10.550468351Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestSocPoll","Output":"    loadpoint_test.go:772: {mode:always status:C dt:3600000000000 res:true}\n"}
+{"Time":"2026-07-01T14:43:10.551565929Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestSocPoll","Output":"--- PASS: TestSocPoll (0.03s)\n"}
+{"Time":"2026-07-01T14:43:10.55158077Z","Action":"pass","Package":"github.com/evcc-io/evcc/core","Test":"TestSocPoll","Elapsed":0.03}
+{"Time":"2026-07-01T14:43:10.551585976Z","Action":"run","Package":"github.com/evcc-io/evcc/core","Test":"TestPublishSocAndRange"}
+{"Time":"2026-07-01T14:43:10.551588772Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPublishSocAndRange","Output":"=== RUN   TestPublishSocAndRange\n"}
+{"Time":"2026-07-01T14:43:10.552833863Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPublishSocAndRange","Output":"[foo   ] ERROR 2026/07/01 14:43:10 vehicle soc: foo\n"}
+{"Time":"2026-07-01T14:43:10.555017246Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPublishSocAndRange","Output":"[foo   ] ERROR 2026/07/01 14:43:10 vehicle soc: foo\n"}
+{"Time":"2026-07-01T14:43:10.55612025Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPublishSocAndRange","Output":"[foo   ] ERROR 2026/07/01 14:43:10 vehicle soc: foo\n"}
+{"Time":"2026-07-01T14:43:10.556133996Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestPublishSocAndRange","Output":"--- PASS: TestPublishSocAndRange (0.00s)\n"}
+{"Time":"2026-07-01T14:43:10.556140709Z","Action":"pass","Package":"github.com/evcc-io/evcc/core","Test":"TestPublishSocAndRange","Elapsed":0}
+{"Time":"2026-07-01T14:43:10.556147003Z","Action":"run","Package":"github.com/evcc-io/evcc/core","Test":"TestVehicleDetectByID"}
+{"Time":"2026-07-01T14:43:10.556150812Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestVehicleDetectByID","Output":"=== RUN   TestVehicleDetectByID\n"}
+{"Time":"2026-07-01T14:43:10.556188425Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestVehicleDetectByID","Output":"    loadpoint_vehicle_test.go:128: {string:1/_/_-\u003e0 id:1 i1: i2: res:\u003cnil\u003e prepare:0x149de80}\n"}
+{"Time":"2026-07-01T14:43:10.556252388Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestVehicleDetectByID","Output":"    loadpoint_vehicle_test.go:128: {string:1/1/2-\u003e1 id:1 i1:1 i2:2 res:0xc000666480 prepare:0x149dda0}\n"}
+{"Time":"2026-07-01T14:43:10.556260714Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestVehicleDetectByID","Output":"    loadpoint_vehicle_test.go:128: {string:2/1/2-\u003e2 id:2 i1:1 i2:2 res:0xc000666490 prepare:0x149dc20}\n"}
+{"Time":"2026-07-01T14:43:10.556285594Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestVehicleDetectByID","Output":"    loadpoint_vehicle_test.go:128: {string:11/1*/2-\u003e1 id:11 i1:1* i2:2 res:0xc000666480 prepare:0x149da00}\n"}
+{"Time":"2026-07-01T14:43:10.556349924Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestVehicleDetectByID","Output":"    loadpoint_vehicle_test.go:128: {string:22/1*/2*-\u003e2 id:22 i1:1* i2:2* res:0xc000666490 prepare:0x149d740}\n"}
+{"Time":"2026-07-01T14:43:10.556387371Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestVehicleDetectByID","Output":"    loadpoint_vehicle_test.go:128: {string:2/_/*-\u003e2 id:2 i1: i2:* res:0xc000666490 prepare:0x149d540}\n"}
+{"Time":"2026-07-01T14:43:10.556433914Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestVehicleDetectByID","Output":"--- PASS: TestVehicleDetectByID (0.00s)\n"}
+{"Time":"2026-07-01T14:43:10.556440787Z","Action":"pass","Package":"github.com/evcc-io/evcc/core","Test":"TestVehicleDetectByID","Elapsed":0}
+{"Time":"2026-07-01T14:43:10.556445274Z","Action":"run","Package":"github.com/evcc-io/evcc/core","Test":"TestDefaultVehicle"}
+{"Time":"2026-07-01T14:43:10.556447901Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestDefaultVehicle","Output":"=== RUN   TestDefaultVehicle\n"}
+{"Time":"2026-07-01T14:43:10.556775526Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestDefaultVehicle","Output":"--- PASS: TestDefaultVehicle (0.00s)\n"}
+{"Time":"2026-07-01T14:43:10.556796879Z","Action":"pass","Package":"github.com/evcc-io/evcc/core","Test":"TestDefaultVehicle","Elapsed":0}
+{"Time":"2026-07-01T14:43:10.556803179Z","Action":"run","Package":"github.com/evcc-io/evcc/core","Test":"TestReconnectVehicle"}
+{"Time":"2026-07-01T14:43:10.556807247Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestReconnectVehicle","Output":"=== RUN   TestReconnectVehicle\n"}
+{"Time":"2026-07-01T14:43:10.556814193Z","Action":"run","Package":"github.com/evcc-io/evcc/core","Test":"TestReconnectVehicle/without_vehicle_id"}
+{"Time":"2026-07-01T14:43:10.556818437Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestReconnectVehicle/without_vehicle_id","Output":"=== RUN   TestReconnectVehicle/without_vehicle_id\n"}
+{"Time":"2026-07-01T14:43:10.557969199Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestReconnectVehicle/without_vehicle_id","Output":"--- PASS: TestReconnectVehicle/without_vehicle_id (0.00s)\n"}
+{"Time":"2026-07-01T14:43:10.557982997Z","Action":"pass","Package":"github.com/evcc-io/evcc/core","Test":"TestReconnectVehicle/without_vehicle_id","Elapsed":0}
+{"Time":"2026-07-01T14:43:10.557987115Z","Action":"run","Package":"github.com/evcc-io/evcc/core","Test":"TestReconnectVehicle/with_vehicle_id"}
+{"Time":"2026-07-01T14:43:10.557989868Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestReconnectVehicle/with_vehicle_id","Output":"=== RUN   TestReconnectVehicle/with_vehicle_id\n"}
+{"Time":"2026-07-01T14:43:10.557993589Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestReconnectVehicle/with_vehicle_id","Output":"--- PASS: TestReconnectVehicle/with_vehicle_id (0.00s)\n"}
+{"Time":"2026-07-01T14:43:10.55799648Z","Action":"pass","Package":"github.com/evcc-io/evcc/core","Test":"TestReconnectVehicle/with_vehicle_id","Elapsed":0}
+{"Time":"2026-07-01T14:43:10.558000478Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestReconnectVehicle","Output":"--- PASS: TestReconnectVehicle (0.00s)\n"}
+{"Time":"2026-07-01T14:43:10.558003484Z","Action":"pass","Package":"github.com/evcc-io/evcc/core","Test":"TestReconnectVehicle","Elapsed":0}
+{"Time":"2026-07-01T14:43:10.558006252Z","Action":"run","Package":"github.com/evcc-io/evcc/core","Test":"TestProgress"}
+{"Time":"2026-07-01T14:43:10.558008724Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestProgress","Output":"=== RUN   TestProgress\n"}
+{"Time":"2026-07-01T14:43:10.55801205Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestProgress","Output":"--- PASS: TestProgress (0.00s)\n"}
+{"Time":"2026-07-01T14:43:10.558014981Z","Action":"pass","Package":"github.com/evcc-io/evcc/core","Test":"TestProgress","Elapsed":0}
+{"Time":"2026-07-01T14:43:10.558017605Z","Action":"run","Package":"github.com/evcc-io/evcc/core","Test":"TestDetermineBatteryMode"}
+{"Time":"2026-07-01T14:43:10.558020022Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestDetermineBatteryMode","Output":"=== RUN   TestDetermineBatteryMode\n"}
+{"Time":"2026-07-01T14:43:10.558037164Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestDetermineBatteryMode","Output":"--- PASS: TestDetermineBatteryMode (0.00s)\n"}
+{"Time":"2026-07-01T14:43:10.558043761Z","Action":"pass","Package":"github.com/evcc-io/evcc/core","Test":"TestDetermineBatteryMode","Elapsed":0}
+{"Time":"2026-07-01T14:43:10.558047072Z","Action":"run","Package":"github.com/evcc-io/evcc/core","Test":"TestUpdateBatteryMode"}
+{"Time":"2026-07-01T14:43:10.55804987Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestUpdateBatteryMode","Output":"=== RUN   TestUpdateBatteryMode\n"}
+{"Time":"2026-07-01T14:43:10.5580531Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestUpdateBatteryMode","Output":"--- PASS: TestUpdateBatteryMode (0.00s)\n"}
+{"Time":"2026-07-01T14:43:10.558055651Z","Action":"pass","Package":"github.com/evcc-io/evcc/core","Test":"TestUpdateBatteryMode","Elapsed":0}
+{"Time":"2026-07-01T14:43:10.558061496Z","Action":"run","Package":"github.com/evcc-io/evcc/core","Test":"TestSitePower"}
+{"Time":"2026-07-01T14:43:10.558064034Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestSitePower","Output":"=== RUN   TestSitePower\n"}
+{"Time":"2026-07-01T14:43:10.55806793Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestSitePower","Output":"--- PASS: TestSitePower (0.00s)\n"}
+{"Time":"2026-07-01T14:43:10.558070562Z","Action":"pass","Package":"github.com/evcc-io/evcc/core","Test":"TestSitePower","Elapsed":0}
+{"Time":"2026-07-01T14:43:10.55807442Z","Action":"run","Package":"github.com/evcc-io/evcc/core","Test":"TestGreenShare"}
+{"Time":"2026-07-01T14:43:10.558077096Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestGreenShare","Output":"=== RUN   TestGreenShare\n"}
+{"Time":"2026-07-01T14:43:10.55807997Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestGreenShare","Output":"    site_test.go:118: half grid, half pv, green home\n"}
+{"Time":"2026-07-01T14:43:10.558082891Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestGreenShare","Output":"    site_test.go:118: half grid, half pv, no home\n"}
+{"Time":"2026-07-01T14:43:10.55808557Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestGreenShare","Output":"    site_test.go:118: half grid, half pv, no lp\n"}
+{"Time":"2026-07-01T14:43:10.558088156Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestGreenShare","Output":"    site_test.go:118: full pv\n"}
+{"Time":"2026-07-01T14:43:10.558090804Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestGreenShare","Output":"    site_test.go:118: full grid\n"}
+{"Time":"2026-07-01T14:43:10.558093335Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestGreenShare","Output":"    site_test.go:118: half grid, half battery, green home\n"}
+{"Time":"2026-07-01T14:43:10.558096208Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestGreenShare","Output":"    site_test.go:118: half grid, half battery, no home\n"}
+{"Time":"2026-07-01T14:43:10.558099819Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestGreenShare","Output":"    site_test.go:118: half grid, half battery, no lp\n"}
+{"Time":"2026-07-01T14:43:10.55810252Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestGreenShare","Output":"    site_test.go:118: full pv, pv export\n"}
+{"Time":"2026-07-01T14:43:10.558105397Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestGreenShare","Output":"    site_test.go:118: full pv, pv export, no lp\n"}
+{"Time":"2026-07-01T14:43:10.558108396Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestGreenShare","Output":"    site_test.go:118: full pv, pv export, battery charge\n"}
+{"Time":"2026-07-01T14:43:10.558112976Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestGreenShare","Output":"    site_test.go:118: full grid, battery charge\n"}
+{"Time":"2026-07-01T14:43:10.558117964Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestGreenShare","Output":"    site_test.go:118: full grid, battery charge, no lp\n"}
+{"Time":"2026-07-01T14:43:10.558122623Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestGreenShare","Output":"    site_test.go:118: half grid, half pv, battery charge, no lp\n"}
+{"Time":"2026-07-01T14:43:10.558127724Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestGreenShare","Output":"    site_test.go:118: half grid, half pv, battery charge, home, lp\n"}
+{"Time":"2026-07-01T14:43:10.558132448Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestGreenShare","Output":"--- PASS: TestGreenShare (0.00s)\n"}
+{"Time":"2026-07-01T14:43:10.558135092Z","Action":"pass","Package":"github.com/evcc-io/evcc/core","Test":"TestGreenShare","Elapsed":0}
+{"Time":"2026-07-01T14:43:10.55813772Z","Action":"run","Package":"github.com/evcc-io/evcc/core","Test":"TestTimer"}
+{"Time":"2026-07-01T14:43:10.558142098Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestTimer","Output":"=== RUN   TestTimer\n"}
+{"Time":"2026-07-01T14:43:10.561210253Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Test":"TestTimer","Output":"--- PASS: TestTimer (0.00s)\n"}
+{"Time":"2026-07-01T14:43:10.561220751Z","Action":"pass","Package":"github.com/evcc-io/evcc/core","Test":"TestTimer","Elapsed":0}
+{"Time":"2026-07-01T14:43:10.561224661Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Output":"PASS\n"}
+{"Time":"2026-07-01T14:43:10.562716101Z","Action":"output","Package":"github.com/evcc-io/evcc/core","Output":"ok  \tgithub.com/evcc-io/evcc/core\t0.973s\n"}
+{"Time":"2026-07-01T14:43:10.562726436Z","Action":"pass","Package":"github.com/evcc-io/evcc/core","Elapsed":0.973}
+{"Time":"2026-07-01T14:43:11.315990391Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestOcpp/TestConnect","Output":"*remotetrigger.TriggerMessageRequest \u0026{RequestedMessage:StatusNotification ConnectorId:0xc0008fc1c0}\n"}
+{"Time":"2026-07-01T14:43:11.316376295Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestOcpp/TestConnect","Output":"    ocpp_test.go:72: StatusNotification: \u0026{}\n"}
+{"Time":"2026-07-01T14:43:11.318541065Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestOcpp/TestConnect","Output":"*core.GetConfigurationRequest \u0026{Key:[]}\n"}
+{"Time":"2026-07-01T14:43:11.320030542Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestOcpp/TestConnect","Output":"*remotetrigger.TriggerMessageRequest \u0026{RequestedMessage:MeterValues ConnectorId:0xc000693248}\n"}
+{"Time":"2026-07-01T14:43:11.320380127Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestOcpp/TestConnect","Output":"    ocpp_test.go:87: MeterValues: \u0026{}\n"}
+{"Time":"2026-07-01T14:43:12.819306991Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestOcpp/TestConnect","Output":"*remotetrigger.TriggerMessageRequest \u0026{RequestedMessage:StatusNotification ConnectorId:0xc00061c5e0}\n"}
+{"Time":"2026-07-01T14:43:12.819598916Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestOcpp/TestConnect","Output":"    ocpp_test.go:72: StatusNotification: \u0026{}\n"}
+{"Time":"2026-07-01T14:43:12.831033792Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestOcpp/TestConnect","Output":"--- PASS: TestOcpp/TestConnect (3.02s)\n"}
+{"Time":"2026-07-01T14:43:12.831060084Z","Action":"pass","Package":"github.com/evcc-io/evcc/charger","Test":"TestOcpp/TestConnect","Elapsed":3.02}
+{"Time":"2026-07-01T14:43:12.831069443Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestOcpp","Output":"--- PASS: TestOcpp (3.07s)\n"}
+{"Time":"2026-07-01T14:43:12.831077049Z","Action":"pass","Package":"github.com/evcc-io/evcc/charger","Test":"TestOcpp","Elapsed":3.07}
+{"Time":"2026-07-01T14:43:12.831080721Z","Action":"run","Package":"github.com/evcc-io/evcc/charger","Test":"TestTemplates"}
+{"Time":"2026-07-01T14:43:12.831084197Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestTemplates","Output":"=== RUN   TestTemplates\n"}
+{"Time":"2026-07-01T14:43:12.831087459Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestTemplates","Output":"=== PAUSE TestTemplates\n"}
+{"Time":"2026-07-01T14:43:12.831089881Z","Action":"pause","Package":"github.com/evcc-io/evcc/charger","Test":"TestTemplates"}
+{"Time":"2026-07-01T14:43:12.831092893Z","Action":"cont","Package":"github.com/evcc-io/evcc/charger","Test":"TestTemplates"}
+{"Time":"2026-07-01T14:43:12.831095212Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestTemplates","Output":"=== CONT  TestTemplates\n"}
+{"Time":"2026-07-01T14:43:12.831100107Z","Action":"run","Package":"github.com/evcc-io/evcc/charger","Test":"TestTemplates/abb"}
+{"Time":"2026-07-01T14:43:12.831104337Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestTemplates/abb","Output":"=== RUN   TestTemplates/abb\n"}
+{"Time":"2026-07-01T14:43:12.831131192Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestTemplates/abb","Output":"=== PAUSE TestTemplates/abb\n"}
+{"Time":"2026-07-01T14:43:12.831134261Z","Action":"pause","Package":"github.com/evcc-io/evcc/charger","Test":"TestTemplates/abb"}
+{"Time":"2026-07-01T14:43:12.831137568Z","Action":"cont","Package":"github.com/evcc-io/evcc/charger","Test":"TestTemplates/abb"}
+{"Time":"2026-07-01T14:43:12.831140664Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestTemplates/abb","Output":"=== CONT  TestTemplates/abb\n"}
+{"Time":"2026-07-01T14:43:12.83199638Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestTemplates/abb","Output":"--- PASS: TestTemplates/abb (0.00s)\n"}
+{"Time":"2026-07-01T14:43:12.832001044Z","Action":"pass","Package":"github.com/evcc-io/evcc/charger","Test":"TestTemplates/abb","Elapsed":0}
+{"Time":"2026-07-01T14:43:12.832004022Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Test":"TestTemplates","Output":"--- PASS: TestTemplates (0.00s)\n"}
+{"Time":"2026-07-01T14:43:12.832009148Z","Action":"pass","Package":"github.com/evcc-io/evcc/charger","Test":"TestTemplates","Elapsed":0}
+{"Time":"2026-07-01T14:43:12.832012938Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Output":"PASS\n"}
+{"Time":"2026-07-01T14:43:12.833922745Z","Action":"output","Package":"github.com/evcc-io/evcc/charger","Output":"ok  \tgithub.com/evcc-io/evcc/charger\t3.244s\n"}
+{"Time":"2026-07-01T14:43:12.833939151Z","Action":"pass","Package":"github.com/evcc-io/evcc/charger","Elapsed":3.2439999999999998}
+reward=1 graded=118 found=118 failed=0 parsed=118 framework=go exit_code=0

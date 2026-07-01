@@ -1,0 +1,2 @@
+patching file .changeset/smooth-items-exercise.md
+patching file packages/kit/src/runtime/server/page.js

@@ -1,0 +1,58 @@
+patching file tests/renderer/components/settings-electron-spec.tsx
+patching file tests/renderer/components/version-select-spec.tsx
+patching file tests/utils.ts
+patching file tests/utils/disable-download-spec.ts
+PASS tests/utils/disable-download-spec.ts (36.701 s)
+  disableDownload
+    ✓ always return false when the system is windows (84 ms)
+    ✓ always return false when the system is linux (7 ms)
+    ✓ always return false when the system is macOS and the arch is not arm64 (6 ms)
+    ✓ returns true if the system is macOS and the arch is arm64 (6 ms)
+
+PASS tests/renderer/components/version-select-spec.tsx (38.894 s)
+  VersionSelect component
+    ✓ renders (17 ms)
+    renderItem()
+      ✓ renders an item (5 ms)
+      ✓ returns null if it does not match predicate (82 ms)
+    disableDownload
+      ✓ disables download buttons when return value is true (10 ms)
+      ✓ does not disable enabled download buttons when return value is false (6 ms)
+    getItemLabel()
+      ✓ returns the correct label for a local version (6 ms)
+      ✓ returns the correct label for a version not downloaded (5 ms)
+      ✓ returns the correct label for a version downloaded (5 ms)
+      ✓ returns the correct label for a version downloading (5 ms)
+    getItemIcon()
+      ✓ returns the correct icon (80 ms)
+    filterItems()
+      ✓ correctly matches a numeric query (6 ms)
+      ✓ sorts in descending order when the query is non-numeric (5 ms)
+
+PASS tests/renderer/components/settings-electron-spec.tsx (40.633 s)
+  ElectronSettings component
+    ✓ renders (19 ms)
+    ✓ handles removing a version (116 ms)
+    ✓ handles downloading a version (62 ms)
+    ✓ handles missing local versions (21 ms)
+    ✓ handles the deleteAll() (9 ms)
+    ✓ handles the downloadAll() (8 ms)
+    handleDownloadClick()
+      ✓ kicks off an update of Electron versions (4 ms)
+    handleAddVersion()
+      ✓ toggles the add version dialog (5 ms)
+    handleStateChange()
+      ✓ toggles remote versions (43 ms)
+    handleShowObsoleteChange()
+      ✓ toggles obsolete versions (10 ms)
+    handleChannelChange()
+      ✓ handles a new selection (10 ms)
+    disableDownload()
+      ✓ disables download buttons where return values are true (7 ms)
+
+Test Suites: 3 passed, 3 total
+Tests:       28 passed, 28 total
+Snapshots:   3 passed, 3 total
+Time:        44.088 s
+Ran all test suites matching /tests\/renderer\/components\/settings-electron-spec.tsx|tests\/renderer\/components\/version-select-spec.tsx|tests\/utils\/disable-download-spec.ts/i.
+{"numFailedTestSuites":0,"numFailedTests":0,"numPassedTestSuites":3,"numPassedTests":28,"numPendingTestSuites":0,"numPendingTests":0,"numRuntimeErrorTestSuites":0,"numTodoTests":0,"numTotalTestSuites":3,"numTotalTests":28,"openHandles":[],"snapshot":{"added":0,"didUpdate":false,"failure":false,"filesAdded":0,"filesRemoved":0,"filesRemovedList":[],"filesUnmatched":0,"filesUpdated":0,"matched":3,"total":3,"unchecked":0,"uncheckedKeysByFile":[],"unmatched":0,"updated":0},"startTime":1782916791070,"success":true,"testResults":[{"assertionResults":[{"ancestorTitles":["disableDownload"],"failureMessages":[],"fullName":"disableDownload always return false when the system is windows","location":null,"status":"passed","title":"always return false when the system is windows"},{"ancestorTitles":["disableDownload"],"failureMessages":[],"fullName":"disableDownload always return false when the system is linux","location":null,"status":"passed","title":"always return false when the system is linux"},{"ancestorTitles":["disableDownload"],"failureMessages":[],"fullName":"disableDownload always return false when the system is macOS and the arch is not arm64","location":null,"status":"passed","title":"always return false when the system is macOS and the arch is not arm64"},{"ancestorTitles":["disableDownload"],"failureMessages":[],"fullName":"disableDownload returns true if the system is macOS and the arch is arm64","location":null,"status":"passed","title":"returns true if the system is macOS and the arch is arm64"}],"endTime":1782916831068,"message":"","name":"/workspace/repo/tests/utils/disable-download-spec.ts","startTime":1782916794367,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["VersionSelect component"],"failureMessages":[],"fullName":"VersionSelect component renders","location":null,"status":"passed","title":"renders"},{"ancestorTitles":["VersionSelect component","renderItem()"],"failureMessages":[],"fullName":"VersionSelect component renderItem() renders an item","location":null,"status":"passed","title":"renders an item"},{"ancestorTitles":["VersionSelect component","renderItem()"],"failureMessages":[],"fullName":"VersionSelect component renderItem() returns null if it does not match predicate","location":null,"status":"passed","title":"returns null if it does not match predicate"},{"ancestorTitles":["VersionSelect component","disableDownload"],"failureMessages":[],"fullName":"VersionSelect component disableDownload disables download buttons when return value is true","location":null,"status":"passed","title":"disables download buttons when return value is true"},{"ancestorTitles":["VersionSelect component","disableDownload"],"failureMessages":[],"fullName":"VersionSelect component disableDownload does not disable enabled download buttons when return value is false","location":null,"status":"passed","title":"does not disable enabled download buttons when return value is false"},{"ancestorTitles":["VersionSelect component","getItemLabel()"],"failureMessages":[],"fullName":"VersionSelect component getItemLabel() returns the correct label for a local version","location":null,"status":"passed","title":"returns the correct label for a local version"},{"ancestorTitles":["VersionSelect component","getItemLabel()"],"failureMessages":[],"fullName":"VersionSelect component getItemLabel() returns the correct label for a version not downloaded","location":null,"status":"passed","title":"returns the correct label for a version not downloaded"},{"ancestorTitles":["VersionSelect component","getItemLabel()"],"failureMessages":[],"fullName":"VersionSelect component getItemLabel() returns the correct label for a version downloaded","location":null,"status":"passed","title":"returns the correct label for a version downloaded"},{"ancestorTitles":["VersionSelect component","getItemLabel()"],"failureMessages":[],"fullName":"VersionSelect component getItemLabel() returns the correct label for a version downloading","location":null,"status":"passed","title":"returns the correct label for a version downloading"},{"ancestorTitles":["VersionSelect component","getItemIcon()"],"failureMessages":[],"fullName":"VersionSelect component getItemIcon() returns the correct icon","location":null,"status":"passed","title":"returns the correct icon"},{"ancestorTitles":["VersionSelect component","filterItems()"],"failureMessages":[],"fullName":"VersionSelect component filterItems() correctly matches a numeric query","location":null,"status":"passed","title":"correctly matches a numeric query"},{"ancestorTitles":["VersionSelect component","filterItems()"],"failureMessages":[],"fullName":"VersionSelect component filterItems() sorts in descending order when the query is non-numeric","location":null,"status":"passed","title":"sorts in descending order when the query is non-numeric"}],"endTime":1782916833159,"message":"","name":"/workspace/repo/tests/renderer/components/version-select-spec.tsx","startTime":1782916794265,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["ElectronSettings component"],"failureMessages":[],"fullName":"ElectronSettings component renders","location":null,"status":"passed","title":"renders"},{"ancestorTitles":["ElectronSettings component"],"failureMessages":[],"fullName":"ElectronSettings component handles removing a version","location":null,"status":"passed","title":"handles removing a version"},{"ancestorTitles":["ElectronSettings component"],"failureMessages":[],"fullName":"ElectronSettings component handles downloading a version","location":null,"status":"passed","title":"handles downloading a version"},{"ancestorTitles":["ElectronSettings component"],"failureMessages":[],"fullName":"ElectronSettings component handles missing local versions","location":null,"status":"passed","title":"handles missing local versions"},{"ancestorTitles":["ElectronSettings component"],"failureMessages":[],"fullName":"ElectronSettings component handles the deleteAll()","location":null,"status":"passed","title":"handles the deleteAll()"},{"ancestorTitles":["ElectronSettings component"],"failureMessages":[],"fullName":"ElectronSettings component handles the downloadAll()","location":null,"status":"passed","title":"handles the downloadAll()"},{"ancestorTitles":["ElectronSettings component","handleDownloadClick()"],"failureMessages":[],"fullName":"ElectronSettings component handleDownloadClick() kicks off an update of Electron versions","location":null,"status":"passed","title":"kicks off an update of Electron versions"},{"ancestorTitles":["ElectronSettings component","handleAddVersion()"],"failureMessages":[],"fullName":"ElectronSettings component handleAddVersion() toggles the add version dialog","location":null,"status":"passed","title":"toggles the add version dialog"},{"ancestorTitles":["ElectronSettings component","handleStateChange()"],"failureMessages":[],"fullName":"ElectronSettings component handleStateChange() toggles remote versions","location":null,"status":"passed","title":"toggles remote versions"},{"ancestorTitles":["ElectronSettings component","handleShowObsoleteChange()"],"failureMessages":[],"fullName":"ElectronSettings component handleShowObsoleteChange() toggles obsolete versions","location":null,"status":"passed","title":"toggles obsolete versions"},{"ancestorTitles":["ElectronSettings component","handleChannelChange()"],"failureMessages":[],"fullName":"ElectronSettings component handleChannelChange() handles a new selection","location":null,"status":"passed","title":"handles a new selection"},{"ancestorTitles":["ElectronSettings component","disableDownload()"],"failureMessages":[],"fullName":"ElectronSettings component disableDownload() disables download buttons where return values are true","location":null,"status":"passed","title":"disables download buttons where return values are true"}],"endTime":1782916834990,"message":"","name":"/workspace/repo/tests/renderer/components/settings-electron-spec.tsx","startTime":1782916794357,"status":"passed","summary":""}],"wasInterrupted":false}reward=1 graded=28 found=28 failed=0 parsed=28 framework=jest exit_code=0

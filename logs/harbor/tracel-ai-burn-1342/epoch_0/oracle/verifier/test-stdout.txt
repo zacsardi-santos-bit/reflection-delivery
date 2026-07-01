@@ -1,0 +1,586 @@
+patching file crates/burn-tensor/src/tests/mod.rs
+patching file crates/burn-tensor/src/tests/ops/all.rs
+patching file crates/burn-tensor/src/tests/ops/any.rs
+patching file crates/burn-tensor/src/tests/ops/mod.rs
+   Compiling burn-common v0.13.0 (/workspace/repo/crates/burn-common)
+   Compiling burn-tensor-testgen v0.13.0 (/workspace/repo/crates/burn-tensor-testgen)
+   Compiling burn-ndarray v0.13.0 (/workspace/repo/crates/burn-ndarray)
+   Compiling burn-tensor v0.13.0 (/workspace/repo/crates/burn-tensor)
+   Compiling burn-autodiff v0.13.0 (/workspace/repo/crates/burn-autodiff)
+    Finished test [unoptimized] target(s) in 6.79s
+────────────
+ Nextest run ID 29668292-89b2-404d-b000-b7fd9dd556cf with nextest profile: default
+    Starting 570 tests across 1 binary
+        PASS [   0.004s] (  1/570) burn-ndarray ops::base::tests::should_generate_row_major_layout_for_cat
+        PASS [   0.005s] (  2/570) burn-ndarray tensor::tests::should_support_into_and_from_data_1d
+        PASS [   0.004s] (  3/570) burn-ndarray tensor::tests::should_support_into_and_from_data_2d
+        PASS [   0.005s] (  4/570) burn-ndarray tensor::tests::should_support_into_and_from_data_3d
+        PASS [   0.005s] (  5/570) burn-ndarray tensor::tests::should_support_into_and_from_data_4d
+        PASS [   0.005s] (  6/570) burn-ndarray tests::abs::tests::should_support_abs_ops_float
+        PASS [   0.004s] (  7/570) burn-ndarray tests::abs::tests::should_support_abs_ops_int
+        PASS [   0.004s] (  8/570) burn-ndarray tests::ad_adaptive_avg_pool1d::tests::test_avg_pool1d_simple
+        PASS [   0.004s] (  9/570) burn-ndarray tests::ad_adaptive_avg_pool2d::tests::test_avg_pool2d_simple
+        PASS [   0.004s] ( 10/570) burn-ndarray tests::ad_add::tests::should_diff_add
+        PASS [   0.004s] ( 11/570) burn-ndarray tests::ad_add::tests::should_diff_add_scalar
+        PASS [   0.023s] ( 12/570) burn-ndarray tests::ad_abs::tests::should_diff_abs
+        PASS [   0.005s] ( 13/570) burn-ndarray tests::ad_add::tests::test_add_complex_1
+        PASS [   0.005s] ( 14/570) burn-ndarray tests::ad_aggregation::tests::should_diff_mean
+        PASS [   0.005s] ( 15/570) burn-ndarray tests::ad_aggregation::tests::should_diff_mean_dim
+        PASS [   0.006s] ( 16/570) burn-ndarray tests::ad_aggregation::tests::should_diff_sum_1
+        PASS [   0.006s] ( 17/570) burn-ndarray tests::ad_aggregation::tests::should_diff_sum_2
+        PASS [   0.005s] ( 18/570) burn-ndarray tests::ad_aggregation::tests::should_diff_sum_dim
+        PASS [   0.005s] ( 19/570) burn-ndarray tests::ad_avg_pool1d::tests::test_avg_pool1d_complex
+        PASS [   0.005s] ( 20/570) burn-ndarray tests::ad_avg_pool1d::tests::test_avg_pool1d_complex_dont_count_pad
+        PASS [   0.005s] ( 21/570) burn-ndarray tests::ad_avg_pool1d::tests::test_avg_pool1d_simple
+        PASS [   0.005s] ( 22/570) burn-ndarray tests::ad_avg_pool2d::tests::test_avg_pool2d_complex
+        PASS [   0.005s] ( 23/570) burn-ndarray tests::ad_avg_pool2d::tests::test_avg_pool2d_complex_dont_include_pad
+        PASS [   0.005s] ( 24/570) burn-ndarray tests::ad_avg_pool2d::tests::test_avg_pool2d_simple
+        PASS [   0.004s] ( 25/570) burn-ndarray tests::ad_broadcast::tests::add_broadcast
+        PASS [   0.004s] ( 26/570) burn-ndarray tests::ad_broadcast::tests::div_broadcast
+        PASS [   0.005s] ( 27/570) burn-ndarray tests::ad_broadcast::tests::mask_where_broadcast
+        PASS [   0.005s] ( 28/570) burn-ndarray tests::ad_broadcast::tests::matmul_broadcast
+        PASS [   0.004s] ( 29/570) burn-ndarray tests::ad_broadcast::tests::mul_broadcast
+        PASS [   0.004s] ( 30/570) burn-ndarray tests::ad_broadcast::tests::sub_broadcast
+        PASS [   0.006s] ( 31/570) burn-ndarray tests::ad_cat::tests::should_diff_cat
+        PASS [   0.005s] ( 32/570) burn-ndarray tests::ad_cat::tests::should_diff_cat_more_than_1_dim
+        PASS [   0.005s] ( 33/570) burn-ndarray tests::ad_complex::tests::should_diff_full_complex_1
+        PASS [   0.005s] ( 34/570) burn-ndarray tests::ad_complex::tests::should_diff_full_complex_2
+        PASS [   0.006s] ( 35/570) burn-ndarray tests::ad_complex::tests::should_diff_full_complex_3
+        PASS [   0.005s] ( 36/570) burn-ndarray tests::ad_conv1d::tests::test_conv1d_basic
+        PASS [   0.006s] ( 37/570) burn-ndarray tests::ad_conv1d::tests::test_conv1d_different_channels
+        PASS [   0.005s] ( 38/570) burn-ndarray tests::ad_conv1d::tests::test_conv1d_dilation
+        PASS [   0.005s] ( 39/570) burn-ndarray tests::ad_conv1d::tests::test_conv1d_groups
+        PASS [   0.005s] ( 40/570) burn-ndarray tests::ad_conv1d::tests::test_conv1d_with_padding
+        PASS [   0.005s] ( 41/570) burn-ndarray tests::ad_conv1d::tests::test_conv1d_with_stride
+        PASS [   0.007s] ( 42/570) burn-ndarray tests::ad_conv2d::tests::test_conv2d_basic
+        PASS [   0.006s] ( 43/570) burn-ndarray tests::ad_conv2d::tests::test_conv2d_complex
+        PASS [   0.007s] ( 44/570) burn-ndarray tests::ad_conv2d::tests::test_conv2d_different_channels
+        PASS [   0.009s] ( 45/570) burn-ndarray tests::ad_conv2d::tests::test_conv2d_different_dilation
+        PASS [   0.006s] ( 46/570) burn-ndarray tests::ad_conv2d::tests::test_conv2d_different_kernel_size
+        PASS [   0.016s] ( 47/570) burn-ndarray tests::ad_conv2d::tests::test_conv2d_different_stride
+        PASS [   0.019s] ( 48/570) burn-ndarray tests::ad_conv2d::tests::test_conv2d_different_padding
+        PASS [   0.007s] ( 49/570) burn-ndarray tests::ad_conv2d::tests::test_conv2d_different_width
+        PASS [   0.007s] ( 50/570) burn-ndarray tests::ad_conv2d::tests::test_conv2d_dilation_2
+        PASS [   0.006s] ( 51/570) burn-ndarray tests::ad_conv2d::tests::test_conv2d_groups
+        PASS [   0.007s] ( 52/570) burn-ndarray tests::ad_conv2d::tests::test_conv2d_groups_different_channels
+        PASS [   0.006s] ( 53/570) burn-ndarray tests::ad_conv2d::tests::test_conv2d_stride_2
+        PASS [   0.008s] ( 54/570) burn-ndarray tests::ad_conv_transpose1d::tests::test_conv_transpose1d_basic
+        PASS [   0.006s] ( 55/570) burn-ndarray tests::ad_conv_transpose1d::tests::test_conv_transpose1d_complex
+        PASS [   0.006s] ( 56/570) burn-ndarray tests::ad_conv_transpose1d::tests::test_conv_transpose1d_dilation
+        PASS [   0.008s] ( 57/570) burn-ndarray tests::ad_conv_transpose1d::tests::test_conv_transpose1d_padding
+        PASS [   0.005s] ( 58/570) burn-ndarray tests::ad_conv_transpose1d::tests::test_conv_transpose1d_stride
+        PASS [   0.005s] ( 59/570) burn-ndarray tests::ad_conv_transpose1d::tests::test_conv_transpose1d_stride_padding_out
+        PASS [   0.007s] ( 60/570) burn-ndarray tests::ad_conv_transpose2d::tests::test_conv_transpose2d_basic
+        PASS [   0.007s] ( 61/570) burn-ndarray tests::ad_conv_transpose2d::tests::test_conv_transpose2d_channels
+        PASS [   0.012s] ( 62/570) burn-ndarray tests::ad_conv_transpose2d::tests::test_conv_transpose2d_complex_groups
+        PASS [   0.018s] ( 63/570) burn-ndarray tests::ad_conv_transpose2d::tests::test_conv_transpose2d_complex_no_groups
+        PASS [   0.006s] ( 64/570) burn-ndarray tests::ad_conv_transpose2d::tests::test_conv_transpose2d_dilation
+        PASS [   0.016s] ( 65/570) burn-ndarray tests::ad_conv_transpose2d::tests::test_conv_transpose2d_complex_no_groups_2
+        PASS [   0.006s] ( 66/570) burn-ndarray tests::ad_conv_transpose2d::tests::test_conv_transpose2d_groups
+        PASS [   0.006s] ( 67/570) burn-ndarray tests::ad_conv_transpose2d::tests::test_conv_transpose2d_kernel_size
+        PASS [   0.023s] ( 68/570) burn-ndarray tests::ad_conv_transpose2d::tests::test_conv_transpose2d_padding
+        PASS [   0.022s] ( 69/570) burn-ndarray tests::ad_conv_transpose2d::tests::test_conv_transpose2d_stride
+        PASS [   0.006s] ( 70/570) burn-ndarray tests::ad_conv_transpose2d::tests::test_conv_transpose2d_stride_padding_out
+        PASS [   0.006s] ( 71/570) burn-ndarray tests::ad_cos::tests::should_diff_cos
+        PASS [   0.004s] ( 72/570) burn-ndarray tests::ad_div::tests::should_diff_div
+        PASS [   0.005s] ( 73/570) burn-ndarray tests::ad_cross_entropy_loss::tests::test_cross_entropy_loss_grad
+        PASS [   0.004s] ( 74/570) burn-ndarray tests::ad_div::tests::should_diff_div_scalar
+        PASS [   0.004s] ( 75/570) burn-ndarray tests::ad_div::tests::test_div_complex_1
+        PASS [   0.005s] ( 76/570) burn-ndarray tests::ad_div::tests::test_div_complex_2
+        PASS [   0.008s] ( 77/570) burn-ndarray tests::ad_erf::tests::should_diff_erf
+        PASS [   0.005s] ( 78/570) burn-ndarray tests::ad_exp::tests::should_diff_exp
+        PASS [   0.005s] ( 79/570) burn-ndarray tests::ad_gather_scatter::tests::test_gather_grad
+        PASS [   0.006s] ( 80/570) burn-ndarray tests::ad_gather_scatter::tests::test_scatter_grad
+        PASS [   0.006s] ( 81/570) burn-ndarray tests::ad_gelu::tests::should_diff_gelu
+        PASS [   0.006s] ( 82/570) burn-ndarray tests::ad_log1p::tests::should_diff_log1p
+        PASS [   0.006s] ( 83/570) burn-ndarray tests::ad_log::tests::should_diff_log
+        PASS [   0.006s] ( 84/570) burn-ndarray tests::ad_mask::tests::should_diff_mask_fill
+        PASS [   0.006s] ( 85/570) burn-ndarray tests::ad_mask::tests::should_diff_mask_where
+        PASS [   0.006s] ( 86/570) burn-ndarray tests::ad_matmul::tests::should_diff_matmul
+        PASS [   0.006s] ( 87/570) burn-ndarray tests::ad_matmul::tests::test_matmul_complex_1
+        PASS [   0.006s] ( 88/570) burn-ndarray tests::ad_matmul::tests::test_matmul_complex_2
+        PASS [   0.005s] ( 89/570) burn-ndarray tests::ad_max_pool1d::tests::test_max_pool1d_complex
+        PASS [   0.005s] ( 90/570) burn-ndarray tests::ad_max_pool1d::tests::test_max_pool1d_complex_with_padding
+        PASS [   0.005s] ( 91/570) burn-ndarray tests::ad_max_pool1d::tests::test_max_pool1d_simple
+        PASS [   0.008s] ( 92/570) burn-ndarray tests::ad_max_pool1d::tests::test_max_pool1d_with_dilation
+        PASS [   0.005s] ( 93/570) burn-ndarray tests::ad_max_pool2d::tests::test_max_pool2d_complex
+        PASS [   0.005s] ( 94/570) burn-ndarray tests::ad_max_pool2d::tests::test_max_pool2d_simple_1
+        PASS [   0.005s] ( 95/570) burn-ndarray tests::ad_max_pool2d::tests::test_max_pool2d_simple_2
+        PASS [   0.005s] ( 96/570) burn-ndarray tests::ad_max_pool2d::tests::test_max_pool2d_with_dilation
+        PASS [   0.005s] ( 97/570) burn-ndarray tests::ad_maxmin::tests::should_diff_max_dim
+        PASS [   0.006s] ( 98/570) burn-ndarray tests::ad_maxmin::tests::should_diff_min_dim
+        PASS [   0.005s] ( 99/570) burn-ndarray tests::ad_mul::tests::should_diff_mul
+        PASS [   0.004s] (100/570) burn-ndarray tests::ad_mul::tests::should_diff_mul_scalar
+        PASS [   0.004s] (101/570) burn-ndarray tests::ad_mul::tests::test_mul_complex_1
+        PASS [   0.014s] (102/570) burn-ndarray tests::ad_neg::tests::should_diff_neg
+        PASS [   0.015s] (103/570) burn-ndarray tests::ad_multithread::tests::should_behave_the_same_with_multithread
+        PASS [   0.004s] (104/570) burn-ndarray tests::ad_powf::tests::should_diff_powf
+        PASS [   0.006s] (105/570) burn-ndarray tests::ad_powf::tests::should_diff_powf_scalar
+        PASS [   0.004s] (106/570) burn-ndarray tests::ad_powf::tests::should_diff_powf_with_untracked_lhs
+        PASS [   0.004s] (107/570) burn-ndarray tests::ad_powf::tests::should_diff_powf_with_untracked_rhs
+        PASS [   0.004s] (108/570) burn-ndarray tests::ad_recip::tests::should_diff_recip
+        PASS [   0.005s] (109/570) burn-ndarray tests::ad_relu::tests::should_diff_relu
+        PASS [   0.005s] (110/570) burn-ndarray tests::ad_reshape::tests::should_diff_reshape
+        PASS [   0.006s] (111/570) burn-ndarray tests::ad_select::tests::test_select_assign_grad
+        PASS [   0.006s] (112/570) burn-ndarray tests::ad_select::tests::test_select_grad
+        PASS [   0.004s] (113/570) burn-ndarray tests::ad_sigmoid::tests::should_diff_sigmoid
+        PASS [   0.004s] (114/570) burn-ndarray tests::ad_sigmoid::tests::small_neg_val_should_not_cause_grad_overflow
+        PASS [   0.005s] (115/570) burn-ndarray tests::ad_sin::tests::should_diff_sin
+        PASS [   0.005s] (116/570) burn-ndarray tests::ad_slice::tests::should_diff_matmul_with_slice
+        PASS [   0.006s] (117/570) burn-ndarray tests::ad_slice::tests::should_diff_matmul_with_slice_assign
+        PASS [   0.006s] (118/570) burn-ndarray tests::ad_slice::tests::should_diff_matmul_with_slice_assign_complex
+        PASS [   0.005s] (119/570) burn-ndarray tests::ad_slice::tests::slice_assign_diff_should_give_same_results_as_cat
+        PASS [   0.007s] (120/570) burn-ndarray tests::ad_softmax::tests::test_log_softmax_grad
+        PASS [   0.006s] (121/570) burn-ndarray tests::ad_softmax::tests::test_quiet_softmax_grad
+        PASS [   0.006s] (122/570) burn-ndarray tests::ad_softmax::tests::test_softmax_grad
+        PASS [   0.005s] (123/570) burn-ndarray tests::ad_sqrt::tests::should_diff_sqrt
+        PASS [   0.004s] (124/570) burn-ndarray tests::ad_sub::tests::should_diff_sub
+        PASS [   0.004s] (125/570) burn-ndarray tests::ad_sub::tests::should_diff_sub_scalar
+        PASS [   0.004s] (126/570) burn-ndarray tests::ad_sub::tests::test_sub_complex_1
+        PASS [   0.005s] (127/570) burn-ndarray tests::ad_tanh::tests::should_diff_tanh
+        PASS [   0.006s] (128/570) burn-ndarray tests::ad_transpose::tests::should_diff_swap_dims
+        PASS [   0.005s] (129/570) burn-ndarray tests::ad_transpose::tests::should_diff_transpose
+        PASS [   0.004s] (130/570) burn-ndarray tests::add::tests::should_support_add_scalar_ops
+        PASS [   0.005s] (131/570) burn-ndarray tests::add::tests::should_support_add_scalar_ops_int
+        PASS [   0.005s] (132/570) burn-ndarray tests::add::tests::test_add_broadcast
+        PASS [   0.004s] (133/570) burn-ndarray tests::add::tests::test_add_broadcast_int
+        PASS [   0.005s] (134/570) burn-ndarray tests::add::tests::test_add_d2
+        PASS [   0.004s] (135/570) burn-ndarray tests::add::tests::test_add_d2_int
+        PASS [   0.004s] (136/570) burn-ndarray tests::add::tests::test_add_different_strides_broadcast
+        PASS [   0.016s] (137/570) burn-ndarray tests::add::tests::test_add_different_strides_lhs
+        PASS [   0.016s] (138/570) burn-ndarray tests::add::tests::test_add_different_strides_rhs
+        PASS [   0.004s] (139/570) burn-ndarray tests::aggregation::tests::test_should_mean
+        PASS [   0.004s] (140/570) burn-ndarray tests::aggregation::tests::test_should_mean_first_dim
+        PASS [   0.004s] (141/570) burn-ndarray tests::aggregation::tests::test_should_mean_int
+        PASS [   0.005s] (142/570) burn-ndarray tests::aggregation::tests::test_should_mean_last_dim
+        PASS [   0.004s] (143/570) burn-ndarray tests::aggregation::tests::test_should_mean_last_dim_int
+        PASS [   0.004s] (144/570) burn-ndarray tests::aggregation::tests::test_should_sum
+        PASS [   0.005s] (145/570) burn-ndarray tests::aggregation::tests::test_should_sum_first_dim
+        PASS [   0.005s] (146/570) burn-ndarray tests::aggregation::tests::test_should_sum_int
+        PASS [   0.004s] (147/570) burn-ndarray tests::aggregation::tests::test_should_sum_last_dim
+        PASS [   0.004s] (148/570) burn-ndarray tests::aggregation::tests::test_should_sum_last_dim_int
+        PASS [   0.005s] (149/570) burn-ndarray tests::aggregation::tests::test_should_sum_mid_dim_3d_non_contiguous_1
+        PASS [   0.005s] (150/570) burn-ndarray tests::aggregation::tests::test_should_sum_mid_dim_3d_non_contiguous_2
+        PASS [   0.004s] (151/570) burn-ndarray tests::all_op::tests::test_all
+        PASS [   0.004s] (152/570) burn-ndarray tests::all_op::tests::test_all_dim
+        PASS [   0.004s] (153/570) burn-ndarray tests::any::tests::test_any
+        PASS [   0.004s] (154/570) burn-ndarray tests::any::tests::test_any_dim
+        PASS [   0.004s] (155/570) burn-ndarray tests::arange::tests::test_arange
+        PASS [   0.004s] (156/570) burn-ndarray tests::arange_step::tests::should_panic_when_step_is_zero
+        PASS [   0.005s] (157/570) burn-ndarray tests::arange_step::tests::test_arange_step
+        PASS [   0.005s] (158/570) burn-ndarray tests::arg::tests::test_argmax_2d_dim0
+        PASS [   0.004s] (159/570) burn-ndarray tests::arg::tests::test_argmax_2d_dim0_int
+        PASS [   0.004s] (160/570) burn-ndarray tests::arg::tests::test_argmax_2d_dim1
+        PASS [   0.004s] (161/570) burn-ndarray tests::arg::tests::test_argmin_2d_dim0
+        PASS [   0.004s] (162/570) burn-ndarray tests::arg::tests::test_argmin_2d_dim0_int
+        PASS [   0.004s] (163/570) burn-ndarray tests::arg::tests::test_argmin_2d_dim1
+        PASS [   0.004s] (164/570) burn-ndarray tests::cast::tests::cast_bool_to_float_tensor
+        PASS [   0.004s] (165/570) burn-ndarray tests::cast::tests::cast_bool_to_int_tensor
+        PASS [   0.005s] (166/570) burn-ndarray tests::cast::tests::cast_float_to_int
+        PASS [   0.004s] (167/570) burn-ndarray tests::cast::tests::cast_int_to_float_tensor
+        PASS [   0.004s] (168/570) burn-ndarray tests::cat::tests::should_panic_when_cat_exceeds_dimension
+        PASS [   0.004s] (169/570) burn-ndarray tests::cat::tests::should_panic_when_dimensions_are_not_the_same
+        PASS [   0.004s] (170/570) burn-ndarray tests::cat::tests::should_panic_when_list_of_vectors_is_empty
+        PASS [   0.006s] (171/570) burn-ndarray tests::cat::tests::should_support_cat_ops_2d_dim0
+        PASS [   0.005s] (172/570) burn-ndarray tests::cat::tests::should_support_cat_ops_2d_dim1
+        PASS [   0.004s] (173/570) burn-ndarray tests::cat::tests::should_support_cat_ops_3d
+        PASS [   0.006s] (174/570) burn-ndarray tests::cat::tests::should_support_cat_ops_bool
+        PASS [   0.005s] (175/570) burn-ndarray tests::cat::tests::should_support_cat_ops_int
+        PASS [   0.005s] (176/570) burn-ndarray tests::chunk::tests::test_chunk_multi_dimension
+        PASS [   0.005s] (177/570) burn-ndarray tests::chunk::tests::test_chunk_not_divisible
+        PASS [   0.004s] (178/570) burn-ndarray tests::chunk::tests::test_chunk_not_evenly_divisible
+        PASS [   0.004s] (179/570) burn-ndarray tests::chunk::tests::test_chunk_not_evenly_divisible_remains_several
+        PASS [   0.004s] (180/570) burn-ndarray tests::clamp::tests::clamp_max
+        PASS [   0.006s] (181/570) burn-ndarray tests::chunk::tests::test_invalid_dim
+        PASS [   0.005s] (182/570) burn-ndarray tests::clamp::tests::clamp_min
+        PASS [   0.005s] (183/570) burn-ndarray tests::clamp::tests::clamp_min_max
+        PASS [   0.006s] (184/570) burn-ndarray tests::clone_invariance::tests::float::Abs
+        PASS [   0.008s] (185/570) burn-ndarray tests::clone_invariance::tests::float::Add
+        PASS [   0.007s] (186/570) burn-ndarray tests::clone_invariance::tests::float::AddScalar
+        PASS [   0.006s] (187/570) burn-ndarray tests::clone_invariance::tests::float::Argmax
+        PASS [   0.005s] (188/570) burn-ndarray tests::clone_invariance::tests::float::Argmin
+        PASS [   0.007s] (189/570) burn-ndarray tests::clone_invariance::tests::float::Cat
+        PASS [   0.005s] (190/570) burn-ndarray tests::clone_invariance::tests::float::Clamp
+        PASS [   0.005s] (191/570) burn-ndarray tests::clone_invariance::tests::float::ClampMax
+        PASS [   0.006s] (192/570) burn-ndarray tests::clone_invariance::tests::float::ClampMin
+        PASS [   0.006s] (193/570) burn-ndarray tests::clone_invariance::tests::float::Cos
+        PASS [   0.006s] (194/570) burn-ndarray tests::clone_invariance::tests::float::Div
+        PASS [   0.005s] (195/570) burn-ndarray tests::clone_invariance::tests::float::DivScalar
+        PASS [   0.007s] (196/570) burn-ndarray tests::clone_invariance::tests::float::Equal
+        PASS [   0.006s] (197/570) burn-ndarray tests::clone_invariance::tests::float::EqualElem
+        PASS [   0.006s] (198/570) burn-ndarray tests::clone_invariance::tests::float::Erf
+        PASS [   0.006s] (199/570) burn-ndarray tests::clone_invariance::tests::float::Exp
+        PASS [   0.007s] (200/570) burn-ndarray tests::clone_invariance::tests::float::Gelu
+        PASS [   0.010s] (201/570) burn-ndarray tests::clone_invariance::tests::float::Gatter
+        PASS [   0.008s] (202/570) burn-ndarray tests::clone_invariance::tests::float::Greater
+        PASS [   0.006s] (203/570) burn-ndarray tests::clone_invariance::tests::float::GreaterElem
+        PASS [   0.006s] (204/570) burn-ndarray tests::clone_invariance::tests::float::GreaterEqualElem
+        PASS [   0.007s] (205/570) burn-ndarray tests::clone_invariance::tests::float::GreaterEqual
+        PASS [   0.007s] (206/570) burn-ndarray tests::clone_invariance::tests::float::Log
+        PASS [   0.007s] (207/570) burn-ndarray tests::clone_invariance::tests::float::Log1P
+        PASS [   0.006s] (208/570) burn-ndarray tests::clone_invariance::tests::float::LogSigmoid
+        PASS [   0.007s] (209/570) burn-ndarray tests::clone_invariance::tests::float::LogSoftmax
+        PASS [   0.010s] (210/570) burn-ndarray tests::clone_invariance::tests::float::Lower
+        PASS [   0.009s] (211/570) burn-ndarray tests::clone_invariance::tests::float::LowerElem
+        PASS [   0.007s] (212/570) burn-ndarray tests::clone_invariance::tests::float::LowerEqualElem
+        PASS [   0.009s] (213/570) burn-ndarray tests::clone_invariance::tests::float::LowerEqual
+        PASS [   0.006s] (214/570) burn-ndarray tests::clone_invariance::tests::float::MaskFill
+        PASS [   0.008s] (215/570) burn-ndarray tests::clone_invariance::tests::float::MaskWhere
+        PASS [   0.006s] (216/570) burn-ndarray tests::clone_invariance::tests::float::Max
+        PASS [   0.009s] (217/570) burn-ndarray tests::clone_invariance::tests::float::Matmul
+        PASS [   0.007s] (218/570) burn-ndarray tests::clone_invariance::tests::float::MaxDim
+        PASS [   0.007s] (219/570) burn-ndarray tests::clone_invariance::tests::float::MaxDimWithIndices
+        PASS [   0.006s] (220/570) burn-ndarray tests::clone_invariance::tests::float::Mean
+        PASS [   0.006s] (221/570) burn-ndarray tests::clone_invariance::tests::float::MeanDim
+        PASS [   0.005s] (222/570) burn-ndarray tests::clone_invariance::tests::float::Min
+        PASS [   0.005s] (223/570) burn-ndarray tests::clone_invariance::tests::float::MinDim
+        PASS [   0.006s] (224/570) burn-ndarray tests::clone_invariance::tests::float::MinDimWithIndices
+        PASS [   0.007s] (225/570) burn-ndarray tests::clone_invariance::tests::float::Mish
+        PASS [   0.007s] (226/570) burn-ndarray tests::clone_invariance::tests::float::Mul
+        PASS [   0.006s] (227/570) burn-ndarray tests::clone_invariance::tests::float::MulScalar
+        PASS [   0.007s] (228/570) burn-ndarray tests::clone_invariance::tests::float::Neg
+        PASS [   0.007s] (229/570) burn-ndarray tests::clone_invariance::tests::float::PowScalar
+        PASS [   0.008s] (230/570) burn-ndarray tests::clone_invariance::tests::float::Relu
+        PASS [   0.009s] (231/570) burn-ndarray tests::clone_invariance::tests::float::Repeat
+        PASS [   0.006s] (232/570) burn-ndarray tests::clone_invariance::tests::float::Reshape
+        PASS [   0.006s] (233/570) burn-ndarray tests::clone_invariance::tests::float::Select
+        PASS [   0.012s] (234/570) burn-ndarray tests::clone_invariance::tests::float::Scatter
+        PASS [   0.008s] (235/570) burn-ndarray tests::clone_invariance::tests::float::SelectAssign
+        PASS [   0.007s] (236/570) burn-ndarray tests::clone_invariance::tests::float::Sigmoid
+        PASS [   0.009s] (237/570) burn-ndarray tests::clone_invariance::tests::float::Silu
+        PASS [   0.010s] (238/570) burn-ndarray tests::clone_invariance::tests::float::Sin
+        PASS [   0.006s] (239/570) burn-ndarray tests::clone_invariance::tests::float::Slice
+        PASS [   0.008s] (240/570) burn-ndarray tests::clone_invariance::tests::float::SliceAssign
+        PASS [   0.008s] (241/570) burn-ndarray tests::clone_invariance::tests::float::Softmax
+        PASS [   0.007s] (242/570) burn-ndarray tests::clone_invariance::tests::float::Softplus
+        PASS [   0.005s] (243/570) burn-ndarray tests::clone_invariance::tests::float::Sqrt
+        PASS [   0.006s] (244/570) burn-ndarray tests::clone_invariance::tests::float::Sub
+        PASS [   0.006s] (245/570) burn-ndarray tests::clone_invariance::tests::float::SubScalar
+        PASS [   0.005s] (246/570) burn-ndarray tests::clone_invariance::tests::float::Sum
+        PASS [   0.005s] (247/570) burn-ndarray tests::clone_invariance::tests::float::SumDim
+        PASS [   0.005s] (248/570) burn-ndarray tests::clone_invariance::tests::float::SwapDims
+        PASS [   0.005s] (249/570) burn-ndarray tests::clone_invariance::tests::float::Tanh
+        PASS [   0.005s] (250/570) burn-ndarray tests::clone_invariance::tests::float::Transpose
+        PASS [   0.006s] (251/570) burn-ndarray tests::clone_invariance::tests::int::Abs
+        PASS [   0.007s] (252/570) burn-ndarray tests::clone_invariance::tests::int::Add
+        PASS [   0.005s] (253/570) burn-ndarray tests::clone_invariance::tests::int::AddScalar
+        PASS [   0.005s] (254/570) burn-ndarray tests::clone_invariance::tests::int::Argmax
+        PASS [   0.005s] (255/570) burn-ndarray tests::clone_invariance::tests::int::Argmin
+        PASS [   0.008s] (256/570) burn-ndarray tests::clone_invariance::tests::int::Cat
+        PASS [   0.006s] (257/570) burn-ndarray tests::clone_invariance::tests::int::Clamp
+        PASS [   0.008s] (258/570) burn-ndarray tests::clone_invariance::tests::int::ClampMax
+        PASS [   0.007s] (259/570) burn-ndarray tests::clone_invariance::tests::int::ClampMin
+        PASS [   0.006s] (260/570) burn-ndarray tests::clone_invariance::tests::int::DivScalar
+        PASS [   0.007s] (261/570) burn-ndarray tests::clone_invariance::tests::int::Div
+        PASS [   0.006s] (262/570) burn-ndarray tests::clone_invariance::tests::int::EqualElem
+        PASS [   0.006s] (263/570) burn-ndarray tests::clone_invariance::tests::int::Equal
+        PASS [   0.008s] (264/570) burn-ndarray tests::clone_invariance::tests::int::Greater
+        PASS [   0.009s] (265/570) burn-ndarray tests::clone_invariance::tests::int::Gatter
+        PASS [   0.007s] (266/570) burn-ndarray tests::clone_invariance::tests::int::GreaterElem
+        PASS [   0.012s] (267/570) burn-ndarray tests::clone_invariance::tests::int::GreaterEqual
+        PASS [   0.010s] (268/570) burn-ndarray tests::clone_invariance::tests::int::GreaterEqualElem
+        PASS [   0.007s] (269/570) burn-ndarray tests::clone_invariance::tests::int::Lower
+        PASS [   0.005s] (270/570) burn-ndarray tests::clone_invariance::tests::int::LowerElem
+        PASS [   0.008s] (271/570) burn-ndarray tests::clone_invariance::tests::int::LowerEqual
+        PASS [   0.007s] (272/570) burn-ndarray tests::clone_invariance::tests::int::LowerEqualElem
+        PASS [   0.006s] (273/570) burn-ndarray tests::clone_invariance::tests::int::MaskFill
+        PASS [   0.006s] (274/570) burn-ndarray tests::clone_invariance::tests::int::MaskWhere
+        PASS [   0.006s] (275/570) burn-ndarray tests::clone_invariance::tests::int::Max
+        PASS [   0.006s] (276/570) burn-ndarray tests::clone_invariance::tests::int::MaxDim
+        PASS [   0.005s] (277/570) burn-ndarray tests::clone_invariance::tests::int::MaxDimWithIndices
+        PASS [   0.005s] (278/570) burn-ndarray tests::clone_invariance::tests::int::Mean
+        PASS [   0.005s] (279/570) burn-ndarray tests::clone_invariance::tests::int::MeanDim
+        PASS [   0.005s] (280/570) burn-ndarray tests::clone_invariance::tests::int::Min
+        PASS [   0.006s] (281/570) burn-ndarray tests::clone_invariance::tests::int::MinDim
+        PASS [   0.006s] (282/570) burn-ndarray tests::clone_invariance::tests::int::MinDimWithIndices
+        PASS [   0.007s] (283/570) burn-ndarray tests::clone_invariance::tests::int::Mul
+        PASS [   0.006s] (284/570) burn-ndarray tests::clone_invariance::tests::int::MulScalar
+        PASS [   0.005s] (285/570) burn-ndarray tests::clone_invariance::tests::int::Neg
+        PASS [   0.007s] (286/570) burn-ndarray tests::clone_invariance::tests::int::Repeat
+        PASS [   0.005s] (287/570) burn-ndarray tests::clone_invariance::tests::int::Reshape
+        PASS [   0.006s] (288/570) burn-ndarray tests::clone_invariance::tests::int::Select
+        PASS [   0.010s] (289/570) burn-ndarray tests::clone_invariance::tests::int::Scatter
+        PASS [   0.006s] (290/570) burn-ndarray tests::clone_invariance::tests::int::SelectAssign
+        PASS [   0.005s] (291/570) burn-ndarray tests::clone_invariance::tests::int::Slice
+        PASS [   0.008s] (292/570) burn-ndarray tests::clone_invariance::tests::int::SliceAssign
+        PASS [   0.008s] (293/570) burn-ndarray tests::clone_invariance::tests::int::Sub
+        PASS [   0.006s] (294/570) burn-ndarray tests::clone_invariance::tests::int::SubScalar
+        PASS [   0.005s] (295/570) burn-ndarray tests::clone_invariance::tests::int::Sum
+        PASS [   0.006s] (296/570) burn-ndarray tests::clone_invariance::tests::int::SumDim
+        PASS [   0.007s] (297/570) burn-ndarray tests::clone_invariance::tests::int::SwapDims
+        PASS [   0.008s] (298/570) burn-ndarray tests::clone_invariance::tests::int::Transpose
+        PASS [   0.008s] (299/570) burn-ndarray tests::cos::tests::should_support_cos_ops
+        PASS [   0.005s] (300/570) burn-ndarray tests::cov::tests::test_cov_1
+        PASS [   0.005s] (301/570) burn-ndarray tests::cov::tests::test_cov_2
+        PASS [   0.005s] (302/570) burn-ndarray tests::cov::tests::test_cov_3
+        PASS [   0.005s] (303/570) burn-ndarray tests::cov::tests::test_cov_4
+        PASS [   0.004s] (304/570) burn-ndarray tests::create_like::tests::should_support_ones_like
+        PASS [   0.005s] (305/570) burn-ndarray tests::create_like::tests::should_support_zeros_like
+        PASS [   0.008s] (306/570) burn-ndarray tests::create_like::tests::should_support_randoms_like
+        PASS [   0.004s] (307/570) burn-ndarray tests::diagonal::tests::test_diagonal
+        PASS [   0.004s] (308/570) burn-ndarray tests::display::tests::test_display_2d_bool_tensor
+        PASS [   0.004s] (309/570) burn-ndarray tests::display::tests::test_display_2d_float_tensor
+        PASS [   0.005s] (310/570) burn-ndarray tests::display::tests::test_display_2d_int_tensor
+        PASS [   0.005s] (311/570) burn-ndarray tests::display::tests::test_display_3d_tensor
+        PASS [   0.006s] (312/570) burn-ndarray tests::display::tests::test_display_4d_tensor
+        PASS [   0.005s] (313/570) burn-ndarray tests::display::tests::test_display_tensor_summarize_1
+        PASS [   0.005s] (314/570) burn-ndarray tests::display::tests::test_display_tensor_summarize_2
+        PASS [   0.006s] (315/570) burn-ndarray tests::display::tests::test_display_tensor_summarize_3
+        PASS [   0.004s] (316/570) burn-ndarray tests::div::tests::should_support_div_ops
+        PASS [   0.004s] (317/570) burn-ndarray tests::div::tests::should_support_div_ops_int
+        PASS [   0.005s] (318/570) burn-ndarray tests::div::tests::should_support_div_scalar_ops
+        PASS [   0.005s] (319/570) burn-ndarray tests::div::tests::should_support_div_scalar_ops_int
+        PASS [   0.006s] (320/570) burn-ndarray tests::div::tests::test_div_broadcast
+        PASS [   0.005s] (321/570) burn-ndarray tests::div::tests::test_div_broadcast_int
+        PASS [   0.004s] (322/570) burn-ndarray tests::erf::tests::should_support_erf_ops
+        PASS [   0.004s] (323/570) burn-ndarray tests::erf::tests::should_support_erf_ops_with_negative_number
+        PASS [   0.004s] (324/570) burn-ndarray tests::exp::tests::should_support_exp_ops
+        PASS [   0.004s] (325/570) burn-ndarray tests::flatten::tests::not_enough_destination_dimension
+        PASS [   0.004s] (326/570) burn-ndarray tests::flatten::tests::should_flatten_begin
+        PASS [   0.005s] (327/570) burn-ndarray tests::flatten::tests::should_flatten_end
+        PASS [   0.005s] (328/570) burn-ndarray tests::flatten::tests::should_flatten_middle
+        PASS [   0.004s] (329/570) burn-ndarray tests::flatten::tests::should_flatten_panic
+        PASS [   0.004s] (330/570) burn-ndarray tests::flatten::tests::should_flatten_to_1d
+        PASS [   0.004s] (331/570) burn-ndarray tests::full::tests::test_data_full
+        PASS [   0.004s] (332/570) burn-ndarray tests::full::tests::test_tensor_full
+        PASS [   0.004s] (333/570) burn-ndarray tests::gather_scatter::tests::scatter_should_panic_on_mismatch_of_shapes
+        PASS [   0.004s] (334/570) burn-ndarray tests::gather_scatter::tests::should_gather_1d_dim0
+        PASS [   0.004s] (335/570) burn-ndarray tests::gather_scatter::tests::should_gather_1d_dim0_int
+        PASS [   0.004s] (336/570) burn-ndarray tests::gather_scatter::tests::should_gather_2d_dim0
+        PASS [   0.004s] (337/570) burn-ndarray tests::gather_scatter::tests::should_gather_2d_dim1
+        PASS [   0.004s] (338/570) burn-ndarray tests::gather_scatter::tests::should_gather_2d_only_1dim
+        PASS [   0.004s] (339/570) burn-ndarray tests::gather_scatter::tests::should_scatter_1d
+        PASS [   0.009s] (340/570) burn-ndarray tests::gather_scatter::tests::should_gather_3d_dim1
+        PASS [   0.004s] (341/570) burn-ndarray tests::gather_scatter::tests::should_scatter_1d_int
+        PASS [   0.005s] (342/570) burn-ndarray tests::gather_scatter::tests::should_scatter_2d_dim0
+        PASS [   0.005s] (343/570) burn-ndarray tests::gather_scatter::tests::should_scatter_2d_dim1
+        PASS [   0.004s] (344/570) burn-ndarray tests::gather_scatter::tests::should_scatter_2d_dim1_diff_shape
+        PASS [   0.005s] (345/570) burn-ndarray tests::gather_scatter::tests::should_scatter_3d_dim1
+        PASS [   0.005s] (346/570) burn-ndarray tests::gelu::tests::test_gelu
+        PASS [   0.004s] (347/570) burn-ndarray tests::init::tests::should_support_bool_empty
+        PASS [   0.008s] (348/570) burn-ndarray tests::gradients::tests::should_update_tensor_when_grad_replace
+        PASS [   0.004s] (349/570) burn-ndarray tests::init::tests::should_support_float_empty
+        PASS [   0.005s] (350/570) burn-ndarray tests::init::tests::should_support_float_ones
+        PASS [   0.005s] (351/570) burn-ndarray tests::init::tests::should_support_float_zeros
+        PASS [   0.005s] (352/570) burn-ndarray tests::init::tests::should_support_int_empty
+        PASS [   0.004s] (353/570) burn-ndarray tests::init::tests::should_support_int_ones
+        PASS [   0.004s] (354/570) burn-ndarray tests::init::tests::should_support_int_zeros
+        PASS [   0.004s] (355/570) burn-ndarray tests::iter_dim::test::test_1d_iter_last_item
+        PASS [   0.005s] (356/570) burn-ndarray tests::iter_dim::test::test_iter_dim_double_end
+        PASS [   0.004s] (357/570) burn-ndarray tests::iter_dim::test::test_iter_dim_single_element
+        PASS [   0.004s] (358/570) burn-ndarray tests::iter_dim::test::test_too_high_dimension
+        PASS [   0.004s] (359/570) burn-ndarray tests::iter_dim::test::test_transposed
+        PASS [   0.004s] (360/570) burn-ndarray tests::log1p::tests::should_support_exp_log1p
+        PASS [   0.004s] (361/570) burn-ndarray tests::log::tests::should_support_log_ops
+        PASS [   0.004s] (362/570) burn-ndarray tests::map_comparison::tests::should_support_bool_equal
+        PASS [   0.004s] (363/570) burn-ndarray tests::map_comparison::tests::should_support_bool_not
+        PASS [   0.004s] (364/570) burn-ndarray tests::map_comparison::tests::test_equal
+        PASS [   0.005s] (365/570) burn-ndarray tests::map_comparison::tests::test_equal_elem
+        PASS [   0.005s] (366/570) burn-ndarray tests::map_comparison::tests::test_greater
+        PASS [   0.004s] (367/570) burn-ndarray tests::map_comparison::tests::test_greater_elem
+        PASS [   0.004s] (368/570) burn-ndarray tests::map_comparison::tests::test_greater_equal
+        PASS [   0.005s] (369/570) burn-ndarray tests::map_comparison::tests::test_greater_equal_elem
+        PASS [   0.005s] (370/570) burn-ndarray tests::map_comparison::tests::test_int_equal
+        PASS [   0.004s] (371/570) burn-ndarray tests::map_comparison::tests::test_int_equal_elem
+        PASS [   0.004s] (372/570) burn-ndarray tests::map_comparison::tests::test_int_greater
+        PASS [   0.004s] (373/570) burn-ndarray tests::map_comparison::tests::test_int_greater_elem
+        PASS [   0.005s] (374/570) burn-ndarray tests::map_comparison::tests::test_int_greater_equal
+        PASS [   0.004s] (375/570) burn-ndarray tests::map_comparison::tests::test_int_greater_equal_elem
+        PASS [   0.005s] (376/570) burn-ndarray tests::map_comparison::tests::test_int_lower
+        PASS [   0.005s] (377/570) burn-ndarray tests::map_comparison::tests::test_int_lower_elem
+        PASS [   0.005s] (378/570) burn-ndarray tests::map_comparison::tests::test_int_lower_equal
+        PASS [   0.005s] (379/570) burn-ndarray tests::map_comparison::tests::test_int_lower_equal_elem
+        PASS [   0.011s] (380/570) burn-ndarray tests::map_comparison::tests::test_lower
+        PASS [   0.010s] (381/570) burn-ndarray tests::map_comparison::tests::test_lower_elem
+        PASS [   0.005s] (382/570) burn-ndarray tests::map_comparison::tests::test_lower_equal
+        PASS [   0.005s] (383/570) burn-ndarray tests::map_comparison::tests::test_lower_equal_elem
+        PASS [   0.004s] (384/570) burn-ndarray tests::mask::tests::should_support_int_mask_fill_ops
+        PASS [   0.005s] (385/570) burn-ndarray tests::mask::tests::should_support_int_mask_where_ops
+        PASS [   0.005s] (386/570) burn-ndarray tests::mask::tests::should_support_mask_fill_ops
+        PASS [   0.005s] (387/570) burn-ndarray tests::mask::tests::should_support_mask_where_ops
+        PASS [   0.004s] (388/570) burn-ndarray tests::matmul::tests::should_panic_when_inner_dimensions_are_not_equal
+        PASS [   0.005s] (389/570) burn-ndarray tests::matmul::tests::test_matmul_broadcast_1
+        PASS [   0.005s] (390/570) burn-ndarray tests::matmul::tests::test_matmul_d2
+        PASS [   0.005s] (391/570) burn-ndarray tests::matmul::tests::test_matmul_d3
+        PASS [   0.006s] (392/570) burn-ndarray tests::matmul::tests::test_matmul_simple_1
+        PASS [   0.006s] (393/570) burn-ndarray tests::matmul::tests::test_matmul_simple_2
+        PASS [   0.005s] (394/570) burn-ndarray tests::matmul::tests::test_matmul_simple_3
+        PASS [   0.004s] (395/570) burn-ndarray tests::maxmin::tests::test_max_dim_2d
+        PASS [   0.005s] (396/570) burn-ndarray tests::maxmin::tests::test_max_dim_2d_with_0th_dim
+        PASS [   0.005s] (397/570) burn-ndarray tests::maxmin::tests::test_max_dim_with_indices_2d
+        PASS [   0.006s] (398/570) burn-ndarray tests::maxmin::tests::test_max_dim_with_indices_2d_with_dim_0th
+        PASS [   0.006s] (399/570) burn-ndarray tests::maxmin::tests::test_mean_dim_2d
+        PASS [   0.004s] (400/570) burn-ndarray tests::maxmin::tests::test_min_dim_2d
+        PASS [   0.004s] (401/570) burn-ndarray tests::maxmin::tests::test_min_dim_2d_with_0th_dim
+        PASS [   0.004s] (402/570) burn-ndarray tests::maxmin::tests::test_min_dim_with_indices_2d
+        PASS [   0.004s] (403/570) burn-ndarray tests::maxmin::tests::test_min_dim_with_indices_2d_with_0th_dim
+        PASS [   0.004s] (404/570) burn-ndarray tests::maxmin::tests::test_sum_dim_2d
+        PASS [   0.004s] (405/570) burn-ndarray tests::mish::tests::test_mish
+        PASS [   0.004s] (406/570) burn-ndarray tests::module_adaptive_avg_pool1d::tests::test_adaptive_avg_pool1d_bigger_output
+        PASS [   0.005s] (407/570) burn-ndarray tests::module_adaptive_avg_pool1d::tests::test_adaptive_avg_pool1d_dyn_filter_size
+        PASS [   0.004s] (408/570) burn-ndarray tests::module_adaptive_avg_pool1d::tests::test_adaptive_avg_pool1d_simple
+        PASS [   0.005s] (409/570) burn-ndarray tests::module_adaptive_avg_pool2d::tests::test_adaptive_avg_pool2d_bigger_output
+        PASS [   0.005s] (410/570) burn-ndarray tests::module_adaptive_avg_pool2d::tests::test_adaptive_avg_pool2d_dyn_filter_size
+        PASS [   0.005s] (411/570) burn-ndarray tests::module_adaptive_avg_pool2d::tests::test_adaptive_avg_pool2d_simple
+        PASS [   0.005s] (412/570) burn-ndarray tests::module_avg_pool1d::tests::test_avg_pool1d_complex
+        PASS [   0.005s] (413/570) burn-ndarray tests::module_avg_pool1d::tests::test_avg_pool1d_complex_dont_count_pad
+        PASS [   0.005s] (414/570) burn-ndarray tests::module_avg_pool1d::tests::test_avg_pool1d_simple
+        PASS [   0.005s] (415/570) burn-ndarray tests::module_avg_pool2d::tests::test_avg_pool2d_complex
+        PASS [   0.005s] (416/570) burn-ndarray tests::module_avg_pool2d::tests::test_avg_pool2d_complex_dont_include_pad
+        PASS [   0.005s] (417/570) burn-ndarray tests::module_avg_pool2d::tests::test_avg_pool2d_simple
+        PASS [   0.006s] (418/570) burn-ndarray tests::module_backward::tests::test_embedding_backward
+        PASS [   0.006s] (419/570) burn-ndarray tests::module_conv1d::tests::test_conv1d_complex
+        PASS [   0.009s] (420/570) burn-ndarray tests::module_conv1d::tests::test_conv1d_dilation
+        PASS [   0.009s] (421/570) burn-ndarray tests::module_conv1d::tests::test_conv1d_groups
+        PASS [   0.006s] (422/570) burn-ndarray tests::module_conv1d::tests::test_conv1d_simple
+        PASS [   0.006s] (423/570) burn-ndarray tests::module_conv2d::tests::test_conv2d_complex
+        PASS [   0.005s] (424/570) burn-ndarray tests::module_conv2d::tests::test_conv2d_groups
+        PASS [   0.005s] (425/570) burn-ndarray tests::module_conv2d::tests::test_conv2d_simple
+        PASS [   0.005s] (426/570) burn-ndarray tests::module_conv_transpose1d::tests::test_conv_transpose1d_diff_channels
+        PASS [   0.007s] (427/570) burn-ndarray tests::module_conv_transpose1d::tests::test_conv_transpose1d_dilation
+        PASS [   0.005s] (428/570) burn-ndarray tests::module_conv_transpose1d::tests::test_conv_transpose1d_groups
+        PASS [   0.005s] (429/570) burn-ndarray tests::module_conv_transpose1d::tests::test_conv_transpose1d_stride
+        PASS [   0.006s] (430/570) burn-ndarray tests::module_conv_transpose2d::tests::test_conv_transpose2d_dilation_2
+        PASS [   0.006s] (431/570) burn-ndarray tests::module_conv_transpose2d::tests::test_conv_transpose2d_groups_2
+        PASS [   0.006s] (432/570) burn-ndarray tests::module_conv_transpose2d::tests::test_conv_transpose2d_groups_different_channels
+        PASS [   0.005s] (433/570) burn-ndarray tests::module_conv_transpose2d::tests::test_conv_transpose2d_simple_1
+        PASS [   0.006s] (434/570) burn-ndarray tests::module_conv_transpose2d::tests::test_conv_transpose2d_simple_2
+        PASS [   0.005s] (435/570) burn-ndarray tests::module_conv_transpose2d::tests::test_conv_transpose2d_stride2_out_padding
+        PASS [   0.005s] (436/570) burn-ndarray tests::module_conv_transpose2d::tests::test_conv_transpose2d_stride_2
+        PASS [   0.005s] (437/570) burn-ndarray tests::module_forward::tests::test_embedding_forward
+        PASS [   0.005s] (438/570) burn-ndarray tests::module_max_pool1d::tests::test_max_pool1d_complex
+        PASS [   0.005s] (439/570) burn-ndarray tests::module_max_pool1d::tests::test_max_pool1d_different_padding_stride_kernel
+        PASS [   0.006s] (440/570) burn-ndarray tests::module_max_pool1d::tests::test_max_pool1d_simple
+        PASS [   0.006s] (441/570) burn-ndarray tests::module_max_pool1d::tests::test_max_pool1d_with_dilation
+        PASS [   0.005s] (442/570) burn-ndarray tests::module_max_pool1d::tests::test_max_pool1d_with_indices
+        PASS [   0.005s] (443/570) burn-ndarray tests::module_max_pool1d::tests::test_max_pool1d_with_neg
+        PASS [   0.005s] (444/570) burn-ndarray tests::module_max_pool2d::tests::test_max_pool2d_complex
+        PASS [   0.005s] (445/570) burn-ndarray tests::module_max_pool2d::tests::test_max_pool2d_different_padding_stride_kernel
+        PASS [   0.005s] (446/570) burn-ndarray tests::module_max_pool2d::tests::test_max_pool2d_simple
+        PASS [   0.005s] (447/570) burn-ndarray tests::module_max_pool2d::tests::test_max_pool2d_with_dilation
+        PASS [   0.006s] (448/570) burn-ndarray tests::module_max_pool2d::tests::test_max_pool2d_with_neg
+        PASS [   0.006s] (449/570) burn-ndarray tests::module_unfold4d::tests::test_unfold4d_complex
+        PASS [   0.005s] (450/570) burn-ndarray tests::module_unfold4d::tests::test_unfold4d_simple
+        PASS [   0.008s] (451/570) burn-ndarray tests::module_unfold4d::tests::test_unfold4d_shape
+        PASS [   0.005s] (452/570) burn-ndarray tests::mul::tests::should_support_mul_ops
+        PASS [   0.005s] (453/570) burn-ndarray tests::mul::tests::should_support_mul_ops_int
+        PASS [   0.013s] (454/570) burn-ndarray tests::mul::tests::should_support_mul_scalar_ops
+        PASS [   0.013s] (455/570) burn-ndarray tests::mul::tests::should_support_mul_scalar_ops_int
+        PASS [   0.004s] (456/570) burn-ndarray tests::mul::tests::test_mul_broadcast
+        PASS [   0.004s] (457/570) burn-ndarray tests::mul::tests::test_mul_broadcast_2_dims
+        PASS [   0.005s] (458/570) burn-ndarray tests::mul::tests::test_mul_broadcast_int
+        PASS [   0.005s] (459/570) burn-ndarray tests::narrow::tests::test_narrow
+        PASS [   0.004s] (460/570) burn-ndarray tests::narrow::tests::test_narrow_invalid_dim
+        PASS [   0.004s] (461/570) burn-ndarray tests::narrow::tests::test_narrow_invalid_length
+        PASS [   0.004s] (462/570) burn-ndarray tests::narrow::tests::test_narrow_invalid_start
+        PASS [   0.004s] (463/570) burn-ndarray tests::narrow::tests::test_narrow_invalid_zero_length
+        PASS [   0.004s] (464/570) burn-ndarray tests::neg::tests::should_support_neg_ops
+        PASS [   0.004s] (465/570) burn-ndarray tests::one_hot::tests::should_panic_when_index_exceeds_number_of_classes
+        PASS [   0.004s] (466/570) burn-ndarray tests::one_hot::tests::should_panic_when_number_of_classes_is_zero
+        PASS [   0.004s] (467/570) burn-ndarray tests::one_hot::tests::should_support_one_hot
+        PASS [   0.004s] (468/570) burn-ndarray tests::powf::tests::should_support_neg_power
+        PASS [   0.004s] (469/570) burn-ndarray tests::powf::tests::should_support_neg_values_with_even_power
+        PASS [   0.004s] (470/570) burn-ndarray tests::powf::tests::should_support_neg_values_with_odd_power
+        PASS [   0.004s] (471/570) burn-ndarray tests::powf::tests::should_support_powf_ops
+        PASS [   0.004s] (472/570) burn-ndarray tests::powf_scalar::tests::should_support_neg_power
+        PASS [   0.004s] (473/570) burn-ndarray tests::powf_scalar::tests::should_support_neg_values_with_even_power
+        PASS [   0.004s] (474/570) burn-ndarray tests::powf_scalar::tests::should_support_neg_values_with_odd_power
+        PASS [   0.004s] (475/570) burn-ndarray tests::powf_scalar::tests::should_support_powf_ops
+        PASS [   0.004s] (476/570) burn-ndarray tests::random::tests::rand_bernoulli
+        PASS [   0.005s] (477/570) burn-ndarray tests::random::tests::rand_default
+        PASS [   0.005s] (478/570) burn-ndarray tests::random::tests::rand_uniform
+        PASS [   0.005s] (479/570) burn-ndarray tests::recip::tests::should_support_recip_ops
+        PASS [   0.004s] (480/570) burn-ndarray tests::relu::tests::test_relu_d2
+        PASS [   0.004s] (481/570) burn-ndarray tests::repeat::tests::should_support_bool_repeat_ops
+        PASS [   0.005s] (482/570) burn-ndarray tests::repeat::tests::should_support_int_repeat_ops
+        PASS [   0.005s] (483/570) burn-ndarray tests::repeat::tests::should_support_repeat_ops
+        PASS [   0.004s] (484/570) burn-ndarray tests::reshape::tests::multiple_neg_ones
+        PASS [   0.005s] (485/570) burn-ndarray tests::reshape::tests::neg_value
+        PASS [   0.004s] (486/570) burn-ndarray tests::reshape::tests::should_support_dim_infererence
+        PASS [   0.004s] (487/570) burn-ndarray tests::reshape::tests::should_support_reshape_1d
+        PASS [   0.004s] (488/570) burn-ndarray tests::reshape::tests::should_support_reshape_2d
+        PASS [   0.004s] (489/570) burn-ndarray tests::reshape::tests::should_support_reshape_bool
+        PASS [   0.004s] (490/570) burn-ndarray tests::reshape::tests::should_support_reshape_int
+        PASS [   0.004s] (491/570) burn-ndarray tests::select::tests::should_select_1d
+        PASS [   0.004s] (492/570) burn-ndarray tests::select::tests::should_select_1d_int
+        PASS [   0.004s] (493/570) burn-ndarray tests::select::tests::should_select_2d_dim0_more_num_dim
+        PASS [   0.004s] (494/570) burn-ndarray tests::select::tests::should_select_2d_dim0_same_num_dim
+        PASS [   0.004s] (495/570) burn-ndarray tests::select::tests::should_select_2d_dim1
+        PASS [   0.004s] (496/570) burn-ndarray tests::select::tests::should_select_assign_1d
+        PASS [   0.004s] (497/570) burn-ndarray tests::select::tests::should_select_assign_1d_int
+        PASS [   0.010s] (498/570) burn-ndarray tests::select::tests::should_select_assign_2d_dim0
+        PASS [   0.008s] (499/570) burn-ndarray tests::select::tests::should_select_assign_2d_dim1
+        PASS [   0.004s] (500/570) burn-ndarray tests::select::tests::should_select_panic_invalid_dimension
+        PASS [   0.004s] (501/570) burn-ndarray tests::sigmoid::tests::test_sigmoid
+        PASS [   0.004s] (502/570) burn-ndarray tests::sigmoid::tests::test_sigmoid_overflow
+        PASS [   0.004s] (503/570) burn-ndarray tests::silu::tests::test_silu
+        PASS [   0.005s] (504/570) burn-ndarray tests::sin::tests::should_support_sin_ops
+        PASS [   0.005s] (505/570) burn-ndarray tests::slice::tests::should_panic_when_slice_exceeds_dimension
+        PASS [   0.004s] (506/570) burn-ndarray tests::slice::tests::should_panic_when_slice_is_desc
+        PASS [   0.004s] (507/570) burn-ndarray tests::slice::tests::should_panic_when_slice_is_equal
+        PASS [   0.004s] (508/570) burn-ndarray tests::slice::tests::should_panic_when_slice_with_too_many_dimensions
+        PASS [   0.004s] (509/570) burn-ndarray tests::slice::tests::should_support_full_sliceing_1d
+        PASS [   0.004s] (510/570) burn-ndarray tests::slice::tests::should_support_full_sliceing_2d
+        PASS [   0.004s] (511/570) burn-ndarray tests::slice::tests::should_support_partial_sliceing_1d
+        PASS [   0.004s] (512/570) burn-ndarray tests::slice::tests::should_support_partial_sliceing_2d
+        PASS [   0.004s] (513/570) burn-ndarray tests::slice::tests::should_support_partial_sliceing_3d
+        PASS [   0.004s] (514/570) burn-ndarray tests::slice::tests::should_support_partial_sliceing_3d_non_contiguous
+        PASS [   0.004s] (515/570) burn-ndarray tests::slice::tests::should_support_slice_assign_1d
+        PASS [   0.004s] (516/570) burn-ndarray tests::slice::tests::should_support_slice_assign_2d
+        PASS [   0.004s] (517/570) burn-ndarray tests::slice::tests::slice_assign_should_not_corrupt_potentially_inplace_operations
+        PASS [   0.004s] (518/570) burn-ndarray tests::slice::tests::slice_should_not_corrupt_potentially_inplace_operations
+        PASS [   0.004s] (519/570) burn-ndarray tests::softmax::tests::test_softmax_d2
+        PASS [   0.004s] (520/570) burn-ndarray tests::softplus::tests::test_softplus_d2
+        PASS [   0.004s] (521/570) burn-ndarray tests::sqrt::tests::should_support_sqrt_ops
+        PASS [   0.004s] (522/570) burn-ndarray tests::squeeze::tests::should_squeeze
+        PASS [   0.004s] (523/570) burn-ndarray tests::squeeze::tests::should_squeeze_first
+        PASS [   0.004s] (524/570) burn-ndarray tests::squeeze::tests::should_squeeze_last
+        PASS [   0.004s] (525/570) burn-ndarray tests::squeeze::tests::should_squeeze_panic
+        PASS [   0.004s] (526/570) burn-ndarray tests::squeeze::tests::should_unsqueeze_dim
+        PASS [   0.004s] (527/570) burn-ndarray tests::squeeze::tests::should_unsqueeze_dim_first
+        PASS [   0.004s] (528/570) burn-ndarray tests::squeeze::tests::should_unsqueeze_dim_last
+        PASS [   0.004s] (529/570) burn-ndarray tests::squeeze::tests::should_unsqueeze_dim_panic
+        PASS [   0.004s] (530/570) burn-ndarray tests::squeeze::tests::should_unsqueeze_dims_handle_first_last
+        PASS [   0.004s] (531/570) burn-ndarray tests::squeeze::tests::should_unsqueeze_dims_panic
+        PASS [   0.004s] (532/570) burn-ndarray tests::squeeze::tests::should_unsqueeze_dims_support_dim_inference
+        PASS [   0.004s] (533/570) burn-ndarray tests::squeeze::tests::should_unsqueeze_dims_work_with_single_dim
+        PASS [   0.004s] (534/570) burn-ndarray tests::stack::tests::should_generate_row_major_layout
+        PASS [   0.004s] (535/570) burn-ndarray tests::stack::tests::should_panic_when_dimensions_are_not_the_same
+        PASS [   0.005s] (536/570) burn-ndarray tests::stack::tests::should_panic_when_list_of_vectors_is_empty
+        PASS [   0.005s] (537/570) burn-ndarray tests::stack::tests::should_panic_when_stack_exceeds_dimension
+        PASS [   0.004s] (538/570) burn-ndarray tests::stack::tests::should_support_stack_ops_2d_dim0
+        PASS [   0.005s] (539/570) burn-ndarray tests::stack::tests::should_support_stack_ops_2d_dim1
+        PASS [   0.005s] (540/570) burn-ndarray tests::stack::tests::should_support_stack_ops_3d
+        PASS [   0.004s] (541/570) burn-ndarray tests::stack::tests::should_support_stack_ops_bool
+        PASS [   0.005s] (542/570) burn-ndarray tests::stack::tests::should_support_stack_ops_int
+        PASS [   0.005s] (543/570) burn-ndarray tests::sub::tests::should_support_sub_ops
+        PASS [   0.007s] (544/570) burn-ndarray tests::sub::tests::should_support_sub_ops_int
+        PASS [   0.008s] (545/570) burn-ndarray tests::sub::tests::should_support_sub_scalar_ops
+        PASS [   0.005s] (546/570) burn-ndarray tests::sub::tests::should_support_sub_scalar_ops_int
+        PASS [   0.004s] (547/570) burn-ndarray tests::sub::tests::test_sub_broadcast
+        PASS [   0.004s] (548/570) burn-ndarray tests::sub::tests::test_sub_broadcast_int
+        PASS [   0.005s] (549/570) burn-ndarray tests::tanh::tests::should_support_tanh_ops
+        PASS [   0.005s] (550/570) burn-ndarray tests::tanh_activation::tests::test_tanh
+        PASS [   0.004s] (551/570) burn-ndarray tests::transpose::tests::should_support_swap_dims
+        PASS [   0.005s] (552/570) burn-ndarray tests::transpose::tests::should_support_swap_dims_bool
+        PASS [   0.004s] (553/570) burn-ndarray tests::transpose::tests::should_support_swap_dims_int
+        PASS [   0.004s] (554/570) burn-ndarray tests::transpose::tests::should_support_transpose_bool
+        PASS [   0.005s] (555/570) burn-ndarray tests::transpose::tests::should_support_transpose_ops
+        PASS [   0.005s] (556/570) burn-ndarray tests::transpose::tests::should_support_transpose_ops_int
+        PASS [   0.004s] (557/570) burn-ndarray tests::tri::tests::test_tril
+        PASS [   0.005s] (558/570) burn-ndarray tests::tri::tests::test_tril_batch_tensors
+        PASS [   0.005s] (559/570) burn-ndarray tests::tri::tests::test_tril_negative_diagonal
+        PASS [   0.004s] (560/570) burn-ndarray tests::tri::tests::test_tril_positive_diagonal
+        PASS [   0.005s] (561/570) burn-ndarray tests::tri::tests::test_tril_too_few_dims
+        PASS [   0.005s] (562/570) burn-ndarray tests::tri::tests::test_triu
+        PASS [   0.004s] (563/570) burn-ndarray tests::tri::tests::test_triu_batch_tensors
+        PASS [   0.005s] (564/570) burn-ndarray tests::tri::tests::test_triu_negative_diagonal
+        PASS [   0.005s] (565/570) burn-ndarray tests::tri::tests::test_triu_positive_diagonal
+        PASS [   0.004s] (566/570) burn-ndarray tests::tri::tests::test_triu_too_few_dims
+        PASS [   0.005s] (567/570) burn-ndarray tests::var::tests::test_var
+        PASS [   0.005s] (568/570) burn-ndarray tests::var::tests::test_var_bias
+        PASS [   0.005s] (569/570) burn-ndarray tests::var::tests::test_var_mean
+        PASS [   0.004s] (570/570) burn-ndarray tests::var::tests::test_var_mean_bias
+────────────
+     Summary [   1.604s] 570 tests run: 570 passed, 0 skipped
+reward=1 graded=570 found=84 failed=0 parsed=570 framework=cargo exit_code=0

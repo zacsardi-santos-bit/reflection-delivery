@@ -1,0 +1,52 @@
+patching file exporters/otlp/test/otlp_grpc_log_exporter_test.cc
+Starting local Bazel server and connecting to it...
+Loading: 
+Loading: 0 packages loaded
+Analyzing: target //exporters/otlp:otlp_grpc_log_exporter_test (1 packages loaded, 0 targets configured)
+Analyzing: target //exporters/otlp:otlp_grpc_log_exporter_test (10 packages loaded, 6 targets configured)
+Analyzing: target //exporters/otlp:otlp_grpc_log_exporter_test (26 packages loaded, 364 targets configured)
+Analyzing: target //exporters/otlp:otlp_grpc_log_exporter_test (40 packages loaded, 892 targets configured)
+Analyzing: target //exporters/otlp:otlp_grpc_log_exporter_test (64 packages loaded, 3274 targets configured)
+INFO: Analyzed target //exporters/otlp:otlp_grpc_log_exporter_test (69 packages loaded, 4077 targets configured).
+
+INFO: Found 1 target...
+[0 / 73] [Prepa] BazelWorkspaceStatusAction stable-status.txt
+[545 / 552] [Prepa] Symlinking virtual headers for //exporters/otlp:otlp_grpc_log_exporter
+INFO: From Action external/com_github_opentelemetry_proto/opentelemetry/proto/collector/logs/v1/logs_service.grpc.pb.h:
+bazel-out/k8-fastbuild/bin/external/com_github_opentelemetry_proto/external/com_github_opentelemetry_proto: warning: directory does not exist.
+[1,245 / 1,386] [Scann] Compiling exporters/otlp/src/otlp_grpc_log_exporter.cc
+[1,893 / 1,967] Compiling exporters/otlp/src/otlp_grpc_log_exporter.cc; 1s processwrapper-sandbox ... (4 actions running)
+[2,145 / 2,181] Compiling exporters/otlp/src/otlp_grpc_log_exporter.cc; 8s processwrapper-sandbox ... (3 actions, 2 running)
+[2,313 / 2,341] Compiling exporters/otlp/test/otlp_grpc_log_exporter_test.cc; 10s processwrapper-sandbox ... (3 actions, 2 running)
+INFO: From Compiling exporters/otlp/test/otlp_grpc_log_exporter_test.cc:
+exporters/otlp/test/otlp_grpc_log_exporter_test.cc: In member function 'virtual void opentelemetry::v1::exporter::otlp::OtlpGrpcLogExporterTestPeer_ExportIntegrationTest_Test::TestBody()':
+exporters/otlp/test/otlp_grpc_log_exporter_test.cc:135:8: warning: unused variable 'trace_id_hex' [-Wunused-variable]
+  135 |   char trace_id_hex[2 * opentelemetry::trace::TraceId::kSize] = {0};
+      |        ^~~~~~~~~~~~
+exporters/otlp/test/otlp_grpc_log_exporter_test.cc:139:8: warning: unused variable 'span_id_hex' [-Wunused-variable]
+  139 |   char span_id_hex[2 * opentelemetry::trace::SpanId::kSize] = {0};
+      |        ^~~~~~~~~~~
+Target //exporters/otlp:otlp_grpc_log_exporter_test up-to-date:
+  bazel-bin/exporters/otlp/otlp_grpc_log_exporter_test
+INFO: Elapsed time: 24.697s, Critical Path: 13.34s
+INFO: 23 processes: 14 internal, 9 processwrapper-sandbox.
+INFO: Build completed successfully, 23 total actions
+INFO: Build completed successfully, 23 total actions
+Running main() from gmock_main.cc
+[==========] Running 3 tests from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 3 tests from OtlpGrpcLogExporterTestPeer
+[ RUN      ] OtlpGrpcLogExporterTestPeer.ShutdownTest
+[Error] File: exporters/otlp/src/otlp_grpc_log_exporter.cc:147[OTLP LOG GRPC Exporter] Export() failed: 
+[       OK ] OtlpGrpcLogExporterTestPeer.ShutdownTest (0 ms)
+[ RUN      ] OtlpGrpcLogExporterTestPeer.ExportUnitTest
+[Error] File: exporters/otlp/src/otlp_grpc_log_exporter.cc:147[OTLP LOG GRPC Exporter] Export() failed: 
+[       OK ] OtlpGrpcLogExporterTestPeer.ExportUnitTest (0 ms)
+[ RUN      ] OtlpGrpcLogExporterTestPeer.ExportIntegrationTest
+[       OK ] OtlpGrpcLogExporterTestPeer.ExportIntegrationTest (1 ms)
+[----------] 3 tests from OtlpGrpcLogExporterTestPeer (1 ms total)
+
+[----------] Global test environment tear-down
+[==========] 3 tests from 1 test suite ran. (1 ms total)
+[  PASSED  ] 3 tests.
+reward=1 graded=3 found=3 failed=0 parsed=3 framework=gtest exit_code=0

@@ -1,0 +1,55 @@
+patching file engine/crates/integration-tests/src/helpers.rs
+patching file engine/crates/integration-tests/tests/caching/mod.rs
+patching file engine/crates/integration-tests/tests/integration_tests.rs
+patching file engine/crates/integration-tests/tests/partial_caching/defer.rs (renamed from engine/crates/integration-tests/tests/caching/partial_caching_defer.rs)
+patching file engine/crates/integration-tests/tests/partial_caching/mod.rs
+patching file engine/crates/integration-tests/tests/partial_caching/type_conditions.rs
+patching file engine/crates/partial-caching/src/output/tests.rs
+patching file engine/crates/partial-caching/tests/query-splitting.rs
+   Compiling graph-entities v0.1.0 (/workspace/repo/engine/crates/graph-entities)
+   Compiling engine-response v0.1.0 (/workspace/repo/engine/crates/engine/response)
+   Compiling partial-caching v0.76.0 (/workspace/repo/engine/crates/partial-caching)
+   Compiling engine-validation v0.1.0 (/workspace/repo/engine/crates/engine/validation)
+   Compiling engine v3.0.31 (/workspace/repo/engine/crates/engine)
+   Compiling parser-sdl v0.1.0 (/workspace/repo/engine/crates/parser-sdl)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 44.43s
+------------
+ Nextest run ID 1f4bd65e-02c9-4fdd-ba37-561e275883df with nextest profile: ci
+    Starting 34 tests across 5 binaries
+        PASS [   0.006s] partial-caching output::store::tests::test_sizes
+        PASS [   0.007s] partial-caching output::shapes::shape_builder::tests::test_insert_polymorphic_object
+        PASS [   0.273s] partial-caching output::tests::test_cache_merging_when_defer_ignored
+        PASS [   0.275s] partial-caching output::tests::test_cache_merging
+        PASS [   0.195s] partial-caching output::tests::test_incremental_response_merging
+        PASS [   0.200s] partial-caching output::tests::test_cache_merging_with_defer
+        PASS [   0.195s] partial-caching output::tests::test_initial_response_handling
+        PASS [   0.199s] partial-caching output::tests::test_nested_defers
+        PASS [   0.183s] partial-caching output::tests::test_nested_defers_when_defer_ignored
+        PASS [   0.188s] partial-caching::cache-fetching cache_partitions_need_cache_fetched
+        PASS [   0.018s] partial-caching::cache-fetching no_cache_fetches_if_nocache_header_provided
+        PASS [   0.225s] partial-caching::cache-fetching correct_query_when_some_miss_some_hits
+        PASS [   0.017s] partial-caching::cache-fetching query_name_does_not_factor_into_cache_key
+        PASS [   0.223s] partial-caching::cache-fetching nocache_fields_are_always_in_query
+        PASS [   0.017s] partial-caching::cache-fetching test_complete_cache_hits
+        PASS [   0.195s] partial-caching::query-splitting test_basic_split
+        PASS [   0.201s] partial-caching::query-splitting test_arguments_and_directives_preserved
+        PASS [   0.222s] partial-caching::query-splitting test_cache_control_propagation
+        PASS [   0.220s] partial-caching::query-splitting test_cache_control_propagation_across_fragments
+        PASS [   0.019s] partial-caching::query-splitting test_mutation
+        PASS [   0.199s] partial-caching::query-splitting test_cache_control_propagation_from_root
+        PASS [   0.201s] partial-caching::query-splitting test_split_with_absurd_fragments
+        PASS [   0.018s] partial-caching::query-splitting test_subscription
+        PASS [   0.212s] partial-caching::query-splitting test_split_with_variables
+        PASS [   0.211s] partial-caching::response-merging test_complete_hit
+        PASS [   0.023s] partial-caching::response-merging test_miss_headers
+        PASS [   0.024s] partial-caching::response-merging test_partial_hit_when_lowest_max_age_is_hit
+        PASS [   0.024s] partial-caching::response-merging test_partial_hit_when_lowest_max_age_is_miss
+        PASS [   0.017s] partial-caching::response-merging test_query_that_hits_uncacheable_fields_should_have_no_cache_control_header
+        PASS [   0.228s] partial-caching::response-merging test_handles_nulls_gracefull
+        PASS [   0.017s] partial-caching::update-serialization no_updates_if_errors
+        PASS [   0.018s] partial-caching::update-serialization no_updates_if_no_store_header_provided
+        PASS [   0.228s] partial-caching::response-merging test_simple_response_merging
+        PASS [   0.201s] partial-caching::update-serialization test_serializing_all_updates
+------------
+     Summary [   2.408s] 34 tests run: 34 passed, 0 skipped
+reward=1 graded=34 found=34 failed=0 parsed=34 framework=cargo exit_code=0

@@ -1,0 +1,14 @@
+patching file pkg/cmd/installer/cmd_test.go
+{"Time":"2026-07-01T15:01:56.400618197Z","Action":"start","Package":"github.com/openshift/cluster-kube-apiserver-operator/pkg/cmd/installer"}
+{"Time":"2026-07-01T15:01:56.407685722Z","Action":"run","Package":"github.com/openshift/cluster-kube-apiserver-operator/pkg/cmd/installer","Test":"TestCopyContent"}
+{"Time":"2026-07-01T15:01:56.407710877Z","Action":"output","Package":"github.com/openshift/cluster-kube-apiserver-operator/pkg/cmd/installer","Test":"TestCopyContent","Output":"=== RUN   TestCopyContent\n"}
+{"Time":"2026-07-01T15:01:56.407720875Z","Action":"run","Package":"github.com/openshift/cluster-kube-apiserver-operator/pkg/cmd/installer","Test":"TestCopyContent/basic"}
+{"Time":"2026-07-01T15:01:56.407723801Z","Action":"output","Package":"github.com/openshift/cluster-kube-apiserver-operator/pkg/cmd/installer","Test":"TestCopyContent/basic","Output":"=== RUN   TestCopyContent/basic\n"}
+{"Time":"2026-07-01T15:01:56.408426606Z","Action":"output","Package":"github.com/openshift/cluster-kube-apiserver-operator/pkg/cmd/installer","Test":"TestCopyContent/basic","Output":"--- PASS: TestCopyContent/basic (0.00s)\n"}
+{"Time":"2026-07-01T15:01:56.408437038Z","Action":"pass","Package":"github.com/openshift/cluster-kube-apiserver-operator/pkg/cmd/installer","Test":"TestCopyContent/basic","Elapsed":0}
+{"Time":"2026-07-01T15:01:56.408444705Z","Action":"output","Package":"github.com/openshift/cluster-kube-apiserver-operator/pkg/cmd/installer","Test":"TestCopyContent","Output":"--- PASS: TestCopyContent (0.00s)\n"}
+{"Time":"2026-07-01T15:01:56.408451697Z","Action":"pass","Package":"github.com/openshift/cluster-kube-apiserver-operator/pkg/cmd/installer","Test":"TestCopyContent","Elapsed":0}
+{"Time":"2026-07-01T15:01:56.408455518Z","Action":"output","Package":"github.com/openshift/cluster-kube-apiserver-operator/pkg/cmd/installer","Output":"PASS\n"}
+{"Time":"2026-07-01T15:01:56.409096214Z","Action":"output","Package":"github.com/openshift/cluster-kube-apiserver-operator/pkg/cmd/installer","Output":"ok  \tgithub.com/openshift/cluster-kube-apiserver-operator/pkg/cmd/installer\t0.008s\n"}
+{"Time":"2026-07-01T15:01:56.409119476Z","Action":"pass","Package":"github.com/openshift/cluster-kube-apiserver-operator/pkg/cmd/installer","Elapsed":0.009}
+reward=1 graded=2 found=2 failed=0 parsed=2 framework=go exit_code=0

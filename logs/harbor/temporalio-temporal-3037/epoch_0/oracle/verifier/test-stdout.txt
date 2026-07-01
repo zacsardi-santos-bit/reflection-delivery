@@ -6,410 +6,410 @@ patching file common/predicates/universal_test.go (renamed from common/predicate
 patching file service/history/queues/scope_test.go
 patching file service/history/queues/slice_test.go
 patching file service/history/tasks/predicates_test.go
-{"Time":"2026-06-29T15:25:52.847257683Z","Action":"start","Package":"go.temporal.io/server/common/predicates"}
-{"Time":"2026-06-29T15:25:52.851521877Z","Action":"run","Package":"go.temporal.io/server/common/predicates","Test":"TestAndSuite"}
-{"Time":"2026-06-29T15:25:52.851575987Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestAndSuite","Output":"=== RUN   TestAndSuite\n"}
-{"Time":"2026-06-29T15:25:52.852213055Z","Action":"run","Package":"go.temporal.io/server/common/predicates","Test":"TestAndSuite/TestAnd_All"}
-{"Time":"2026-06-29T15:25:52.852286705Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestAndSuite/TestAnd_All","Output":"=== RUN   TestAndSuite/TestAnd_All\n"}
-{"Time":"2026-06-29T15:25:52.852336554Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestAndSuite/TestAnd_All","Output":"--- PASS: TestAndSuite/TestAnd_All (0.00s)\n"}
-{"Time":"2026-06-29T15:25:52.852359844Z","Action":"pass","Package":"go.temporal.io/server/common/predicates","Test":"TestAndSuite/TestAnd_All","Elapsed":0}
-{"Time":"2026-06-29T15:25:52.852398044Z","Action":"run","Package":"go.temporal.io/server/common/predicates","Test":"TestAndSuite/TestAnd_Duplication"}
-{"Time":"2026-06-29T15:25:52.852422044Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestAndSuite/TestAnd_Duplication","Output":"=== RUN   TestAndSuite/TestAnd_Duplication\n"}
-{"Time":"2026-06-29T15:25:52.852450244Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestAndSuite/TestAnd_Duplication","Output":"--- PASS: TestAndSuite/TestAnd_Duplication (0.00s)\n"}
-{"Time":"2026-06-29T15:25:52.852476954Z","Action":"pass","Package":"go.temporal.io/server/common/predicates","Test":"TestAndSuite/TestAnd_Duplication","Elapsed":0}
-{"Time":"2026-06-29T15:25:52.852500834Z","Action":"run","Package":"go.temporal.io/server/common/predicates","Test":"TestAndSuite/TestAnd_Equals"}
-{"Time":"2026-06-29T15:25:52.852523664Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestAndSuite/TestAnd_Equals","Output":"=== RUN   TestAndSuite/TestAnd_Equals\n"}
-{"Time":"2026-06-29T15:25:52.852676983Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestAndSuite/TestAnd_Equals","Output":"--- PASS: TestAndSuite/TestAnd_Equals (0.00s)\n"}
-{"Time":"2026-06-29T15:25:52.852754653Z","Action":"pass","Package":"go.temporal.io/server/common/predicates","Test":"TestAndSuite/TestAnd_Equals","Elapsed":0}
-{"Time":"2026-06-29T15:25:52.852779193Z","Action":"run","Package":"go.temporal.io/server/common/predicates","Test":"TestAndSuite/TestAnd_None"}
-{"Time":"2026-06-29T15:25:52.852801993Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestAndSuite/TestAnd_None","Output":"=== RUN   TestAndSuite/TestAnd_None\n"}
-{"Time":"2026-06-29T15:25:52.852827393Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestAndSuite/TestAnd_None","Output":"--- PASS: TestAndSuite/TestAnd_None (0.00s)\n"}
-{"Time":"2026-06-29T15:25:52.852850713Z","Action":"pass","Package":"go.temporal.io/server/common/predicates","Test":"TestAndSuite/TestAnd_None","Elapsed":0}
-{"Time":"2026-06-29T15:25:52.852891152Z","Action":"run","Package":"go.temporal.io/server/common/predicates","Test":"TestAndSuite/TestAnd_Normal"}
-{"Time":"2026-06-29T15:25:52.852913402Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestAndSuite/TestAnd_Normal","Output":"=== RUN   TestAndSuite/TestAnd_Normal\n"}
-{"Time":"2026-06-29T15:25:52.852937182Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestAndSuite/TestAnd_Normal","Output":"--- PASS: TestAndSuite/TestAnd_Normal (0.00s)\n"}
-{"Time":"2026-06-29T15:25:52.852960922Z","Action":"pass","Package":"go.temporal.io/server/common/predicates","Test":"TestAndSuite/TestAnd_Normal","Elapsed":0}
-{"Time":"2026-06-29T15:25:52.852988712Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestAndSuite","Output":"--- PASS: TestAndSuite (0.00s)\n"}
-{"Time":"2026-06-29T15:25:52.853027942Z","Action":"pass","Package":"go.temporal.io/server/common/predicates","Test":"TestAndSuite","Elapsed":0}
-{"Time":"2026-06-29T15:25:52.853051722Z","Action":"run","Package":"go.temporal.io/server/common/predicates","Test":"TestNoneSuite"}
-{"Time":"2026-06-29T15:25:52.853085272Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestNoneSuite","Output":"=== RUN   TestNoneSuite\n"}
-{"Time":"2026-06-29T15:25:52.853115542Z","Action":"run","Package":"go.temporal.io/server/common/predicates","Test":"TestNoneSuite/TestEmpty_Equals"}
-{"Time":"2026-06-29T15:25:52.853137711Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestNoneSuite/TestEmpty_Equals","Output":"=== RUN   TestNoneSuite/TestEmpty_Equals\n"}
-{"Time":"2026-06-29T15:25:52.853162341Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestNoneSuite/TestEmpty_Equals","Output":"--- PASS: TestNoneSuite/TestEmpty_Equals (0.00s)\n"}
-{"Time":"2026-06-29T15:25:52.853186431Z","Action":"pass","Package":"go.temporal.io/server/common/predicates","Test":"TestNoneSuite/TestEmpty_Equals","Elapsed":0}
-{"Time":"2026-06-29T15:25:52.853216591Z","Action":"run","Package":"go.temporal.io/server/common/predicates","Test":"TestNoneSuite/TestEmpty_Test"}
-{"Time":"2026-06-29T15:25:52.853239081Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestNoneSuite/TestEmpty_Test","Output":"=== RUN   TestNoneSuite/TestEmpty_Test\n"}
-{"Time":"2026-06-29T15:25:52.853263601Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestNoneSuite/TestEmpty_Test","Output":"--- PASS: TestNoneSuite/TestEmpty_Test (0.00s)\n"}
-{"Time":"2026-06-29T15:25:52.853287771Z","Action":"pass","Package":"go.temporal.io/server/common/predicates","Test":"TestNoneSuite/TestEmpty_Test","Elapsed":0}
-{"Time":"2026-06-29T15:25:52.853312271Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestNoneSuite","Output":"--- PASS: TestNoneSuite (0.00s)\n"}
-{"Time":"2026-06-29T15:25:52.853335611Z","Action":"pass","Package":"go.temporal.io/server/common/predicates","Test":"TestNoneSuite","Elapsed":0}
-{"Time":"2026-06-29T15:25:52.853360311Z","Action":"run","Package":"go.temporal.io/server/common/predicates","Test":"TestNotSuite"}
-{"Time":"2026-06-29T15:25:52.853382631Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestNotSuite","Output":"=== RUN   TestNotSuite\n"}
-{"Time":"2026-06-29T15:25:52.85341648Z","Action":"run","Package":"go.temporal.io/server/common/predicates","Test":"TestNotSuite/TestNot_Equals"}
-{"Time":"2026-06-29T15:25:52.85343859Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestNotSuite/TestNot_Equals","Output":"=== RUN   TestNotSuite/TestNot_Equals\n"}
-{"Time":"2026-06-29T15:25:52.85346854Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestNotSuite/TestNot_Equals","Output":"--- PASS: TestNotSuite/TestNot_Equals (0.00s)\n"}
-{"Time":"2026-06-29T15:25:52.85349189Z","Action":"pass","Package":"go.temporal.io/server/common/predicates","Test":"TestNotSuite/TestNot_Equals","Elapsed":0}
-{"Time":"2026-06-29T15:25:52.85351584Z","Action":"run","Package":"go.temporal.io/server/common/predicates","Test":"TestNotSuite/TestNot_Test"}
-{"Time":"2026-06-29T15:25:52.85353831Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestNotSuite/TestNot_Test","Output":"=== RUN   TestNotSuite/TestNot_Test\n"}
-{"Time":"2026-06-29T15:25:52.85356773Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestNotSuite/TestNot_Test","Output":"--- PASS: TestNotSuite/TestNot_Test (0.00s)\n"}
-{"Time":"2026-06-29T15:25:52.85359152Z","Action":"pass","Package":"go.temporal.io/server/common/predicates","Test":"TestNotSuite/TestNot_Test","Elapsed":0}
-{"Time":"2026-06-29T15:25:52.85361653Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestNotSuite","Output":"--- PASS: TestNotSuite (0.00s)\n"}
-{"Time":"2026-06-29T15:25:52.85365031Z","Action":"pass","Package":"go.temporal.io/server/common/predicates","Test":"TestNotSuite","Elapsed":0}
-{"Time":"2026-06-29T15:25:52.853673279Z","Action":"run","Package":"go.temporal.io/server/common/predicates","Test":"TestOrSuite"}
-{"Time":"2026-06-29T15:25:52.853699799Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestOrSuite","Output":"=== RUN   TestOrSuite\n"}
-{"Time":"2026-06-29T15:25:52.853925728Z","Action":"run","Package":"go.temporal.io/server/common/predicates","Test":"TestOrSuite/TestOr_All"}
-{"Time":"2026-06-29T15:25:52.853950538Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestOrSuite/TestOr_All","Output":"=== RUN   TestOrSuite/TestOr_All\n"}
-{"Time":"2026-06-29T15:25:52.853982418Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestOrSuite/TestOr_All","Output":"--- PASS: TestOrSuite/TestOr_All (0.00s)\n"}
-{"Time":"2026-06-29T15:25:52.854006118Z","Action":"pass","Package":"go.temporal.io/server/common/predicates","Test":"TestOrSuite/TestOr_All","Elapsed":0}
-{"Time":"2026-06-29T15:25:52.854030258Z","Action":"run","Package":"go.temporal.io/server/common/predicates","Test":"TestOrSuite/TestOr_Duplication"}
-{"Time":"2026-06-29T15:25:52.854053078Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestOrSuite/TestOr_Duplication","Output":"=== RUN   TestOrSuite/TestOr_Duplication\n"}
-{"Time":"2026-06-29T15:25:52.854092088Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestOrSuite/TestOr_Duplication","Output":"--- PASS: TestOrSuite/TestOr_Duplication (0.00s)\n"}
-{"Time":"2026-06-29T15:25:52.854116498Z","Action":"pass","Package":"go.temporal.io/server/common/predicates","Test":"TestOrSuite/TestOr_Duplication","Elapsed":0}
-{"Time":"2026-06-29T15:25:52.854140198Z","Action":"run","Package":"go.temporal.io/server/common/predicates","Test":"TestOrSuite/TestOr_Equals"}
-{"Time":"2026-06-29T15:25:52.854162988Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestOrSuite/TestOr_Equals","Output":"=== RUN   TestOrSuite/TestOr_Equals\n"}
-{"Time":"2026-06-29T15:25:52.854187197Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestOrSuite/TestOr_Equals","Output":"--- PASS: TestOrSuite/TestOr_Equals (0.00s)\n"}
-{"Time":"2026-06-29T15:25:52.854211027Z","Action":"pass","Package":"go.temporal.io/server/common/predicates","Test":"TestOrSuite/TestOr_Equals","Elapsed":0}
-{"Time":"2026-06-29T15:25:52.854235027Z","Action":"run","Package":"go.temporal.io/server/common/predicates","Test":"TestOrSuite/TestOr_None"}
-{"Time":"2026-06-29T15:25:52.854258497Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestOrSuite/TestOr_None","Output":"=== RUN   TestOrSuite/TestOr_None\n"}
-{"Time":"2026-06-29T15:25:52.854283007Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestOrSuite/TestOr_None","Output":"--- PASS: TestOrSuite/TestOr_None (0.00s)\n"}
-{"Time":"2026-06-29T15:25:52.854306697Z","Action":"pass","Package":"go.temporal.io/server/common/predicates","Test":"TestOrSuite/TestOr_None","Elapsed":0}
-{"Time":"2026-06-29T15:25:52.854330437Z","Action":"run","Package":"go.temporal.io/server/common/predicates","Test":"TestOrSuite/TestOr_Normal"}
-{"Time":"2026-06-29T15:25:52.854357837Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestOrSuite/TestOr_Normal","Output":"=== RUN   TestOrSuite/TestOr_Normal\n"}
-{"Time":"2026-06-29T15:25:52.854381877Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestOrSuite/TestOr_Normal","Output":"--- PASS: TestOrSuite/TestOr_Normal (0.00s)\n"}
-{"Time":"2026-06-29T15:25:52.854405267Z","Action":"pass","Package":"go.temporal.io/server/common/predicates","Test":"TestOrSuite/TestOr_Normal","Elapsed":0}
-{"Time":"2026-06-29T15:25:52.854429777Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestOrSuite","Output":"--- PASS: TestOrSuite (0.00s)\n"}
-{"Time":"2026-06-29T15:25:52.854462646Z","Action":"pass","Package":"go.temporal.io/server/common/predicates","Test":"TestOrSuite","Elapsed":0}
-{"Time":"2026-06-29T15:25:52.854529686Z","Action":"run","Package":"go.temporal.io/server/common/predicates","Test":"TestUniversalSuite"}
-{"Time":"2026-06-29T15:25:52.854566756Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestUniversalSuite","Output":"=== RUN   TestUniversalSuite\n"}
-{"Time":"2026-06-29T15:25:52.854600456Z","Action":"run","Package":"go.temporal.io/server/common/predicates","Test":"TestUniversalSuite/TestUniversal_Equals"}
-{"Time":"2026-06-29T15:25:52.854622446Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestUniversalSuite/TestUniversal_Equals","Output":"=== RUN   TestUniversalSuite/TestUniversal_Equals\n"}
-{"Time":"2026-06-29T15:25:52.854666996Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestUniversalSuite/TestUniversal_Equals","Output":"--- PASS: TestUniversalSuite/TestUniversal_Equals (0.00s)\n"}
-{"Time":"2026-06-29T15:25:52.854953635Z","Action":"pass","Package":"go.temporal.io/server/common/predicates","Test":"TestUniversalSuite/TestUniversal_Equals","Elapsed":0}
-{"Time":"2026-06-29T15:25:52.855009594Z","Action":"run","Package":"go.temporal.io/server/common/predicates","Test":"TestUniversalSuite/TestUniversal_Test"}
-{"Time":"2026-06-29T15:25:52.855033394Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestUniversalSuite/TestUniversal_Test","Output":"=== RUN   TestUniversalSuite/TestUniversal_Test\n"}
-{"Time":"2026-06-29T15:25:52.855061044Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestUniversalSuite/TestUniversal_Test","Output":"--- PASS: TestUniversalSuite/TestUniversal_Test (0.00s)\n"}
-{"Time":"2026-06-29T15:25:52.855102544Z","Action":"pass","Package":"go.temporal.io/server/common/predicates","Test":"TestUniversalSuite/TestUniversal_Test","Elapsed":0}
-{"Time":"2026-06-29T15:25:52.855128524Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestUniversalSuite","Output":"--- PASS: TestUniversalSuite (0.00s)\n"}
-{"Time":"2026-06-29T15:25:52.855159914Z","Action":"pass","Package":"go.temporal.io/server/common/predicates","Test":"TestUniversalSuite","Elapsed":0}
-{"Time":"2026-06-29T15:25:52.855184014Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Output":"PASS\n"}
-{"Time":"2026-06-29T15:25:52.889569045Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Output":"ok  \tgo.temporal.io/server/common/predicates\t0.042s\n"}
-{"Time":"2026-06-29T15:25:52.889679364Z","Action":"pass","Package":"go.temporal.io/server/common/predicates","Elapsed":0.042}
-{"Time":"2026-06-29T15:26:01.402644514Z","Action":"start","Package":"go.temporal.io/server/service/history/queues"}
-{"Time":"2026-06-29T15:26:01.402764043Z","Action":"start","Package":"go.temporal.io/server/service/history/tasks"}
-{"Time":"2026-06-29T15:26:01.410034386Z","Action":"run","Package":"go.temporal.io/server/service/history/tasks","Test":"TestTaskKeySuite"}
-{"Time":"2026-06-29T15:26:01.410098566Z","Action":"output","Package":"go.temporal.io/server/service/history/tasks","Test":"TestTaskKeySuite","Output":"=== RUN   TestTaskKeySuite\n"}
-{"Time":"2026-06-29T15:26:01.410543634Z","Action":"run","Package":"go.temporal.io/server/service/history/tasks","Test":"TestTaskKeySuite/TestMinMaxKey"}
-{"Time":"2026-06-29T15:26:01.410569214Z","Action":"output","Package":"go.temporal.io/server/service/history/tasks","Test":"TestTaskKeySuite/TestMinMaxKey","Output":"=== RUN   TestTaskKeySuite/TestMinMaxKey\n"}
-{"Time":"2026-06-29T15:26:01.410615414Z","Action":"output","Package":"go.temporal.io/server/service/history/tasks","Test":"TestTaskKeySuite/TestMinMaxKey","Output":"--- PASS: TestTaskKeySuite/TestMinMaxKey (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.410638664Z","Action":"pass","Package":"go.temporal.io/server/service/history/tasks","Test":"TestTaskKeySuite/TestMinMaxKey","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.410679903Z","Action":"run","Package":"go.temporal.io/server/service/history/tasks","Test":"TestTaskKeySuite/TestNext"}
-{"Time":"2026-06-29T15:26:01.410702223Z","Action":"output","Package":"go.temporal.io/server/service/history/tasks","Test":"TestTaskKeySuite/TestNext","Output":"=== RUN   TestTaskKeySuite/TestNext\n"}
-{"Time":"2026-06-29T15:26:01.410731603Z","Action":"output","Package":"go.temporal.io/server/service/history/tasks","Test":"TestTaskKeySuite/TestNext","Output":"--- PASS: TestTaskKeySuite/TestNext (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.410754643Z","Action":"pass","Package":"go.temporal.io/server/service/history/tasks","Test":"TestTaskKeySuite/TestNext","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.410780603Z","Action":"run","Package":"go.temporal.io/server/service/history/tasks","Test":"TestTaskKeySuite/TestPrev"}
-{"Time":"2026-06-29T15:26:01.410803113Z","Action":"output","Package":"go.temporal.io/server/service/history/tasks","Test":"TestTaskKeySuite/TestPrev","Output":"=== RUN   TestTaskKeySuite/TestPrev\n"}
-{"Time":"2026-06-29T15:26:01.410833113Z","Action":"output","Package":"go.temporal.io/server/service/history/tasks","Test":"TestTaskKeySuite/TestPrev","Output":"--- PASS: TestTaskKeySuite/TestPrev (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.410855733Z","Action":"pass","Package":"go.temporal.io/server/service/history/tasks","Test":"TestTaskKeySuite/TestPrev","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.410878823Z","Action":"run","Package":"go.temporal.io/server/service/history/tasks","Test":"TestTaskKeySuite/TestSort"}
-{"Time":"2026-06-29T15:26:01.410900423Z","Action":"output","Package":"go.temporal.io/server/service/history/tasks","Test":"TestTaskKeySuite/TestSort","Output":"=== RUN   TestTaskKeySuite/TestSort\n"}
-{"Time":"2026-06-29T15:26:01.415117347Z","Action":"output","Package":"go.temporal.io/server/service/history/tasks","Test":"TestTaskKeySuite/TestSort","Output":"--- PASS: TestTaskKeySuite/TestSort (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.415177796Z","Action":"pass","Package":"go.temporal.io/server/service/history/tasks","Test":"TestTaskKeySuite/TestSort","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.415204856Z","Action":"run","Package":"go.temporal.io/server/service/history/tasks","Test":"TestTaskKeySuite/TestValidateKey_Invalid"}
-{"Time":"2026-06-29T15:26:01.415227766Z","Action":"output","Package":"go.temporal.io/server/service/history/tasks","Test":"TestTaskKeySuite/TestValidateKey_Invalid","Output":"=== RUN   TestTaskKeySuite/TestValidateKey_Invalid\n"}
-{"Time":"2026-06-29T15:26:01.415261176Z","Action":"output","Package":"go.temporal.io/server/service/history/tasks","Test":"TestTaskKeySuite/TestValidateKey_Invalid","Output":"--- PASS: TestTaskKeySuite/TestValidateKey_Invalid (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.415283956Z","Action":"pass","Package":"go.temporal.io/server/service/history/tasks","Test":"TestTaskKeySuite/TestValidateKey_Invalid","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.415309376Z","Action":"run","Package":"go.temporal.io/server/service/history/tasks","Test":"TestTaskKeySuite/TestValidateKey_Valid"}
-{"Time":"2026-06-29T15:26:01.415331296Z","Action":"output","Package":"go.temporal.io/server/service/history/tasks","Test":"TestTaskKeySuite/TestValidateKey_Valid","Output":"=== RUN   TestTaskKeySuite/TestValidateKey_Valid\n"}
-{"Time":"2026-06-29T15:26:01.415355166Z","Action":"output","Package":"go.temporal.io/server/service/history/tasks","Test":"TestTaskKeySuite/TestValidateKey_Valid","Output":"--- PASS: TestTaskKeySuite/TestValidateKey_Valid (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.415378886Z","Action":"pass","Package":"go.temporal.io/server/service/history/tasks","Test":"TestTaskKeySuite/TestValidateKey_Valid","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.415402926Z","Action":"output","Package":"go.temporal.io/server/service/history/tasks","Test":"TestTaskKeySuite","Output":"--- PASS: TestTaskKeySuite (0.01s)\n"}
-{"Time":"2026-06-29T15:26:01.415426146Z","Action":"pass","Package":"go.temporal.io/server/service/history/tasks","Test":"TestTaskKeySuite","Elapsed":0.01}
-{"Time":"2026-06-29T15:26:01.415460085Z","Action":"run","Package":"go.temporal.io/server/service/history/tasks","Test":"TestPredicateSuite"}
-{"Time":"2026-06-29T15:26:01.415482465Z","Action":"output","Package":"go.temporal.io/server/service/history/tasks","Test":"TestPredicateSuite","Output":"=== RUN   TestPredicateSuite\n"}
-{"Time":"2026-06-29T15:26:01.417827037Z","Action":"run","Package":"go.temporal.io/server/service/history/tasks","Test":"TestPredicateSuite/TestNamespacePredicate_Equals"}
-{"Time":"2026-06-29T15:26:01.417861656Z","Action":"output","Package":"go.temporal.io/server/service/history/tasks","Test":"TestPredicateSuite/TestNamespacePredicate_Equals","Output":"=== RUN   TestPredicateSuite/TestNamespacePredicate_Equals\n"}
-{"Time":"2026-06-29T15:26:01.417897506Z","Action":"output","Package":"go.temporal.io/server/service/history/tasks","Test":"TestPredicateSuite/TestNamespacePredicate_Equals","Output":"--- PASS: TestPredicateSuite/TestNamespacePredicate_Equals (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.417927106Z","Action":"pass","Package":"go.temporal.io/server/service/history/tasks","Test":"TestPredicateSuite/TestNamespacePredicate_Equals","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.417951406Z","Action":"run","Package":"go.temporal.io/server/service/history/tasks","Test":"TestPredicateSuite/TestNamespacePredicate_Test"}
-{"Time":"2026-06-29T15:26:01.417973766Z","Action":"output","Package":"go.temporal.io/server/service/history/tasks","Test":"TestPredicateSuite/TestNamespacePredicate_Test","Output":"=== RUN   TestPredicateSuite/TestNamespacePredicate_Test\n"}
-{"Time":"2026-06-29T15:26:01.418005006Z","Action":"output","Package":"go.temporal.io/server/service/history/tasks","Test":"TestPredicateSuite/TestNamespacePredicate_Test","Output":"--- PASS: TestPredicateSuite/TestNamespacePredicate_Test (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.418027966Z","Action":"pass","Package":"go.temporal.io/server/service/history/tasks","Test":"TestPredicateSuite/TestNamespacePredicate_Test","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.418052316Z","Action":"run","Package":"go.temporal.io/server/service/history/tasks","Test":"TestPredicateSuite/TestTypePredicate_Equals"}
-{"Time":"2026-06-29T15:26:01.418083246Z","Action":"output","Package":"go.temporal.io/server/service/history/tasks","Test":"TestPredicateSuite/TestTypePredicate_Equals","Output":"=== RUN   TestPredicateSuite/TestTypePredicate_Equals\n"}
-{"Time":"2026-06-29T15:26:01.418113805Z","Action":"output","Package":"go.temporal.io/server/service/history/tasks","Test":"TestPredicateSuite/TestTypePredicate_Equals","Output":"--- PASS: TestPredicateSuite/TestTypePredicate_Equals (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.418136325Z","Action":"pass","Package":"go.temporal.io/server/service/history/tasks","Test":"TestPredicateSuite/TestTypePredicate_Equals","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.418159395Z","Action":"run","Package":"go.temporal.io/server/service/history/tasks","Test":"TestPredicateSuite/TestTypePredicate_Test"}
-{"Time":"2026-06-29T15:26:01.418181065Z","Action":"output","Package":"go.temporal.io/server/service/history/tasks","Test":"TestPredicateSuite/TestTypePredicate_Test","Output":"=== RUN   TestPredicateSuite/TestTypePredicate_Test\n"}
-{"Time":"2026-06-29T15:26:01.418313055Z","Action":"output","Package":"go.temporal.io/server/service/history/tasks","Test":"TestPredicateSuite/TestTypePredicate_Test","Output":"--- PASS: TestPredicateSuite/TestTypePredicate_Test (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.418349565Z","Action":"pass","Package":"go.temporal.io/server/service/history/tasks","Test":"TestPredicateSuite/TestTypePredicate_Test","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.418376594Z","Action":"output","Package":"go.temporal.io/server/service/history/tasks","Test":"TestPredicateSuite","Output":"--- PASS: TestPredicateSuite (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.418401754Z","Action":"pass","Package":"go.temporal.io/server/service/history/tasks","Test":"TestPredicateSuite","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.418433774Z","Action":"output","Package":"go.temporal.io/server/service/history/tasks","Output":"PASS\n"}
-{"Time":"2026-06-29T15:26:01.418795923Z","Action":"output","Package":"go.temporal.io/server/service/history/tasks","Output":"ok  \tgo.temporal.io/server/service/history/tasks\t0.016s\n"}
-{"Time":"2026-06-29T15:26:01.418829223Z","Action":"pass","Package":"go.temporal.io/server/service/history/tasks","Elapsed":0.016}
-{"Time":"2026-06-29T15:26:01.418873993Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite"}
-{"Time":"2026-06-29T15:26:01.418907412Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite","Output":"=== RUN   TestExecutableSuite\n"}
-{"Time":"2026-06-29T15:26:01.420234467Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestExecute_TaskExecuted"}
-{"Time":"2026-06-29T15:26:01.457337928Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestExecute_TaskExecuted","Output":"=== RUN   TestExecutableSuite/TestExecute_TaskExecuted\n"}
-{"Time":"2026-06-29T15:26:01.457463318Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestExecute_TaskExecuted","Output":"--- PASS: TestExecutableSuite/TestExecute_TaskExecuted (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.457623657Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestExecute_TaskExecuted","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.457684147Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestExecute_TaskFiltered"}
-{"Time":"2026-06-29T15:26:01.457712317Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestExecute_TaskFiltered","Output":"=== RUN   TestExecutableSuite/TestExecute_TaskFiltered\n"}
-{"Time":"2026-06-29T15:26:01.457736977Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestExecute_TaskFiltered","Output":"--- PASS: TestExecutableSuite/TestExecute_TaskFiltered (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.457760557Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestExecute_TaskFiltered","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.457783716Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestExecute_UserLatency"}
-{"Time":"2026-06-29T15:26:01.457805356Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestExecute_UserLatency","Output":"=== RUN   TestExecutableSuite/TestExecute_UserLatency\n"}
-{"Time":"2026-06-29T15:26:01.457835766Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestExecute_UserLatency","Output":"--- PASS: TestExecutableSuite/TestExecute_UserLatency (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.457858486Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestExecute_UserLatency","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.457881256Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestHandleErr_EntityNotExists"}
-{"Time":"2026-06-29T15:26:01.457903246Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestHandleErr_EntityNotExists","Output":"=== RUN   TestExecutableSuite/TestHandleErr_EntityNotExists\n"}
-{"Time":"2026-06-29T15:26:01.457926806Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestHandleErr_EntityNotExists","Output":"--- PASS: TestExecutableSuite/TestHandleErr_EntityNotExists (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.457950136Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestHandleErr_EntityNotExists","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.457984976Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestHandleErr_ErrTaskDiscarded"}
-{"Time":"2026-06-29T15:26:01.458009716Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestHandleErr_ErrTaskDiscarded","Output":"=== RUN   TestExecutableSuite/TestHandleErr_ErrTaskDiscarded\n"}
-{"Time":"2026-06-29T15:26:01.458033706Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestHandleErr_ErrTaskDiscarded","Output":"--- PASS: TestExecutableSuite/TestHandleErr_ErrTaskDiscarded (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.458058805Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestHandleErr_ErrTaskDiscarded","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.458093875Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestHandleErr_ErrTaskRetry"}
-{"Time":"2026-06-29T15:26:01.458116065Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestHandleErr_ErrTaskRetry","Output":"=== RUN   TestExecutableSuite/TestHandleErr_ErrTaskRetry\n"}
-{"Time":"2026-06-29T15:26:01.458141505Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestHandleErr_ErrTaskRetry","Output":"--- PASS: TestExecutableSuite/TestHandleErr_ErrTaskRetry (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.458165515Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestHandleErr_ErrTaskRetry","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.458189365Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestHandleErr_NamespaceNotActiveError"}
-{"Time":"2026-06-29T15:26:01.458212125Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestHandleErr_NamespaceNotActiveError","Output":"=== RUN   TestExecutableSuite/TestHandleErr_NamespaceNotActiveError\n"}
-{"Time":"2026-06-29T15:26:01.458236345Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestHandleErr_NamespaceNotActiveError","Output":"--- PASS: TestExecutableSuite/TestHandleErr_NamespaceNotActiveError (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.458259185Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestHandleErr_NamespaceNotActiveError","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.458283755Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestHandleErr_RandomErr"}
-{"Time":"2026-06-29T15:26:01.458306334Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestHandleErr_RandomErr","Output":"=== RUN   TestExecutableSuite/TestHandleErr_RandomErr\n"}
-{"Time":"2026-06-29T15:26:01.458330794Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestHandleErr_RandomErr","Output":"{\"level\":\"error\",\"ts\":\"2026-06-29T15:26:01.423Z\",\"msg\":\"Fail to process task\",\"wf-namespace-id\":\"deadbeef-0123-4567-890a-bcdef0123456\",\"wf-id\":\"mock-workflow-id\",\"wf-run-id\":\"0d00698f-08e1-4d36-a3e2-3bf109f5d2d6\",\"queue-task-id\":0,\"queue-task-visibility-timestamp\":\"2026-06-29T15:26:01.422Z\",\"queue-task-type\":\"Unspecified\",\"queue-task\":{\"NamespaceID\":\"deadbeef-0123-4567-890a-bcdef0123456\",\"WorkflowID\":\"mock-workflow-id\",\"RunID\":\"0d00698f-08e1-4d36-a3e2-3bf109f5d2d6\",\"VisibilityTimestamp\":\"2026-06-29T15:26:01.422645698Z\",\"TaskID\":0,\"Version\":0,\"Category\":{}},\"wf-history-event-id\":0,\"error\":\"random error\",\"lifecycle\":\"ProcessingFailed\",\"logging-call-at\":\"lazy_logger.go:68\",\"stacktrace\":\"go.temporal.io/server/common/log.(*zapLogger).Error\\n\\t/workspace/repo/common/log/zap_logger.go:142\\ngo.temporal.io/server/common/log.(*lazyLogger).Error\\n\\t/workspace/repo/common/log/lazy_logger.go:68\\ngo.temporal.io/server/service/history/queues.(*executableImpl).HandleErr\\n\\t/workspace/repo/service/history/queues/executable.go"}
-{"Time":"2026-06-29T15:26:01.458364674Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestHandleErr_RandomErr","Output":":231\\ngo.temporal.io/server/service/history/queues.(*executableSuite).TestHandleErr_RandomErr\\n\\t/workspace/repo/service/history/queues/executable_test.go:168\\nreflect.Value.call\\n\\t/usr/local/go/src/reflect/value.go:596\\nreflect.Value.Call\\n\\t/usr/local/go/src/reflect/value.go:380\\ngithub.com/stretchr/testify/suite.Run.func1\\n\\t/go/pkg/mod/github.com/stretchr/testify@v1.7.4/suite/suite.go:168\\ntesting.tRunner\\n\\t/usr/local/go/src/testing/testing.go:1595\"}\n"}
-{"Time":"2026-06-29T15:26:01.458391164Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestHandleErr_RandomErr","Output":"--- PASS: TestExecutableSuite/TestHandleErr_RandomErr (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.458414474Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestHandleErr_RandomErr","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.458438544Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestTaskAck"}
-{"Time":"2026-06-29T15:26:01.458463884Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestTaskAck","Output":"=== RUN   TestExecutableSuite/TestTaskAck\n"}
-{"Time":"2026-06-29T15:26:01.458489674Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestTaskAck","Output":"--- PASS: TestExecutableSuite/TestTaskAck (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.458512534Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestTaskAck","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.458536364Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestTaskNack_Reschedule"}
-{"Time":"2026-06-29T15:26:01.458559204Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestTaskNack_Reschedule","Output":"=== RUN   TestExecutableSuite/TestTaskNack_Reschedule\n"}
-{"Time":"2026-06-29T15:26:01.458582793Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestTaskNack_Reschedule","Output":"--- PASS: TestExecutableSuite/TestTaskNack_Reschedule (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.458605533Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestTaskNack_Reschedule","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.458628333Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestTaskNack_Resubmit"}
-{"Time":"2026-06-29T15:26:01.458650003Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestTaskNack_Resubmit","Output":"=== RUN   TestExecutableSuite/TestTaskNack_Resubmit\n"}
-{"Time":"2026-06-29T15:26:01.458673443Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestTaskNack_Resubmit","Output":"--- PASS: TestExecutableSuite/TestTaskNack_Resubmit (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.458696713Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestTaskNack_Resubmit","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.458720403Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite","Output":"--- PASS: TestExecutableSuite (0.01s)\n"}
-{"Time":"2026-06-29T15:26:01.458743353Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite","Elapsed":0.01}
-{"Time":"2026-06-29T15:26:01.458775943Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestIteratorSuite"}
-{"Time":"2026-06-29T15:26:01.458798083Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestIteratorSuite","Output":"=== RUN   TestIteratorSuite\n"}
-{"Time":"2026-06-29T15:26:01.458821063Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestIteratorSuite/TestCanMerge"}
-{"Time":"2026-06-29T15:26:01.458843732Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestIteratorSuite/TestCanMerge","Output":"=== RUN   TestIteratorSuite/TestCanMerge\n"}
-{"Time":"2026-06-29T15:26:01.458867292Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestIteratorSuite/TestCanMerge","Output":"--- PASS: TestIteratorSuite/TestCanMerge (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.458891332Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestIteratorSuite/TestCanMerge","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.458914672Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestIteratorSuite/TestCanSplit"}
-{"Time":"2026-06-29T15:26:01.458937562Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestIteratorSuite/TestCanSplit","Output":"=== RUN   TestIteratorSuite/TestCanSplit\n"}
-{"Time":"2026-06-29T15:26:01.458961452Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestIteratorSuite/TestCanSplit","Output":"--- PASS: TestIteratorSuite/TestCanSplit (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.458985042Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestIteratorSuite/TestCanSplit","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.459007922Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestIteratorSuite/TestMerge"}
-{"Time":"2026-06-29T15:26:01.459029752Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestIteratorSuite/TestMerge","Output":"=== RUN   TestIteratorSuite/TestMerge\n"}
-{"Time":"2026-06-29T15:26:01.459053882Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestIteratorSuite/TestMerge","Output":"--- PASS: TestIteratorSuite/TestMerge (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.459085452Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestIteratorSuite/TestMerge","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.459109521Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestIteratorSuite/TestNext_IncreaseTaskKey"}
-{"Time":"2026-06-29T15:26:01.459131511Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestIteratorSuite/TestNext_IncreaseTaskKey","Output":"=== RUN   TestIteratorSuite/TestNext_IncreaseTaskKey\n"}
-{"Time":"2026-06-29T15:26:01.459156581Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestIteratorSuite/TestNext_IncreaseTaskKey","Output":"--- PASS: TestIteratorSuite/TestNext_IncreaseTaskKey (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.459179781Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestIteratorSuite/TestNext_IncreaseTaskKey","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.459202471Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestIteratorSuite/TestRemaining"}
-{"Time":"2026-06-29T15:26:01.459224291Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestIteratorSuite/TestRemaining","Output":"=== RUN   TestIteratorSuite/TestRemaining\n"}
-{"Time":"2026-06-29T15:26:01.459248151Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestIteratorSuite/TestRemaining","Output":"--- PASS: TestIteratorSuite/TestRemaining (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.459271311Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestIteratorSuite/TestRemaining","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.459301491Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestIteratorSuite/TestSplit"}
-{"Time":"2026-06-29T15:26:01.459323541Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestIteratorSuite/TestSplit","Output":"=== RUN   TestIteratorSuite/TestSplit\n"}
-{"Time":"2026-06-29T15:26:01.459348501Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestIteratorSuite/TestSplit","Output":"--- PASS: TestIteratorSuite/TestSplit (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.4593717Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestIteratorSuite/TestSplit","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.45939532Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestIteratorSuite","Output":"--- PASS: TestIteratorSuite (0.01s)\n"}
-{"Time":"2026-06-29T15:26:01.45941849Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestIteratorSuite","Elapsed":0.01}
-{"Time":"2026-06-29T15:26:01.45944301Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestPriorityAssignerSuite"}
-{"Time":"2026-06-29T15:26:01.4594653Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestPriorityAssignerSuite","Output":"=== RUN   TestPriorityAssignerSuite\n"}
-{"Time":"2026-06-29T15:26:01.45949881Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestPriorityAssignerSuite/TestAssign_CriticalAttempts"}
-{"Time":"2026-06-29T15:26:01.45952821Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestPriorityAssignerSuite/TestAssign_CriticalAttempts","Output":"=== RUN   TestPriorityAssignerSuite/TestAssign_CriticalAttempts\n"}
-{"Time":"2026-06-29T15:26:01.45955285Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestPriorityAssignerSuite/TestAssign_CriticalAttempts","Output":"--- PASS: TestPriorityAssignerSuite/TestAssign_CriticalAttempts (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.4595758Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestPriorityAssignerSuite/TestAssign_CriticalAttempts","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.45959861Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestPriorityAssignerSuite/TestAssign_NoopExecuable"}
-{"Time":"2026-06-29T15:26:01.45962208Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestPriorityAssignerSuite/TestAssign_NoopExecuable","Output":"=== RUN   TestPriorityAssignerSuite/TestAssign_NoopExecuable\n"}
-{"Time":"2026-06-29T15:26:01.459651679Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestPriorityAssignerSuite/TestAssign_NoopExecuable","Output":"--- PASS: TestPriorityAssignerSuite/TestAssign_NoopExecuable (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.459674829Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestPriorityAssignerSuite/TestAssign_NoopExecuable","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.459698639Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestPriorityAssignerSuite/TestAssign_SelectedTaskTypes"}
-{"Time":"2026-06-29T15:26:01.459720419Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestPriorityAssignerSuite/TestAssign_SelectedTaskTypes","Output":"=== RUN   TestPriorityAssignerSuite/TestAssign_SelectedTaskTypes\n"}
-{"Time":"2026-06-29T15:26:01.459745479Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestPriorityAssignerSuite/TestAssign_SelectedTaskTypes","Output":"--- PASS: TestPriorityAssignerSuite/TestAssign_SelectedTaskTypes (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.459769299Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestPriorityAssignerSuite/TestAssign_SelectedTaskTypes","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.459800379Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestPriorityAssignerSuite/TestAssign_StandbyNamespaceStandbyQueue"}
-{"Time":"2026-06-29T15:26:01.459822059Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestPriorityAssignerSuite/TestAssign_StandbyNamespaceStandbyQueue","Output":"=== RUN   TestPriorityAssignerSuite/TestAssign_StandbyNamespaceStandbyQueue\n"}
-{"Time":"2026-06-29T15:26:01.459845709Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestPriorityAssignerSuite/TestAssign_StandbyNamespaceStandbyQueue","Output":"--- PASS: TestPriorityAssignerSuite/TestAssign_StandbyNamespaceStandbyQueue (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.459870129Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestPriorityAssignerSuite/TestAssign_StandbyNamespaceStandbyQueue","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.459892789Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestPriorityAssignerSuite/TestAssign_Throttled"}
-{"Time":"2026-06-29T15:26:01.459914518Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestPriorityAssignerSuite/TestAssign_Throttled","Output":"=== RUN   TestPriorityAssignerSuite/TestAssign_Throttled\n"}
-{"Time":"2026-06-29T15:26:01.459937828Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestPriorityAssignerSuite/TestAssign_Throttled","Output":"--- PASS: TestPriorityAssignerSuite/TestAssign_Throttled (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.459960608Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestPriorityAssignerSuite/TestAssign_Throttled","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.459983968Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestPriorityAssignerSuite","Output":"--- PASS: TestPriorityAssignerSuite (0.01s)\n"}
-{"Time":"2026-06-29T15:26:01.460008348Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestPriorityAssignerSuite","Elapsed":0.01}
-{"Time":"2026-06-29T15:26:01.460031318Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite"}
-{"Time":"2026-06-29T15:26:01.460052908Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite","Output":"=== RUN   TestRangeSuite\n"}
-{"Time":"2026-06-29T15:26:01.460083818Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestCanMerge"}
-{"Time":"2026-06-29T15:26:01.460105898Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestCanMerge","Output":"=== RUN   TestRangeSuite/TestCanMerge\n"}
-{"Time":"2026-06-29T15:26:01.460129488Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestCanMerge","Output":"--- PASS: TestRangeSuite/TestCanMerge (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.460153758Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestCanMerge","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.460176567Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestCanSplit"}
-{"Time":"2026-06-29T15:26:01.460198187Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestCanSplit","Output":"=== RUN   TestRangeSuite/TestCanSplit\n"}
-{"Time":"2026-06-29T15:26:01.460221537Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestCanSplit","Output":"--- PASS: TestRangeSuite/TestCanSplit (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.460244117Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestCanSplit","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.460266687Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestContainsKey_EmptyRange"}
-{"Time":"2026-06-29T15:26:01.460295867Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestContainsKey_EmptyRange","Output":"=== RUN   TestRangeSuite/TestContainsKey_EmptyRange\n"}
-{"Time":"2026-06-29T15:26:01.460319457Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestContainsKey_EmptyRange","Output":"--- PASS: TestRangeSuite/TestContainsKey_EmptyRange (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.460342847Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestContainsKey_EmptyRange","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.460367537Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestContainsKey_NonEmptyRange"}
-{"Time":"2026-06-29T15:26:01.460389357Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestContainsKey_NonEmptyRange","Output":"=== RUN   TestRangeSuite/TestContainsKey_NonEmptyRange\n"}
-{"Time":"2026-06-29T15:26:01.460413577Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestContainsKey_NonEmptyRange","Output":"--- PASS: TestRangeSuite/TestContainsKey_NonEmptyRange (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.460436916Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestContainsKey_NonEmptyRange","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.460460346Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestContainsRange_EmptyRange"}
-{"Time":"2026-06-29T15:26:01.460482396Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestContainsRange_EmptyRange","Output":"=== RUN   TestRangeSuite/TestContainsRange_EmptyRange\n"}
-{"Time":"2026-06-29T15:26:01.460508036Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestContainsRange_EmptyRange","Output":"--- PASS: TestRangeSuite/TestContainsRange_EmptyRange (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.460532226Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestContainsRange_EmptyRange","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.460555196Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestContainsRange_NonEmptyRange"}
-{"Time":"2026-06-29T15:26:01.460577646Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestContainsRange_NonEmptyRange","Output":"=== RUN   TestRangeSuite/TestContainsRange_NonEmptyRange\n"}
-{"Time":"2026-06-29T15:26:01.460602336Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestContainsRange_NonEmptyRange","Output":"--- PASS: TestRangeSuite/TestContainsRange_NonEmptyRange (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.460625836Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestContainsRange_NonEmptyRange","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.460649276Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestIsEmpty"}
-{"Time":"2026-06-29T15:26:01.460671146Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestIsEmpty","Output":"=== RUN   TestRangeSuite/TestIsEmpty\n"}
-{"Time":"2026-06-29T15:26:01.460695066Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestIsEmpty","Output":"--- PASS: TestRangeSuite/TestIsEmpty (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.460718725Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestIsEmpty","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.460742335Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestMerge"}
-{"Time":"2026-06-29T15:26:01.460774505Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestMerge","Output":"=== RUN   TestRangeSuite/TestMerge\n"}
-{"Time":"2026-06-29T15:26:01.460798335Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestMerge","Output":"--- PASS: TestRangeSuite/TestMerge (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.460821525Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestMerge","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.460846955Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestNewRange_Invalid"}
-{"Time":"2026-06-29T15:26:01.460869975Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestNewRange_Invalid","Output":"=== RUN   TestRangeSuite/TestNewRange_Invalid\n"}
-{"Time":"2026-06-29T15:26:01.460895395Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestNewRange_Invalid","Output":"--- PASS: TestRangeSuite/TestNewRange_Invalid (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.460919465Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestNewRange_Invalid","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.460942655Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestNewRange_Valid"}
-{"Time":"2026-06-29T15:26:01.460965204Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestNewRange_Valid","Output":"=== RUN   TestRangeSuite/TestNewRange_Valid\n"}
-{"Time":"2026-06-29T15:26:01.460988874Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestNewRange_Valid","Output":"--- PASS: TestRangeSuite/TestNewRange_Valid (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.461013264Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestNewRange_Valid","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.461037334Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestSplit"}
-{"Time":"2026-06-29T15:26:01.461059484Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestSplit","Output":"=== RUN   TestRangeSuite/TestSplit\n"}
-{"Time":"2026-06-29T15:26:01.461101344Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestSplit","Output":"--- PASS: TestRangeSuite/TestSplit (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.461124604Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestSplit","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.461149214Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite","Output":"--- PASS: TestRangeSuite (0.01s)\n"}
-{"Time":"2026-06-29T15:26:01.461172524Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite","Elapsed":0.01}
-{"Time":"2026-06-29T15:26:01.461195874Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestReschdulerSuite"}
-{"Time":"2026-06-29T15:26:01.461217614Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestReschdulerSuite","Output":"=== RUN   TestReschdulerSuite\n"}
-{"Time":"2026-06-29T15:26:01.461241453Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestReschdulerSuite/TestReschedule_NoRescheduleLimit"}
-{"Time":"2026-06-29T15:26:01.461265323Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestReschdulerSuite/TestReschedule_NoRescheduleLimit","Output":"=== RUN   TestReschdulerSuite/TestReschedule_NoRescheduleLimit\n"}
-{"Time":"2026-06-29T15:26:01.461289593Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestReschdulerSuite/TestReschedule_NoRescheduleLimit","Output":"--- PASS: TestReschdulerSuite/TestReschedule_NoRescheduleLimit (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.461320733Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestReschdulerSuite/TestReschedule_NoRescheduleLimit","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.461344083Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestReschdulerSuite/TestReschedule_SubmissionFailed"}
-{"Time":"2026-06-29T15:26:01.461366433Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestReschdulerSuite/TestReschedule_SubmissionFailed","Output":"=== RUN   TestReschdulerSuite/TestReschedule_SubmissionFailed\n"}
-{"Time":"2026-06-29T15:26:01.461405273Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestReschdulerSuite/TestReschedule_SubmissionFailed","Output":"--- PASS: TestReschdulerSuite/TestReschedule_SubmissionFailed (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.461429473Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestReschdulerSuite/TestReschedule_SubmissionFailed","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.461452693Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestReschdulerSuite/TestReschedule_WithRescheduleLimit"}
-{"Time":"2026-06-29T15:26:01.461475083Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestReschdulerSuite/TestReschedule_WithRescheduleLimit","Output":"=== RUN   TestReschdulerSuite/TestReschedule_WithRescheduleLimit\n"}
-{"Time":"2026-06-29T15:26:01.461499072Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestReschdulerSuite/TestReschedule_WithRescheduleLimit","Output":"--- PASS: TestReschdulerSuite/TestReschedule_WithRescheduleLimit (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.461522602Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestReschdulerSuite/TestReschedule_WithRescheduleLimit","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.461546622Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestReschdulerSuite","Output":"--- PASS: TestReschdulerSuite (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.461569782Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestReschdulerSuite","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.461593492Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite"}
-{"Time":"2026-06-29T15:26:01.461615482Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite","Output":"=== RUN   TestScopeSuite\n"}
-{"Time":"2026-06-29T15:26:01.461639512Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestCanMergeByPredicate"}
-{"Time":"2026-06-29T15:26:01.461661082Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestCanMergeByPredicate","Output":"=== RUN   TestScopeSuite/TestCanMergeByPredicate\n"}
-{"Time":"2026-06-29T15:26:01.461685392Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestCanMergeByPredicate","Output":"--- PASS: TestScopeSuite/TestCanMergeByPredicate (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.461708632Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestCanMergeByPredicate","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.461733712Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestCanMergeByRange"}
-{"Time":"2026-06-29T15:26:01.461756532Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestCanMergeByRange","Output":"=== RUN   TestScopeSuite/TestCanMergeByRange\n"}
-{"Time":"2026-06-29T15:26:01.461780901Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestCanMergeByRange","Output":"--- PASS: TestScopeSuite/TestCanMergeByRange (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.461811991Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestCanMergeByRange","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.461835831Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestCanSplitByRange"}
-{"Time":"2026-06-29T15:26:01.461858221Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestCanSplitByRange","Output":"=== RUN   TestScopeSuite/TestCanSplitByRange\n"}
-{"Time":"2026-06-29T15:26:01.461882031Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestCanSplitByRange","Output":"--- PASS: TestScopeSuite/TestCanSplitByRange (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.461905631Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestCanSplitByRange","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.461928441Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestContains"}
-{"Time":"2026-06-29T15:26:01.461950941Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestContains","Output":"=== RUN   TestScopeSuite/TestContains\n"}
-{"Time":"2026-06-29T15:26:01.461974761Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestContains","Output":"--- PASS: TestScopeSuite/TestContains (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.461998221Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestContains","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.46203339Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestMergeByPredicate_DifferentPredicateType"}
-{"Time":"2026-06-29T15:26:01.46205536Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestMergeByPredicate_DifferentPredicateType","Output":"=== RUN   TestScopeSuite/TestMergeByPredicate_DifferentPredicateType\n"}
-{"Time":"2026-06-29T15:26:01.4620915Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestMergeByPredicate_DifferentPredicateType","Output":"--- PASS: TestScopeSuite/TestMergeByPredicate_DifferentPredicateType (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.46211478Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestMergeByPredicate_DifferentPredicateType","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.46213762Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestMergeByPredicate_SamePredicateType"}
-{"Time":"2026-06-29T15:26:01.46215983Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestMergeByPredicate_SamePredicateType","Output":"=== RUN   TestScopeSuite/TestMergeByPredicate_SamePredicateType\n"}
-{"Time":"2026-06-29T15:26:01.46218449Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestMergeByPredicate_SamePredicateType","Output":"--- PASS: TestScopeSuite/TestMergeByPredicate_SamePredicateType (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.46220764Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestMergeByPredicate_SamePredicateType","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.4622313Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestMergeByRange"}
-{"Time":"2026-06-29T15:26:01.46225323Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestMergeByRange","Output":"=== RUN   TestScopeSuite/TestMergeByRange\n"}
-{"Time":"2026-06-29T15:26:01.46227747Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestMergeByRange","Output":"--- PASS: TestScopeSuite/TestMergeByRange (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.462309029Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestMergeByRange","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.462332339Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestSplitByPredicate_DifferentPredicateType"}
-{"Time":"2026-06-29T15:26:01.462354829Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestSplitByPredicate_DifferentPredicateType","Output":"=== RUN   TestScopeSuite/TestSplitByPredicate_DifferentPredicateType\n"}
-{"Time":"2026-06-29T15:26:01.462378949Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestSplitByPredicate_DifferentPredicateType","Output":"--- PASS: TestScopeSuite/TestSplitByPredicate_DifferentPredicateType (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.462402019Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestSplitByPredicate_DifferentPredicateType","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.462425199Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestSplitByPredicate_SamePredicateType"}
-{"Time":"2026-06-29T15:26:01.462450629Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestSplitByPredicate_SamePredicateType","Output":"=== RUN   TestScopeSuite/TestSplitByPredicate_SamePredicateType\n"}
-{"Time":"2026-06-29T15:26:01.462474539Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestSplitByPredicate_SamePredicateType","Output":"--- PASS: TestScopeSuite/TestSplitByPredicate_SamePredicateType (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.462497399Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestSplitByPredicate_SamePredicateType","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.462520269Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestSplitByRange"}
-{"Time":"2026-06-29T15:26:01.462541889Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestSplitByRange","Output":"=== RUN   TestScopeSuite/TestSplitByRange\n"}
-{"Time":"2026-06-29T15:26:01.462565308Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestSplitByRange","Output":"--- PASS: TestScopeSuite/TestSplitByRange (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.462588178Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestSplitByRange","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.462611468Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite","Output":"--- PASS: TestScopeSuite (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.462634228Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.462656878Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite"}
-{"Time":"2026-06-29T15:26:01.462678618Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite","Output":"=== RUN   TestSliceSuite\n"}
-{"Time":"2026-06-29T15:26:01.462702248Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestCanMergeWithSlice"}
-{"Time":"2026-06-29T15:26:01.462723928Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestCanMergeWithSlice","Output":"=== RUN   TestSliceSuite/TestCanMergeWithSlice\n"}
-{"Time":"2026-06-29T15:26:01.462747548Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestCanMergeWithSlice","Output":"--- PASS: TestSliceSuite/TestCanMergeWithSlice (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.462770348Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestCanMergeWithSlice","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.462803458Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestCanSplitByRange"}
-{"Time":"2026-06-29T15:26:01.462824978Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestCanSplitByRange","Output":"=== RUN   TestSliceSuite/TestCanSplitByRange\n"}
-{"Time":"2026-06-29T15:26:01.462848447Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestCanSplitByRange","Output":"--- PASS: TestSliceSuite/TestCanSplitByRange (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.462871937Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestCanSplitByRange","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.462895127Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestMergeWithSlice_DifferentMinMaxKey"}
-{"Time":"2026-06-29T15:26:01.462916897Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestMergeWithSlice_DifferentMinMaxKey","Output":"=== RUN   TestSliceSuite/TestMergeWithSlice_DifferentMinMaxKey\n"}
-{"Time":"2026-06-29T15:26:01.462940617Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestMergeWithSlice_DifferentMinMaxKey","Output":"--- PASS: TestSliceSuite/TestMergeWithSlice_DifferentMinMaxKey (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.462963597Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestMergeWithSlice_DifferentMinMaxKey","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.462986287Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestMergeWithSlice_SameMaxKey"}
-{"Time":"2026-06-29T15:26:01.463007957Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestMergeWithSlice_SameMaxKey","Output":"=== RUN   TestSliceSuite/TestMergeWithSlice_SameMaxKey\n"}
-{"Time":"2026-06-29T15:26:01.463055137Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestMergeWithSlice_SameMaxKey","Output":"--- PASS: TestSliceSuite/TestMergeWithSlice_SameMaxKey (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.463090427Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestMergeWithSlice_SameMaxKey","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.463113656Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestMergeWithSlice_SameMinKey"}
-{"Time":"2026-06-29T15:26:01.463135356Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestMergeWithSlice_SameMinKey","Output":"=== RUN   TestSliceSuite/TestMergeWithSlice_SameMinKey\n"}
-{"Time":"2026-06-29T15:26:01.463159686Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestMergeWithSlice_SameMinKey","Output":"--- PASS: TestSliceSuite/TestMergeWithSlice_SameMinKey (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.463182496Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestMergeWithSlice_SameMinKey","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.463205286Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestMergeWithSlice_SamePredicate"}
-{"Time":"2026-06-29T15:26:01.463226996Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestMergeWithSlice_SamePredicate","Output":"=== RUN   TestSliceSuite/TestMergeWithSlice_SamePredicate\n"}
-{"Time":"2026-06-29T15:26:01.463250466Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestMergeWithSlice_SamePredicate","Output":"--- PASS: TestSliceSuite/TestMergeWithSlice_SamePredicate (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.463281766Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestMergeWithSlice_SamePredicate","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.463304376Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestMergeWithSlice_SameRange"}
-{"Time":"2026-06-29T15:26:01.463326056Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestMergeWithSlice_SameRange","Output":"=== RUN   TestSliceSuite/TestMergeWithSlice_SameRange\n"}
-{"Time":"2026-06-29T15:26:01.463350256Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestMergeWithSlice_SameRange","Output":"--- PASS: TestSliceSuite/TestMergeWithSlice_SameRange (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.463373125Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestMergeWithSlice_SameRange","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.463407665Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestSelectTasks_Error"}
-{"Time":"2026-06-29T15:26:01.463429655Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestSelectTasks_Error","Output":"=== RUN   TestSliceSuite/TestSelectTasks_Error\n"}
-{"Time":"2026-06-29T15:26:01.463453245Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestSelectTasks_Error","Output":"--- PASS: TestSliceSuite/TestSelectTasks_Error (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.463476945Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestSelectTasks_Error","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.463499825Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestSelectTasks_NoError"}
-{"Time":"2026-06-29T15:26:01.463521555Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestSelectTasks_NoError","Output":"=== RUN   TestSliceSuite/TestSelectTasks_NoError\n"}
-{"Time":"2026-06-29T15:26:01.465233848Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestSelectTasks_NoError","Output":"--- PASS: TestSliceSuite/TestSelectTasks_NoError (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.465262788Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestSelectTasks_NoError","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.465286428Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestShrinkRange"}
-{"Time":"2026-06-29T15:26:01.465309118Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestShrinkRange","Output":"=== RUN   TestSliceSuite/TestShrinkRange\n"}
-{"Time":"2026-06-29T15:26:01.465404308Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestShrinkRange","Output":"--- PASS: TestSliceSuite/TestShrinkRange (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.465447648Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestShrinkRange","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.465472448Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestSplitByPredicate"}
-{"Time":"2026-06-29T15:26:01.465495507Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestSplitByPredicate","Output":"=== RUN   TestSliceSuite/TestSplitByPredicate\n"}
-{"Time":"2026-06-29T15:26:01.466008266Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestSplitByPredicate","Output":"--- PASS: TestSliceSuite/TestSplitByPredicate (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.466034535Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestSplitByPredicate","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.466079105Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestSplitByRange"}
-{"Time":"2026-06-29T15:26:01.466105245Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestSplitByRange","Output":"=== RUN   TestSliceSuite/TestSplitByRange\n"}
-{"Time":"2026-06-29T15:26:01.466248855Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestSplitByRange","Output":"--- PASS: TestSliceSuite/TestSplitByRange (0.00s)\n"}
-{"Time":"2026-06-29T15:26:01.466275695Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestSplitByRange","Elapsed":0}
-{"Time":"2026-06-29T15:26:01.466304934Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite","Output":"--- PASS: TestSliceSuite (0.01s)\n"}
-{"Time":"2026-06-29T15:26:01.466328964Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite","Elapsed":0.01}
-{"Time":"2026-06-29T15:26:01.466352884Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Output":"PASS\n"}
-{"Time":"2026-06-29T15:26:01.466986652Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Output":"ok  \tgo.temporal.io/server/service/history/queues\t0.064s\n"}
-{"Time":"2026-06-29T15:26:01.467047762Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Elapsed":0.064}
+{"Time":"2026-07-01T15:15:41.189022637Z","Action":"start","Package":"go.temporal.io/server/common/predicates"}
+{"Time":"2026-07-01T15:15:41.193201978Z","Action":"run","Package":"go.temporal.io/server/common/predicates","Test":"TestAndSuite"}
+{"Time":"2026-07-01T15:15:41.193227237Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestAndSuite","Output":"=== RUN   TestAndSuite\n"}
+{"Time":"2026-07-01T15:15:41.194345256Z","Action":"run","Package":"go.temporal.io/server/common/predicates","Test":"TestAndSuite/TestAnd_All"}
+{"Time":"2026-07-01T15:15:41.194360642Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestAndSuite/TestAnd_All","Output":"=== RUN   TestAndSuite/TestAnd_All\n"}
+{"Time":"2026-07-01T15:15:41.194432671Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestAndSuite/TestAnd_All","Output":"--- PASS: TestAndSuite/TestAnd_All (0.00s)\n"}
+{"Time":"2026-07-01T15:15:41.194443909Z","Action":"pass","Package":"go.temporal.io/server/common/predicates","Test":"TestAndSuite/TestAnd_All","Elapsed":0}
+{"Time":"2026-07-01T15:15:41.194453545Z","Action":"run","Package":"go.temporal.io/server/common/predicates","Test":"TestAndSuite/TestAnd_Duplication"}
+{"Time":"2026-07-01T15:15:41.194458073Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestAndSuite/TestAnd_Duplication","Output":"=== RUN   TestAndSuite/TestAnd_Duplication\n"}
+{"Time":"2026-07-01T15:15:41.194510713Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestAndSuite/TestAnd_Duplication","Output":"--- PASS: TestAndSuite/TestAnd_Duplication (0.00s)\n"}
+{"Time":"2026-07-01T15:15:41.194517577Z","Action":"pass","Package":"go.temporal.io/server/common/predicates","Test":"TestAndSuite/TestAnd_Duplication","Elapsed":0}
+{"Time":"2026-07-01T15:15:41.194526033Z","Action":"run","Package":"go.temporal.io/server/common/predicates","Test":"TestAndSuite/TestAnd_Equals"}
+{"Time":"2026-07-01T15:15:41.19453042Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestAndSuite/TestAnd_Equals","Output":"=== RUN   TestAndSuite/TestAnd_Equals\n"}
+{"Time":"2026-07-01T15:15:41.194575478Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestAndSuite/TestAnd_Equals","Output":"--- PASS: TestAndSuite/TestAnd_Equals (0.00s)\n"}
+{"Time":"2026-07-01T15:15:41.194581771Z","Action":"pass","Package":"go.temporal.io/server/common/predicates","Test":"TestAndSuite/TestAnd_Equals","Elapsed":0}
+{"Time":"2026-07-01T15:15:41.194589065Z","Action":"run","Package":"go.temporal.io/server/common/predicates","Test":"TestAndSuite/TestAnd_None"}
+{"Time":"2026-07-01T15:15:41.194593485Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestAndSuite/TestAnd_None","Output":"=== RUN   TestAndSuite/TestAnd_None\n"}
+{"Time":"2026-07-01T15:15:41.194618815Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestAndSuite/TestAnd_None","Output":"--- PASS: TestAndSuite/TestAnd_None (0.00s)\n"}
+{"Time":"2026-07-01T15:15:41.19462399Z","Action":"pass","Package":"go.temporal.io/server/common/predicates","Test":"TestAndSuite/TestAnd_None","Elapsed":0}
+{"Time":"2026-07-01T15:15:41.194632653Z","Action":"run","Package":"go.temporal.io/server/common/predicates","Test":"TestAndSuite/TestAnd_Normal"}
+{"Time":"2026-07-01T15:15:41.194636656Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestAndSuite/TestAnd_Normal","Output":"=== RUN   TestAndSuite/TestAnd_Normal\n"}
+{"Time":"2026-07-01T15:15:41.194673583Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestAndSuite/TestAnd_Normal","Output":"--- PASS: TestAndSuite/TestAnd_Normal (0.00s)\n"}
+{"Time":"2026-07-01T15:15:41.194679587Z","Action":"pass","Package":"go.temporal.io/server/common/predicates","Test":"TestAndSuite/TestAnd_Normal","Elapsed":0}
+{"Time":"2026-07-01T15:15:41.194688013Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestAndSuite","Output":"--- PASS: TestAndSuite (0.00s)\n"}
+{"Time":"2026-07-01T15:15:41.194701987Z","Action":"pass","Package":"go.temporal.io/server/common/predicates","Test":"TestAndSuite","Elapsed":0}
+{"Time":"2026-07-01T15:15:41.194708137Z","Action":"run","Package":"go.temporal.io/server/common/predicates","Test":"TestNoneSuite"}
+{"Time":"2026-07-01T15:15:41.194712285Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestNoneSuite","Output":"=== RUN   TestNoneSuite\n"}
+{"Time":"2026-07-01T15:15:41.195655747Z","Action":"run","Package":"go.temporal.io/server/common/predicates","Test":"TestNoneSuite/TestEmpty_Equals"}
+{"Time":"2026-07-01T15:15:41.195672879Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestNoneSuite/TestEmpty_Equals","Output":"=== RUN   TestNoneSuite/TestEmpty_Equals\n"}
+{"Time":"2026-07-01T15:15:41.195712466Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestNoneSuite/TestEmpty_Equals","Output":"--- PASS: TestNoneSuite/TestEmpty_Equals (0.00s)\n"}
+{"Time":"2026-07-01T15:15:41.195719032Z","Action":"pass","Package":"go.temporal.io/server/common/predicates","Test":"TestNoneSuite/TestEmpty_Equals","Elapsed":0}
+{"Time":"2026-07-01T15:15:41.195727038Z","Action":"run","Package":"go.temporal.io/server/common/predicates","Test":"TestNoneSuite/TestEmpty_Test"}
+{"Time":"2026-07-01T15:15:41.195731547Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestNoneSuite/TestEmpty_Test","Output":"=== RUN   TestNoneSuite/TestEmpty_Test\n"}
+{"Time":"2026-07-01T15:15:41.195766368Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestNoneSuite/TestEmpty_Test","Output":"--- PASS: TestNoneSuite/TestEmpty_Test (0.00s)\n"}
+{"Time":"2026-07-01T15:15:41.195772712Z","Action":"pass","Package":"go.temporal.io/server/common/predicates","Test":"TestNoneSuite/TestEmpty_Test","Elapsed":0}
+{"Time":"2026-07-01T15:15:41.195780225Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestNoneSuite","Output":"--- PASS: TestNoneSuite (0.00s)\n"}
+{"Time":"2026-07-01T15:15:41.195785086Z","Action":"pass","Package":"go.temporal.io/server/common/predicates","Test":"TestNoneSuite","Elapsed":0}
+{"Time":"2026-07-01T15:15:41.195793229Z","Action":"run","Package":"go.temporal.io/server/common/predicates","Test":"TestNotSuite"}
+{"Time":"2026-07-01T15:15:41.195797795Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestNotSuite","Output":"=== RUN   TestNotSuite\n"}
+{"Time":"2026-07-01T15:15:41.196703842Z","Action":"run","Package":"go.temporal.io/server/common/predicates","Test":"TestNotSuite/TestNot_Equals"}
+{"Time":"2026-07-01T15:15:41.196715525Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestNotSuite/TestNot_Equals","Output":"=== RUN   TestNotSuite/TestNot_Equals\n"}
+{"Time":"2026-07-01T15:15:41.19677094Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestNotSuite/TestNot_Equals","Output":"--- PASS: TestNotSuite/TestNot_Equals (0.00s)\n"}
+{"Time":"2026-07-01T15:15:41.196780318Z","Action":"pass","Package":"go.temporal.io/server/common/predicates","Test":"TestNotSuite/TestNot_Equals","Elapsed":0}
+{"Time":"2026-07-01T15:15:41.196787372Z","Action":"run","Package":"go.temporal.io/server/common/predicates","Test":"TestNotSuite/TestNot_Test"}
+{"Time":"2026-07-01T15:15:41.196793556Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestNotSuite/TestNot_Test","Output":"=== RUN   TestNotSuite/TestNot_Test\n"}
+{"Time":"2026-07-01T15:15:41.19685921Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestNotSuite/TestNot_Test","Output":"--- PASS: TestNotSuite/TestNot_Test (0.00s)\n"}
+{"Time":"2026-07-01T15:15:41.196865797Z","Action":"pass","Package":"go.temporal.io/server/common/predicates","Test":"TestNotSuite/TestNot_Test","Elapsed":0}
+{"Time":"2026-07-01T15:15:41.196873307Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestNotSuite","Output":"--- PASS: TestNotSuite (0.00s)\n"}
+{"Time":"2026-07-01T15:15:41.196884043Z","Action":"pass","Package":"go.temporal.io/server/common/predicates","Test":"TestNotSuite","Elapsed":0}
+{"Time":"2026-07-01T15:15:41.196889153Z","Action":"run","Package":"go.temporal.io/server/common/predicates","Test":"TestOrSuite"}
+{"Time":"2026-07-01T15:15:41.196893249Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestOrSuite","Output":"=== RUN   TestOrSuite\n"}
+{"Time":"2026-07-01T15:15:41.197828797Z","Action":"run","Package":"go.temporal.io/server/common/predicates","Test":"TestOrSuite/TestOr_All"}
+{"Time":"2026-07-01T15:15:41.19784085Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestOrSuite/TestOr_All","Output":"=== RUN   TestOrSuite/TestOr_All\n"}
+{"Time":"2026-07-01T15:15:41.19788321Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestOrSuite/TestOr_All","Output":"--- PASS: TestOrSuite/TestOr_All (0.00s)\n"}
+{"Time":"2026-07-01T15:15:41.197889266Z","Action":"pass","Package":"go.temporal.io/server/common/predicates","Test":"TestOrSuite/TestOr_All","Elapsed":0}
+{"Time":"2026-07-01T15:15:41.197896213Z","Action":"run","Package":"go.temporal.io/server/common/predicates","Test":"TestOrSuite/TestOr_Duplication"}
+{"Time":"2026-07-01T15:15:41.197900518Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestOrSuite/TestOr_Duplication","Output":"=== RUN   TestOrSuite/TestOr_Duplication\n"}
+{"Time":"2026-07-01T15:15:41.19794937Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestOrSuite/TestOr_Duplication","Output":"--- PASS: TestOrSuite/TestOr_Duplication (0.00s)\n"}
+{"Time":"2026-07-01T15:15:41.197955447Z","Action":"pass","Package":"go.temporal.io/server/common/predicates","Test":"TestOrSuite/TestOr_Duplication","Elapsed":0}
+{"Time":"2026-07-01T15:15:41.197962198Z","Action":"run","Package":"go.temporal.io/server/common/predicates","Test":"TestOrSuite/TestOr_Equals"}
+{"Time":"2026-07-01T15:15:41.197965845Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestOrSuite/TestOr_Equals","Output":"=== RUN   TestOrSuite/TestOr_Equals\n"}
+{"Time":"2026-07-01T15:15:41.198022408Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestOrSuite/TestOr_Equals","Output":"--- PASS: TestOrSuite/TestOr_Equals (0.00s)\n"}
+{"Time":"2026-07-01T15:15:41.198028497Z","Action":"pass","Package":"go.temporal.io/server/common/predicates","Test":"TestOrSuite/TestOr_Equals","Elapsed":0}
+{"Time":"2026-07-01T15:15:41.198034721Z","Action":"run","Package":"go.temporal.io/server/common/predicates","Test":"TestOrSuite/TestOr_None"}
+{"Time":"2026-07-01T15:15:41.198040544Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestOrSuite/TestOr_None","Output":"=== RUN   TestOrSuite/TestOr_None\n"}
+{"Time":"2026-07-01T15:15:41.198079092Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestOrSuite/TestOr_None","Output":"--- PASS: TestOrSuite/TestOr_None (0.00s)\n"}
+{"Time":"2026-07-01T15:15:41.198084928Z","Action":"pass","Package":"go.temporal.io/server/common/predicates","Test":"TestOrSuite/TestOr_None","Elapsed":0}
+{"Time":"2026-07-01T15:15:41.198091477Z","Action":"run","Package":"go.temporal.io/server/common/predicates","Test":"TestOrSuite/TestOr_Normal"}
+{"Time":"2026-07-01T15:15:41.198096888Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestOrSuite/TestOr_Normal","Output":"=== RUN   TestOrSuite/TestOr_Normal\n"}
+{"Time":"2026-07-01T15:15:41.198124736Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestOrSuite/TestOr_Normal","Output":"--- PASS: TestOrSuite/TestOr_Normal (0.00s)\n"}
+{"Time":"2026-07-01T15:15:41.198130387Z","Action":"pass","Package":"go.temporal.io/server/common/predicates","Test":"TestOrSuite/TestOr_Normal","Elapsed":0}
+{"Time":"2026-07-01T15:15:41.198138159Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestOrSuite","Output":"--- PASS: TestOrSuite (0.00s)\n"}
+{"Time":"2026-07-01T15:15:41.198148804Z","Action":"pass","Package":"go.temporal.io/server/common/predicates","Test":"TestOrSuite","Elapsed":0}
+{"Time":"2026-07-01T15:15:41.198155107Z","Action":"run","Package":"go.temporal.io/server/common/predicates","Test":"TestUniversalSuite"}
+{"Time":"2026-07-01T15:15:41.198159193Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestUniversalSuite","Output":"=== RUN   TestUniversalSuite\n"}
+{"Time":"2026-07-01T15:15:41.207087943Z","Action":"run","Package":"go.temporal.io/server/common/predicates","Test":"TestUniversalSuite/TestUniversal_Equals"}
+{"Time":"2026-07-01T15:15:41.207106201Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestUniversalSuite/TestUniversal_Equals","Output":"=== RUN   TestUniversalSuite/TestUniversal_Equals\n"}
+{"Time":"2026-07-01T15:15:41.207173196Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestUniversalSuite/TestUniversal_Equals","Output":"--- PASS: TestUniversalSuite/TestUniversal_Equals (0.00s)\n"}
+{"Time":"2026-07-01T15:15:41.207187266Z","Action":"pass","Package":"go.temporal.io/server/common/predicates","Test":"TestUniversalSuite/TestUniversal_Equals","Elapsed":0}
+{"Time":"2026-07-01T15:15:41.20719446Z","Action":"run","Package":"go.temporal.io/server/common/predicates","Test":"TestUniversalSuite/TestUniversal_Test"}
+{"Time":"2026-07-01T15:15:41.207199837Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestUniversalSuite/TestUniversal_Test","Output":"=== RUN   TestUniversalSuite/TestUniversal_Test\n"}
+{"Time":"2026-07-01T15:15:41.207276155Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestUniversalSuite/TestUniversal_Test","Output":"--- PASS: TestUniversalSuite/TestUniversal_Test (0.00s)\n"}
+{"Time":"2026-07-01T15:15:41.207298837Z","Action":"pass","Package":"go.temporal.io/server/common/predicates","Test":"TestUniversalSuite/TestUniversal_Test","Elapsed":0}
+{"Time":"2026-07-01T15:15:41.207307094Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Test":"TestUniversalSuite","Output":"--- PASS: TestUniversalSuite (0.01s)\n"}
+{"Time":"2026-07-01T15:15:41.207320709Z","Action":"pass","Package":"go.temporal.io/server/common/predicates","Test":"TestUniversalSuite","Elapsed":0.01}
+{"Time":"2026-07-01T15:15:41.207333881Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Output":"PASS\n"}
+{"Time":"2026-07-01T15:15:41.207956445Z","Action":"output","Package":"go.temporal.io/server/common/predicates","Output":"ok  \tgo.temporal.io/server/common/predicates\t0.019s\n"}
+{"Time":"2026-07-01T15:15:41.207972946Z","Action":"pass","Package":"go.temporal.io/server/common/predicates","Elapsed":0.019}
+{"Time":"2026-07-01T15:17:12.56279907Z","Action":"start","Package":"go.temporal.io/server/service/history/queues"}
+{"Time":"2026-07-01T15:17:12.60058574Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite"}
+{"Time":"2026-07-01T15:17:12.600620554Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite","Output":"=== RUN   TestExecutableSuite\n"}
+{"Time":"2026-07-01T15:17:12.60124121Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestExecute_TaskExecuted"}
+{"Time":"2026-07-01T15:17:12.601252554Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestExecute_TaskExecuted","Output":"=== RUN   TestExecutableSuite/TestExecute_TaskExecuted\n"}
+{"Time":"2026-07-01T15:17:12.601393113Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestExecute_TaskExecuted","Output":"--- PASS: TestExecutableSuite/TestExecute_TaskExecuted (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.601416055Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestExecute_TaskExecuted","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.601436162Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestExecute_TaskFiltered"}
+{"Time":"2026-07-01T15:17:12.601441726Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestExecute_TaskFiltered","Output":"=== RUN   TestExecutableSuite/TestExecute_TaskFiltered\n"}
+{"Time":"2026-07-01T15:17:12.601448163Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestExecute_TaskFiltered","Output":"--- PASS: TestExecutableSuite/TestExecute_TaskFiltered (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.601453025Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestExecute_TaskFiltered","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.601462785Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestExecute_UserLatency"}
+{"Time":"2026-07-01T15:17:12.601467062Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestExecute_UserLatency","Output":"=== RUN   TestExecutableSuite/TestExecute_UserLatency\n"}
+{"Time":"2026-07-01T15:17:12.601536852Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestExecute_UserLatency","Output":"--- PASS: TestExecutableSuite/TestExecute_UserLatency (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.601546679Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestExecute_UserLatency","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.601564586Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestHandleErr_EntityNotExists"}
+{"Time":"2026-07-01T15:17:12.601569207Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestHandleErr_EntityNotExists","Output":"=== RUN   TestExecutableSuite/TestHandleErr_EntityNotExists\n"}
+{"Time":"2026-07-01T15:17:12.601605358Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestHandleErr_EntityNotExists","Output":"--- PASS: TestExecutableSuite/TestHandleErr_EntityNotExists (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.601612421Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestHandleErr_EntityNotExists","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.601621826Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestHandleErr_ErrTaskDiscarded"}
+{"Time":"2026-07-01T15:17:12.601626358Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestHandleErr_ErrTaskDiscarded","Output":"=== RUN   TestExecutableSuite/TestHandleErr_ErrTaskDiscarded\n"}
+{"Time":"2026-07-01T15:17:12.60166271Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestHandleErr_ErrTaskDiscarded","Output":"--- PASS: TestExecutableSuite/TestHandleErr_ErrTaskDiscarded (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.601670995Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestHandleErr_ErrTaskDiscarded","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.601676914Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestHandleErr_ErrTaskRetry"}
+{"Time":"2026-07-01T15:17:12.601681937Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestHandleErr_ErrTaskRetry","Output":"=== RUN   TestExecutableSuite/TestHandleErr_ErrTaskRetry\n"}
+{"Time":"2026-07-01T15:17:12.601722625Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestHandleErr_ErrTaskRetry","Output":"--- PASS: TestExecutableSuite/TestHandleErr_ErrTaskRetry (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.601735078Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestHandleErr_ErrTaskRetry","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.601739997Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestHandleErr_NamespaceNotActiveError"}
+{"Time":"2026-07-01T15:17:12.601744069Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestHandleErr_NamespaceNotActiveError","Output":"=== RUN   TestExecutableSuite/TestHandleErr_NamespaceNotActiveError\n"}
+{"Time":"2026-07-01T15:17:12.601782088Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestHandleErr_NamespaceNotActiveError","Output":"--- PASS: TestExecutableSuite/TestHandleErr_NamespaceNotActiveError (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.601790204Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestHandleErr_NamespaceNotActiveError","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.601809487Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestHandleErr_RandomErr"}
+{"Time":"2026-07-01T15:17:12.60181402Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestHandleErr_RandomErr","Output":"=== RUN   TestExecutableSuite/TestHandleErr_RandomErr\n"}
+{"Time":"2026-07-01T15:17:12.60198319Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestHandleErr_RandomErr","Output":"{\"level\":\"error\",\"ts\":\"2026-07-01T15:17:12.601Z\",\"msg\":\"Fail to process task\",\"wf-namespace-id\":\"deadbeef-0123-4567-890a-bcdef0123456\",\"wf-id\":\"mock-workflow-id\",\"wf-run-id\":\"0d00698f-08e1-4d36-a3e2-3bf109f5d2d6\",\"queue-task-id\":0,\"queue-task-visibility-timestamp\":\"2026-07-01T15:17:12.601Z\",\"queue-task-type\":\"Unspecified\",\"queue-task\":{\"NamespaceID\":\"deadbeef-0123-4567-890a-bcdef0123456\",\"WorkflowID\":\"mock-workflow-id\",\"RunID\":\"0d00698f-08e1-4d36-a3e2-3bf109f5d2d6\",\"VisibilityTimestamp\":\"2026-07-01T15:17:12.601811628Z\",\"TaskID\":0,\"Version\":0,\"Category\":{}},\"wf-history-event-id\":0,\"error\":\"random error\",\"lifecycle\":\"ProcessingFailed\",\"logging-call-at\":\"lazy_logger.go:68\",\"stacktrace\":\"go.temporal.io/server/common/log.(*zapLogger).Error\\n\\t/workspace/repo/common/log/zap_logger.go:142\\ngo.temporal.io/server/common/log.(*lazyLogger).Error\\n\\t/workspace/repo/common/log/lazy_logger.go:68\\ngo.temporal.io/server/service/history/queues.(*executableImpl).HandleErr\\n\\t/workspace/repo/service/history/queues/executable.go"}
+{"Time":"2026-07-01T15:17:12.601998887Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestHandleErr_RandomErr","Output":":231\\ngo.temporal.io/server/service/history/queues.(*executableSuite).TestHandleErr_RandomErr\\n\\t/workspace/repo/service/history/queues/executable_test.go:168\\nreflect.Value.call\\n\\t/usr/local/go/src/reflect/value.go:596\\nreflect.Value.Call\\n\\t/usr/local/go/src/reflect/value.go:380\\ngithub.com/stretchr/testify/suite.Run.func1\\n\\t/go/pkg/mod/github.com/stretchr/testify@v1.7.4/suite/suite.go:168\\ntesting.tRunner\\n\\t/usr/local/go/src/testing/testing.go:1595\"}\n"}
+{"Time":"2026-07-01T15:17:12.602014296Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestHandleErr_RandomErr","Output":"--- PASS: TestExecutableSuite/TestHandleErr_RandomErr (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.602019461Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestHandleErr_RandomErr","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.602024388Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestTaskAck"}
+{"Time":"2026-07-01T15:17:12.602029087Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestTaskAck","Output":"=== RUN   TestExecutableSuite/TestTaskAck\n"}
+{"Time":"2026-07-01T15:17:12.602083741Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestTaskAck","Output":"--- PASS: TestExecutableSuite/TestTaskAck (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.602092717Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestTaskAck","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.602099162Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestTaskNack_Reschedule"}
+{"Time":"2026-07-01T15:17:12.602103035Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestTaskNack_Reschedule","Output":"=== RUN   TestExecutableSuite/TestTaskNack_Reschedule\n"}
+{"Time":"2026-07-01T15:17:12.602170928Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestTaskNack_Reschedule","Output":"--- PASS: TestExecutableSuite/TestTaskNack_Reschedule (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.602179586Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestTaskNack_Reschedule","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.602196217Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestTaskNack_Resubmit"}
+{"Time":"2026-07-01T15:17:12.602200677Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestTaskNack_Resubmit","Output":"=== RUN   TestExecutableSuite/TestTaskNack_Resubmit\n"}
+{"Time":"2026-07-01T15:17:12.602250679Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestTaskNack_Resubmit","Output":"--- PASS: TestExecutableSuite/TestTaskNack_Resubmit (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.6022606Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite/TestTaskNack_Resubmit","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.602268435Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite","Output":"--- PASS: TestExecutableSuite (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.602275203Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestExecutableSuite","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.602281197Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestIteratorSuite"}
+{"Time":"2026-07-01T15:17:12.602285182Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestIteratorSuite","Output":"=== RUN   TestIteratorSuite\n"}
+{"Time":"2026-07-01T15:17:12.602848916Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestIteratorSuite/TestCanMerge"}
+{"Time":"2026-07-01T15:17:12.602863324Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestIteratorSuite/TestCanMerge","Output":"=== RUN   TestIteratorSuite/TestCanMerge\n"}
+{"Time":"2026-07-01T15:17:12.603081427Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestIteratorSuite/TestCanMerge","Output":"--- PASS: TestIteratorSuite/TestCanMerge (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.606913016Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestIteratorSuite/TestCanMerge","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.606932086Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestIteratorSuite/TestCanSplit"}
+{"Time":"2026-07-01T15:17:12.60693668Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestIteratorSuite/TestCanSplit","Output":"=== RUN   TestIteratorSuite/TestCanSplit\n"}
+{"Time":"2026-07-01T15:17:12.607034178Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestIteratorSuite/TestCanSplit","Output":"--- PASS: TestIteratorSuite/TestCanSplit (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.607046515Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestIteratorSuite/TestCanSplit","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.607054315Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestIteratorSuite/TestMerge"}
+{"Time":"2026-07-01T15:17:12.607057889Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestIteratorSuite/TestMerge","Output":"=== RUN   TestIteratorSuite/TestMerge\n"}
+{"Time":"2026-07-01T15:17:12.607124262Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestIteratorSuite/TestMerge","Output":"--- PASS: TestIteratorSuite/TestMerge (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.607130205Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestIteratorSuite/TestMerge","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.607136915Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestIteratorSuite/TestNext_IncreaseTaskKey"}
+{"Time":"2026-07-01T15:17:12.607141818Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestIteratorSuite/TestNext_IncreaseTaskKey","Output":"=== RUN   TestIteratorSuite/TestNext_IncreaseTaskKey\n"}
+{"Time":"2026-07-01T15:17:12.607215535Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestIteratorSuite/TestNext_IncreaseTaskKey","Output":"--- PASS: TestIteratorSuite/TestNext_IncreaseTaskKey (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.607232135Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestIteratorSuite/TestNext_IncreaseTaskKey","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.607237392Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestIteratorSuite/TestRemaining"}
+{"Time":"2026-07-01T15:17:12.607242353Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestIteratorSuite/TestRemaining","Output":"=== RUN   TestIteratorSuite/TestRemaining\n"}
+{"Time":"2026-07-01T15:17:12.60730127Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestIteratorSuite/TestRemaining","Output":"--- PASS: TestIteratorSuite/TestRemaining (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.607306572Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestIteratorSuite/TestRemaining","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.607312566Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestIteratorSuite/TestSplit"}
+{"Time":"2026-07-01T15:17:12.607315894Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestIteratorSuite/TestSplit","Output":"=== RUN   TestIteratorSuite/TestSplit\n"}
+{"Time":"2026-07-01T15:17:12.607357757Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestIteratorSuite/TestSplit","Output":"--- PASS: TestIteratorSuite/TestSplit (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.607363855Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestIteratorSuite/TestSplit","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.60737552Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestIteratorSuite","Output":"--- PASS: TestIteratorSuite (0.01s)\n"}
+{"Time":"2026-07-01T15:17:12.607381876Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestIteratorSuite","Elapsed":0.01}
+{"Time":"2026-07-01T15:17:12.607388907Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestPriorityAssignerSuite"}
+{"Time":"2026-07-01T15:17:12.607393229Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestPriorityAssignerSuite","Output":"=== RUN   TestPriorityAssignerSuite\n"}
+{"Time":"2026-07-01T15:17:12.60828343Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestPriorityAssignerSuite/TestAssign_CriticalAttempts"}
+{"Time":"2026-07-01T15:17:12.608294967Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestPriorityAssignerSuite/TestAssign_CriticalAttempts","Output":"=== RUN   TestPriorityAssignerSuite/TestAssign_CriticalAttempts\n"}
+{"Time":"2026-07-01T15:17:12.608389472Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestPriorityAssignerSuite/TestAssign_CriticalAttempts","Output":"--- PASS: TestPriorityAssignerSuite/TestAssign_CriticalAttempts (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.608397683Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestPriorityAssignerSuite/TestAssign_CriticalAttempts","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.608404644Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestPriorityAssignerSuite/TestAssign_NoopExecuable"}
+{"Time":"2026-07-01T15:17:12.608408681Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestPriorityAssignerSuite/TestAssign_NoopExecuable","Output":"=== RUN   TestPriorityAssignerSuite/TestAssign_NoopExecuable\n"}
+{"Time":"2026-07-01T15:17:12.608527267Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestPriorityAssignerSuite/TestAssign_NoopExecuable","Output":"--- PASS: TestPriorityAssignerSuite/TestAssign_NoopExecuable (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.608532707Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestPriorityAssignerSuite/TestAssign_NoopExecuable","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.608540201Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestPriorityAssignerSuite/TestAssign_SelectedTaskTypes"}
+{"Time":"2026-07-01T15:17:12.608544061Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestPriorityAssignerSuite/TestAssign_SelectedTaskTypes","Output":"=== RUN   TestPriorityAssignerSuite/TestAssign_SelectedTaskTypes\n"}
+{"Time":"2026-07-01T15:17:12.608666361Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestPriorityAssignerSuite/TestAssign_SelectedTaskTypes","Output":"--- PASS: TestPriorityAssignerSuite/TestAssign_SelectedTaskTypes (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.608672381Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestPriorityAssignerSuite/TestAssign_SelectedTaskTypes","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.608678541Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestPriorityAssignerSuite/TestAssign_StandbyNamespaceStandbyQueue"}
+{"Time":"2026-07-01T15:17:12.608682124Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestPriorityAssignerSuite/TestAssign_StandbyNamespaceStandbyQueue","Output":"=== RUN   TestPriorityAssignerSuite/TestAssign_StandbyNamespaceStandbyQueue\n"}
+{"Time":"2026-07-01T15:17:12.608787822Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestPriorityAssignerSuite/TestAssign_StandbyNamespaceStandbyQueue","Output":"--- PASS: TestPriorityAssignerSuite/TestAssign_StandbyNamespaceStandbyQueue (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.608795119Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestPriorityAssignerSuite/TestAssign_StandbyNamespaceStandbyQueue","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.608801189Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestPriorityAssignerSuite/TestAssign_Throttled"}
+{"Time":"2026-07-01T15:17:12.60880541Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestPriorityAssignerSuite/TestAssign_Throttled","Output":"=== RUN   TestPriorityAssignerSuite/TestAssign_Throttled\n"}
+{"Time":"2026-07-01T15:17:12.609302456Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestPriorityAssignerSuite/TestAssign_Throttled","Output":"--- PASS: TestPriorityAssignerSuite/TestAssign_Throttled (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.609321165Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestPriorityAssignerSuite/TestAssign_Throttled","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.609326907Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestPriorityAssignerSuite","Output":"--- PASS: TestPriorityAssignerSuite (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.609332569Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestPriorityAssignerSuite","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.609336465Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite"}
+{"Time":"2026-07-01T15:17:12.609340519Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite","Output":"=== RUN   TestRangeSuite\n"}
+{"Time":"2026-07-01T15:17:12.61081131Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestCanMerge"}
+{"Time":"2026-07-01T15:17:12.610822098Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestCanMerge","Output":"=== RUN   TestRangeSuite/TestCanMerge\n"}
+{"Time":"2026-07-01T15:17:12.610942912Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestCanMerge","Output":"--- PASS: TestRangeSuite/TestCanMerge (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.610954901Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestCanMerge","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.610962254Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestCanSplit"}
+{"Time":"2026-07-01T15:17:12.610966718Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestCanSplit","Output":"=== RUN   TestRangeSuite/TestCanSplit\n"}
+{"Time":"2026-07-01T15:17:12.612491377Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestCanSplit","Output":"--- PASS: TestRangeSuite/TestCanSplit (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.612505394Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestCanSplit","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.612512086Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestContainsKey_EmptyRange"}
+{"Time":"2026-07-01T15:17:12.612516504Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestContainsKey_EmptyRange","Output":"=== RUN   TestRangeSuite/TestContainsKey_EmptyRange\n"}
+{"Time":"2026-07-01T15:17:12.612562509Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestContainsKey_EmptyRange","Output":"--- PASS: TestRangeSuite/TestContainsKey_EmptyRange (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.612570874Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestContainsKey_EmptyRange","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.612577606Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestContainsKey_NonEmptyRange"}
+{"Time":"2026-07-01T15:17:12.61258174Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestContainsKey_NonEmptyRange","Output":"=== RUN   TestRangeSuite/TestContainsKey_NonEmptyRange\n"}
+{"Time":"2026-07-01T15:17:12.613680871Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestContainsKey_NonEmptyRange","Output":"--- PASS: TestRangeSuite/TestContainsKey_NonEmptyRange (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.61368876Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestContainsKey_NonEmptyRange","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.613700744Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestContainsRange_EmptyRange"}
+{"Time":"2026-07-01T15:17:12.613705093Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestContainsRange_EmptyRange","Output":"=== RUN   TestRangeSuite/TestContainsRange_EmptyRange\n"}
+{"Time":"2026-07-01T15:17:12.613726077Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestContainsRange_EmptyRange","Output":"--- PASS: TestRangeSuite/TestContainsRange_EmptyRange (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.613733935Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestContainsRange_EmptyRange","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.613739953Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestContainsRange_NonEmptyRange"}
+{"Time":"2026-07-01T15:17:12.613743999Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestContainsRange_NonEmptyRange","Output":"=== RUN   TestRangeSuite/TestContainsRange_NonEmptyRange\n"}
+{"Time":"2026-07-01T15:17:12.613779689Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestContainsRange_NonEmptyRange","Output":"--- PASS: TestRangeSuite/TestContainsRange_NonEmptyRange (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.613800693Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestContainsRange_NonEmptyRange","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.613806452Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestIsEmpty"}
+{"Time":"2026-07-01T15:17:12.613811184Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestIsEmpty","Output":"=== RUN   TestRangeSuite/TestIsEmpty\n"}
+{"Time":"2026-07-01T15:17:12.61383353Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestIsEmpty","Output":"--- PASS: TestRangeSuite/TestIsEmpty (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.613841498Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestIsEmpty","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.613846341Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestMerge"}
+{"Time":"2026-07-01T15:17:12.613851667Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestMerge","Output":"=== RUN   TestRangeSuite/TestMerge\n"}
+{"Time":"2026-07-01T15:17:12.613896833Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestMerge","Output":"--- PASS: TestRangeSuite/TestMerge (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.613904079Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestMerge","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.613911581Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestNewRange_Invalid"}
+{"Time":"2026-07-01T15:17:12.613915803Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestNewRange_Invalid","Output":"=== RUN   TestRangeSuite/TestNewRange_Invalid\n"}
+{"Time":"2026-07-01T15:17:12.61413685Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestNewRange_Invalid","Output":"--- PASS: TestRangeSuite/TestNewRange_Invalid (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.614143979Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestNewRange_Invalid","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.614150289Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestNewRange_Valid"}
+{"Time":"2026-07-01T15:17:12.614155233Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestNewRange_Valid","Output":"=== RUN   TestRangeSuite/TestNewRange_Valid\n"}
+{"Time":"2026-07-01T15:17:12.614167688Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestNewRange_Valid","Output":"--- PASS: TestRangeSuite/TestNewRange_Valid (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.614175269Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestNewRange_Valid","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.614182961Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestSplit"}
+{"Time":"2026-07-01T15:17:12.614186873Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestSplit","Output":"=== RUN   TestRangeSuite/TestSplit\n"}
+{"Time":"2026-07-01T15:17:12.614194273Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestSplit","Output":"--- PASS: TestRangeSuite/TestSplit (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.614200178Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite/TestSplit","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.614208103Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite","Output":"--- PASS: TestRangeSuite (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.614212955Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestRangeSuite","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.614218656Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestReschdulerSuite"}
+{"Time":"2026-07-01T15:17:12.614223455Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestReschdulerSuite","Output":"=== RUN   TestReschdulerSuite\n"}
+{"Time":"2026-07-01T15:17:12.614767343Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestReschdulerSuite/TestReschedule_NoRescheduleLimit"}
+{"Time":"2026-07-01T15:17:12.614776692Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestReschdulerSuite/TestReschedule_NoRescheduleLimit","Output":"=== RUN   TestReschdulerSuite/TestReschedule_NoRescheduleLimit\n"}
+{"Time":"2026-07-01T15:17:12.614889339Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestReschdulerSuite/TestReschedule_NoRescheduleLimit","Output":"--- PASS: TestReschdulerSuite/TestReschedule_NoRescheduleLimit (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.614902664Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestReschdulerSuite/TestReschedule_NoRescheduleLimit","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.614908855Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestReschdulerSuite/TestReschedule_SubmissionFailed"}
+{"Time":"2026-07-01T15:17:12.614914906Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestReschdulerSuite/TestReschedule_SubmissionFailed","Output":"=== RUN   TestReschdulerSuite/TestReschedule_SubmissionFailed\n"}
+{"Time":"2026-07-01T15:17:12.615034767Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestReschdulerSuite/TestReschedule_SubmissionFailed","Output":"--- PASS: TestReschdulerSuite/TestReschedule_SubmissionFailed (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.61504304Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestReschdulerSuite/TestReschedule_SubmissionFailed","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.615048888Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestReschdulerSuite/TestReschedule_WithRescheduleLimit"}
+{"Time":"2026-07-01T15:17:12.615053081Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestReschdulerSuite/TestReschedule_WithRescheduleLimit","Output":"=== RUN   TestReschdulerSuite/TestReschedule_WithRescheduleLimit\n"}
+{"Time":"2026-07-01T15:17:12.615108881Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestReschdulerSuite/TestReschedule_WithRescheduleLimit","Output":"--- PASS: TestReschdulerSuite/TestReschedule_WithRescheduleLimit (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.615117114Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestReschdulerSuite/TestReschedule_WithRescheduleLimit","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.615124577Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestReschdulerSuite","Output":"--- PASS: TestReschdulerSuite (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.615129887Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestReschdulerSuite","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.615136119Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite"}
+{"Time":"2026-07-01T15:17:12.615140639Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite","Output":"=== RUN   TestScopeSuite\n"}
+{"Time":"2026-07-01T15:17:12.615715204Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestCanMergeByPredicate"}
+{"Time":"2026-07-01T15:17:12.615725114Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestCanMergeByPredicate","Output":"=== RUN   TestScopeSuite/TestCanMergeByPredicate\n"}
+{"Time":"2026-07-01T15:17:12.615782825Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestCanMergeByPredicate","Output":"--- PASS: TestScopeSuite/TestCanMergeByPredicate (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.615790897Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestCanMergeByPredicate","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.615800055Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestCanMergeByRange"}
+{"Time":"2026-07-01T15:17:12.615804498Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestCanMergeByRange","Output":"=== RUN   TestScopeSuite/TestCanMergeByRange\n"}
+{"Time":"2026-07-01T15:17:12.615896521Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestCanMergeByRange","Output":"--- PASS: TestScopeSuite/TestCanMergeByRange (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.615904394Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestCanMergeByRange","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.615910124Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestCanSplitByRange"}
+{"Time":"2026-07-01T15:17:12.615915523Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestCanSplitByRange","Output":"=== RUN   TestScopeSuite/TestCanSplitByRange\n"}
+{"Time":"2026-07-01T15:17:12.615949922Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestCanSplitByRange","Output":"--- PASS: TestScopeSuite/TestCanSplitByRange (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.615957512Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestCanSplitByRange","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.615964267Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestContains"}
+{"Time":"2026-07-01T15:17:12.61596856Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestContains","Output":"=== RUN   TestScopeSuite/TestContains\n"}
+{"Time":"2026-07-01T15:17:12.616098107Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestContains","Output":"--- PASS: TestScopeSuite/TestContains (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.616111149Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestContains","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.616116881Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestMergeByPredicate_DifferentPredicateType"}
+{"Time":"2026-07-01T15:17:12.616121101Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestMergeByPredicate_DifferentPredicateType","Output":"=== RUN   TestScopeSuite/TestMergeByPredicate_DifferentPredicateType\n"}
+{"Time":"2026-07-01T15:17:12.616506855Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestMergeByPredicate_DifferentPredicateType","Output":"--- PASS: TestScopeSuite/TestMergeByPredicate_DifferentPredicateType (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.616515748Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestMergeByPredicate_DifferentPredicateType","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.616521358Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestMergeByPredicate_SamePredicateType"}
+{"Time":"2026-07-01T15:17:12.616526952Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestMergeByPredicate_SamePredicateType","Output":"=== RUN   TestScopeSuite/TestMergeByPredicate_SamePredicateType\n"}
+{"Time":"2026-07-01T15:17:12.616725435Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestMergeByPredicate_SamePredicateType","Output":"--- PASS: TestScopeSuite/TestMergeByPredicate_SamePredicateType (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.616733773Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestMergeByPredicate_SamePredicateType","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.616738739Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestMergeByRange"}
+{"Time":"2026-07-01T15:17:12.616742999Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestMergeByRange","Output":"=== RUN   TestScopeSuite/TestMergeByRange\n"}
+{"Time":"2026-07-01T15:17:12.61679101Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestMergeByRange","Output":"--- PASS: TestScopeSuite/TestMergeByRange (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.616798532Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestMergeByRange","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.616805002Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestSplitByPredicate_DifferentPredicateType"}
+{"Time":"2026-07-01T15:17:12.616809688Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestSplitByPredicate_DifferentPredicateType","Output":"=== RUN   TestScopeSuite/TestSplitByPredicate_DifferentPredicateType\n"}
+{"Time":"2026-07-01T15:17:12.617379805Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestSplitByPredicate_DifferentPredicateType","Output":"--- PASS: TestScopeSuite/TestSplitByPredicate_DifferentPredicateType (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.617388891Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestSplitByPredicate_DifferentPredicateType","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.617402341Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestSplitByPredicate_SamePredicateType"}
+{"Time":"2026-07-01T15:17:12.617407512Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestSplitByPredicate_SamePredicateType","Output":"=== RUN   TestScopeSuite/TestSplitByPredicate_SamePredicateType\n"}
+{"Time":"2026-07-01T15:17:12.617623794Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestSplitByPredicate_SamePredicateType","Output":"--- PASS: TestScopeSuite/TestSplitByPredicate_SamePredicateType (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.617633032Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestSplitByPredicate_SamePredicateType","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.617640081Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestSplitByRange"}
+{"Time":"2026-07-01T15:17:12.617644143Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestSplitByRange","Output":"=== RUN   TestScopeSuite/TestSplitByRange\n"}
+{"Time":"2026-07-01T15:17:12.617678632Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestSplitByRange","Output":"--- PASS: TestScopeSuite/TestSplitByRange (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.617686505Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite/TestSplitByRange","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.617709019Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite","Output":"--- PASS: TestScopeSuite (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.617716219Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestScopeSuite","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.617722425Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite"}
+{"Time":"2026-07-01T15:17:12.61773656Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite","Output":"=== RUN   TestSliceSuite\n"}
+{"Time":"2026-07-01T15:17:12.618233259Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestCanMergeWithSlice"}
+{"Time":"2026-07-01T15:17:12.618240985Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestCanMergeWithSlice","Output":"=== RUN   TestSliceSuite/TestCanMergeWithSlice\n"}
+{"Time":"2026-07-01T15:17:12.618347231Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestCanMergeWithSlice","Output":"--- PASS: TestSliceSuite/TestCanMergeWithSlice (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.618354497Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestCanMergeWithSlice","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.618359919Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestCanSplitByRange"}
+{"Time":"2026-07-01T15:17:12.61836389Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestCanSplitByRange","Output":"=== RUN   TestSliceSuite/TestCanSplitByRange\n"}
+{"Time":"2026-07-01T15:17:12.618404656Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestCanSplitByRange","Output":"--- PASS: TestSliceSuite/TestCanSplitByRange (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.6184128Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestCanSplitByRange","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.618419573Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestMergeWithSlice_DifferentMinMaxKey"}
+{"Time":"2026-07-01T15:17:12.61842374Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestMergeWithSlice_DifferentMinMaxKey","Output":"=== RUN   TestSliceSuite/TestMergeWithSlice_DifferentMinMaxKey\n"}
+{"Time":"2026-07-01T15:17:12.618983075Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestMergeWithSlice_DifferentMinMaxKey","Output":"--- PASS: TestSliceSuite/TestMergeWithSlice_DifferentMinMaxKey (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.619002609Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestMergeWithSlice_DifferentMinMaxKey","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.61900953Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestMergeWithSlice_SameMaxKey"}
+{"Time":"2026-07-01T15:17:12.619013674Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestMergeWithSlice_SameMaxKey","Output":"=== RUN   TestSliceSuite/TestMergeWithSlice_SameMaxKey\n"}
+{"Time":"2026-07-01T15:17:12.619740764Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestMergeWithSlice_SameMaxKey","Output":"--- PASS: TestSliceSuite/TestMergeWithSlice_SameMaxKey (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.619752587Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestMergeWithSlice_SameMaxKey","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.619759467Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestMergeWithSlice_SameMinKey"}
+{"Time":"2026-07-01T15:17:12.61976357Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestMergeWithSlice_SameMinKey","Output":"=== RUN   TestSliceSuite/TestMergeWithSlice_SameMinKey\n"}
+{"Time":"2026-07-01T15:17:12.620479169Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestMergeWithSlice_SameMinKey","Output":"--- PASS: TestSliceSuite/TestMergeWithSlice_SameMinKey (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.620489604Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestMergeWithSlice_SameMinKey","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.62049496Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestMergeWithSlice_SamePredicate"}
+{"Time":"2026-07-01T15:17:12.620499357Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestMergeWithSlice_SamePredicate","Output":"=== RUN   TestSliceSuite/TestMergeWithSlice_SamePredicate\n"}
+{"Time":"2026-07-01T15:17:12.621331515Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestMergeWithSlice_SamePredicate","Output":"--- PASS: TestSliceSuite/TestMergeWithSlice_SamePredicate (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.621341629Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestMergeWithSlice_SamePredicate","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.621346683Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestMergeWithSlice_SameRange"}
+{"Time":"2026-07-01T15:17:12.621351273Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestMergeWithSlice_SameRange","Output":"=== RUN   TestSliceSuite/TestMergeWithSlice_SameRange\n"}
+{"Time":"2026-07-01T15:17:12.622398109Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestMergeWithSlice_SameRange","Output":"--- PASS: TestSliceSuite/TestMergeWithSlice_SameRange (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.62240808Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestMergeWithSlice_SameRange","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.622413205Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestSelectTasks_Error"}
+{"Time":"2026-07-01T15:17:12.622417804Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestSelectTasks_Error","Output":"=== RUN   TestSliceSuite/TestSelectTasks_Error\n"}
+{"Time":"2026-07-01T15:17:12.622961439Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestSelectTasks_Error","Output":"--- PASS: TestSliceSuite/TestSelectTasks_Error (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.622983303Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestSelectTasks_Error","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.622989059Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestSelectTasks_NoError"}
+{"Time":"2026-07-01T15:17:12.622993461Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestSelectTasks_NoError","Output":"=== RUN   TestSliceSuite/TestSelectTasks_NoError\n"}
+{"Time":"2026-07-01T15:17:12.626436092Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestSelectTasks_NoError","Output":"--- PASS: TestSliceSuite/TestSelectTasks_NoError (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.626449136Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestSelectTasks_NoError","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.62645696Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestShrinkRange"}
+{"Time":"2026-07-01T15:17:12.626462312Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestShrinkRange","Output":"=== RUN   TestSliceSuite/TestShrinkRange\n"}
+{"Time":"2026-07-01T15:17:12.626617181Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestShrinkRange","Output":"--- PASS: TestSliceSuite/TestShrinkRange (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.626623986Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestShrinkRange","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.626630258Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestSplitByPredicate"}
+{"Time":"2026-07-01T15:17:12.626634438Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestSplitByPredicate","Output":"=== RUN   TestSliceSuite/TestSplitByPredicate\n"}
+{"Time":"2026-07-01T15:17:12.626934768Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestSplitByPredicate","Output":"--- PASS: TestSliceSuite/TestSplitByPredicate (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.62694806Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestSplitByPredicate","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.626953724Z","Action":"run","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestSplitByRange"}
+{"Time":"2026-07-01T15:17:12.626957876Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestSplitByRange","Output":"=== RUN   TestSliceSuite/TestSplitByRange\n"}
+{"Time":"2026-07-01T15:17:12.627539988Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestSplitByRange","Output":"--- PASS: TestSliceSuite/TestSplitByRange (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.627550928Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite/TestSplitByRange","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.627556649Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite","Output":"--- PASS: TestSliceSuite (0.01s)\n"}
+{"Time":"2026-07-01T15:17:12.627564454Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Test":"TestSliceSuite","Elapsed":0.01}
+{"Time":"2026-07-01T15:17:12.627571173Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Output":"PASS\n"}
+{"Time":"2026-07-01T15:17:12.629003442Z","Action":"output","Package":"go.temporal.io/server/service/history/queues","Output":"ok  \tgo.temporal.io/server/service/history/queues\t0.066s\n"}
+{"Time":"2026-07-01T15:17:12.629022844Z","Action":"pass","Package":"go.temporal.io/server/service/history/queues","Elapsed":0.066}
+{"Time":"2026-07-01T15:17:12.974432697Z","Action":"start","Package":"go.temporal.io/server/service/history/tasks"}
+{"Time":"2026-07-01T15:17:12.981160799Z","Action":"run","Package":"go.temporal.io/server/service/history/tasks","Test":"TestTaskKeySuite"}
+{"Time":"2026-07-01T15:17:12.981184145Z","Action":"output","Package":"go.temporal.io/server/service/history/tasks","Test":"TestTaskKeySuite","Output":"=== RUN   TestTaskKeySuite\n"}
+{"Time":"2026-07-01T15:17:12.981865331Z","Action":"run","Package":"go.temporal.io/server/service/history/tasks","Test":"TestTaskKeySuite/TestMinMaxKey"}
+{"Time":"2026-07-01T15:17:12.981869893Z","Action":"output","Package":"go.temporal.io/server/service/history/tasks","Test":"TestTaskKeySuite/TestMinMaxKey","Output":"=== RUN   TestTaskKeySuite/TestMinMaxKey\n"}
+{"Time":"2026-07-01T15:17:12.981934098Z","Action":"output","Package":"go.temporal.io/server/service/history/tasks","Test":"TestTaskKeySuite/TestMinMaxKey","Output":"--- PASS: TestTaskKeySuite/TestMinMaxKey (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.981939085Z","Action":"pass","Package":"go.temporal.io/server/service/history/tasks","Test":"TestTaskKeySuite/TestMinMaxKey","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.981946139Z","Action":"run","Package":"go.temporal.io/server/service/history/tasks","Test":"TestTaskKeySuite/TestNext"}
+{"Time":"2026-07-01T15:17:12.981948751Z","Action":"output","Package":"go.temporal.io/server/service/history/tasks","Test":"TestTaskKeySuite/TestNext","Output":"=== RUN   TestTaskKeySuite/TestNext\n"}
+{"Time":"2026-07-01T15:17:12.981985054Z","Action":"output","Package":"go.temporal.io/server/service/history/tasks","Test":"TestTaskKeySuite/TestNext","Output":"--- PASS: TestTaskKeySuite/TestNext (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.981989471Z","Action":"pass","Package":"go.temporal.io/server/service/history/tasks","Test":"TestTaskKeySuite/TestNext","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.98199558Z","Action":"run","Package":"go.temporal.io/server/service/history/tasks","Test":"TestTaskKeySuite/TestPrev"}
+{"Time":"2026-07-01T15:17:12.98199812Z","Action":"output","Package":"go.temporal.io/server/service/history/tasks","Test":"TestTaskKeySuite/TestPrev","Output":"=== RUN   TestTaskKeySuite/TestPrev\n"}
+{"Time":"2026-07-01T15:17:12.982027563Z","Action":"output","Package":"go.temporal.io/server/service/history/tasks","Test":"TestTaskKeySuite/TestPrev","Output":"--- PASS: TestTaskKeySuite/TestPrev (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.982031842Z","Action":"pass","Package":"go.temporal.io/server/service/history/tasks","Test":"TestTaskKeySuite/TestPrev","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.98203593Z","Action":"run","Package":"go.temporal.io/server/service/history/tasks","Test":"TestTaskKeySuite/TestSort"}
+{"Time":"2026-07-01T15:17:12.982040673Z","Action":"output","Package":"go.temporal.io/server/service/history/tasks","Test":"TestTaskKeySuite/TestSort","Output":"=== RUN   TestTaskKeySuite/TestSort\n"}
+{"Time":"2026-07-01T15:17:12.986905375Z","Action":"output","Package":"go.temporal.io/server/service/history/tasks","Test":"TestTaskKeySuite/TestSort","Output":"--- PASS: TestTaskKeySuite/TestSort (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.986917151Z","Action":"pass","Package":"go.temporal.io/server/service/history/tasks","Test":"TestTaskKeySuite/TestSort","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.9869235Z","Action":"run","Package":"go.temporal.io/server/service/history/tasks","Test":"TestTaskKeySuite/TestValidateKey_Invalid"}
+{"Time":"2026-07-01T15:17:12.986926456Z","Action":"output","Package":"go.temporal.io/server/service/history/tasks","Test":"TestTaskKeySuite/TestValidateKey_Invalid","Output":"=== RUN   TestTaskKeySuite/TestValidateKey_Invalid\n"}
+{"Time":"2026-07-01T15:17:12.986936619Z","Action":"output","Package":"go.temporal.io/server/service/history/tasks","Test":"TestTaskKeySuite/TestValidateKey_Invalid","Output":"--- PASS: TestTaskKeySuite/TestValidateKey_Invalid (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.986942816Z","Action":"pass","Package":"go.temporal.io/server/service/history/tasks","Test":"TestTaskKeySuite/TestValidateKey_Invalid","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.986953352Z","Action":"run","Package":"go.temporal.io/server/service/history/tasks","Test":"TestTaskKeySuite/TestValidateKey_Valid"}
+{"Time":"2026-07-01T15:17:12.986956129Z","Action":"output","Package":"go.temporal.io/server/service/history/tasks","Test":"TestTaskKeySuite/TestValidateKey_Valid","Output":"=== RUN   TestTaskKeySuite/TestValidateKey_Valid\n"}
+{"Time":"2026-07-01T15:17:12.986984954Z","Action":"output","Package":"go.temporal.io/server/service/history/tasks","Test":"TestTaskKeySuite/TestValidateKey_Valid","Output":"--- PASS: TestTaskKeySuite/TestValidateKey_Valid (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.986993361Z","Action":"pass","Package":"go.temporal.io/server/service/history/tasks","Test":"TestTaskKeySuite/TestValidateKey_Valid","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.986997289Z","Action":"output","Package":"go.temporal.io/server/service/history/tasks","Test":"TestTaskKeySuite","Output":"--- PASS: TestTaskKeySuite (0.01s)\n"}
+{"Time":"2026-07-01T15:17:12.987001736Z","Action":"pass","Package":"go.temporal.io/server/service/history/tasks","Test":"TestTaskKeySuite","Elapsed":0.01}
+{"Time":"2026-07-01T15:17:12.987006938Z","Action":"run","Package":"go.temporal.io/server/service/history/tasks","Test":"TestPredicateSuite"}
+{"Time":"2026-07-01T15:17:12.9870128Z","Action":"output","Package":"go.temporal.io/server/service/history/tasks","Test":"TestPredicateSuite","Output":"=== RUN   TestPredicateSuite\n"}
+{"Time":"2026-07-01T15:17:12.988462342Z","Action":"run","Package":"go.temporal.io/server/service/history/tasks","Test":"TestPredicateSuite/TestNamespacePredicate_Equals"}
+{"Time":"2026-07-01T15:17:12.988477965Z","Action":"output","Package":"go.temporal.io/server/service/history/tasks","Test":"TestPredicateSuite/TestNamespacePredicate_Equals","Output":"=== RUN   TestPredicateSuite/TestNamespacePredicate_Equals\n"}
+{"Time":"2026-07-01T15:17:12.988570926Z","Action":"output","Package":"go.temporal.io/server/service/history/tasks","Test":"TestPredicateSuite/TestNamespacePredicate_Equals","Output":"--- PASS: TestPredicateSuite/TestNamespacePredicate_Equals (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.988580639Z","Action":"pass","Package":"go.temporal.io/server/service/history/tasks","Test":"TestPredicateSuite/TestNamespacePredicate_Equals","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.988586263Z","Action":"run","Package":"go.temporal.io/server/service/history/tasks","Test":"TestPredicateSuite/TestNamespacePredicate_Test"}
+{"Time":"2026-07-01T15:17:12.988591458Z","Action":"output","Package":"go.temporal.io/server/service/history/tasks","Test":"TestPredicateSuite/TestNamespacePredicate_Test","Output":"=== RUN   TestPredicateSuite/TestNamespacePredicate_Test\n"}
+{"Time":"2026-07-01T15:17:12.988672139Z","Action":"output","Package":"go.temporal.io/server/service/history/tasks","Test":"TestPredicateSuite/TestNamespacePredicate_Test","Output":"--- PASS: TestPredicateSuite/TestNamespacePredicate_Test (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.98868035Z","Action":"pass","Package":"go.temporal.io/server/service/history/tasks","Test":"TestPredicateSuite/TestNamespacePredicate_Test","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.988685925Z","Action":"run","Package":"go.temporal.io/server/service/history/tasks","Test":"TestPredicateSuite/TestTypePredicate_Equals"}
+{"Time":"2026-07-01T15:17:12.988692435Z","Action":"output","Package":"go.temporal.io/server/service/history/tasks","Test":"TestPredicateSuite/TestTypePredicate_Equals","Output":"=== RUN   TestPredicateSuite/TestTypePredicate_Equals\n"}
+{"Time":"2026-07-01T15:17:12.988735106Z","Action":"output","Package":"go.temporal.io/server/service/history/tasks","Test":"TestPredicateSuite/TestTypePredicate_Equals","Output":"--- PASS: TestPredicateSuite/TestTypePredicate_Equals (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.988742865Z","Action":"pass","Package":"go.temporal.io/server/service/history/tasks","Test":"TestPredicateSuite/TestTypePredicate_Equals","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.988749575Z","Action":"run","Package":"go.temporal.io/server/service/history/tasks","Test":"TestPredicateSuite/TestTypePredicate_Test"}
+{"Time":"2026-07-01T15:17:12.988758946Z","Action":"output","Package":"go.temporal.io/server/service/history/tasks","Test":"TestPredicateSuite/TestTypePredicate_Test","Output":"=== RUN   TestPredicateSuite/TestTypePredicate_Test\n"}
+{"Time":"2026-07-01T15:17:12.988973374Z","Action":"output","Package":"go.temporal.io/server/service/history/tasks","Test":"TestPredicateSuite/TestTypePredicate_Test","Output":"--- PASS: TestPredicateSuite/TestTypePredicate_Test (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.988980188Z","Action":"pass","Package":"go.temporal.io/server/service/history/tasks","Test":"TestPredicateSuite/TestTypePredicate_Test","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.988990718Z","Action":"output","Package":"go.temporal.io/server/service/history/tasks","Test":"TestPredicateSuite","Output":"--- PASS: TestPredicateSuite (0.00s)\n"}
+{"Time":"2026-07-01T15:17:12.989047228Z","Action":"pass","Package":"go.temporal.io/server/service/history/tasks","Test":"TestPredicateSuite","Elapsed":0}
+{"Time":"2026-07-01T15:17:12.989052336Z","Action":"output","Package":"go.temporal.io/server/service/history/tasks","Output":"PASS\n"}
+{"Time":"2026-07-01T15:17:12.989853824Z","Action":"output","Package":"go.temporal.io/server/service/history/tasks","Output":"ok  \tgo.temporal.io/server/service/history/tasks\t0.015s\n"}
+{"Time":"2026-07-01T15:17:12.989883678Z","Action":"pass","Package":"go.temporal.io/server/service/history/tasks","Elapsed":0.015}
 reward=1 graded=98 found=98 failed=0 parsed=98 framework=go exit_code=0

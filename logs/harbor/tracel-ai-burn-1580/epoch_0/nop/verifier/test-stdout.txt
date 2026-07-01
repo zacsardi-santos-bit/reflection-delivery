@@ -1,0 +1,372 @@
+patching file crates/burn-compute/tests/dummy/server.rs
+patching file crates/burn-compute/tests/dummy/tune/autotune_operations.rs
+patching file crates/burn-compute/tests/dummy/tune/operation_sets.rs
+patching file crates/burn-compute/tests/integration_test.rs
+warning: `/workspace/repo/.cargo/config` is deprecated in favor of `config.toml`
+  |
+  = help: if you need to support cargo 1.38 or earlier, you can symlink `config` to `config.toml`
+warning: `/workspace/repo/.cargo/config` is deprecated in favor of `config.toml`
+  |
+  = help: if you need to support cargo 1.38 or earlier, you can symlink `config` to `config.toml`
+warning: `/workspace/repo/.cargo/config` is deprecated in favor of `config.toml`
+  |
+  = help: if you need to support cargo 1.38 or earlier, you can symlink `config` to `config.toml`
+warning: hiding a lifetime that's elided elsewhere is confusing
+  --> crates/burn-common/src/stub.rs:34:17
+   |
+34 |     pub fn lock(&self) -> Result<MutexGuard<T>, alloc::string::String> {
+   |                 ^^^^^            ^^^^^^^^^^^^^ the same lifetime is hidden here
+   |                 |
+   |                 the lifetime is elided here
+   |
+   = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+   = note: `#[warn(mismatched_lifetime_syntaxes)]` on by default
+help: use `'_` for type paths
+   |
+34 |     pub fn lock(&self) -> Result<MutexGuard<'_, T>, alloc::string::String> {
+   |                                             +++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+  --> crates/burn-common/src/stub.rs:68:17
+   |
+68 |     pub fn read(&self) -> Result<RwLockReadGuard<T>, alloc::string::String> {
+   |                 ^^^^^            ^^^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+   |                 |
+   |                 the lifetime is elided here
+   |
+   = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+   |
+68 |     pub fn read(&self) -> Result<RwLockReadGuard<'_, T>, alloc::string::String> {
+   |                                                  +++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+  --> crates/burn-common/src/stub.rs:82:18
+   |
+82 |     pub fn write(&self) -> Result<RwLockWriteGuard<T>, alloc::string::String> {
+   |                  ^^^^^            ^^^^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+   |                  |
+   |                  the lifetime is elided here
+   |
+   = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+   |
+82 |     pub fn write(&self) -> Result<RwLockWriteGuard<'_, T>, alloc::string::String> {
+   |                                                    +++
+
+warning: `burn-common` (lib) generated 3 warnings (run `cargo fix --lib -p burn-common` to apply 3 suggestions)
+   Compiling burn-compute v0.14.0 (/workspace/repo/crates/burn-compute)
+error[E0432]: unresolved import `burn_compute::server::Binding`
+ --> crates/burn-compute/tests/dummy/server.rs:6:14
+  |
+6 |     server::{Binding, ComputeServer, Handle},
+  |              ^^^^^^^ no `Binding` in `server`
+
+error[E0432]: unresolved import `burn_compute::server::Binding`
+ --> crates/burn-compute/tests/dummy/tune/autotune_operations.rs:3:43
+  |
+3 | use burn_compute::{client::ComputeClient, server::Binding, tune::AutotuneOperation};
+  |                                           ^^^^^^^^^^^^^^^ no `Binding` in `server`
+
+error[E0432]: unresolved import `burn_compute::server::Binding`
+ --> crates/burn-compute/tests/dummy/tune/operation_sets.rs:8:5
+  |
+8 |     server::Binding,
+  |     ^^^^^^^^^^^^^^^ no `Binding` in `server`
+
+warning: unused import: `MemoryHandle`
+ --> crates/burn-compute/tests/dummy/server.rs:5:25
+  |
+5 |     memory_management::{MemoryHandle, MemoryManagement, SimpleMemoryManagement},
+  |                         ^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+error[E0599]: no method named `binding` found for associated type `<MM as MemoryManagement<BytesStorage>>::Handle` in the current scope
+  --> crates/burn-compute/tests/dummy/server.rs:37:66
+   |
+37 |         let resource = self.memory_management.get(handle.clone().binding());
+   |                                                                  ^^^^^^^ method not found in `<MM as MemoryManagement<BytesStorage>>::Handle`
+
+error[E0599]: no method named `binding` found for struct `Handle<Server>` in the current scope
+  --> crates/burn-compute/tests/integration_test.rs:17:62
+   |
+17 |     let obtained_resource = client.read(resource_description.binding());
+   |                                                              ^^^^^^^ method not found in `Handle<dummy::server::DummyServer>`
+
+error[E0599]: no method named `binding` found for struct `Handle<Server>` in the current scope
+  --> crates/burn-compute/tests/integration_test.rs:27:59
+   |
+27 |     let empty_resource = client.read(resource_description.binding());
+   |                                                           ^^^^^^^ method not found in `Handle<dummy::server::DummyServer>`
+
+error[E0599]: no method named `binding` found for struct `Handle<Server>` in the current scope
+  --> crates/burn-compute/tests/integration_test.rs:41:18
+   |
+41 |         vec![lhs.binding(), rhs.binding(), out.clone().binding()],
+   |                  ^^^^^^^ method not found in `Handle<dummy::server::DummyServer>`
+
+error[E0599]: no method named `binding` found for struct `Handle<Server>` in the current scope
+  --> crates/burn-compute/tests/integration_test.rs:41:33
+   |
+41 |         vec![lhs.binding(), rhs.binding(), out.clone().binding()],
+   |                                 ^^^^^^^ method not found in `Handle<dummy::server::DummyServer>`
+
+error[E0599]: no method named `binding` found for struct `Handle<Server>` in the current scope
+  --> crates/burn-compute/tests/integration_test.rs:41:56
+   |
+41 |         vec![lhs.binding(), rhs.binding(), out.clone().binding()],
+   |                                                        ^^^^^^^ method not found in `Handle<dummy::server::DummyServer>`
+
+error[E0599]: no method named `binding` found for struct `Handle<Server>` in the current scope
+  --> crates/burn-compute/tests/integration_test.rs:44:45
+   |
+44 |     let obtained_resource = client.read(out.binding());
+   |                                             ^^^^^^^ method not found in `Handle<dummy::server::DummyServer>`
+
+error[E0599]: no method named `binding` found for struct `Handle<Server>` in the current scope
+  --> crates/burn-compute/tests/integration_test.rs:59:28
+   |
+59 |     let handles = vec![lhs.binding(), rhs.binding(), out.clone().binding()];
+   |                            ^^^^^^^ method not found in `Handle<dummy::server::DummyServer>`
+
+error[E0599]: no method named `binding` found for struct `Handle<Server>` in the current scope
+  --> crates/burn-compute/tests/integration_test.rs:59:43
+   |
+59 |     let handles = vec![lhs.binding(), rhs.binding(), out.clone().binding()];
+   |                                           ^^^^^^^ method not found in `Handle<dummy::server::DummyServer>`
+
+error[E0599]: no method named `binding` found for struct `Handle<Server>` in the current scope
+  --> crates/burn-compute/tests/integration_test.rs:59:66
+   |
+59 |     let handles = vec![lhs.binding(), rhs.binding(), out.clone().binding()];
+   |                                                                  ^^^^^^^ method not found in `Handle<dummy::server::DummyServer>`
+
+error[E0599]: no method named `binding` found for struct `Handle<Server>` in the current scope
+  --> crates/burn-compute/tests/integration_test.rs:65:45
+   |
+65 |     let obtained_resource = client.read(out.binding());
+   |                                             ^^^^^^^ method not found in `Handle<dummy::server::DummyServer>`
+
+error[E0599]: no method named `binding` found for struct `Handle<Server>` in the current scope
+  --> crates/burn-compute/tests/integration_test.rs:81:28
+   |
+81 |     let handles = vec![lhs.binding(), rhs.binding(), out.clone().binding()];
+   |                            ^^^^^^^ method not found in `Handle<dummy::server::DummyServer>`
+
+error[E0599]: no method named `binding` found for struct `Handle<Server>` in the current scope
+  --> crates/burn-compute/tests/integration_test.rs:81:43
+   |
+81 |     let handles = vec![lhs.binding(), rhs.binding(), out.clone().binding()];
+   |                                           ^^^^^^^ method not found in `Handle<dummy::server::DummyServer>`
+
+error[E0599]: no method named `binding` found for struct `Handle<Server>` in the current scope
+  --> crates/burn-compute/tests/integration_test.rs:81:66
+   |
+81 |     let handles = vec![lhs.binding(), rhs.binding(), out.clone().binding()];
+   |                                                                  ^^^^^^^ method not found in `Handle<dummy::server::DummyServer>`
+
+error[E0599]: no method named `binding` found for struct `Handle<Server>` in the current scope
+  --> crates/burn-compute/tests/integration_test.rs:87:45
+   |
+87 |     let obtained_resource = client.read(out.binding());
+   |                                             ^^^^^^^ method not found in `Handle<dummy::server::DummyServer>`
+
+error[E0599]: no method named `binding` found for struct `Handle<Server>` in the current scope
+   --> crates/burn-compute/tests/integration_test.rs:111:32
+    |
+111 |     let handles_1 = vec![lhs_1.binding(), rhs_1.binding(), out_1.binding()];
+    |                                ^^^^^^^ method not found in `Handle<dummy::server::DummyServer>`
+
+error[E0599]: no method named `binding` found for struct `Handle<Server>` in the current scope
+   --> crates/burn-compute/tests/integration_test.rs:111:49
+    |
+111 |     let handles_1 = vec![lhs_1.binding(), rhs_1.binding(), out_1.binding()];
+    |                                                 ^^^^^^^ method not found in `Handle<dummy::server::DummyServer>`
+
+error[E0599]: no method named `binding` found for struct `Handle<Server>` in the current scope
+   --> crates/burn-compute/tests/integration_test.rs:111:66
+    |
+111 |     let handles_1 = vec![lhs_1.binding(), rhs_1.binding(), out_1.binding()];
+    |                                                                  ^^^^^^^ method not found in `Handle<dummy::server::DummyServer>`
+
+error[E0599]: no method named `binding` found for struct `Handle<Server>` in the current scope
+   --> crates/burn-compute/tests/integration_test.rs:117:32
+    |
+117 |     let handles_2 = vec![lhs_2.binding(), rhs_2.binding(), out_2.clone().binding()];
+    |                                ^^^^^^^ method not found in `Handle<dummy::server::DummyServer>`
+
+error[E0599]: no method named `binding` found for struct `Handle<Server>` in the current scope
+   --> crates/burn-compute/tests/integration_test.rs:117:49
+    |
+117 |     let handles_2 = vec![lhs_2.binding(), rhs_2.binding(), out_2.clone().binding()];
+    |                                                 ^^^^^^^ method not found in `Handle<dummy::server::DummyServer>`
+
+error[E0599]: no method named `binding` found for struct `Handle<Server>` in the current scope
+   --> crates/burn-compute/tests/integration_test.rs:117:74
+    |
+117 |     let handles_2 = vec![lhs_2.binding(), rhs_2.binding(), out_2.clone().binding()];
+    |                                                                          ^^^^^^^ method not found in `Handle<dummy::server::DummyServer>`
+
+error[E0599]: no method named `binding` found for struct `Handle<Server>` in the current scope
+   --> crates/burn-compute/tests/integration_test.rs:126:47
+    |
+126 |     let obtained_resource = client.read(out_2.binding());
+    |                                               ^^^^^^^ method not found in `Handle<dummy::server::DummyServer>`
+
+error[E0599]: no method named `binding` found for struct `Handle<Server>` in the current scope
+   --> crates/burn-compute/tests/integration_test.rs:152:32
+    |
+152 |     let handles_1 = vec![lhs_1.binding(), rhs_1.binding(), out_1.binding()];
+    |                                ^^^^^^^ method not found in `Handle<dummy::server::DummyServer>`
+
+error[E0599]: no method named `binding` found for struct `Handle<Server>` in the current scope
+   --> crates/burn-compute/tests/integration_test.rs:152:49
+    |
+152 |     let handles_1 = vec![lhs_1.binding(), rhs_1.binding(), out_1.binding()];
+    |                                                 ^^^^^^^ method not found in `Handle<dummy::server::DummyServer>`
+
+error[E0599]: no method named `binding` found for struct `Handle<Server>` in the current scope
+   --> crates/burn-compute/tests/integration_test.rs:152:66
+    |
+152 |     let handles_1 = vec![lhs_1.binding(), rhs_1.binding(), out_1.binding()];
+    |                                                                  ^^^^^^^ method not found in `Handle<dummy::server::DummyServer>`
+
+error[E0599]: no method named `binding` found for struct `Handle<Server>` in the current scope
+   --> crates/burn-compute/tests/integration_test.rs:158:32
+    |
+158 |     let handles_2 = vec![lhs_2.binding(), rhs_2.binding(), out_2.clone().binding()];
+    |                                ^^^^^^^ method not found in `Handle<dummy::server::DummyServer>`
+
+error[E0599]: no method named `binding` found for struct `Handle<Server>` in the current scope
+   --> crates/burn-compute/tests/integration_test.rs:158:49
+    |
+158 |     let handles_2 = vec![lhs_2.binding(), rhs_2.binding(), out_2.clone().binding()];
+    |                                                 ^^^^^^^ method not found in `Handle<dummy::server::DummyServer>`
+
+error[E0599]: no method named `binding` found for struct `Handle<Server>` in the current scope
+   --> crates/burn-compute/tests/integration_test.rs:158:74
+    |
+158 |     let handles_2 = vec![lhs_2.binding(), rhs_2.binding(), out_2.clone().binding()];
+    |                                                                          ^^^^^^^ method not found in `Handle<dummy::server::DummyServer>`
+
+error[E0599]: no method named `binding` found for struct `Handle<Server>` in the current scope
+   --> crates/burn-compute/tests/integration_test.rs:168:47
+    |
+168 |     let obtained_resource = client.read(out_2.binding());
+    |                                               ^^^^^^^ method not found in `Handle<dummy::server::DummyServer>`
+
+error[E0599]: no method named `binding` found for struct `Handle<Server>` in the current scope
+   --> crates/burn-compute/tests/integration_test.rs:197:28
+    |
+197 |     let handles = vec![lhs.binding(), rhs.binding(), out.clone().binding()];
+    |                            ^^^^^^^ method not found in `Handle<dummy::server::DummyServer>`
+
+error[E0599]: no method named `binding` found for struct `Handle<Server>` in the current scope
+   --> crates/burn-compute/tests/integration_test.rs:197:43
+    |
+197 |     let handles = vec![lhs.binding(), rhs.binding(), out.clone().binding()];
+    |                                           ^^^^^^^ method not found in `Handle<dummy::server::DummyServer>`
+
+error[E0599]: no method named `binding` found for struct `Handle<Server>` in the current scope
+   --> crates/burn-compute/tests/integration_test.rs:197:66
+    |
+197 |     let handles = vec![lhs.binding(), rhs.binding(), out.clone().binding()];
+    |                                                                  ^^^^^^^ method not found in `Handle<dummy::server::DummyServer>`
+
+error[E0599]: no method named `binding` found for struct `Handle<Server>` in the current scope
+   --> crates/burn-compute/tests/integration_test.rs:203:46
+    |
+203 |     let _obtained_resource = client.read(out.binding());
+    |                                              ^^^^^^^ method not found in `Handle<dummy::server::DummyServer>`
+
+error[E0599]: no method named `binding` found for struct `Handle<Server>` in the current scope
+   --> crates/burn-compute/tests/integration_test.rs:224:32
+    |
+224 |     let handles_1 = vec![lhs_1.binding(), rhs_1.binding(), out_1.binding()];
+    |                                ^^^^^^^ method not found in `Handle<dummy::server::DummyServer>`
+
+error[E0599]: no method named `binding` found for struct `Handle<Server>` in the current scope
+   --> crates/burn-compute/tests/integration_test.rs:224:49
+    |
+224 |     let handles_1 = vec![lhs_1.binding(), rhs_1.binding(), out_1.binding()];
+    |                                                 ^^^^^^^ method not found in `Handle<dummy::server::DummyServer>`
+
+error[E0599]: no method named `binding` found for struct `Handle<Server>` in the current scope
+   --> crates/burn-compute/tests/integration_test.rs:224:66
+    |
+224 |     let handles_1 = vec![lhs_1.binding(), rhs_1.binding(), out_1.binding()];
+    |                                                                  ^^^^^^^ method not found in `Handle<dummy::server::DummyServer>`
+
+error[E0599]: no method named `binding` found for struct `Handle<Server>` in the current scope
+   --> crates/burn-compute/tests/integration_test.rs:230:32
+    |
+230 |     let handles_2 = vec![lhs_2.binding(), rhs_2.binding(), out_2.clone().binding()];
+    |                                ^^^^^^^ method not found in `Handle<dummy::server::DummyServer>`
+
+error[E0599]: no method named `binding` found for struct `Handle<Server>` in the current scope
+   --> crates/burn-compute/tests/integration_test.rs:230:49
+    |
+230 |     let handles_2 = vec![lhs_2.binding(), rhs_2.binding(), out_2.clone().binding()];
+    |                                                 ^^^^^^^ method not found in `Handle<dummy::server::DummyServer>`
+
+error[E0599]: no method named `binding` found for struct `Handle<Server>` in the current scope
+   --> crates/burn-compute/tests/integration_test.rs:230:74
+    |
+230 |     let handles_2 = vec![lhs_2.binding(), rhs_2.binding(), out_2.clone().binding()];
+    |                                                                          ^^^^^^^ method not found in `Handle<dummy::server::DummyServer>`
+
+error[E0599]: no method named `binding` found for struct `Handle<Server>` in the current scope
+   --> crates/burn-compute/tests/integration_test.rs:239:47
+    |
+239 |     let obtained_resource = client.read(out_2.binding());
+    |                                               ^^^^^^^ method not found in `Handle<dummy::server::DummyServer>`
+
+error[E0599]: no method named `binding` found for struct `Handle<Server>` in the current scope
+   --> crates/burn-compute/tests/integration_test.rs:259:32
+    |
+259 |     let handles_1 = vec![lhs_1.binding(), rhs_1.binding(), out_1.binding()];
+    |                                ^^^^^^^ method not found in `Handle<dummy::server::DummyServer>`
+
+error[E0599]: no method named `binding` found for struct `Handle<Server>` in the current scope
+   --> crates/burn-compute/tests/integration_test.rs:259:49
+    |
+259 |     let handles_1 = vec![lhs_1.binding(), rhs_1.binding(), out_1.binding()];
+    |                                                 ^^^^^^^ method not found in `Handle<dummy::server::DummyServer>`
+
+error[E0599]: no method named `binding` found for struct `Handle<Server>` in the current scope
+   --> crates/burn-compute/tests/integration_test.rs:259:66
+    |
+259 |     let handles_1 = vec![lhs_1.binding(), rhs_1.binding(), out_1.binding()];
+    |                                                                  ^^^^^^^ method not found in `Handle<dummy::server::DummyServer>`
+
+error[E0599]: no method named `binding` found for struct `Handle<Server>` in the current scope
+   --> crates/burn-compute/tests/integration_test.rs:275:32
+    |
+275 |     let handles_2 = vec![lhs_2.binding(), rhs_2.binding(), out_2.clone().binding()];
+    |                                ^^^^^^^ method not found in `Handle<dummy::server::DummyServer>`
+
+error[E0599]: no method named `binding` found for struct `Handle<Server>` in the current scope
+   --> crates/burn-compute/tests/integration_test.rs:275:49
+    |
+275 |     let handles_2 = vec![lhs_2.binding(), rhs_2.binding(), out_2.clone().binding()];
+    |                                                 ^^^^^^^ method not found in `Handle<dummy::server::DummyServer>`
+
+error[E0599]: no method named `binding` found for struct `Handle<Server>` in the current scope
+   --> crates/burn-compute/tests/integration_test.rs:275:74
+    |
+275 |     let handles_2 = vec![lhs_2.binding(), rhs_2.binding(), out_2.clone().binding()];
+    |                                                                          ^^^^^^^ method not found in `Handle<dummy::server::DummyServer>`
+
+error[E0599]: no method named `binding` found for struct `Handle<Server>` in the current scope
+   --> crates/burn-compute/tests/integration_test.rs:283:47
+    |
+283 |     let obtained_resource = client.read(out_2.binding());
+    |                                               ^^^^^^^ method not found in `Handle<dummy::server::DummyServer>`
+
+Some errors have detailed explanations: E0432, E0599.
+For more information about an error, try `rustc --explain E0432`.
+warning: `burn-compute` (test "integration_test") generated 1 warning
+error: could not compile `burn-compute` (test "integration_test") due to 50 previous errors; 1 warning emitted
+error: command `/usr/local/rustup/toolchains/1.96.1-x86_64-unknown-linux-gnu/bin/cargo test --no-run --message-format json-render-diagnostics --package burn-compute` exited with code 101
+reward=0 graded=23 found=0 failed=0 parsed=0 framework=cargo exit_code=101

@@ -1,0 +1,6 @@
+patching file api/handlers/task_handler_test.go
+patching file api/repositories/task_repository_test.go
+# code.cloudfoundry.org/korifi/api/handlers_test [code.cloudfoundry.org/korifi/api/handlers.test]
+api/handlers/task_handler_test.go:55:5: unknown field 'CreationTimestamp' in struct literal of type repositories.TaskRecord
+FAIL	code.cloudfoundry.org/korifi/api/handlers [build failed]
+reward=0 graded=1 found=1 failed=1 parsed=1 framework=go exit_code=2

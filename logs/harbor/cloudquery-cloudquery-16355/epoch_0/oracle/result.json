@@ -1,26 +1,26 @@
 {
-    "id": "c3830f4e-cced-4f92-bc22-bb65a713d23b",
+    "id": "941e92cd-3cae-43ff-a8cc-85027f94c6bd",
     "task_name": "offline/cloudquery-cloudquery-16355",
-    "trial_name": "cloudquery-cloudquery-16355__KvU8UbT",
-    "trial_uri": "file:///home/ubuntu/reflection_offline_harbor_delivery/oracle_jobs_all/2026-06-29__15-12-04/cloudquery-cloudquery-16355__KvU8UbT",
+    "trial_name": "cloudquery-cloudquery-16355__UKxEg9k",
+    "trial_uri": "file:///tmp/oracle/2026-07-01__14-31-06/cloudquery-cloudquery-16355__UKxEg9k",
     "task_id": {
-        "path": "/home/ubuntu/reflection_offline_harbor_delivery/harbor/cloudquery-cloudquery-16355"
+        "path": "cloudquery-cloudquery-16355"
     },
-    "source": "harbor",
-    "task_checksum": "a07ef5338ff0578bbdf6191ecc931cde897030aac4f5744f23ec7fc594962230",
+    "source": "src",
+    "task_checksum": "69fe3e6720a9fdc0abe7b0ce0fcd12109706908adb4e57d1f087f5b6fdd1caca",
     "config": {
         "task": {
-            "path": "/home/ubuntu/reflection_offline_harbor_delivery/harbor/cloudquery-cloudquery-16355",
+            "path": "cloudquery-cloudquery-16355",
             "git_url": null,
             "git_commit_id": null,
             "name": null,
             "ref": null,
             "overwrite": false,
             "download_dir": null,
-            "source": "harbor"
+            "source": "src"
         },
-        "trial_name": "cloudquery-cloudquery-16355__KvU8UbT",
-        "trials_dir": "/home/ubuntu/reflection_offline_harbor_delivery/oracle_jobs_all/2026-06-29__15-12-04",
+        "trial_name": "cloudquery-cloudquery-16355__UKxEg9k",
+        "trials_dir": "/tmp/oracle/2026-07-01__14-31-06",
         "timeout_multiplier": 1.0,
         "agent_timeout_multiplier": null,
         "verifier_timeout_multiplier": null,
@@ -37,10 +37,10 @@
             "env": {}
         },
         "environment": {
-            "type": "modal",
+            "type": "docker",
             "import_path": null,
             "force_build": false,
-            "delete": false,
+            "delete": true,
             "override_cpus": null,
             "override_memory_mb": null,
             "override_storage_mb": null,
@@ -56,28 +56,43 @@
             "disable": false
         },
         "artifacts": [],
-        "job_id": "8d8c11e2-61bb-4d33-b502-02a799419317"
+        "job_id": "4717e880-4b97-404a-8781-d2cac81e670c"
     },
     "agent_info": {
         "name": "oracle",
         "version": "1.0.0",
         "model_info": null
     },
-    "agent_result": null,
-    "verifier_result": null,
-    "exception_info": {
-        "exception_type": "StreamTerminatedError",
-        "exception_message": "Protocol error",
-        "exception_traceback": "Traceback (most recent call last):\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/grpclib/client.py\", line 429, in recv_message\n    message = await recv_message(self._stream, self._codec,\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/grpclib/stream.py\", line 20, in recv_message\n    meta = await stream.recv_data(5)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/grpclib/protocol.py\", line 347, in recv_data\n    return await self.buffer.read(size)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/grpclib/protocol.py\", line 88, in read\n    data, data_size, ack_size = await self._unacked.get()\n                                ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/asyncio/queues.py\", line 158, in get\n    await getter\nasyncio.exceptions.CancelledError\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/harbor/trial/trial.py\", line 531, in run\n    await self._setup_environment()\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/harbor/trial/trial.py\", line 238, in _setup_environment\n    await self._start_environment_with_retry()\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/tenacity/asyncio/__init__.py\", line 193, in async_wrapped\n    return await copy(fn, *args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/tenacity/asyncio/__init__.py\", line 112, in __call__\n    do = await self.iter(retry_state=retry_state)\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/tenacity/asyncio/__init__.py\", line 157, in iter\n    result = await action(retry_state)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/tenacity/_utils.py\", line 111, in inner\n    return call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/tenacity/__init__.py\", line 393, in <lambda>\n    self._add_action_func(lambda rs: rs.outcome.result())\n                                     ^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/concurrent/futures/_base.py\", line 449, in result\n    return self.__get_result()\n           ^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/concurrent/futures/_base.py\", line 401, in __get_result\n    raise self._exception\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/tenacity/asyncio/__init__.py\", line 116, in __call__\n    result = await fn(*args, **kwargs)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/harbor/trial/trial.py\", line 250, in _start_environment_with_retry\n    await asyncio.wait_for(\n  File \"/usr/lib/python3.12/asyncio/tasks.py\", line 520, in wait_for\n    return await fut\n           ^^^^^^^^^\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/harbor/environments/modal.py\", line 203, in start\n    self._sandbox = await self._create_sandbox(\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/tenacity/asyncio/__init__.py\", line 193, in async_wrapped\n    return await copy(fn, *args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/tenacity/asyncio/__init__.py\", line 112, in __call__\n    do = await self.iter(retry_state=retry_state)\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/tenacity/asyncio/__init__.py\", line 157, in iter\n    result = await action(retry_state)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/tenacity/_utils.py\", line 111, in inner\n    return call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/tenacity/__init__.py\", line 413, in exc_check\n    raise retry_exc.reraise()\n          ^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/tenacity/__init__.py\", line 184, in reraise\n    raise self.last_attempt.result()\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/concurrent/futures/_base.py\", line 449, in result\n    return self.__get_result()\n           ^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/concurrent/futures/_base.py\", line 401, in __get_result\n    raise self._exception\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/tenacity/asyncio/__init__.py\", line 116, in __call__\n    result = await fn(*args, **kwargs)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/harbor/environments/modal.py\", line 137, in _create_sandbox\n    return await Sandbox.create.aio(\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/modal/sandbox.py\", line 455, in create\n    return await _Sandbox._create(\n           ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/modal/sandbox.py\", line 609, in _create\n    await resolver.load(obj, load_context)\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/modal/image.py\", line 683, in _load\n    resp = await _image_await_build_result(image_id, load_context.client)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/modal/image.py\", line 401, in _image_await_build_result\n    raise exc\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/modal/image.py\", line 397, in _image_await_build_result\n    await join()\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/modal/image.py\", line 378, in join\n    async for response in client.stub.ImageJoinStreaming.unary_stream(request):\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/modal/_grpc_client.py\", line 190, in unary_stream\n    async for response in self.client._call_stream(self.wrapped_method, request, metadata=metadata):\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/modal/client.py\", line 356, in _call_stream\n    yield await self._call_safely(stream.__anext__(), f\"{grpclib_method.name}.recv\")\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/modal/client.py\", line 300, in _call_safely\n    return await request_task\n           ^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/grpclib/stream.py\", line 61, in __anext__\n    message = await self.recv_message()\n              ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/grpclib/client.py\", line 428, in recv_message\n    with self._wrapper:\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/grpclib/utils.py\", line 70, in __exit__\n    raise self._error\ngrpclib.exceptions.StreamTerminatedError: Protocol error\n",
-        "occurred_at": "2026-06-29T15:21:15.128682"
+    "agent_result": {
+        "n_input_tokens": null,
+        "n_cache_tokens": null,
+        "n_output_tokens": null,
+        "cost_usd": null,
+        "rollout_details": null,
+        "metadata": null
     },
-    "started_at": "2026-06-29T15:16:16.638672Z",
-    "finished_at": "2026-06-29T15:21:15.172080Z",
+    "verifier_result": {
+        "rewards": {
+            "reward": 1.0
+        }
+    },
+    "exception_info": null,
+    "started_at": "2026-07-01T14:31:15.669268Z",
+    "finished_at": "2026-07-01T15:02:02.747330Z",
     "environment_setup": {
-        "started_at": "2026-06-29T15:16:16.645797Z",
-        "finished_at": "2026-06-29T15:21:15.126302Z"
+        "started_at": "2026-07-01T14:31:15.670225Z",
+        "finished_at": "2026-07-01T15:01:45.271334Z"
     },
-    "agent_setup": null,
-    "agent_execution": null,
-    "verifier": null
+    "agent_setup": {
+        "started_at": "2026-07-01T15:01:45.377350Z",
+        "finished_at": "2026-07-01T15:01:45.377418Z"
+    },
+    "agent_execution": {
+        "started_at": "2026-07-01T15:01:45.463665Z",
+        "finished_at": "2026-07-01T15:01:45.733842Z"
+    },
+    "verifier": {
+        "started_at": "2026-07-01T15:01:45.733974Z",
+        "finished_at": "2026-07-01T15:01:52.301215Z"
+    }
 }

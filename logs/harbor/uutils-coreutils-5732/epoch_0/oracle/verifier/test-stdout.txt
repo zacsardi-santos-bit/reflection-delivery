@@ -1,0 +1,47 @@
+patching file tests/by-util/test_head.rs
+   Compiling bigdecimal v0.4.0
+   Compiling coreutils v0.0.23 (/workspace/repo)
+   Compiling uu_head v0.0.23 (/workspace/repo/src/uu/head)
+   Compiling uu_seq v0.0.23 (/workspace/repo/src/uu/seq)
+    Finished test [unoptimized + debuginfo] target(s) in 11.89s
+────────────
+ Nextest run ID e4499aee-82b4-42e0-a3a6-00b52c98a1fd with nextest profile: default
+    Starting 35 tests across 1 binary (2583 tests and 2 binaries skipped)
+        PASS [   0.010s] ( 1/35) coreutils::tests test_head::test_bad_utf8
+        PASS [   0.011s] ( 2/35) coreutils::tests test_head::test_bad_utf8_lines
+        PASS [   0.013s] ( 3/35) coreutils::tests test_head::test_byte_syntax
+        PASS [   0.012s] ( 4/35) coreutils::tests test_head::test_file_backwards
+        PASS [   0.021s] ( 5/35) coreutils::tests test_head::test_head_num_with_undocumented_sign_bytes
+        PASS [   0.031s] ( 6/35) coreutils::tests test_head::test_head_invalid_num
+        PASS [   0.011s] ( 7/35) coreutils::tests test_head::test_invalid_arg
+        PASS [   0.012s] ( 8/35) coreutils::tests test_head::test_line_syntax
+        PASS [   0.012s] ( 9/35) coreutils::tests test_head::test_lines_leading_zeros
+        PASS [   0.013s] (10/35) coreutils::tests test_head::test_multiple_files
+        PASS [   0.012s] (11/35) coreutils::tests test_head::test_multiple_files_with_stdin
+        PASS [   0.010s] (12/35) coreutils::tests test_head::test_negative_byte_syntax
+        PASS [   0.010s] (13/35) coreutils::tests test_head::test_multiple_nonexistent_files
+        PASS [   0.011s] (14/35) coreutils::tests test_head::test_negative_zero_bytes
+        PASS [   0.019s] (15/35) coreutils::tests test_head::test_negative_zero_lines
+        PASS [   0.009s] (16/35) coreutils::tests test_head::test_no_such_file_or_directory
+        PASS [   0.013s] (17/35) coreutils::tests test_head::test_obsolete_extras
+        PASS [   0.013s] (18/35) coreutils::tests test_head::test_presume_input_pipe_default
+        PASS [   0.017s] (19/35) coreutils::tests test_head::test_read_backwards_bytes_proc_fs_version
+        PASS [   0.047s] (20/35) coreutils::tests test_head::test_presume_input_pipe_5_chars
+        PASS [   0.011s] (21/35) coreutils::tests test_head::test_sequence_fixture
+        PASS [   0.013s] (22/35) coreutils::tests test_head::test_single_1_line
+        PASS [   0.011s] (23/35) coreutils::tests test_head::test_single_1_line_obsolete
+        PASS [   0.011s] (24/35) coreutils::tests test_head::test_single_5_chars
+        PASS [   0.009s] (25/35) coreutils::tests test_head::test_single_default
+        PASS [   0.010s] (26/35) coreutils::tests test_head::test_stdin_1_line
+        PASS [   0.009s] (27/35) coreutils::tests test_head::test_stdin_1_line_obsolete
+        PASS [   0.012s] (28/35) coreutils::tests test_head::test_stdin_default
+        PASS [   0.013s] (29/35) coreutils::tests test_head::test_stdin_5_chars
+        PASS [   0.010s] (30/35) coreutils::tests test_head::test_verbose
+        PASS [   0.015s] (31/35) coreutils::tests test_head::test_stdin_negative_23_line
+        PASS [   0.013s] (32/35) coreutils::tests test_head::test_zero_terminated
+        PASS [   0.014s] (33/35) coreutils::tests test_head::test_zero_terminated_negative_lines
+        PASS [   0.013s] (34/35) coreutils::tests test_head::test_zero_terminated_syntax_2
+        PASS [   0.044s] (35/35) coreutils::tests test_head::test_zero_terminated_syntax
+────────────
+     Summary [   0.273s] 35 tests run: 35 passed, 2583 skipped
+reward=1 graded=35 found=8 failed=0 parsed=35 framework=cargo exit_code=0

@@ -24,10 +24,6 @@ patching file tests/system/system_test.go
 /go/src/github.com/quintilesims/layer0/cli/printer/text_test.go:80:78: unknown field EnvironmentType in struct literal of type struct{EnvironmentID string "json:\"environment_id\""; EnvironmentName string "json:\"environment_name\""; OperatingSystem string "json:\"operating_system\""}
 /go/src/github.com/quintilesims/layer0/cli/printer/text_test.go:81:78: unknown field EnvironmentType in struct literal of type struct{EnvironmentID string "json:\"environment_id\""; EnvironmentName string "json:\"environment_name\""; OperatingSystem string "json:\"operating_system\""}
 /go/src/github.com/quintilesims/layer0/cli/printer/text_test.go:82:80: unknown field EnvironmentType in struct literal of type struct{EnvironmentID string "json:\"environment_id\""; EnvironmentName string "json:\"environment_name\""; OperatingSystem string "json:\"operating_system\""}
-# github.com/quintilesims/layer0/cli/command [github.com/quintilesims/layer0/cli/command.test]
-/go/src/github.com/quintilesims/layer0/cli/command/environment_test.go:21:3: unknown field EnvironmentType in struct literal of type models.CreateEnvironmentRequest
-/go/src/github.com/quintilesims/layer0/cli/command/environment_test.go:23:3: unknown field Scale in struct literal of type models.CreateEnvironmentRequest
-/go/src/github.com/quintilesims/layer0/cli/command/environment_test.go:39:20: req.Scale undefined (type models.CreateEnvironmentRequest has no field or method Scale)
 # github.com/quintilesims/layer0/api/controllers [github.com/quintilesims/layer0/api/controllers.test]
 /go/src/github.com/quintilesims/layer0/api/controllers/environment_test.go:21:3: unknown field EnvironmentType in struct literal of type models.CreateEnvironmentRequest
 /go/src/github.com/quintilesims/layer0/api/controllers/environment_test.go:23:3: unknown field Scale in struct literal of type models.CreateEnvironmentRequest
@@ -35,13 +31,10 @@ patching file tests/system/system_test.go
 /go/src/github.com/quintilesims/layer0/api/controllers/environment_test.go:112:3: unknown field DesiredScale in struct literal of type models.Environment
 /go/src/github.com/quintilesims/layer0/api/controllers/environment_test.go:150:3: unknown field Scale in struct literal of type models.UpdateEnvironmentRequest
 FAIL	github.com/quintilesims/layer0/api/controllers [build failed]
-# github.com/quintilesims/layer0/plugins/terraform/layer0 [github.com/quintilesims/layer0/plugins/terraform/layer0.test]
-/go/src/github.com/quintilesims/layer0/plugins/terraform/layer0/data_source_layer0_environment_test.go:31:3: unknown field EnvironmentType in struct literal of type models.Environment
-/go/src/github.com/quintilesims/layer0/plugins/terraform/layer0/data_source_layer0_environment_test.go:32:3: unknown field DesiredScale in struct literal of type models.Environment
-/go/src/github.com/quintilesims/layer0/plugins/terraform/layer0/resource_layer0_environment_test.go:22:3: unknown field EnvironmentType in struct literal of type models.CreateEnvironmentRequest
-/go/src/github.com/quintilesims/layer0/plugins/terraform/layer0/resource_layer0_environment_test.go:24:3: unknown field Scale in struct literal of type models.CreateEnvironmentRequest
-/go/src/github.com/quintilesims/layer0/plugins/terraform/layer0/resource_layer0_environment_test.go:36:3: unknown field EnvironmentType in struct literal of type models.Environment
-/go/src/github.com/quintilesims/layer0/plugins/terraform/layer0/resource_layer0_environment_test.go:37:3: unknown field DesiredScale in struct literal of type models.Environment
+# github.com/quintilesims/layer0/cli/command [github.com/quintilesims/layer0/cli/command.test]
+/go/src/github.com/quintilesims/layer0/cli/command/environment_test.go:21:3: unknown field EnvironmentType in struct literal of type models.CreateEnvironmentRequest
+/go/src/github.com/quintilesims/layer0/cli/command/environment_test.go:23:3: unknown field Scale in struct literal of type models.CreateEnvironmentRequest
+/go/src/github.com/quintilesims/layer0/cli/command/environment_test.go:39:20: req.Scale undefined (type models.CreateEnvironmentRequest has no field or method Scale)
 # github.com/quintilesims/layer0/api/provider/aws [github.com/quintilesims/layer0/api/provider/aws.test]
 /go/src/github.com/quintilesims/layer0/api/provider/aws/environment_create_test.go:16:67: too many arguments in call to environment.createTags
 	have (string, string, string, string)
@@ -57,5 +50,12 @@ FAIL	github.com/quintilesims/layer0/api/provider/aws [build failed]
 FAIL	github.com/quintilesims/layer0/api/provider/aws/test_aws [build failed]
 FAIL	github.com/quintilesims/layer0/cli/command [build failed]
 FAIL	github.com/quintilesims/layer0/cli/printer [build failed]
+# github.com/quintilesims/layer0/plugins/terraform/layer0 [github.com/quintilesims/layer0/plugins/terraform/layer0.test]
+/go/src/github.com/quintilesims/layer0/plugins/terraform/layer0/data_source_layer0_environment_test.go:31:3: unknown field EnvironmentType in struct literal of type models.Environment
+/go/src/github.com/quintilesims/layer0/plugins/terraform/layer0/data_source_layer0_environment_test.go:32:3: unknown field DesiredScale in struct literal of type models.Environment
+/go/src/github.com/quintilesims/layer0/plugins/terraform/layer0/resource_layer0_environment_test.go:22:3: unknown field EnvironmentType in struct literal of type models.CreateEnvironmentRequest
+/go/src/github.com/quintilesims/layer0/plugins/terraform/layer0/resource_layer0_environment_test.go:24:3: unknown field Scale in struct literal of type models.CreateEnvironmentRequest
+/go/src/github.com/quintilesims/layer0/plugins/terraform/layer0/resource_layer0_environment_test.go:36:3: unknown field EnvironmentType in struct literal of type models.Environment
+/go/src/github.com/quintilesims/layer0/plugins/terraform/layer0/resource_layer0_environment_test.go:37:3: unknown field DesiredScale in struct literal of type models.Environment
 FAIL	github.com/quintilesims/layer0/plugins/terraform/layer0 [build failed]
-reward=0 (grader error: Extra data: line 277 column 1 (char 22307); fell back to exit_code=1)
+reward=0 graded=248 found=248 failed=248 parsed=6 framework=go exit_code=1

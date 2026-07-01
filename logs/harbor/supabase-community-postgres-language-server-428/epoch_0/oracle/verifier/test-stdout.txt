@@ -1,0 +1,68 @@
+patching file crates/pgt_lsp/tests/server.rs
+Starting PostgreSQL 15 database server: main.
+ALTER ROLE
+   Compiling log v0.4.22
+   Compiling tracing v0.1.41
+   Compiling polling v3.7.4
+   Compiling oxc_resolver v1.12.0
+   Compiling async-io v2.4.0
+   Compiling bindgen v0.66.1
+   Compiling prost-build v0.13.5
+   Compiling pgt_diagnostics v0.0.0 (/workspace/repo/crates/pgt_diagnostics)
+   Compiling async-global-executor v2.4.1
+   Compiling protobuf-parse v3.7.1
+   Compiling polling v2.8.0
+   Compiling kv-log-macro v1.0.7
+   Compiling pg_query v6.1.0
+   Compiling pgt_query_proto_parser v0.0.0 (/workspace/repo/crates/pgt_query_proto_parser)
+   Compiling biome_rowan v0.5.7
+   Compiling async-std v1.13.0
+   Compiling async-io v1.13.0
+   Compiling sqlx-core v0.8.2
+   Compiling sqlx-postgres v0.8.2
+   Compiling pgt_lexer_codegen v0.0.0 (/workspace/repo/crates/pgt_lexer_codegen)
+   Compiling biome_diagnostics v0.5.7
+   Compiling sqlx-macros-core v0.8.2
+   Compiling biome_json_syntax v0.5.7
+   Compiling pgt_query_ext_codegen v0.0.0 (/workspace/repo/crates/pgt_query_ext_codegen)
+   Compiling biome_parser v0.5.7
+   Compiling pgt_lexer v0.0.0 (/workspace/repo/crates/pgt_lexer)
+   Compiling pgt_query_ext v0.0.0 (/workspace/repo/crates/pgt_query_ext)
+warning: tree_sitter_sql@0.0.0: ./tree-sitter-sql/src/scanner.c: In function 'add_char':
+warning: tree_sitter_sql@0.0.0: ./tree-sitter-sql/src/scanner.c:40:17: warning: comparison of integer expressions of different signedness: 'int' and 'size_t' {aka 'long unsigned int'} [-Wsign-compare]
+warning: tree_sitter_sql@0.0.0:    40 |   if (index + 1 >= *text_size) {
+warning: tree_sitter_sql@0.0.0:       |                 ^~
+   Compiling biome_json_factory v0.5.7
+   Compiling sqlx-macros v0.8.2
+   Compiling biome_json_parser v0.5.7
+   Compiling biome_deserialize v0.6.0
+   Compiling pgt_analyse v0.0.0 (/workspace/repo/crates/pgt_analyse)
+   Compiling globset v0.4.16
+   Compiling sqlx v0.8.2
+   Compiling pgt_analyser v0.0.0 (/workspace/repo/crates/pgt_analyser)
+   Compiling pgt_schema_cache v0.0.0 (/workspace/repo/crates/pgt_schema_cache)
+   Compiling tower v0.4.13
+   Compiling pgt_fs v0.0.0 (/workspace/repo/crates/pgt_fs)
+   Compiling pgt_completions v0.0.0 (/workspace/repo/crates/pgt_completions)
+   Compiling pgt_typecheck v0.0.0 (/workspace/repo/crates/pgt_typecheck)
+   Compiling pgt_configuration v0.0.0 (/workspace/repo/crates/pgt_configuration)
+   Compiling ignore v0.4.23
+   Compiling pgt_statement_splitter v0.0.0 (/workspace/repo/crates/pgt_statement_splitter)
+   Compiling env_filter v0.1.3
+   Compiling tower-lsp v0.20.0
+   Compiling env_logger v0.11.7
+   Compiling pgt_workspace v0.0.0 (/workspace/repo/crates/pgt_workspace)
+   Compiling uuid v1.11.0
+   Compiling test-log-macros v0.2.17
+   Compiling dotenv v0.15.0
+   Compiling pgt_test_utils v0.0.0 (/workspace/repo/crates/pgt_test_utils)
+   Compiling test-log v0.2.17
+   Compiling pgt_lsp v0.0.0 (/workspace/repo/crates/pgt_lsp)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1m 26s
+────────────
+ Nextest run ID bebf336a-a6fe-41f0-9be9-1dc6dad45338 with nextest profile: default
+    Starting 1 test across 2 binaries (19 tests skipped)
+        PASS [   3.583s] pgt_lsp::server test_multiple_content_changes_single_request
+────────────
+     Summary [   3.586s] 1 test run: 1 passed, 19 skipped
+reward=1 graded=1 found=1 failed=0 parsed=1 framework=cargo exit_code=0

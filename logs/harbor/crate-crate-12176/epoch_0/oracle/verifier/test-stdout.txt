@@ -1,0 +1,243 @@
+patching file server/src/test/java/io/crate/analyze/parser/TypeSignatureParserTest.java (renamed from server/src/test/java/io/crate/types/TypeSignatureTest.java)
+patching file server/src/test/java/io/crate/integrationtests/TransportSQLActionTest.java
+To honour the JVM settings for this build a single-use Daemon process will be forked. See https://docs.gradle.org/7.3.3/userguide/gradle_daemon.html#sec:disabling_the_daemon.
+Daemon will be stopped at the end of the build 
+> Task :buildSrc:compileJava UP-TO-DATE
+> Task :buildSrc:compileGroovy NO-SOURCE
+> Task :buildSrc:pluginDescriptors UP-TO-DATE
+> Task :buildSrc:processResources UP-TO-DATE
+> Task :buildSrc:classes UP-TO-DATE
+> Task :buildSrc:jar UP-TO-DATE
+> Task :buildSrc:assemble UP-TO-DATE
+> Task :buildSrc:pluginUnderTestMetadata UP-TO-DATE
+> Task :buildSrc:compileTestJava UP-TO-DATE
+> Task :buildSrc:compileTestGroovy NO-SOURCE
+> Task :buildSrc:processTestResources UP-TO-DATE
+> Task :buildSrc:testClasses UP-TO-DATE
+
+> Task :buildSrc:test
+
+io.crate.gradle.plugins.jdk.JdkDownloadPluginFunctionalTest > testAarch64LinuxJDKExtraction PASSED
+
+io.crate.gradle.plugins.jdk.JdkDownloadPluginFunctionalTest > testWindowsJDKExtraction PASSED
+
+io.crate.gradle.plugins.jdk.JdkDownloadPluginFunctionalTest > testX64LinuxJDKExtraction PASSED
+
+io.crate.gradle.plugins.jdk.JdkDownloadPluginFunctionalTest > testMacJDKExtraction PASSED
+
+io.crate.gradle.plugins.jdk.JdkTest > testBadVersionFormat PASSED
+
+io.crate.gradle.plugins.jdk.JdkTest > testUnknownVendor PASSED
+
+io.crate.gradle.plugins.jdk.JdkTest > testMissingVendor PASSED
+
+io.crate.gradle.plugins.jdk.JdkTest > testMissingArch PASSED
+
+io.crate.gradle.plugins.jdk.JdkTest > testMissingVersion PASSED
+
+io.crate.gradle.plugins.jdk.JdkTest > testUnknownArch PASSED
+
+io.crate.gradle.plugins.jdk.JdkTest > testUnknownOS PASSED
+
+io.crate.gradle.plugins.jdk.JdkTest > testMissingOS PASSED
+
+> Task :buildSrc:validatePlugins
+> Task :buildSrc:check
+> Task :buildSrc:build
+> Task :server:antlrOutputDir
+> Task :server:generateGrammarSource
+> Task :libs:cli:compileJava UP-TO-DATE
+> Task :libs:shared:compileJava UP-TO-DATE
+> Task :libs:shared:processResources NO-SOURCE
+> Task :libs:shared:classes UP-TO-DATE
+> Task :libs:shared:jar UP-TO-DATE
+> Task :libs:dex:compileJava UP-TO-DATE
+> Task :libs:dex:processResources NO-SOURCE
+> Task :libs:dex:classes UP-TO-DATE
+> Task :libs:dex:jar UP-TO-DATE
+> Task :libs:es-plugin-classloader:compileJava UP-TO-DATE
+> Task :libs:es-plugin-classloader:processResources NO-SOURCE
+> Task :libs:es-plugin-classloader:classes UP-TO-DATE
+> Task :libs:es-plugin-classloader:jar UP-TO-DATE
+> Task :libs:es-x-content:compileJava UP-TO-DATE
+> Task :libs:es-x-content:processResources NO-SOURCE
+> Task :libs:es-x-content:classes UP-TO-DATE
+> Task :libs:es-x-content:jar UP-TO-DATE
+> Task :libs:guice:compileJava UP-TO-DATE
+> Task :libs:guice:processResources NO-SOURCE
+> Task :libs:guice:classes UP-TO-DATE
+> Task :libs:guice:jar UP-TO-DATE
+> Task :libs:pgwire:antlrOutputDir
+> Task :libs:pgwire:generateGrammarSource UP-TO-DATE
+> Task :libs:pgwire:compileJava UP-TO-DATE
+> Task :libs:pgwire:processResources NO-SOURCE
+> Task :libs:pgwire:classes UP-TO-DATE
+> Task :libs:pgwire:jar UP-TO-DATE
+> Task :libs:sql-parser:antlrOutputDir
+> Task :libs:sql-parser:generateGrammarSource UP-TO-DATE
+> Task :libs:sql-parser:compileJava UP-TO-DATE
+> Task :libs:sql-parser:processResources NO-SOURCE
+> Task :libs:sql-parser:classes UP-TO-DATE
+> Task :libs:sql-parser:jar UP-TO-DATE
+> Task :server:compileJava
+Note: Some input files use or override a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+
+> Task :server:processResources UP-TO-DATE
+> Task :server:classes
+> Task :server:jar
+> Task :libs:dex:compileTestFixturesJava UP-TO-DATE
+
+> Task :server:compileTestFixturesJava
+Note: Some input files use or override a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+Note: /workspace/repo/server/src/testFixtures/java/org/elasticsearch/test/disruption/LongGCDisruption.java uses or overrides a deprecated API that is marked for removal.
+Note: Recompile with -Xlint:removal for details.
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+
+> Task :server:compileTestJava
+Note: Some input files use or override a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+
+> Task :server:processTestResources UP-TO-DATE
+> Task :server:testClasses
+> Task :server:processTestFixturesResources NO-SOURCE
+> Task :server:testFixturesClasses
+> Task :server:testFixturesJar UP-TO-DATE
+> Task :libs:cli:processResources NO-SOURCE
+> Task :libs:cli:classes UP-TO-DATE
+> Task :libs:cli:jar UP-TO-DATE
+> Task :libs:dex:processTestFixturesResources NO-SOURCE
+> Task :libs:dex:testFixturesClasses UP-TO-DATE
+> Task :libs:dex:testFixturesJar UP-TO-DATE
+
+> Task :server:test
+Running: Gradle Test Run :server:test
+Running: Gradle Test Executor 2
+Running: Test class io.crate.analyze.parser.TypeSignatureParserTest
+
+TypeSignatureParserTest > test_parse_numeric_type_signature_round_trip PASSED
+
+TypeSignatureParserTest > test_create_and_parse_object_type_containing_parameter_name_with_bracket PASSED
+
+TypeSignatureParserTest > test_create_and_parse_object_type_containing_parameter_name_with_spaces_and_quotes PASSED
+
+TypeSignatureParserTest > test_parse_numeric_type_signature_with_precision_round_trip PASSED
+
+TypeSignatureParserTest > testParsingOfPrimitiveDataTypes PASSED
+
+TypeSignatureParserTest > test_parse_record_with_named_data_type PASSED
+
+TypeSignatureParserTest > test_create_and_parse_object_type_containing_parameter_name_with_special_characters PASSED
+
+TypeSignatureParserTest > test_create_type_signature_from_nested_named_text_type_with_length_limit PASSED
+
+TypeSignatureParserTest > test_parse_record_with_nested_named_record_type PASSED
+
+TypeSignatureParserTest > test_parse_array_with_nested_record_type PASSED
+
+TypeSignatureParserTest > test_parse_nested_named_text_type_signature_with_length_limit PASSED
+
+TypeSignatureParserTest > testParsingOfObject PASSED
+
+TypeSignatureParserTest > testParsingOfArray PASSED
+
+TypeSignatureParserTest > test_parse_record PASSED
+
+TypeSignatureParserTest > test_parse_numeric_type_signature_with_precision_and_scale_round_trip PASSED
+
+TypeSignatureParserTest > testParsingOfNestedArray PASSED
+
+TypeSignatureParserTest > test_create_and_parse_object_type_containing_parameter_name_with_spaces PASSED
+
+TypeSignatureParserTest > test_parse_record_with_named_data_types_that_contain_whitespaces PASSED
+
+TypeSignatureParserTest > test_create_type_signature_from_text_type_with_length_limit PASSED
+
+TypeSignatureParserTest > test_parse_text_type_signature_with_length_limit PASSED
+
+TypeSignatureParserTest > test_create_and_parse_object_type_containing_parameter_name_with_spaces_and_brackets PASSED
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 8.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+See https://docs.gradle.org/7.3.3/userguide/command_line_interface.html#sec:command_line_warnings
+
+BUILD SUCCESSFUL in 2m 38s
+41 actionable tasks: 11 executed, 30 up-to-date
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="io.crate.analyze.parser.TypeSignatureParserTest" tests="21" skipped="0" failures="0" errors="0" timestamp="2026-07-01T14:44:30" hostname="09ad1452de6b" time="0.924">
+  <properties/>
+  <testcase name="test_parse_numeric_type_signature_round_trip" classname="io.crate.analyze.parser.TypeSignatureParserTest" time="0.629"/>
+  <testcase name="test_create_and_parse_object_type_containing_parameter_name_with_bracket" classname="io.crate.analyze.parser.TypeSignatureParserTest" time="0.07"/>
+  <testcase name="test_create_and_parse_object_type_containing_parameter_name_with_spaces_and_quotes" classname="io.crate.analyze.parser.TypeSignatureParserTest" time="0.005"/>
+  <testcase name="test_parse_numeric_type_signature_with_precision_round_trip" classname="io.crate.analyze.parser.TypeSignatureParserTest" time="0.01"/>
+  <testcase name="testParsingOfPrimitiveDataTypes" classname="io.crate.analyze.parser.TypeSignatureParserTest" time="0.009"/>
+  <testcase name="test_parse_record_with_named_data_type" classname="io.crate.analyze.parser.TypeSignatureParserTest" time="0.005"/>
+  <testcase name="test_create_and_parse_object_type_containing_parameter_name_with_special_characters" classname="io.crate.analyze.parser.TypeSignatureParserTest" time="0.068"/>
+  <testcase name="test_create_type_signature_from_nested_named_text_type_with_length_limit" classname="io.crate.analyze.parser.TypeSignatureParserTest" time="0.003"/>
+  <testcase name="test_parse_record_with_nested_named_record_type" classname="io.crate.analyze.parser.TypeSignatureParserTest" time="0.005"/>
+  <testcase name="test_parse_array_with_nested_record_type" classname="io.crate.analyze.parser.TypeSignatureParserTest" time="0.003"/>
+  <testcase name="test_parse_nested_named_text_type_signature_with_length_limit" classname="io.crate.analyze.parser.TypeSignatureParserTest" time="0.002"/>
+  <testcase name="testParsingOfObject" classname="io.crate.analyze.parser.TypeSignatureParserTest" time="0.002"/>
+  <testcase name="testParsingOfArray" classname="io.crate.analyze.parser.TypeSignatureParserTest" time="0.004"/>
+  <testcase name="test_parse_record" classname="io.crate.analyze.parser.TypeSignatureParserTest" time="0.075"/>
+  <testcase name="test_parse_numeric_type_signature_with_precision_and_scale_round_trip" classname="io.crate.analyze.parser.TypeSignatureParserTest" time="0.005"/>
+  <testcase name="testParsingOfNestedArray" classname="io.crate.analyze.parser.TypeSignatureParserTest" time="0.006"/>
+  <testcase name="test_create_and_parse_object_type_containing_parameter_name_with_spaces" classname="io.crate.analyze.parser.TypeSignatureParserTest" time="0.003"/>
+  <testcase name="test_parse_record_with_named_data_types_that_contain_whitespaces" classname="io.crate.analyze.parser.TypeSignatureParserTest" time="0.003"/>
+  <testcase name="test_create_type_signature_from_text_type_with_length_limit" classname="io.crate.analyze.parser.TypeSignatureParserTest" time="0.003"/>
+  <testcase name="test_parse_text_type_signature_with_length_limit" classname="io.crate.analyze.parser.TypeSignatureParserTest" time="0.003"/>
+  <testcase name="test_create_and_parse_object_type_containing_parameter_name_with_spaces_and_brackets" classname="io.crate.analyze.parser.TypeSignatureParserTest" time="0.004"/>
+  <system-out><![CDATA[[2026-07-01T14:44:30,413][INFO ][i.c.a.p.TypeSignatureParserTest] [test_parse_numeric_type_signature_round_trip] before test
+[2026-07-01T14:44:31,011][INFO ][i.c.a.p.TypeSignatureParserTest] [test_parse_numeric_type_signature_round_trip] after test
+[2026-07-01T14:44:31,031][INFO ][i.c.a.p.TypeSignatureParserTest] [test_create_and_parse_object_type_containing_parameter_name_with_bracket] before test
+[2026-07-01T14:44:31,097][INFO ][i.c.a.p.TypeSignatureParserTest] [test_create_and_parse_object_type_containing_parameter_name_with_bracket] after test
+[2026-07-01T14:44:31,101][INFO ][i.c.a.p.TypeSignatureParserTest] [test_create_and_parse_object_type_containing_parameter_name_with_spaces_and_quotes] before test
+[2026-07-01T14:44:31,103][INFO ][i.c.a.p.TypeSignatureParserTest] [test_create_and_parse_object_type_containing_parameter_name_with_spaces_and_quotes] after test
+[2026-07-01T14:44:31,107][INFO ][i.c.a.p.TypeSignatureParserTest] [test_parse_numeric_type_signature_with_precision_round_trip] before test
+[2026-07-01T14:44:31,113][INFO ][i.c.a.p.TypeSignatureParserTest] [test_parse_numeric_type_signature_with_precision_round_trip] after test
+[2026-07-01T14:44:31,116][INFO ][i.c.a.p.TypeSignatureParserTest] [testParsingOfPrimitiveDataTypes] before test
+[2026-07-01T14:44:31,122][INFO ][i.c.a.p.TypeSignatureParserTest] [testParsingOfPrimitiveDataTypes] after test
+[2026-07-01T14:44:31,125][INFO ][i.c.a.p.TypeSignatureParserTest] [test_parse_record_with_named_data_type] before test
+[2026-07-01T14:44:31,127][INFO ][i.c.a.p.TypeSignatureParserTest] [test_parse_record_with_named_data_type] after test
+[2026-07-01T14:44:31,194][INFO ][i.c.a.p.TypeSignatureParserTest] [test_create_and_parse_object_type_containing_parameter_name_with_special_characters] before test
+[2026-07-01T14:44:31,196][INFO ][i.c.a.p.TypeSignatureParserTest] [test_create_and_parse_object_type_containing_parameter_name_with_special_characters] after test
+[2026-07-01T14:44:31,198][INFO ][i.c.a.p.TypeSignatureParserTest] [test_create_type_signature_from_nested_named_text_type_with_length_limit] before test
+[2026-07-01T14:44:31,199][INFO ][i.c.a.p.TypeSignatureParserTest] [test_create_type_signature_from_nested_named_text_type_with_length_limit] after test
+[2026-07-01T14:44:31,203][INFO ][i.c.a.p.TypeSignatureParserTest] [test_parse_record_with_nested_named_record_type] before test
+[2026-07-01T14:44:31,204][INFO ][i.c.a.p.TypeSignatureParserTest] [test_parse_record_with_nested_named_record_type] after test
+[2026-07-01T14:44:31,207][INFO ][i.c.a.p.TypeSignatureParserTest] [test_parse_array_with_nested_record_type] before test
+[2026-07-01T14:44:31,207][INFO ][i.c.a.p.TypeSignatureParserTest] [test_parse_array_with_nested_record_type] after test
+[2026-07-01T14:44:31,210][INFO ][i.c.a.p.TypeSignatureParserTest] [test_parse_nested_named_text_type_signature_with_length_limit] before test
+[2026-07-01T14:44:31,210][INFO ][i.c.a.p.TypeSignatureParserTest] [test_parse_nested_named_text_type_signature_with_length_limit] after test
+[2026-07-01T14:44:31,213][INFO ][i.c.a.p.TypeSignatureParserTest] [testParsingOfObject] before test
+[2026-07-01T14:44:31,213][INFO ][i.c.a.p.TypeSignatureParserTest] [testParsingOfObject] after test
+[2026-07-01T14:44:31,217][INFO ][i.c.a.p.TypeSignatureParserTest] [testParsingOfArray] before test
+[2026-07-01T14:44:31,218][INFO ][i.c.a.p.TypeSignatureParserTest] [testParsingOfArray] after test
+[2026-07-01T14:44:31,221][INFO ][i.c.a.p.TypeSignatureParserTest] [test_parse_record] before test
+[2026-07-01T14:44:31,221][INFO ][i.c.a.p.TypeSignatureParserTest] [test_parse_record] after test
+[2026-07-01T14:44:31,297][INFO ][i.c.a.p.TypeSignatureParserTest] [test_parse_numeric_type_signature_with_precision_and_scale_round_trip] before test
+[2026-07-01T14:44:31,298][INFO ][i.c.a.p.TypeSignatureParserTest] [test_parse_numeric_type_signature_with_precision_and_scale_round_trip] after test
+[2026-07-01T14:44:31,303][INFO ][i.c.a.p.TypeSignatureParserTest] [testParsingOfNestedArray] before test
+[2026-07-01T14:44:31,304][INFO ][i.c.a.p.TypeSignatureParserTest] [testParsingOfNestedArray] after test
+[2026-07-01T14:44:31,307][INFO ][i.c.a.p.TypeSignatureParserTest] [test_create_and_parse_object_type_containing_parameter_name_with_spaces] before test
+[2026-07-01T14:44:31,308][INFO ][i.c.a.p.TypeSignatureParserTest] [test_create_and_parse_object_type_containing_parameter_name_with_spaces] after test
+[2026-07-01T14:44:31,311][INFO ][i.c.a.p.TypeSignatureParserTest] [test_parse_record_with_named_data_types_that_contain_whitespaces] before test
+[2026-07-01T14:44:31,312][INFO ][i.c.a.p.TypeSignatureParserTest] [test_parse_record_with_named_data_types_that_contain_whitespaces] after test
+[2026-07-01T14:44:31,315][INFO ][i.c.a.p.TypeSignatureParserTest] [test_create_type_signature_from_text_type_with_length_limit] before test
+[2026-07-01T14:44:31,315][INFO ][i.c.a.p.TypeSignatureParserTest] [test_create_type_signature_from_text_type_with_length_limit] after test
+[2026-07-01T14:44:31,318][INFO ][i.c.a.p.TypeSignatureParserTest] [test_parse_text_type_signature_with_length_limit] before test
+[2026-07-01T14:44:31,318][INFO ][i.c.a.p.TypeSignatureParserTest] [test_parse_text_type_signature_with_length_limit] after test
+[2026-07-01T14:44:31,321][INFO ][i.c.a.p.TypeSignatureParserTest] [test_create_and_parse_object_type_containing_parameter_name_with_spaces_and_brackets] before test
+[2026-07-01T14:44:31,322][INFO ][i.c.a.p.TypeSignatureParserTest] [test_create_and_parse_object_type_containing_parameter_name_with_spaces_and_brackets] after test
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
+reward=1 graded=21 found=21 failed=0 parsed=21 framework=junit exit_code=0
